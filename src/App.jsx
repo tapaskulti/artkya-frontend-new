@@ -1,4 +1,4 @@
-import Login from "./pages/auth/Login";
+import { Routes } from "react-router-dom";
 
 
 
@@ -6,8 +6,7 @@ function App() {
   return (
     <>
       <div>
-        <h2>Hello World</h2>
-        <Login />
+        <Routes />
       </div>
     </>
   );

@@ -1,5 +1,5 @@
-// import Header from "../../components/Header";
-// import Footer from "../../components/Footer";
+import Header from "../../components/Header";
+import Footer from "../../components/Footer";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser, faLock, faBuilding } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from "react";
@@ -37,7 +37,7 @@ const Login = () => {
 
   return (
     <div>
-      {/* <Header className="bg-black header fixed z-10" /> */}
+      <Header className="bg-black header fixed z-10" />
       <div className="overflow-y-auto scrollbar pt-20">
         <div className="bg-gradient-to-r from-[#e54000] via-[#f16a01] to-[#fe9700] py-32">
           <div className="px-32 md:px-20 lg:px-52 xl:px-64 2xl:px-96 3xl:px-[480px]">
@@ -127,7 +127,7 @@ const Login = () => {
             </div>
           </div>
         </div>
-        {/* <Footer /> */}
+        <Footer />
       </div>
     </div>
   );
