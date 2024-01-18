@@ -1,6 +1,5 @@
 import Header from "../components/Header";
 // import phouzdar_photo from "../assets/artist1.jpg";
-import painting01 from "../assets/painting01.jpg";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
@@ -14,24 +13,12 @@ const LandingPage = () => {
       <div className="static">
         <Header />
         <div className="mt-10 lg:flex">
-          <div className="px-10">
-            <h2>Painting</h2>
-            {/* <div className="bg-gray-100 h-auto backdrop-blur-lg rounded-md w-full md:max-lg:max-w-screen-sm md:max-lg:mx-auto mt-6 px-3 py-2">Left</div> */}
-            <div className="mt-20">
-              <div className="flex space-x-10">
-                <img src={painting01} className="w-60" />
-                <img src={painting01} className="w-60" />
-                <img src={painting01} className="w-60" />
-                <img src={painting01} className="w-60" />
-                <img src={painting01} className="w-60" />
-                <img src={painting01} className="w-60" />
-                <img src={painting01} className="w-60" />
-                <img src={painting01} className="w-60" />
-                <img src={painting01} className="w-60" />
-                <img src={painting01} className="w-60" />
-              </div>
-            </div>
+        
+          <div className="lg:w-[23rem] rounded-lg rounded-br-xl px-10">
+            <h2>Filter</h2>
+            <div className="bg-gray-100 h-auto backdrop-blur-lg rounded-md w-full md:max-lg:max-w-screen-sm md:max-lg:mx-auto mt-6 px-3 py-2">Left</div>
           </div>
+          <div>Right</div>
         </div>
       </div>
     </>
