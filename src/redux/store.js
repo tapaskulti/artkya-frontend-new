@@ -12,7 +12,8 @@ const store = configureStore({
     reducer : {
         auth: authReducer,
     },
-    middleware
+    middleware,
+    // middleware:  (getDefaultMiddleware) => getDefaultMiddleware().concat(sagaMiddleware),
 });
 
 sagaMiddleware.run(rootSaga);

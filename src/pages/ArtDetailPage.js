@@ -1,4 +1,4 @@
-import React, { useEffect, useSatate, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../components/Header";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";

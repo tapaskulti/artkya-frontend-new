@@ -1,5 +1,5 @@
 import { useState } from "react";
-import logo from "../assets/logo.jpeg";
+import logo from "../assets/logo.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 import { Link, NavLink } from "react-router-dom";
@@ -10,19 +10,16 @@ const Header = () => {
     <>
       <div className="items-center w-full scroll ">
         <div className={`${dropDownOpen ? "visible" : "hidden"}`}>
-          <div
-            className={`h-full  bg-gray-100 absolute w-52 z-10 ease-in-out transition delay-150   ${
-              dropDownOpen
-                ? " duration-500  z-20 translate-x-0 scale-100"
-                : "duration-300 ease-out translate-x-0 "
-            } `}
-          >
+          <div>
             <ul className="md:flex font-sans text-base space-y-2 cursor-pointer text-[#000000] p-5">
               <li className="hover:text-amber-800 ">
-                <NavLink to="/">Artworks</NavLink>
+                <NavLink to="/">Home</NavLink>
               </li>
               <li className="hover:text-amber-800 ">
-                <NavLink to="/Album">Album</NavLink>
+                <NavLink to="/Album">Painting</NavLink>
+              </li>
+              <li className="hover:text-amber-800 ">
+                <NavLink to="/AboutUs">About Us</NavLink>
               </li>
               <li className="hover:text-amber-800 ">
                 <NavLink to="/Contact">Contact</NavLink>
@@ -52,38 +49,36 @@ const Header = () => {
                 <img src={logo} className="h-6 " alt="Artkya Logo" />
               </Link>
             </div>
-            <ul className="hidden md:flex space-x-10 font-sans text-base cursor-pointer  text-[#000000] ">
-              <li className="hover:text-amber-800 ">
-                <NavLink
-                  className={({ isActive }) =>
-                    isActive ? "border-b-2 border-black " : ""
-                  }
-                  to="/"
-                >
-                  Artworks
-                </NavLink>
-              </li>
-              <li className="hover:text-amber-800 ">
-                <NavLink
-                  className={({ isActive }) =>
-                    isActive ? "border-b-2 border-black " : ""
-                  }
-                  to="/Album"
-                >
-                  Album
-                </NavLink>
-              </li>
-              <li className="hover:text-amber-800 ">
-                <NavLink
-                  className={({ isActive }) =>
-                    isActive ? "border-b-2 border-black " : ""
-                  }
-                  to="/Contact"
-                >
-                  Contact
-                </NavLink>
-              </li>
-            </ul>
+            <div className="flex items-center space-x-10">
+              <ul className="hidden md:flex space-x-10 font-sans text-base cursor-pointer  text-[#000000] ">
+                <li className="hover:text-amber-800 ">
+                  <NavLink className="border-black" to="/">
+                    Home
+                  </NavLink>
+                </li>
+                <li className="hover:text-amber-800 ">
+                  <NavLink className="border-black" to="/Painting">
+                    Painting
+                  </NavLink>
+                </li>
+                <li className="hover:text-amber-800 ">
+                  <NavLink className="border-black" to="/AboutUs">
+                    About Us
+                  </NavLink>
+                </li>
+                <li className="hover:text-amber-800 ">
+                  <NavLink className="border-black" to="/Contact">
+                    Contact
+                  </NavLink>
+                </li>
+              </ul>
+              <div>
+                <input
+                  placeholder="Search"
+                  className="w-96 bg-white border border-slate-200 rounded-md px-3 py-1.5"
+                ></input>
+              </div>
+            </div>
           </div>
         </div>
       </div>
