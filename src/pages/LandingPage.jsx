@@ -36,18 +36,18 @@ const LandingPage = () => {
                 <img src={painting04} alt="" />
                 <img src={painting05} alt="" />
                 <img src={painting06} alt="" />
-                <img src={painting01} alt="" />
+                <img src={painting07} alt="" />
                 <img src={painting02} alt="" />
                 <img src={painting03} alt="" />
                 <img src={painting04} alt="" />
                 <img src={painting05} alt="" />
                 <img src={painting06} alt="" />
+                <img src={painting01} alt="" />
                 <img src={painting07} alt="" />
-                <img src={painting03} alt="" />
                 <img src={painting04} alt="" />
                 <img src={painting05} alt="" />
                 <img src={painting06} alt="" />
-                <img src={painting06} alt="" />
+                <img src={painting02} alt="" />
               </div>
             </div>
           </div>
