@@ -1,6 +1,12 @@
 import Header from "../components/Header";
 // import phouzdar_photo from "../assets/artist1.jpg";
-import painting01 from "../assets/painting01.jpg";
+import painting01 from "../assets/img-800x1000.jpg";
+import painting02 from "../assets/img-1000x1500.jpg";
+import painting03 from "../assets/img-1080x1920.jpg";
+import painting04 from "../assets/img-1200x808.jpg";
+import painting05 from "../assets/img-1200x900.jpg";
+import painting06 from "../assets/img-1280x853.jpg";
+import painting07 from "../assets/img-2048x1365.jpg";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
@@ -17,18 +23,31 @@ const LandingPage = () => {
           <div className="px-10">
             <h2>Painting</h2>
             {/* <div className="bg-gray-100 h-auto backdrop-blur-lg rounded-md w-full md:max-lg:max-w-screen-sm md:max-lg:mx-auto mt-6 px-3 py-2">Left</div> */}
-            <div className="mt-20">
-              <div className="flex space-x-10">
-                <img src={painting01} className="w-60" />
-                <img src={painting01} className="w-60" />
-                <img src={painting01} className="w-60" />
-                <img src={painting01} className="w-60" />
-                <img src={painting01} className="w-60" />
-                <img src={painting01} className="w-60" />
-                <img src={painting01} className="w-60" />
-                <img src={painting01} className="w-60" />
-                <img src={painting01} className="w-60" />
-                <img src={painting01} className="w-60" />
+            <div className="mt-20 p-5 md:p-10">
+              <div className="h-auto mx-6 mt-32 sm:mx-6 gap-10 lg:gap-16 columns-1 md:columns-2 lg:columns-3 2xl:columns-4 gap-y-16 [&>img:not(:first-child)]:mt-5 lg:[&>img:not(:first-child)]:mt-16">
+                <img src={painting01} alt="" />
+                <img src={painting02} alt="" />
+                <img src={painting03} alt="" />
+                <img src={painting04} alt="" />
+                <img src={painting05} alt="" />
+                <img src={painting06} alt="" />
+                <img src={painting07} alt="" />
+                <img src={painting03} alt="" />
+                <img src={painting04} alt="" />
+                <img src={painting05} alt="" />
+                <img src={painting06} alt="" />
+                <img src={painting01} alt="" />
+                <img src={painting02} alt="" />
+                <img src={painting03} alt="" />
+                <img src={painting04} alt="" />
+                <img src={painting05} alt="" />
+                <img src={painting06} alt="" />
+                <img src={painting07} alt="" />
+                <img src={painting03} alt="" />
+                <img src={painting04} alt="" />
+                <img src={painting05} alt="" />
+                <img src={painting06} alt="" />
+                <img src={painting06} alt="" />
               </div>
             </div>
           </div>

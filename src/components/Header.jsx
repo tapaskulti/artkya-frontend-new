@@ -1,8 +1,12 @@
 import { useState } from "react";
 import logo from "../assets/logo.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBars } from "@fortawesome/free-solid-svg-icons";
+import { faBars, faHeart, faUser } from "@fortawesome/free-solid-svg-icons";
 import { Link, NavLink } from "react-router-dom";
+import { faOpencart } from "@fortawesome/free-brands-svg-icons";
+import { AiOutlineUser } from "react-icons/ai";
+import { CiHeart } from "react-icons/ci";
+import { IoBagHandleOutline } from "react-icons/io5";
 
 const Header = () => {
   const [dropDownOpen, setdropDownOpen] = useState(false);
@@ -49,7 +53,7 @@ const Header = () => {
                 <img src={logo} className="h-6 " alt="Artkya Logo" />
               </Link>
             </div>
-            <div className="flex items-center space-x-10">
+            <div className="flex items-center space-x-24">
               <ul className="hidden md:flex space-x-10 font-sans text-base cursor-pointer  text-[#000000] ">
                 <li className="hover:text-amber-800 ">
                   <NavLink className="border-black" to="/">
@@ -72,14 +76,36 @@ const Header = () => {
                   </NavLink>
                 </li>
               </ul>
-              <div>
-                <input
-                  placeholder="Search"
-                  className="w-96 bg-white border border-slate-200 rounded-md px-3 py-1.5"
-                ></input>
-              </div>
+              <ul className="hidden md:flex space-x-3 font-sans text-base cursor-pointer font-medium  text-[#000000] ">
+                <li className="hover:text-amber-800 ">
+                  <NavLink className="border-black" to="/Contact">
+                    Login
+                  </NavLink>
+                </li>
+                <span>|</span>
+                <li className="hover:text-amber-800 ">
+                  <NavLink className="border-black" to="/Contact">
+                    Register
+                  </NavLink>
+                </li>
+                <li className="hover:text-amber-800">
+                <CiHeart className="w-5 h-6" />
+                </li>
+                <li className="hover:text-amber-800 ">
+                <IoBagHandleOutline className="w-5 h-6" />
+                </li>
+                <li className="hover:text-amber-800 ">
+                <AiOutlineUser className="w-5 h-6" />
+                </li>
+              </ul>
             </div>
           </div>
+        </div>
+        <div className="flex justify-end px-10 py-2">
+          <input
+            placeholder="Search"
+            className="w-96 bg-white border border-slate-200 rounded-md px-3 py-1.5"
+          ></input>
         </div>
       </div>
     </>
