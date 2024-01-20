@@ -13,34 +13,24 @@ import {
 } from "@fortawesome/free-brands-svg-icons";
 import googleIcon from "../../assets/google-icon.png";
 
-const Login = () => {
-  // const dispatch = useDispatch();
-  // const { token } = useSelector((state) => state.auth);
-  // const [email, setEmail] = useState("");
-  // const [password, setPassword] = useState("");
-  // const [companyId, setCompanyId] = useState("");
-  // const navigate = useNavigate();
+const Register = () => {
+//   const dispatch = useDispatch();
+//   const { loading } = useSelector((state) => state.user);
+//   const [newUser, setnewUser] = useState({});
 
-  // useEffect(() => {
-  //   if (token) {
-  //     navigate("/", { replace: true });
-  //   } else {
-  //     navigate("/login", { replace: true });
-  //   }
-  // }, [token]);
-
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   const loginPayload = { companyId, email, password };
-  //   // console.log("LOGIN PAGE", loginPayload);
-  //   dispatch({
-  //     type: "LOGIN",
-  //     payload: {
-  //       body: loginPayload,
-  //       navigate,
-  //     },
-  //   });
-  // };
+//   const handleSignup = () => {
+//     const payload = {
+//       name: newUser.firstName + " " + newUser.lastName,
+//       email: newUser.email,
+//       password: newUser.password,
+//     };
+//     dispatch({
+//       type: "SIGNUP",
+//       payload: {
+//         body: payload,
+//       },
+//     });
+//   };
 
   return (
     <div>
@@ -58,12 +48,52 @@ const Login = () => {
             <div className="w-full md:w-1/2 py-12 md:py-10 2xl:py-14 3xl:py-16">
               <div className=" h-full mr-8 md:mr-8 lg:mr-12 lg:px-2 3xl:px-6 3xl:py-8">
                 <h1 className="root text-slate-800 text-left text-2xl md:text-[16px] lg:text-3xl">
-                  Welcome back to Logo!
+                  Welcome to Logo!
                 </h1>
                 <h1 className="text-slate-600 text-left text-lg md:text-[16px] lg:text-lg -mt-1">
-                  Login to your account
+                  Register here
                 </h1>
                 <form className="mt-5">
+                  <div className="relative">
+                    <FontAwesomeIcon
+                      icon={faUser}
+                      className="absolute top-4 left-4 text-slate-400"
+                    />
+                    <input
+                      type="text"
+                      name="fname"
+                      id="fname"
+                      placeholder="Enter your first name"
+                      className="w-full border border-slate-300 rounded-md pl-10 pr-4 py-3.5 text-sm active:bg-transparent focus:outline-none"
+                    //   onChange={(e) => {
+                    //     setnewUser({
+                    //       ...newUser,
+                    //       firstName: e.target.value,
+                    //     });
+                    //   }}
+                    />
+                  </div>
+
+                  <div className="relative">
+                    <FontAwesomeIcon
+                      icon={faUser}
+                      className="absolute top-8 left-4 text-slate-400"
+                    />
+                    <input
+                      type="text"
+                      name="lname"
+                      id="lname"
+                      placeholder="Enter your last name"
+                      className="w-full border border-slate-300 rounded-md pl-10 pr-4 py-3.5 text-sm my-4 active:bg-transparent focus:outline-none"
+                    //   onChange={(e) => {
+                    //     setnewUser({
+                    //       ...newUser,
+                    //       lastName: e.target.value,
+                    //     });
+                    //   }}
+                    />
+                  </div>
+
                   <div className="relative">
                     <FontAwesomeIcon
                       icon={faEnvelope}
@@ -90,7 +120,7 @@ const Login = () => {
                       type="password"
                       name="password"
                       id="password"
-                      placeholder="Enter your password"
+                      placeholder="Create your password"
                       className="w-full border border-slate-300 rounded-md pl-10 pr-4 py-3.5 text-sm mt-4 active:bg-transparent focus:outline-none"
                       // onChange={(e) => {
                       //   setPassword(e.target.value);
@@ -98,19 +128,13 @@ const Login = () => {
                     />
                   </div>
 
-                  <Link to="/forgotpassword">
-                    <h1 className="text-black text-base text-right mt-1">
-                      Forgot Password?
-                    </h1>
-                  </Link>
-
                   <div className="mt-5">
                     <button
                       type="submit"
                       className="w-full bg-slate-900 rounded-md px-4 py-2.5 text-lg font-semibold text-white"
                       // onClick={(e) => handleSubmit(e)}
                     >
-                      LOGIN
+                      REGISTER
                     </button>
                     <h2 className="py-3 text-center font-bold">OR</h2>
                     <button
@@ -135,7 +159,13 @@ const Login = () => {
                     </button>
                   </div>
                   <h1 className="text-black text-base text-center mt-6">
-                    Don't have an account? <Link to="/register" className="text-underline font-semibold">Register.</Link>
+                    have an account?{" "}
+                    <Link
+                      to="/login"
+                      className="text-underline font-semibold"
+                    >
+                      Login
+                    </Link>
                   </h1>
                 </form>
               </div>
@@ -148,4 +178,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Register;

@@ -2,6 +2,7 @@
 import { BrowserRouter, Route, Routes as RoutePath } from "react-router-dom";
 import LandingPage from "./pages/LandingPage";
 import Login from "./pages/auth/Login";
+import Register from "./pages/auth/Register";
 // import ArtDetailPage from "./pages/ArtDetailPage";
 // import AboutUs from "./pages/AboutUs";
 // import Contact from "./pages/Contact";
@@ -12,6 +13,7 @@ const Routes = () => {
       <RoutePath>
         <Route path="/" element={<LandingPage />} />
         <Route path="/Login" element={<Login />} />
+        <Route path="/Register" element={<Register />} />
         {/* <Route path="/:id" element={<ArtDetailPage />} /> */}
         {/* <Route path="/admin" element={<AdminPage />} /> */}
         {/* <Route path="/aboutus" element={<AboutUs />} /> */}
