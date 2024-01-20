@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import LoginImage from "../../assets/LoginImage.jpg";
+import { faFacebookF } from "@fortawesome/free-brands-svg-icons";
 
 const Login = () => {
   // const dispatch = useDispatch();
@@ -61,14 +62,14 @@ const Login = () => {
                   <div className="relative">
                     <FontAwesomeIcon
                       icon={faUser}
-                      className="absolute top-7 left-4"
+                      className="absolute top-8 left-4 text-slate-400"
                     />
                     <input
                       type="email"
                       name="email"
                       id="email"
                       placeholder="Enter your email"
-                      className="rounded-md pl-10 pr-4 py-3 text-sm my-4 w-full"
+                      className=" w-full border border-slate-300 rounded-md pl-10 pr-4 py-3 text-sm my-4"
                       // onChange={(e) => {
                       //   setEmail(e.target.value);
                       // }}
@@ -78,27 +79,36 @@ const Login = () => {
                   <div className="relative">
                     <FontAwesomeIcon
                       icon={faLock}
-                      className="absolute top-3 left-4"
+                      className="absolute top-3.5 left-4"
                     />
                     <input
                       type="password"
                       name="password"
                       id="password"
                       placeholder="Enter your password"
-                      className="w-full rounded-md pl-10 pr-4 py-3 text-sm mb-4"
+                      className="w-full border border-slate-300 rounded-md pl-10 pr-4 py-3 text-sm mb-4"
                       // onChange={(e) => {
                       //   setPassword(e.target.value);
                       // }}
                     />
                   </div>
 
-                  <div className="flex justify-center ">
+                  <div className="">
                     <button
                       type="submit"
-                      className="bg-grad rounded-full px-4 py-2 text-lg font-semibold w-full"
+                      className="w-full bg-slate-900 rounded-md px-4 py-2 text-lg font-semibold text-white"
                       // onClick={(e) => handleSubmit(e)}
                     >
                       LOGIN
+                    </button>
+                    <h2>OR</h2>
+                    <button
+                      type="submit"
+                      className="w-full flex items-center justify-center bg-blue-900 rounded-md px-4 py-2 text-lg font-semibold text-white"
+                      // onClick={(e) => handleSubmit(e)}
+                    >
+                      <FontAwesomeIcon icon={faFacebookF} className="font-thin" />
+                      <h2>LOGIN</h2>
                     </button>
                   </div>
                   <Link to="/forgotpassword">
