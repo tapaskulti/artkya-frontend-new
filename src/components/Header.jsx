@@ -72,7 +72,7 @@ const Header = () => {
                 </li>
                 <li className="hover:text-amber-800 ">
                   <NavLink className="border-black" to="/Contact">
-                    Contact
+                    Contacts
                   </NavLink>
                 </li>
               </ul>
