@@ -78,13 +78,13 @@ const Header = () => {
               </ul>
               <ul className="hidden md:flex space-x-3 font-sans text-base cursor-pointer font-medium  text-[#000000] ">
                 <li className="hover:text-amber-800 ">
-                  <NavLink className="border-black" to="/Contact">
+                  <NavLink className="border-black" to="/Login">
                     Login
                   </NavLink>
                 </li>
                 <span>|</span>
                 <li className="hover:text-amber-800 ">
-                  <NavLink className="border-black" to="/Contact">
+                  <NavLink className="border-black" to="/Register">
                     Register
                   </NavLink>
                 </li>
