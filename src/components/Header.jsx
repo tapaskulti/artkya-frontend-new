@@ -20,13 +20,13 @@ const Header = () => {
                 <NavLink to="/">Home</NavLink>
               </li>
               <li className="hover:text-amber-800 ">
-                <NavLink to="/Album">Painting</NavLink>
+                <NavLink to="/Painting">Painting</NavLink>
               </li>
               <li className="hover:text-amber-800 ">
                 <NavLink to="/AboutUs">About Us</NavLink>
               </li>
               <li className="hover:text-amber-800 ">
-                <NavLink to="/Contact">Contact</NavLink>
+                <NavLink to="/Contacts">Contacts</NavLink>
               </li>
             </ul>
           </div>
@@ -71,7 +71,7 @@ const Header = () => {
                   </NavLink>
                 </li>
                 <li className="hover:text-amber-800 ">
-                  <NavLink className="border-black" to="/Contact">
+                  <NavLink className="border-black" to="/Contacts">
                     Contacts
                   </NavLink>
                 </li>

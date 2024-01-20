@@ -1,8 +1,14 @@
 import Header from "../components/Header";
-// import phouzdar_photo from "../assets/artist1.jpg";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
+import painting01 from "../assets/img-800x1000.jpg";
+import painting02 from "../assets/img-1000x1500.jpg";
+import painting03 from "../assets/img-1080x1920.jpg";
+import painting04 from "../assets/img-1200x808.jpg";
+import painting05 from "../assets/img-1200x900.jpg";
+import painting06 from "../assets/img-1280x853.jpg";
+import painting07 from "../assets/img-2048x1365.jpg";
 
 import { faPaintBrush } from "@fortawesome/free-solid-svg-icons";
 // import ArtItem from "../components/ArtItem";
@@ -12,13 +18,184 @@ const LandingPage = () => {
     <>
       <div className="static">
         <Header />
+        <h2>Painting</h2>
         <div className="mt-10 lg:flex">
-        
-          <div className="lg:w-[23rem] rounded-lg rounded-br-xl px-10">
+          <div className="w-1/4 rounded-lg rounded-br-xl px-10">
             <h2>Filter</h2>
-            <div className="bg-gray-100 h-auto backdrop-blur-lg rounded-md w-full md:max-lg:max-w-screen-sm md:max-lg:mx-auto mt-6 px-3 py-2">Left</div>
+            <div className="w-full bg-gray-100 backdrop-blur-lg rounded-md mt-6 px-3 py-2">
+              Left
+            </div>
           </div>
-          <div>Right</div>
+          <div className="w-4/6 mt-10 lg:flex">
+            <div className="px-10">
+              {/* <div className="bg-gray-100 h-auto backdrop-blur-lg rounded-md w-full md:max-lg:max-w-screen-sm md:max-lg:mx-auto mt-6 px-3 py-2">Left</div> */}
+              <div className="mt-20">
+                <div className="h-auto mt-32 gap-10 lg:gap-16 columns-1 md:columns-2 lg:columns-3 2xl:columns-4 gap-y-16 [&>img:not(:first-child)]:mt-5 lg:[&>img:not(:first-child)]:mt-16">
+                  <div>
+                    <img src={painting01} alt="" />
+                    <br />
+                    <div>
+                      <ArtDetails />
+                    </div>
+                  </div>
+                  <div>
+                    <img src={painting02} alt="" />
+                    <br />
+                    <div>
+                      <ArtDetails />
+                    </div>
+                  </div>
+                  <div>
+                    <img src={painting03} alt="" />
+                    <br />
+                    <div>
+                      <ArtDetails />
+                    </div>
+                  </div>
+                  <div>
+                    <img src={painting04} alt="" />
+                    <br />
+                    <div>
+                      <ArtDetails />
+                    </div>
+                  </div>
+                  <div>
+                    <img src={painting05} alt="" />
+                    <br />
+                    <div>
+                      <ArtDetails />
+                    </div>
+                  </div>
+                  <div>
+                    <img src={painting06} alt="" />
+                    <br />
+                    <div>
+                      <ArtDetails />
+                    </div>
+                  </div>
+                  <div>
+                    <img src={painting07} alt="" />
+                    <br />
+                    <div>
+                      <ArtDetails />
+                    </div>
+                  </div>
+                  <div>
+                    <img src={painting03} alt="" />
+                    <br />
+                    <div>
+                      <ArtDetails />
+                    </div>
+                  </div>
+                  <div>
+                    <img src={painting04} alt="" />
+                    <br />
+                    <div>
+                      <ArtDetails />
+                    </div>
+                  </div>
+                  <div>
+                    <img src={painting05} alt="" />
+                    <br />
+                    <div>
+                      <ArtDetails />
+                    </div>
+                  </div>
+                  <div>
+                    <img src={painting06} alt="" />
+                    <br />
+                    <div>
+                      <ArtDetails />
+                    </div>
+                  </div>
+                  <div>
+                    <img src={painting07} alt="" />
+                    <br />
+                    <div>
+                      <ArtDetails />
+                    </div>
+                  </div>
+                  <div>
+                    <img src={painting02} alt="" />
+                    <br />
+                    <div>
+                      <ArtDetails />
+                    </div>
+                  </div>
+                  <div>
+                    <img src={painting03} alt="" />
+                    <br />
+                    <div>
+                      <ArtDetails />
+                    </div>
+                  </div>
+                  <div>
+                    <img src={painting04} alt="" />
+                    <br />
+                    <div>
+                      <ArtDetails />
+                    </div>
+                  </div>
+                  <div>
+                    <img src={painting05} alt="" />
+                    <br />
+                    <div>
+                      <ArtDetails />
+                    </div>
+                  </div>
+                  <div>
+                    <img src={painting06} alt="" />
+                    <br />
+                    <div>
+                      <ArtDetails />
+                    </div>
+                  </div>
+                  <div>
+                    <img src={painting01} alt="" />
+                    <br />
+                    <div>
+                      <ArtDetails />
+                    </div>
+                  </div>
+                  <div>
+                    <img src={painting07} alt="" />
+                    <br />
+                    <div>
+                      <ArtDetails />
+                    </div>
+                  </div>
+                  <div>
+                    <img src={painting04} alt="" />
+                    <br />
+                    <div>
+                      <ArtDetails />
+                    </div>
+                  </div>
+                  <div>
+                    <img src={painting05} alt="" />
+                    <br />
+                    <div>
+                      <ArtDetails />
+                    </div>
+                  </div>
+                  <div>
+                    <img src={painting06} alt="" />
+                    <br />
+                    <div>
+                      <ArtDetails />
+                    </div>
+                  </div>
+                  <div>
+                    <img src={painting02} alt="" />
+                    <br />
+                    <div>
+                      <ArtDetails />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </>
@@ -78,6 +255,26 @@ export const SkeletonLoader = () => {
         </div>
       </div>
       <span className="sr-only">Loading...</span>
+    </div>
+  );
+};
+
+export const ArtDetails = () => {
+  return (
+    <div className="w-full text-black -bottom-2 md:bottom-px">
+      <div className="flex items-center justify-between text-sm font-normal lg:text-base xl:text-lg lg:items-start lg:justify-normal lg:flex-col">
+        <div className="text-gray-500 lg:text-base xl:text-base">
+          ID: AK125436
+        </div>
+        <div className="my-1 text-sm font-semibold text-gray-500 lg:text-base xl:text-base md:text-sm">
+          <span className="lg:text-base xl:text-base">Size:</span> W 120 * H 300
+          inches
+        </div>
+      </div>
+      <div className="text-sm font-semibold text-gray-500 xl:text-base md:text-sm">
+        <span className="">Price:</span> Print Copy $75{" "}
+        <span className="text-xs">(Starting from)</span>
+      </div>
     </div>
   );
 };
