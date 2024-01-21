@@ -26,22 +26,22 @@ const ResetPassword = () => {
   const REACT_URL = import.meta.env.VITE_BASE_URL;
   const navigate = useNavigate();
 
-  const validateToken = async () => {
-    const response = await axios.get(
-      `${REACT_URL}/user/checkToken?token=${token}`
-    );
-    console.log("Response from validateToken------>", response);
-    if (response.status === 200) {
-      setForgotPasswordTokenValid(true);
-      setUserName(response?.data?.userName);
-    }
-  };
+  // const validateToken = async () => {
+  //   const response = await axios.get(
+  //     `${REACT_URL}/user/checkToken?token=${token}`
+  //   );
+  //   console.log("Response from validateToken------>", response);
+  //   if (response.status === 200) {
+  //     setForgotPasswordTokenValid(true);
+  //     setUserName(response?.data?.userName);
+  //   }
+  // };
 
-  console.log("reset token.................>", token);
-  console.log(
-    "forgotPasswordTokenValid.................>",
-    forgotPasswordTokenValid
-  );
+  // console.log("reset token.................>", token);
+  // console.log(
+  //   "forgotPasswordTokenValid.................>",
+  //   forgotPasswordTokenValid
+  // );
 
   useEffect(() => {
     validateToken();
@@ -51,35 +51,35 @@ const ResetPassword = () => {
   //   validateToken();
   // }, [token]);
 
-  const resetPassword = async (e) => {
-    e.preventDefault()
-    if (forgotPasswordTokenValid === true) {
-      if (password !== confirmPassword) {
-        toast.warning("Password and Confirm password does not match!");
-      } else {
-        setloading(true);
-        const response = await axios.post(
-          `${REACT_URL}/user/resetPassword?token=${token}&userName=${userName}`,
-          {password:password}
-        );
+  // const resetPassword = async (e) => {
+  //   e.preventDefault()
+  //   if (forgotPasswordTokenValid === true) {
+  //     if (password !== confirmPassword) {
+  //       toast.warning("Password and Confirm password does not match!");
+  //     } else {
+  //       setloading(true);
+  //       const response = await axios.post(
+  //         `${REACT_URL}/user/resetPassword?token=${token}&userName=${userName}`,
+  //         {password:password}
+  //       );
 
-        console.log("Response from Reset Password------>", response);
+  //       console.log("Response from Reset Password------>", response);
 
-        if (response?.status === 200) {
-          setloading(false);
-          toast.success(response.data.message);
-          navigate("/login");
-          setForgotPasswordTokenValid(false);
-        } else {
-          setloading(false);
-          toast.success(response.data.message);
-        }
-      }
-    } else {
-      // navigate(`${REACT_URL}/user/forgotPassword`);
-      console.log("NOT VALID");
-    }
-  };
+  //       if (response?.status === 200) {
+  //         setloading(false);
+  //         toast.success(response.data.message);
+  //         navigate("/login");
+  //         setForgotPasswordTokenValid(false);
+  //       } else {
+  //         setloading(false);
+  //         toast.success(response.data.message);
+  //       }
+  //     }
+  //   } else {
+  //     // navigate(`${REACT_URL}/user/forgotPassword`);
+  //     console.log("NOT VALID");
+  //   }
+  // };
 
   return (
     <div>

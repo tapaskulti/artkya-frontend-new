@@ -13,8 +13,6 @@ import { Link, useNavigate } from "react-router-dom";
 import LoginImage from "../../assets/LoginImage.jpg";
 import {
   faFacebook,
-  faFacebookF,
-  faGoogle,
 } from "@fortawesome/free-brands-svg-icons";
 import googleIcon from "../../assets/google-icon.png";
 
@@ -23,6 +21,7 @@ const Register = () => {
   const dispatch = useDispatch();
   //   const { loading } = useSelector((state) => state.user);
   //   const [newUser, setnewUser] = useState({});
+
 
   const [userRegister, setUserRegister] = useState({
     firstName: "",

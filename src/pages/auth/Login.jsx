@@ -1,7 +1,8 @@
+/* eslint-disable react/jsx-no-duplicate-props */
 import Header from "../../components/Header";
 // import Footer from "../../components/Footer";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faLock, faEnvelope } from "@fortawesome/free-solid-svg-icons";
+import { faLock, faEnvelope, faEyeSlash, faEye } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
@@ -13,6 +14,8 @@ const Login = () => {
   const dispatch = useDispatch();
   // const { token } = useSelector((state) => state.auth);
   const navigate = useNavigate();
+  const [isPasswordVisible, setisPasswordVisible] = useState(false);
+
   const [userLogin, setUserLogin] = useState({
     email: "",
     password: "",
@@ -88,7 +91,7 @@ const Login = () => {
                       className="absolute top-8 left-4 text-slate-400"
                     />
                     <input
-                      type="password"
+                      // type="password"
                       name="password"
                       id="password"
                       placeholder="Enter your password"
@@ -100,7 +103,27 @@ const Login = () => {
                           password: e.target.value,
                         });
                       }}
+                      type={isPasswordVisible ? "text" : "password"}
                     />
+                    <div className="absolute top-7 right-3">
+                      {!isPasswordVisible ? (
+                        <FontAwesomeIcon
+                          className="cursor-pointer text-slate-400"
+                          icon={faEye}
+                          onClick={() => {
+                            setisPasswordVisible(!isPasswordVisible);
+                          }}
+                        />
+                      ) : (
+                        <FontAwesomeIcon
+                          className="cursor-pointer text-slate-400"
+                          icon={faEyeSlash}
+                          onClick={() => {
+                            setisPasswordVisible(!isPasswordVisible);
+                          }}
+                        />
+                      )}
+                    </div>
                   </div>
 
                   <Link to="/forgotpassword">
