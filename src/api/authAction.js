@@ -1,5 +1,14 @@
 import axios from "axios";
-const VITE_BASE_URL = import.meta.env.VITE_BASE_URL;
+const VITE_BASE_URL = import.meta.env.VITE_APP_BASE_URL;
+
+export const registerUserAction = async (payload) => {
+  const response = await axios.post(
+    `${VITE_BASE_URL}/user/registerUser`,
+    payload.body
+  );
+  return response;
+};
+
 
 export const loginAction = async (payload) => {
   // console.log("Action payload---->", payload);

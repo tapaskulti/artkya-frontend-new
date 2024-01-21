@@ -1,7 +1,12 @@
 import Header from "../../components/Header";
 // import Footer from "../../components/Footer";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUser, faLock, faBuilding, faEnvelope } from "@fortawesome/free-solid-svg-icons";
+import {
+  faUser,
+  faLock,
+  faBuilding,
+  faEnvelope,
+} from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
@@ -14,23 +19,40 @@ import {
 import googleIcon from "../../assets/google-icon.png";
 
 const Register = () => {
-//   const dispatch = useDispatch();
-//   const { loading } = useSelector((state) => state.user);
-//   const [newUser, setnewUser] = useState({});
+  
+  const dispatch = useDispatch();
+  //   const { loading } = useSelector((state) => state.user);
+  //   const [newUser, setnewUser] = useState({});
 
-//   const handleSignup = () => {
-//     const payload = {
-//       name: newUser.firstName + " " + newUser.lastName,
-//       email: newUser.email,
-//       password: newUser.password,
-//     };
-//     dispatch({
-//       type: "SIGNUP",
-//       payload: {
-//         body: payload,
-//       },
-//     });
-//   };
+  const [userRegister, setUserRegister] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+  })
+
+  const addUserHandler = (e) => {
+    e.preventDefault();
+    const payload = {
+      firstName: userRegister?.firstName,
+      lastName: userRegister?.lastName,
+      email: userRegister?.email,
+      password: userRegister?.password,
+    };
+    dispatch({
+      type: "REGISTER",
+      payload: {
+        body: payload,
+      },
+    });
+
+    setUserRegister({
+      firstName: "",
+      lastName: "",
+      email: "",
+      password: "",
+    })
+  };
 
   return (
     <div>
@@ -65,12 +87,13 @@ const Register = () => {
                       id="fname"
                       placeholder="Enter your first name"
                       className="w-full border border-slate-300 rounded-md pl-10 pr-4 py-3.5 text-sm active:bg-transparent focus:outline-none"
-                    //   onChange={(e) => {
-                    //     setnewUser({
-                    //       ...newUser,
-                    //       firstName: e.target.value,
-                    //     });
-                    //   }}
+                      value={userRegister.firstName}
+                      onChange={(e) => {
+                        setUserRegister({
+                          ...userRegister,
+                          firstName: e.target.value,
+                        });
+                      }}
                     />
                   </div>
 
@@ -85,12 +108,13 @@ const Register = () => {
                       id="lname"
                       placeholder="Enter your last name"
                       className="w-full border border-slate-300 rounded-md pl-10 pr-4 py-3.5 text-sm my-4 active:bg-transparent focus:outline-none"
-                    //   onChange={(e) => {
-                    //     setnewUser({
-                    //       ...newUser,
-                    //       lastName: e.target.value,
-                    //     });
-                    //   }}
+                      value={userRegister.lastName}
+                      onChange={(e) => {
+                        setUserRegister({
+                          ...userRegister,
+                          lastName: e.target.value,
+                        });
+                      }}
                     />
                   </div>
 
@@ -105,9 +129,13 @@ const Register = () => {
                       id="email"
                       placeholder="Enter your email"
                       className="w-full border border-slate-300 rounded-md pl-10 pr-4 py-3.5 text-sm active:bg-transparent focus:outline-none"
-                      // onChange={(e) => {
-                      //   setEmail(e.target.value);
-                      // }}
+                      value={userRegister.email}
+                      onChange={(e) => {
+                        setUserRegister({
+                          ...userRegister,
+                          email: e.target.value,
+                        });
+                      }}
                     />
                   </div>
 
@@ -122,9 +150,13 @@ const Register = () => {
                       id="password"
                       placeholder="Create your password"
                       className="w-full border border-slate-300 rounded-md pl-10 pr-4 py-3.5 text-sm mt-4 active:bg-transparent focus:outline-none"
-                      // onChange={(e) => {
-                      //   setPassword(e.target.value);
-                      // }}
+                      value={userRegister.password}
+                      onChange={(e) => {
+                        setUserRegister({
+                          ...userRegister,
+                          password: e.target.value,
+                        });
+                      }}
                     />
                   </div>
 
@@ -132,7 +164,7 @@ const Register = () => {
                     <button
                       type="submit"
                       className="w-full bg-slate-900 rounded-md px-4 py-2.5 text-lg font-semibold text-white"
-                      // onClick={(e) => handleSubmit(e)}
+                      onClick={addUserHandler}
                     >
                       REGISTER
                     </button>
@@ -160,10 +192,7 @@ const Register = () => {
                   </div>
                   <h1 className="text-black text-base text-center mt-6">
                     have an account?{" "}
-                    <Link
-                      to="/login"
-                      className="text-underline font-semibold"
-                    >
+                    <Link to="/login" className="text-underline font-semibold">
                       Login
                     </Link>
                   </h1>

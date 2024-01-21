@@ -1,5 +1,4 @@
-
-import { BrowserRouter, Route, Routes as RoutePath } from "react-router-dom";
+import {Route, Routes as RoutePath } from "react-router-dom";
 import LandingPage from "./pages/LandingPage";
 import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
@@ -10,7 +9,7 @@ import Contacts from "./pages/Contacts";
 
 const Routes = () => {
   return (
-    <BrowserRouter>
+    
       <RoutePath>
         <Route path="/" element={<LandingPage />} />
         <Route path="/Login" element={<Login />} />
@@ -24,7 +23,6 @@ const Routes = () => {
         <Route path="/disclaimer" element={<Disclaimer />} />
         <Route path="/:id/checkout" element={<ChekoutPage />} /> */}
       </RoutePath>
-    </BrowserRouter>
   );
 };
 
