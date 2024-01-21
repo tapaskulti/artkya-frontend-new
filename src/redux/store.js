@@ -5,17 +5,13 @@ import { rootSaga } from "../saga/rootSaga";
 
 const sagaMiddleware = createSagaMiddleware();
 
-const middleware = [sagaMiddleware];
-
-
-const store = configureStore({
+export const Store = configureStore({
     reducer : {
         auth: authReducer,
     },
-    middleware,
-    // middleware:  (getDefaultMiddleware) => getDefaultMiddleware().concat(sagaMiddleware),
+    // middleware: [sagaMiddleware],
+    middleware:  (getDefaultMiddleware) => getDefaultMiddleware().concat(sagaMiddleware),
 });
 
 sagaMiddleware.run(rootSaga);
 
-export default store

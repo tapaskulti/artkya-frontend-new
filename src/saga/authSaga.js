@@ -5,6 +5,7 @@ import {
   userLoggedInAction,
   loginAction,
   logoutSagaAction,
+  registerUserAction,
 } from "../api/authAction";
 import {
   setAuthUser,
@@ -15,29 +16,43 @@ import {
   setToken,
 } from "../redux/app/auth/auth-slice";
 
+
+function* registerSaga(action){
+  try {
+      console.log(action?.payload);
+     const response =  yield call (registerUserAction,action?.payload)
+     console.log("registerUserAction resposnse",response);
+     if(response.status===201){
+         toast.success(response?.data?.message)
+     }
+  } catch (error) {
+      toast.warning(error?.response?.data?.message)
+  }
+  }
+
 function* loginSaga(action) {
   try {
-    const response = yield call(loginAction, action.payload);
-    localStorage.setItem("User_email", action.payload.body.email);
+    const response = yield call(loginAction, action?.payload);
+    localStorage.setItem("User_email", action?.payload?.body?.email);
     if (response.status === 200) {
       console.log("login response----->", response);
       yield put(setError({ errMsg: "" }));
       yield put({
         type: "ACCESSTOKEN",
         payload: {
-          body: action.payload.body.email,
-          navigate: action.payload.navigate,
+          body: action?.payload?.body?.email,
         },
       });
-      toast.success(response.data.message);
+      toast.success("Logged In Successfully");
       yield put(
         setIsLoggedIn({
           setIsLoggedIn: false,
         })
       );
+      action.payload.navigate("/Painting")
     }
   } catch (error) {
-    toast.error(error?.response?.data.message);
+    toast.error(error?.response?.data?.message);
     yield put(setIsLoggedIn({ setIsLoggedIn: false }));
     yield put(setError({ errMsg: error?.response?.data?.message }));
   }
@@ -89,6 +104,7 @@ function* userLoggedInSaga(action) {
 }
 
 export function* watchAsyncAuthSaga() {
+  yield takeEvery("REGISTER",registerSaga)
   yield takeEvery("LOGIN", loginSaga);
   yield takeEvery("ACCESSTOKEN", accessTokenSaga);
   yield takeEvery("LOGGED_IN_USER", userLoggedInSaga);

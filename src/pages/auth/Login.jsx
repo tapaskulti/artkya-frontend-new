@@ -1,25 +1,22 @@
 import Header from "../../components/Header";
 // import Footer from "../../components/Footer";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUser, faLock, faBuilding, faEnvelope } from "@fortawesome/free-solid-svg-icons";
+import { faLock, faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import LoginImage from "../../assets/LoginImage.jpg";
-import {
-  faFacebook,
-  faFacebookF,
-  faGoogle,
-} from "@fortawesome/free-brands-svg-icons";
+import { faFacebook } from "@fortawesome/free-brands-svg-icons";
 import googleIcon from "../../assets/google-icon.png";
 
 const Login = () => {
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
   // const { token } = useSelector((state) => state.auth);
-  // const [email, setEmail] = useState("");
-  // const [password, setPassword] = useState("");
-  // const [companyId, setCompanyId] = useState("");
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
+  const [userLogin, setUserLogin] = useState({
+    email: "",
+    password: "",
+  });
 
   // useEffect(() => {
   //   if (token) {
@@ -29,18 +26,21 @@ const Login = () => {
   //   }
   // }, [token]);
 
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   const loginPayload = { companyId, email, password };
-  //   // console.log("LOGIN PAGE", loginPayload);
-  //   dispatch({
-  //     type: "LOGIN",
-  //     payload: {
-  //       body: loginPayload,
-  //       navigate,
-  //     },
-  //   });
-  // };
+  const handleLogin = (e) => {
+    e.preventDefault();
+    const loginPayload = {
+      email: userLogin?.email,
+      password: userLogin?.password,
+    };
+
+    dispatch({
+      type: "LOGIN",
+      payload: {
+        body: loginPayload,
+        navigate,
+      },
+    });
+  };
 
   return (
     <div>
@@ -75,9 +75,10 @@ const Login = () => {
                       id="email"
                       placeholder="Enter your email"
                       className="w-full border border-slate-300 rounded-md pl-10 pr-4 py-3.5 text-sm active:bg-transparent focus:outline-none"
-                      // onChange={(e) => {
-                      //   setEmail(e.target.value);
-                      // }}
+                      value={userLogin.email}
+                      onChange={(e) => {
+                        setUserLogin({ ...userLogin, email: e.target.value });
+                      }}
                     />
                   </div>
 
@@ -92,9 +93,13 @@ const Login = () => {
                       id="password"
                       placeholder="Enter your password"
                       className="w-full border border-slate-300 rounded-md pl-10 pr-4 py-3.5 text-sm mt-4 active:bg-transparent focus:outline-none"
-                      // onChange={(e) => {
-                      //   setPassword(e.target.value);
-                      // }}
+                      value={userLogin.password}
+                      onChange={(e) => {
+                        setUserLogin({
+                          ...userLogin,
+                          password: e.target.value,
+                        });
+                      }}
                     />
                   </div>
 
@@ -108,7 +113,7 @@ const Login = () => {
                     <button
                       type="submit"
                       className="w-full bg-slate-900 rounded-md px-4 py-2.5 text-lg font-semibold text-white"
-                      // onClick={(e) => handleSubmit(e)}
+                      onClick={handleLogin}
                     >
                       LOGIN
                     </button>
@@ -135,7 +140,13 @@ const Login = () => {
                     </button>
                   </div>
                   <h1 className="text-black text-base text-center mt-6">
-                    Don't have an account? <Link to="/register" className="text-underline font-semibold">Register.</Link>
+                    Don't have an account?{" "}
+                    <Link
+                      to="/register"
+                      className="text-underline font-semibold"
+                    >
+                      Register.
+                    </Link>
                   </h1>
                 </form>
               </div>
