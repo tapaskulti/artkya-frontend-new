@@ -49,7 +49,7 @@ function* loginSaga(action) {
           setIsLoggedIn: false,
         })
       );
-      action.payload.navigate("/Painting")
+      action.payload.navigate("/")
     }
   } catch (error) {
     toast.error(error?.response?.data?.message);
