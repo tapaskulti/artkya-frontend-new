@@ -2,13 +2,13 @@ import Header from "../components/Header";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
-import painting01 from "../assets/img-800x1000.jpg";
-import painting02 from "../assets/img-1000x1500.jpg";
-import painting03 from "../assets/img-1080x1920.jpg";
-import painting04 from "../assets/img-1200x808.jpg";
-import painting05 from "../assets/img-1200x900.jpg";
-import painting06 from "../assets/img-1280x853.jpg";
-import painting07 from "../assets/img-2048x1365.jpg";
+import Img1 from "../assets/Img1.jpg";
+import Img3 from "../assets/img3.jpg";
+import Img14 from "../assets/img14.jpg";
+import Img6 from "../assets/img6.jpg";
+import Img8 from "../assets/img8.jpg";
+import Img9 from "../assets/img9.jpg";
+import Img12 from "../assets/img12.jpg";
 
 import { faPaintBrush } from "@fortawesome/free-solid-svg-icons";
 // import ArtItem from "../components/ArtItem";
@@ -30,163 +30,51 @@ const LandingPage = () => {
             <div className="px-10">
               {/* <div className="bg-gray-100 h-auto backdrop-blur-lg rounded-md w-full md:max-lg:max-w-screen-sm md:max-lg:mx-auto mt-6 px-3 py-2">Left</div> */}
               <div className="mt-20">
-                <div className="h-auto mt-32 gap-10 lg:gap-16 columns-1 md:columns-2 lg:columns-3 2xl:columns-4 gap-y-16 [&>img:not(:first-child)]:mt-5 lg:[&>img:not(:first-child)]:mt-16">
+                <div className="h-auto mt-32 gap-10 lg:gap-16 columns-1 md:columns-2 lg:columns-3 2xl:columns-3 gap-y-16 [&>img:not(:first-child)]:mt-5 lg:[&>img:not(:first-child)]:mt-16">
                   <div>
-                    <img src={painting01} alt="" />
+                    <img src={Img1} alt="" />
                     <br />
                     <div>
                       <ArtDetails />
                     </div>
                   </div>
                   <div>
-                    <img src={painting02} alt="" />
+                    <img src={Img3} alt="" />
                     <br />
                     <div>
                       <ArtDetails />
                     </div>
                   </div>
                   <div>
-                    <img src={painting03} alt="" />
+                    <img src={Img14} alt="" />
                     <br />
                     <div>
                       <ArtDetails />
                     </div>
                   </div>
                   <div>
-                    <img src={painting04} alt="" />
+                    <img src={Img6} alt="" />
+                    <br />
+                    <div>
+                      <ArtDetails />
+                    </div>
+                  </div>                  
+                  <div>
+                    <img src={Img8} alt="" />
                     <br />
                     <div>
                       <ArtDetails />
                     </div>
                   </div>
                   <div>
-                    <img src={painting05} alt="" />
+                    <img src={Img9} alt="" />
                     <br />
                     <div>
                       <ArtDetails />
                     </div>
                   </div>
                   <div>
-                    <img src={painting06} alt="" />
-                    <br />
-                    <div>
-                      <ArtDetails />
-                    </div>
-                  </div>
-                  <div>
-                    <img src={painting07} alt="" />
-                    <br />
-                    <div>
-                      <ArtDetails />
-                    </div>
-                  </div>
-                  <div>
-                    <img src={painting03} alt="" />
-                    <br />
-                    <div>
-                      <ArtDetails />
-                    </div>
-                  </div>
-                  <div>
-                    <img src={painting04} alt="" />
-                    <br />
-                    <div>
-                      <ArtDetails />
-                    </div>
-                  </div>
-                  <div>
-                    <img src={painting05} alt="" />
-                    <br />
-                    <div>
-                      <ArtDetails />
-                    </div>
-                  </div>
-                  <div>
-                    <img src={painting06} alt="" />
-                    <br />
-                    <div>
-                      <ArtDetails />
-                    </div>
-                  </div>
-                  <div>
-                    <img src={painting07} alt="" />
-                    <br />
-                    <div>
-                      <ArtDetails />
-                    </div>
-                  </div>
-                  <div>
-                    <img src={painting02} alt="" />
-                    <br />
-                    <div>
-                      <ArtDetails />
-                    </div>
-                  </div>
-                  <div>
-                    <img src={painting03} alt="" />
-                    <br />
-                    <div>
-                      <ArtDetails />
-                    </div>
-                  </div>
-                  <div>
-                    <img src={painting04} alt="" />
-                    <br />
-                    <div>
-                      <ArtDetails />
-                    </div>
-                  </div>
-                  <div>
-                    <img src={painting05} alt="" />
-                    <br />
-                    <div>
-                      <ArtDetails />
-                    </div>
-                  </div>
-                  <div>
-                    <img src={painting06} alt="" />
-                    <br />
-                    <div>
-                      <ArtDetails />
-                    </div>
-                  </div>
-                  <div>
-                    <img src={painting01} alt="" />
-                    <br />
-                    <div>
-                      <ArtDetails />
-                    </div>
-                  </div>
-                  <div>
-                    <img src={painting07} alt="" />
-                    <br />
-                    <div>
-                      <ArtDetails />
-                    </div>
-                  </div>
-                  <div>
-                    <img src={painting04} alt="" />
-                    <br />
-                    <div>
-                      <ArtDetails />
-                    </div>
-                  </div>
-                  <div>
-                    <img src={painting05} alt="" />
-                    <br />
-                    <div>
-                      <ArtDetails />
-                    </div>
-                  </div>
-                  <div>
-                    <img src={painting06} alt="" />
-                    <br />
-                    <div>
-                      <ArtDetails />
-                    </div>
-                  </div>
-                  <div>
-                    <img src={painting02} alt="" />
+                    <img src={Img12} alt="" />
                     <br />
                     <div>
                       <ArtDetails />
@@ -218,7 +106,7 @@ export const SkeletonLoader = () => {
   return (
     <div
       role="status"
-      className="max-w-sm p-4 border border-gray-200 rounded shadow animate-pulse md:p-6 dark:border-gray-700"
+      className="max-w-sm border border-gray-200 rounded shadow animate-pulse md:p-6 dark:border-gray-700"
     >
       <div className="flex items-center justify-center h-48 mb-4 bg-gray-300 rounded dark:bg-gray-700">
         <svg
@@ -261,19 +149,23 @@ export const SkeletonLoader = () => {
 
 export const ArtDetails = () => {
   return (
-    <div className="w-full text-black -bottom-2 md:bottom-px">
-      <div className="flex items-center justify-between text-sm font-normal lg:text-base xl:text-lg lg:items-start lg:justify-normal lg:flex-col">
+    <div className="w-full text-black">
+      <div className="text-sm font-normal lg:text-base xl:text-lg lg:items-start lg:justify-normal lg:flex-col">
         <div className="text-gray-500 lg:text-base xl:text-base">
           ID: AK125436
         </div>
-        <div className="my-1 text-sm font-semibold text-gray-500 lg:text-base xl:text-base md:text-sm">
-          <span className="lg:text-base xl:text-base">Size:</span> W 120 * H 300
-          inches
+        <div className="-mt-1 text-sm font-semibold text-gray-500 lg:text-base xl:text-base md:text-sm">
+          <div className="lg:text-xs xl:text-xs">W 120 * H 300 inches</div>          
         </div>
       </div>
-      <div className="text-sm font-semibold text-gray-500 xl:text-base md:text-sm">
-        <span className="">Price:</span> Print Copy $75{" "}
-        <span className="text-xs">(Starting from)</span>
+      <div className="flex justify-between text-sm font-semibold text-gray-500 xl:text-base md:text-sm my-5">
+        <div>
+          <div className="text-sm">Elizabeth Becker</div>
+          <div className="text-xs -pt-2">United States</div>
+        </div>
+        <div>
+          <span className="text-sm">Price:</span> Print Copy $75
+        </div>
       </div>
     </div>
   );

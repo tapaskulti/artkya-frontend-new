@@ -1,13 +1,46 @@
 import Header from "../components/Header";
 // import phouzdar_photo from "../assets/artist1.jpg";
-import painting01 from "../assets/img-800x1000.jpg";
-import painting02 from "../assets/img-1000x1500.jpg";
-import painting03 from "../assets/img-1080x1920.jpg";
-import painting04 from "../assets/img-1200x808.jpg";
-import painting05 from "../assets/img-1200x900.jpg";
-import painting06 from "../assets/img-1280x853.jpg";
-import painting07 from "../assets/img-2048x1365.jpg";
-
+import Img1 from "../assets/Img1.jpg";
+// import Img2 from "../assets/img2.jpg";
+import Img3 from "../assets/img3.jpg";
+import Img4 from "../assets/img4.jpg";
+import Img6 from "../assets/img6.jpg";
+// // import Img7 from "../assets/img7.jpg";
+import Img8 from "../assets/img8.jpg";
+import Img9 from "../assets/img9.jpg";
+import Img10 from "../assets/img10.jpg";
+import Img11 from "../assets/img11.jpg";
+import Img12 from "../assets/img12.jpg";
+import Img13 from "../assets/img13.jpg";
+import Img14 from "../assets/img14.jpg";
+import Img15 from "../assets/img15.jpg";
+import Img16 from "../assets/img16.jpg";
+import Img17 from "../assets/img17.jpg";
+import Img18 from "../assets/img18.jpg";
+import Img19 from "../assets/img19.jpg";
+import Img20 from "../assets/img20.jpg";
+import Img21 from "../assets/img21.jpg";
+import Img22 from "../assets/img22.jpg";
+import Img23 from "../assets/img23.jpg";
+import Img24 from "../assets/img24.jpg";
+import Img25 from "../assets/img25.jpg";
+import Img26 from "../assets/img26.jpg";
+import Img27 from "../assets/img27.jpg";
+import Img28 from "../assets/img28.jpg";
+import Img29 from "../assets/img29.jpg";
+import Img30 from "../assets/img30.jpg";
+// import Img31 from "../assets/img31.jpg";
+// import Img32 from "../assets/img32.jpg";
+// import Img33 from "../assets/img33.jpg";
+// import Img34 from "../assets/img34.jpg";
+// import Img35 from "../assets/img35.jpg";
+// import Img36 from "../assets/img36.jpg";
+// import Img37 from "../assets/img37.jpg";
+// import Img38 from "../assets/img38.jpg";
+// import Img39 from "../assets/img39.jpg";
+// import Img40 from "../assets/img40.jpg";
+// import Img41 from "../assets/img41.jpg";
+// import Img42 from "../assets/img42.jpg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
 
@@ -26,166 +59,292 @@ const LandingPage = () => {
             <div className="mt-20 p-5 md:p-10">
               <div className="h-auto mx-6 mt-32 sm:mx-6 gap-10 lg:gap-16 columns-1 md:columns-2 lg:columns-3 2xl:columns-4 gap-y-16 [&>img:not(:first-child)]:mt-5 lg:[&>img:not(:first-child)]:mt-16">
                 <div>
-                  <img src={painting01} alt="" />
+                  <img src={Img1} alt="" />
+                  <br />
+                  <div>
+                    <ArtDetails />
+                  </div>
+                </div>
+                {/* <div>
+                  <img src={Img2} alt="" />
+                  <br />
+                  <div>
+                    <ArtDetails />
+                  </div>
+                </div> */}
+                <div>
+                  <img src={Img3} alt="" />
                   <br />
                   <div>
                     <ArtDetails />
                   </div>
                 </div>
                 <div>
-                  <img src={painting02} alt="" />
+                  <img src={Img4} alt="" />
                   <br />
                   <div>
                     <ArtDetails />
                   </div>
                 </div>
                 <div>
-                  <img src={painting03} alt="" />
+                  <img src={Img6} alt="" />
+                  <br />
+                  <div>
+                    <ArtDetails />
+                  </div>
+                </div>
+                {/* <div>
+                  <img src={Img7} alt="" />
+                  <br />
+                  <div>
+                    <ArtDetails />
+                  </div>
+                </div> */}
+                <div>
+                  <img src={Img8} alt="" />
                   <br />
                   <div>
                     <ArtDetails />
                   </div>
                 </div>
                 <div>
-                  <img src={painting04} alt="" />
+                  <img src={Img9} alt="" />
                   <br />
                   <div>
                     <ArtDetails />
                   </div>
                 </div>
                 <div>
-                  <img src={painting05} alt="" />
+                  <img src={Img10} alt="" />
                   <br />
                   <div>
                     <ArtDetails />
                   </div>
                 </div>
                 <div>
-                  <img src={painting06} alt="" />
+                  <img src={Img11} alt="" />
                   <br />
                   <div>
                     <ArtDetails />
                   </div>
                 </div>
                 <div>
-                  <img src={painting07} alt="" />
+                  <img src={Img12} alt="" />
                   <br />
                   <div>
                     <ArtDetails />
                   </div>
                 </div>
                 <div>
-                  <img src={painting03} alt="" />
+                  <img src={Img13} alt="" />
                   <br />
                   <div>
                     <ArtDetails />
                   </div>
                 </div>
                 <div>
-                  <img src={painting04} alt="" />
+                  <img src={Img14} alt="" />
                   <br />
                   <div>
                     <ArtDetails />
                   </div>
                 </div>
                 <div>
-                  <img src={painting05} alt="" />
+                  <img src={Img15} alt="" />
                   <br />
                   <div>
                     <ArtDetails />
                   </div>
                 </div>
                 <div>
-                  <img src={painting06} alt="" />
+                  <img src={Img16} alt="" />
                   <br />
                   <div>
                     <ArtDetails />
                   </div>
                 </div>
                 <div>
-                  <img src={painting07} alt="" />
+                  <img src={Img17} alt="" />
                   <br />
                   <div>
                     <ArtDetails />
                   </div>
                 </div>
                 <div>
-                  <img src={painting02} alt="" />
+                  <img src={Img18} alt="" />
                   <br />
                   <div>
                     <ArtDetails />
                   </div>
                 </div>
                 <div>
-                  <img src={painting03} alt="" />
+                  <img src={Img19} alt="" />
                   <br />
                   <div>
                     <ArtDetails />
                   </div>
                 </div>
                 <div>
-                  <img src={painting04} alt="" />
+                  <img src={Img20} alt="" />
                   <br />
                   <div>
                     <ArtDetails />
                   </div>
                 </div>
                 <div>
-                  <img src={painting05} alt="" />
+                  <img src={Img21} alt="" />
                   <br />
                   <div>
                     <ArtDetails />
                   </div>
                 </div>
                 <div>
-                  <img src={painting06} alt="" />
+                  <img src={Img22} alt="" />
                   <br />
                   <div>
                     <ArtDetails />
                   </div>
                 </div>
                 <div>
-                  <img src={painting01} alt="" />
+                  <img src={Img23} alt="" />
                   <br />
                   <div>
                     <ArtDetails />
                   </div>
                 </div>
                 <div>
-                  <img src={painting07} alt="" />
+                  <img src={Img24} alt="" />
                   <br />
                   <div>
                     <ArtDetails />
                   </div>
                 </div>
                 <div>
-                  <img src={painting04} alt="" />
+                  <img src={Img25} alt="" />
                   <br />
                   <div>
                     <ArtDetails />
                   </div>
                 </div>
                 <div>
-                  <img src={painting05} alt="" />
+                  <img src={Img26} alt="" />
                   <br />
                   <div>
                     <ArtDetails />
                   </div>
                 </div>
                 <div>
-                  <img src={painting06} alt="" />
+                  <img src={Img27} alt="" />
                   <br />
                   <div>
                     <ArtDetails />
                   </div>
                 </div>
                 <div>
-                  <img src={painting02} alt="" />
+                  <img src={Img28} alt="" />
                   <br />
                   <div>
                     <ArtDetails />
                   </div>
                 </div>
+                <div>
+                  <img src={Img29} alt="" />
+                  <br />
+                  <div>
+                    <ArtDetails />
+                  </div>
+                </div>
+                <div>
+                  <img src={Img30} alt="" />
+                  <br />
+                  <div>
+                    <ArtDetails />
+                  </div>
+                </div>
+                {/* <div>
+                  <img src={Img31} alt="" />
+                  <br />
+                  <div>
+                    <ArtDetails />
+                  </div>
+                </div>
+                <div>
+                  <img src={Img32} alt="" />
+                  <br />
+                  <div>
+                    <ArtDetails />
+                  </div>
+                </div>
+                <div>
+                  <img src={Img33} alt="" />
+                  <br />
+                  <div>
+                    <ArtDetails />
+                  </div>
+                </div>
+                <div>
+                  <img src={Img34} alt="" />
+                  <br />
+                  <div>
+                    <ArtDetails />
+                  </div>
+                </div>
+                <div>
+                  <img src={Img35} alt="" />
+                  <br />
+                  <div>
+                    <ArtDetails />
+                  </div>
+                </div>
+                <div>
+                  <img src={Img36} alt="" />
+                  <br />
+                  <div>
+                    <ArtDetails />
+                  </div>
+                </div>
+                <div>
+                  <img src={Img37} alt="" />
+                  <br />
+                  <div>
+                    <ArtDetails />
+                  </div>
+                </div>
+                <div>
+                  <img src={Img38} alt="" />
+                  <br />
+                  <div>
+                    <ArtDetails />
+                  </div>
+                </div>
+                <div>
+                  <img src={Img39} alt="" />
+                  <br />
+                  <div>
+                    <ArtDetails />
+                  </div>
+                </div>
+                <div>
+                  <img src={Img40} alt="" />
+                  <br />
+                  <div>
+                    <ArtDetails />
+                  </div>
+                </div>
+                <div>
+                  <img src={Img41} alt="" />
+                  <br />
+                  <div>
+                    <ArtDetails />
+                  </div>
+                </div>
+                <div>
+                  <img src={Img42} alt="" />
+                  <br />
+                  <div>
+                    <ArtDetails />
+                  </div>
+                </div> */}
               </div>
             </div>
           </div>
@@ -254,19 +413,23 @@ export const SkeletonLoader = () => {
 
 export const ArtDetails = () => {
   return (
-    <div className="w-full text-black -bottom-2 md:bottom-px">
-      <div className="flex items-center justify-between text-sm font-normal lg:text-base xl:text-lg lg:items-start lg:justify-normal lg:flex-col">
+    <div className="w-full text-black">
+      <div className="text-sm font-normal lg:text-base xl:text-lg lg:items-start lg:justify-normal lg:flex-col">
         <div className="text-gray-500 lg:text-base xl:text-base">
           ID: AK125436
         </div>
-        <div className="my-1 text-sm font-semibold text-gray-500 lg:text-base xl:text-base md:text-sm">
-          <span className="lg:text-base xl:text-base">Size:</span> W 120 * H 300
-          inches
+        <div className="-mt-1 text-sm font-semibold text-gray-500 lg:text-base xl:text-base md:text-sm">
+          <div className="lg:text-xs xl:text-xs">W 120 * H 300 inches</div>          
         </div>
       </div>
-      <div className="text-sm font-semibold text-gray-500 xl:text-base md:text-sm">
-        <span className="">Price:</span> Print Copy $75{" "}
-        <span className="text-xs">(Starting from)</span>
+      <div className="flex justify-between text-sm font-semibold text-gray-500 xl:text-base md:text-sm my-5">
+        <div>
+          <div className="text-sm">Elizabeth Becker</div>
+          <div className="text-xs -pt-2">United States</div>
+        </div>
+        <div>
+          <span className="text-sm">Price:</span> Print Copy $75
+        </div>
       </div>
     </div>
   );
