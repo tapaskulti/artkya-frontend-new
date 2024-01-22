@@ -7,8 +7,10 @@ import { faOpencart } from "@fortawesome/free-brands-svg-icons";
 import { AiOutlineUser } from "react-icons/ai";
 import { CiHeart } from "react-icons/ci";
 import { IoBagHandleOutline } from "react-icons/io5";
+import { useSelector } from "react-redux";
 
 const Header = () => {
+  const {token, user} = useSelector((state) => state.user);
   const [dropDownOpen, setdropDownOpen] = useState(false);
   return (
     <>
