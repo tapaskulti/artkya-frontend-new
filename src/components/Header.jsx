@@ -10,7 +10,7 @@ import { IoBagHandleOutline } from "react-icons/io5";
 import { useSelector } from "react-redux";
 
 const Header = () => {
-  const {token, user} = useSelector((state) => state.user);
+  // const {token, user} = useSelector((state) => state.user);
   const [dropDownOpen, setdropDownOpen] = useState(false);
   return (
     <>
