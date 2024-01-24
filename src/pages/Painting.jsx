@@ -1,7 +1,7 @@
 import Header from "../components/Header";
-
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Link } from "react-router-dom";
+
+// import { Link } from "react-router-dom";
 import Img1 from "../assets/Img1.jpg";
 import Img3 from "../assets/img3.jpg";
 import Img14 from "../assets/img14.jpg";
@@ -11,9 +11,17 @@ import Img9 from "../assets/img9.jpg";
 import Img12 from "../assets/img12.jpg";
 
 import { faPaintBrush } from "@fortawesome/free-solid-svg-icons";
+import Accordion from "../components/Accordion";
+import { useState } from "react";
 // import ArtItem from "../components/ArtItem";
 
 const LandingPage = () => {
+  const styleElement = [
+    "Abstract",
+    "Fine Art",
+    "Modern",
+    "Expressionism",
+  ]
   return (
     <>
       <div className="static">
@@ -22,34 +30,14 @@ const LandingPage = () => {
         <div className="mt-10 lg:flex">
           <div className="w-1/4 rounded-lg rounded-br-xl px-10">
             <h2>Category</h2>
-            <div className="w-full bg-gray-100 backdrop-blur-lg rounded-md mt-6 px-3 py-2 text-xl text-center">
+            <div className="w-full bg-gray-50 border border-gray-200 backdrop-blur-lg rounded-md mt-6 px-3 py-2 text-xl text-center">
               Paintings
             </div>
-            <div>
-              <h2 className="">STYLE</h2>
-              <div>
-                <div className="flex items-center space-x-4"><input type="checkbox"></input><h2>Abstract</h2></div>
-                <div className="flex items-center space-x-4"><input type="checkbox"></input><h2>Fine Art</h2></div>
-                <div className="flex items-center space-x-4"><input type="checkbox"></input><h2 className="">Modern</h2></div>
-                <div className="flex items-center space-x-4"><input type="checkbox"></input><h2>Abstract Expressionism</h2></div>
-                <div className="flex items-center space-x-4"><input type="checkbox"></input><h2>Expressionism</h2></div>
-                <div className="flex items-center space-x-4"><input type="checkbox"></input><h2>Figurative</h2></div>
-                <div className="flex items-center space-x-4"><input type="checkbox"></input><h2>Impressionism</h2></div>
-                <div className="flex items-center space-x-4"><input type="checkbox"></input><h2>Realism</h2></div>
-                <div className="flex items-center space-x-4"><input type="checkbox"></input><h2>Conceptual</h2></div>
-                <div className="flex items-center space-x-4"><input type="checkbox"></input><h2>Minimalism</h2></div>
-                <div className="flex items-center space-x-4"><input type="checkbox"></input><h2>Pop Art</h2></div>
-                <div className="flex items-center space-x-4"><input type="checkbox"></input><h2>Portraiture</h2></div>
-                <div className="flex items-center space-x-4"><input type="checkbox"></input><h2>Surrealism</h2></div>
-                <div className="flex items-center space-x-4"><input type="checkbox"></input><h2>Art Deco</h2></div>
-                <div className="flex items-center space-x-4"><input type="checkbox"></input><h2>Illustration</h2></div>
-                <div className="flex items-center space-x-4"><input type="checkbox"></input><h2>Street Art</h2></div>
-                <div className="flex items-center space-x-4"><input type="checkbox"></input><h2>Photorealism</h2></div>
-                <div className="flex items-center space-x-4"><input type="checkbox"></input><h2>Cubism</h2></div>
-                <div className="flex items-center space-x-4"><input type="checkbox"></input><h2>Folk</h2></div>
-                <div className="flex items-center space-x-4"><input type="checkbox"></input><h2>Documentary</h2></div>
-                <div className="flex items-center space-x-4"><input type="checkbox"></input><h2>Dada</h2></div>
-              </div>
+            <div className="px-4 py-2 bg-gray-200 rounded-lg mt-2.5">
+              <Accordion
+                title="STYLE"
+                element = {styleElement}
+              />
             </div>
           </div>
           <div className="w-4/6 mt-10 lg:flex">
