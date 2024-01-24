@@ -3,7 +3,7 @@ import { useState } from "react";
 // eslint-disable-next-line react/prop-types
 const Accordion = ({ title, element }) => {
   const [accordionOpen, setAccordionOpen] = useState(false);
- 
+
   return (
     <div className="py-2">
       <button
@@ -14,13 +14,13 @@ const Accordion = ({ title, element }) => {
         {/* {accordionOpen ? <span>-</span> : <span>+</span>} */}
         <svg
           className="fill-indigo-500 shrink-0 ml-8"
-          width="16"
+          width="12"
           height="16"
           xmlns="http://www.w3.org/2000/svg"
         >
           <rect
             y="7"
-            width="16"
+            width="12"
             height="2"
             rx="1"
             className={`transform origin-center transition duration-200 ease-out ${
@@ -29,7 +29,7 @@ const Accordion = ({ title, element }) => {
           />
           <rect
             y="7"
-            width="16"
+            width="12"
             height="2"
             rx="1"
             className={`transform origin-center rotate-90 transition duration-200 ease-out ${
@@ -47,14 +47,14 @@ const Accordion = ({ title, element }) => {
       >
         {/* <div className="overflow-hidden">{answer}</div> */}
 
-        <div className="overflow-hidden">
+        <div className="overflow-hidden mt-2">
           {element?.map((singleElement) => {
             return (
               <>
-               <div className="flex items-center space-x-2">
-               <input type="checkbox"></input>
-                <div>{singleElement}</div>
-               </div>
+                <div className="flex items-center space-x-2">
+                  <input type="checkbox" className="border border-slate-50"></input>
+                  <div className="my-0.5">{singleElement}</div>
+                </div>
               </>
             );
           })}

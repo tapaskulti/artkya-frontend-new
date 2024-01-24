@@ -20,8 +20,40 @@ const LandingPage = () => {
     "Abstract",
     "Fine Art",
     "Modern",
-    "Expressionism",
-  ]
+    "Abstract Expressionism",
+    "Figurative",
+    "Impressionism",
+    "Realism",
+    "Conceptual",
+    "Minimalism",
+    "Pop Art",
+    "Pop Art",
+    "Portraiture",
+    "Surrealism",
+    "Art Deco",
+    "Illustration",
+    "Street Art",
+    "Photorealism",
+    "Cubism",
+    "Folk",
+    "Documentary",
+    "Dada",
+  ];
+  const subjectElement = [
+    "Abstract",
+    "Landscape",
+    "Portrait",
+    "People",
+    "Animal",
+    "floral",
+    "Nature",
+    "women",
+    "Still Life",
+    "Seascape",
+    "Fantasy",
+    "Cities",
+    "Architecture",
+  ];
   return (
     <>
       <div className="static">
@@ -33,11 +65,11 @@ const LandingPage = () => {
             <div className="w-full bg-gray-50 border border-gray-200 backdrop-blur-lg rounded-md mt-6 px-3 py-2 text-xl text-center">
               Paintings
             </div>
-            <div className="px-4 py-2 bg-gray-200 rounded-lg mt-2.5">
-              <Accordion
-                title="STYLE"
-                element = {styleElement}
-              />
+            <div className="px-4 py-1 bg-white border-t border-b border-slate-200 rounded-lg mt-2.5">
+              <Accordion title="STYLE" element={styleElement} />
+            </div>
+            <div className="px-4 py-1 bg-white border-t border-b border-slate-200 rounded-lg mt-2.5">
+              <Accordion title="SUBJECT" element={subjectElement} />
             </div>
           </div>
           <div className="w-4/6 mt-10 lg:flex">
