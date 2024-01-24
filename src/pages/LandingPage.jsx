@@ -53,11 +53,11 @@ const LandingPage = () => {
       <div className="static">
         <Header />
         <div className="mt-10 lg:flex">
-          <div className="px-10">
-            <h2>Painting</h2>
+          <div>
+            <h2 className="px-10">Painting</h2>
             {/* <div className="bg-gray-100 h-auto backdrop-blur-lg rounded-md w-full md:max-lg:max-w-screen-sm md:max-lg:mx-auto mt-6 px-3 py-2">Left</div> */}
-            <div className="mt-20 p-5 md:p-10">
-              <div className="h-auto mx-6 mt-32 sm:mx-6 gap-10 lg:gap-16 columns-1 md:columns-2 lg:columns-3 2xl:columns-4 gap-y-16 [&>img:not(:first-child)]:mt-5 lg:[&>img:not(:first-child)]:mt-16">
+            <div className="mt-20 px-5 md:px-10">
+              <div className="h-auto mt-32 gap-10 lg:gap-16 columns-1 md:columns-2 lg:columns-3 2xl:columns-4 gap-y-16 [&>img:not(:first-child)]:mt-5 lg:[&>img:not(:first-child)]:mt-16">
                 <div>
                   <img src={Img1} alt="" />
                   <br />

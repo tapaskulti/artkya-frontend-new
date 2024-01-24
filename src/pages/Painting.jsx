@@ -18,16 +18,42 @@ const LandingPage = () => {
     <>
       <div className="static">
         <Header />
-        <h2>Painting</h2>
+        <h2 className="px-10">Painting</h2>
         <div className="mt-10 lg:flex">
           <div className="w-1/4 rounded-lg rounded-br-xl px-10">
-            <h2>Filter</h2>
-            <div className="w-full bg-gray-100 backdrop-blur-lg rounded-md mt-6 px-3 py-2">
-              Left
+            <h2>Category</h2>
+            <div className="w-full bg-gray-100 backdrop-blur-lg rounded-md mt-6 px-3 py-2 text-xl text-center">
+              Paintings
+            </div>
+            <div>
+              <h2 className="">STYLE</h2>
+              <div>
+                <div className="flex items-center space-x-4"><input type="checkbox"></input><h2>Abstract</h2></div>
+                <div className="flex items-center space-x-4"><input type="checkbox"></input><h2>Fine Art</h2></div>
+                <div className="flex items-center space-x-4"><input type="checkbox"></input><h2 className="">Modern</h2></div>
+                <div className="flex items-center space-x-4"><input type="checkbox"></input><h2>Abstract Expressionism</h2></div>
+                <div className="flex items-center space-x-4"><input type="checkbox"></input><h2>Expressionism</h2></div>
+                <div className="flex items-center space-x-4"><input type="checkbox"></input><h2>Figurative</h2></div>
+                <div className="flex items-center space-x-4"><input type="checkbox"></input><h2>Impressionism</h2></div>
+                <div className="flex items-center space-x-4"><input type="checkbox"></input><h2>Realism</h2></div>
+                <div className="flex items-center space-x-4"><input type="checkbox"></input><h2>Conceptual</h2></div>
+                <div className="flex items-center space-x-4"><input type="checkbox"></input><h2>Minimalism</h2></div>
+                <div className="flex items-center space-x-4"><input type="checkbox"></input><h2>Pop Art</h2></div>
+                <div className="flex items-center space-x-4"><input type="checkbox"></input><h2>Portraiture</h2></div>
+                <div className="flex items-center space-x-4"><input type="checkbox"></input><h2>Surrealism</h2></div>
+                <div className="flex items-center space-x-4"><input type="checkbox"></input><h2>Art Deco</h2></div>
+                <div className="flex items-center space-x-4"><input type="checkbox"></input><h2>Illustration</h2></div>
+                <div className="flex items-center space-x-4"><input type="checkbox"></input><h2>Street Art</h2></div>
+                <div className="flex items-center space-x-4"><input type="checkbox"></input><h2>Photorealism</h2></div>
+                <div className="flex items-center space-x-4"><input type="checkbox"></input><h2>Cubism</h2></div>
+                <div className="flex items-center space-x-4"><input type="checkbox"></input><h2>Folk</h2></div>
+                <div className="flex items-center space-x-4"><input type="checkbox"></input><h2>Documentary</h2></div>
+                <div className="flex items-center space-x-4"><input type="checkbox"></input><h2>Dada</h2></div>
+              </div>
             </div>
           </div>
           <div className="w-4/6 mt-10 lg:flex">
-            <div className="px-10">
+            <div className="">
               {/* <div className="bg-gray-100 h-auto backdrop-blur-lg rounded-md w-full md:max-lg:max-w-screen-sm md:max-lg:mx-auto mt-6 px-3 py-2">Left</div> */}
               <div className="mt-20">
                 <div className="h-auto mt-32 gap-10 lg:gap-16 columns-1 md:columns-2 lg:columns-3 2xl:columns-3 gap-y-16 [&>img:not(:first-child)]:mt-5 lg:[&>img:not(:first-child)]:mt-16">
@@ -58,7 +84,7 @@ const LandingPage = () => {
                     <div>
                       <ArtDetails />
                     </div>
-                  </div>                  
+                  </div>
                   <div>
                     <img src={Img8} alt="" />
                     <br />
@@ -155,7 +181,7 @@ export const ArtDetails = () => {
           ID: AK125436
         </div>
         <div className="-mt-1 text-sm font-semibold text-gray-500 lg:text-base xl:text-base md:text-sm">
-          <div className="lg:text-xs xl:text-xs">W 120 * H 300 inches</div>          
+          <div className="lg:text-xs xl:text-xs">W 120 * H 300 inches</div>
         </div>
       </div>
       <div className="flex justify-between text-sm font-semibold text-gray-500 xl:text-base md:text-sm my-5">
