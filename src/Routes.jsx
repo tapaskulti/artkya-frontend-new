@@ -2,6 +2,7 @@ import {Route, Routes as RoutePath } from "react-router-dom";
 import LandingPage from "./pages/LandingPage";
 import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
+import ForgotPassword from "./pages/auth/ForgotPassword";
 // import ArtDetailPage from "./pages/ArtDetailPage";
 import Painting from "./pages/Painting";
 import AboutUs from "./pages/AboutUs";
@@ -14,6 +15,7 @@ const Routes = () => {
         <Route path="/" element={<LandingPage />} />
         <Route path="/Login" element={<Login />} />
         <Route path="/Register" element={<Register />} />
+        <Route path="/forgotPassword" element={<ForgotPassword />} />
         {/* <Route path="/:id" element={<ArtDetailPage />} /> */}
         <Route path="/Painting" element={<Painting />} />
         {/* <Route path="/admin" element={<AdminPage />} /> */}
