@@ -47,7 +47,7 @@ const Accordion = ({ title, element }) => {
       >
         {/* <div className="overflow-hidden">{answer}</div> */}
 
-        <div className="overflow-hidden mt-2">
+        <div className="overflow-hidden">
           {element?.map((singleElement) => {
             return (
               <>
