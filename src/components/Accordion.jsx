@@ -13,7 +13,7 @@ const Accordion = ({ element }) => {
         <span>{element[0]?.title}</span>
         {/* {accordionOpen ? <span>-</span> : <span>+</span>} */}
         <svg
-          className="fill-indigo-500 shrink-0 ml-8"
+          className="fill-slate-500 shrink-0 ml-8 mt-1.5"
           width="12"
           height="16"
           xmlns="http://www.w3.org/2000/svg"

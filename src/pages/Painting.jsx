@@ -1,5 +1,6 @@
 import Header from "../components/Header";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useState } from "react";
 
 // import { Link } from "react-router-dom";
 import Img1 from "../assets/Img1.jpg";
@@ -12,10 +13,11 @@ import Img12 from "../assets/img12.jpg";
 
 import { faPaintBrush } from "@fortawesome/free-solid-svg-icons";
 import Accordion from "../components/Accordion";
-import { useState } from "react";
+
 // import ArtItem from "../components/ArtItem";
 
 const Painting = () => {
+  const [itemsToShow, setItemsToShow] = useState();
   // const body = [{
   //   title:"STYLE",
   //   element: [
@@ -366,291 +368,275 @@ const Painting = () => {
 
   const materialElement = [
     {
-      title: "MEDIUM",
+      title: "MATERIAL",
       element: [
         "Canvas",
         "Paper",
         "Wood",
         "Other",
-        "Cardboard"
-        "Soft (Yarn, Cotton, Fabric)"
-        "Plastic"
-        "Aluminium"
-        "Glass"
-        "acrylic"
-        
-        
-        "Carbon Fibre"
-        
-        
-        "Linen"
-        
-        
-        "Oil"
-        
-        
-        "Canvas board"
-        
-        
-        "Bronze"
-        
-        
-        Steel
-        
-        
-        Stone
-        
-        
-        Panel
-        
-        
-        Marble
-        
-        
-        Ceramic
-        
-        
-        Iron
-        
-        
-        Oil Paint
-        
-        
-        Paint
-        
-        
-        Ink
-        
-        
-        Stainless Steel
-        
-        
-        Wood Panel
-        
-        
-        Acrylic Paint
-        
-        
-        Canvas Panel
-        
-        
-        Masonite
-        
-        
-        Watercolor
-        
-        
-        varnish
-        
-        
-        Stretched Canvas
-        
-        
-        Gesso
-        
-        
-        Gold Leaf
-        
-        
-        Sound
-        
-        
-        Watercolor Paper
-        
-        
-        Mdf
-        
-        
-        Resin
-        
-        
-        Acrylic On Gallery-wrapped Canvas
-        
-        
-        Oil On Canvas
-        
-        
-        Sand
-        
-        
-        Linen Canvas
-        
-        
-        Hardboard
-        
-        
-        High Quality Professional Oil Art Paints, Canvas, Covered With Protective Varnish
-        
-        
-        Mixed Media
-        
-        
-        Acrylic On Canvas
-        
-        
-        Acrylics
-        
-        
-        High Quality Professional Oil Art Paints, Italian Linen Canvas, Covered With Protective Varnish
-        
-        
-        Charcoal
-        
-        
-        Pencil
-        
-        
-        Silk
-        
-        
-        Encaustic
-        
-        
-        Plexiglass
-        
-        
-        Watercolour
-        
-        
-        Pastel
-        
-        
-        Plywood
-        
-        
-        Collage
-        
-        
-        Digital
-        
-        
-        Plaster
-        
-        
-        Acid Free Canson Paper
-        
-        
-        Gold
-        
-        
-        Mdf Board
-        
-        
-        Acrylic Paints
-        
-        
-        Mdf Wood Panel
-        
-        
-        spray paint
-        
-        
-        Newspaper
-        
-        
-        Frame
-        
-        
-        Marker
-        
-        
-        Oil Pastel
-        
-        
-        Raw Canvas
-        
-        
-        Wood Frame
-        
-        
-        Oil Paints
-        
-        
-        Palette Knife
-        
-        
-        Canvas Paper
-        
-        
-        Acrylic sealant
-        
-        
-        Carton
-        
-        
-        Unstretched Canvas
-        
-        
-        Wax
-        
-        
-        Graphite
-        
-        
-        Alcohol Ink
-        
-        
-        Rice Paper
-        
-        
-        Japanese Paper
-        
-        
-        Pigments
-        
-        
-        Arches 100 Percent Cotton Watercolor Paper
-        
-        
-        Fine Art Paper
-        
-        
-        Papyrus
-        
-        
-        Brush
-        
-        
-        Texture
-        
-        
-        Acid Free Foam Core Backing
-        
-        
-        Cotton Canvas
-        
-        
-        Glitter
-        
-        
-        Acrylic. Mixed Material.
-        
-        
-        Rolled Canvas
-        
-        
-        Silver Leaf
-        
-        
-        Photography
-        
-        
-        Yupo
-        
-        
-        canvasboard
-        
-        
-        Metal
-        
-        
-        Oil Painting
-        
-        
-        Textile"
-      ]
-    }
-  ]
+        "Cardboard",
+        "Soft (Yarn, Cotton, Fabric)",
+        "Plastic",
+        "Aluminium",
+        "Glass",
+        "acrylic",
+        "Carbon Fibre",
+        "Linen",
+        "Oil",
+        "Canvas board",
+        "Bronze",
+        "Steel",
+        "Stone",
+        "Panel",
+        "Marble",
+        "Ceramic",
+        "Iron",
+        "Oil Paint",
+        "Paint",
+        "Ink",
+        "Stainless Steel",
+        "Wood Panel",
+        "Acrylic Paint",
+        "Canvas Panel",
+        "Masonite",
+        "Watercolor",
+        "Varnish",
+        "Stretched Canvas",
+        "Gesso",
+        "Gold Leaf",
+        "Sound",
+        "Watercolor Paper",
+        "Mdf",
+        "Resin",
+        "Acrylic On Gallery-wrapped Canvas",
+        "Oil On Canvas",
+        "Sand",
+        "Linen Canvas",
+        "Hardboard",
+        "High Quality Professional Oil Art Paints, Canvas, Covered With Protective Varnish",
+        "Mixed Media",
+        "Acrylic On Canvas",
+        "Acrylics",
+        "High Quality Professional Oil Art Paints, Italian Linen Canvas, Covered With Protective Varnish",
+        "Charcoal",
+        "Pencil",
+        "Silk",
+        "Encaustic",
+        "Plexiglass",
+        "Watercolour",
+        "Pastel",
+        "Plywood",
+        "Collage",
+        "Digital",
+        "Plaster",
+        "Acid Free Canson Paper",
+        "Gold",
+        "Mdf Board",
+        "Acrylic Paints",
+        "Mdf Wood Panel",
+        "Spray paint",
+        "Newspaper",
+        "Frame",
+        "Marker",
+        "Oil Pastel",
+        "Raw Canvas",
+        "Wood Frame",
+        "Oil Paints",
+        "Palette Knife",
+        "Canvas Paper",
+        "Acrylic sealant",
+        "Carton",
+        "Unstretched Canvas",
+        "Wax",
+        "Graphite",
+        "Alcohol Ink",
+        "Rice Paper",
+        "Japanese Paper",
+        "Pigments",
+        "Arches 100 Percent Cotton Watercolor Paper",
+        "Fine Art Paper",
+        "Papyrus",
+        "Brush",
+        "Texture",
+        "Acid Free Foam Core Backing",
+        "Cotton Canvas",
+        "Glitter",
+        "Acrylic. Mixed Material",
+        "Rolled Canvas",
+        "Silver Leaf",
+        "Photography",
+        "Yupo",
+        "Canvasboard",
+        "Metal",
+        "Oil Painting",
+        "Textile",
+      ],
+    },
+  ];
+
+  const priceElement = [
+    {
+      title: "PRICE",
+      element: [
+        "Under ₹500",
+        "₹500 - ₹1,000",
+        "₹1,000 - ₹2,000",
+        "₹2,000 - ₹5,000",
+        "₹5,000 - ₹10,000",
+        "Over ₹10,000",
+      ],
+    },
+  ];
+
+  const sizeElement = [
+    {
+      title: "SIZE",
+      element: ["Small", "Medium", "Large", "Oversized"],
+    },
+  ];
+
+  const orientationElement = [
+    {
+      title: "ORIENTATION",
+      element: ["Horizontal", "Vertical", "Square"],
+    },
+  ];
+
+  const colorElement = [
+    {
+      title: "COLOR",
+      element: [],
+    },
+  ];
+
+  const artistCountryElement = [
+    {
+      title: "ARTIST COUNTRY",
+      element: [
+        "United States",
+        "United Kingdom",
+        "Germany",
+        "France",
+        "Spain",
+        "Italy",
+        "Canada",
+        "Netherlands",
+        "Ukraine",
+        "India",
+        "Poland",
+        "Australia",
+        "Hungary",
+        "Turkey",
+        "Serbia",
+        "Romania",
+        "Bulgaria",
+        "South Korea",
+        "Israel",
+        "Belgium",
+        "Czech Republic",
+        "Greece",
+        "Switzerland",
+        "Japan",
+        "Austria",
+        "Portugal",
+        "Pakistan",
+        "Brazil",
+        "Latvia",
+        "Mexico",
+        "Argentina",
+        "Slovakia",
+        "Armenia",
+        "China",
+        "Georgia",
+        "Vietnam",
+        "Indonesia",
+        "Lithuania",
+        "Sweden",
+        "South Africa",
+        "Moldova",
+        "Ireland",
+        "Slovenia",
+        "Norway",
+        "Kazakhstan",
+        "Nigeria",
+        "Estonia",
+        "Thailand",
+        "Croatia",
+        "Finland",
+        "Colombia",
+        "United Arab Emirates",
+        "Egypt",
+        "Sri Lanka",
+        "Denmark",
+        "Cyprus",
+        "New Zealand",
+        "Macedonia",
+        "Uruguay",
+        "Chile",
+        "Singapore",
+        "Hong Kong",
+        "Azerbaijan",
+        "Kenya",
+        "Bangladesh",
+        "Uzbekistan",
+        "Mozambique",
+        "Luxembourg",
+        "Malaysia",
+        "Ghana",
+        "Taiwan",
+        "Lebanon",
+        "Philippines",
+        "Montenegro",
+        "Costa Rica",
+        "Bosnia and Herzegovina",
+        "Ecuador",
+        "Saint Martin",
+        "Peru",
+        "Venezuela",
+        "Iceland",
+        "United States Minor Outlying Islands",
+        "Kyrgyzstan",
+        "Albania",
+        "Jamaica",
+        "Uganda",
+        "Malta",
+        "Morocco",
+        "Trinidad and Tobago",
+        "Qatar",
+        "Puerto Rico",
+        "Saudi Arabia",
+        "Paraguay",
+        "Sint Maarten",
+        "Tunisia",
+        "Russia",
+        "Jordan",
+        "Kosovo",
+        "Monaco",
+        "Nicaragua",
+      ],
+    },
+  ];
+
+  const featuredArtistElement = [
+    {
+      title: "FEATURED ARTIST",
+      element: [
+        "Artkya Catalog",
+        "Inside The Studio",
+        "Rising Stars",
+        "One To Watch",
+        "The Other Art Fair",
+      ],
+    },
+  ];
+
+  const showmore = () => {
+    setItemsToShow(styleElement.length);
+  };
+
+  const showless = () => {
+    setItemsToShow(3);
+  };
 
   return (
     <>
@@ -665,6 +651,17 @@ const Painting = () => {
             </div>
             <div className="px-4 bg-white border-t border-b border-slate-200 rounded-lg mt-2.5">
               <Accordion element={styleElement} />
+
+              {/* {styleElement.slice(0, itemsToShow).map((c, ...rest) => (
+                <Accordion key={c.title} name={c.title} rest={rest} />
+              ))}
+              {styleElement.length > 3 && itemsToShow < 6 ? (
+                <button onClick={showmore}>Show More</button>
+              ) : itemsToShow > 3 && styleElement.length > 5 ? (
+                <button onClick={showless}>Show Less</button>
+              ) : (
+                ""
+              )} */}
             </div>
             <div className="px-4 bg-white border-t border-b border-slate-200 rounded-lg mt-2.5">
               <Accordion element={subjectElement} />
@@ -672,7 +669,27 @@ const Painting = () => {
             <div className="px-4 bg-white border-t border-b border-slate-200 rounded-lg mt-2.5">
               <Accordion element={mediumElement} />
             </div>
-            <div></div>
+            <div className="px-4 bg-white border-t border-b border-slate-200 rounded-lg mt-2.5">
+              <Accordion element={materialElement} />
+            </div>
+            <div className="px-4 bg-white border-t border-b border-slate-200 rounded-lg mt-2.5">
+              <Accordion element={priceElement} />
+            </div>
+            <div className="px-4 bg-white border-t border-b border-slate-200 rounded-lg mt-2.5">
+              <Accordion element={sizeElement} />
+            </div>
+            <div className="px-4 bg-white border-t border-b border-slate-200 rounded-lg mt-2.5">
+              <Accordion element={orientationElement} />
+            </div>
+            <div className="px-4 bg-white border-t border-b border-slate-200 rounded-lg mt-2.5">
+              <Accordion element={colorElement} />
+            </div>
+            <div className="px-4 bg-white border-t border-b border-slate-200 rounded-lg mt-2.5">
+              <Accordion element={artistCountryElement} />
+            </div>
+            <div className="px-4 bg-white border-t border-b border-slate-200 rounded-lg mt-2.5">
+              <Accordion element={featuredArtistElement} />
+            </div>
           </div>
           <div className="w-4/6 mt-10 lg:flex">
             <div className="">
