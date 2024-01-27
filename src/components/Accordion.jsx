@@ -1,16 +1,16 @@
+/* eslint-disable react/prop-types */
 import { useState } from "react";
 
 // eslint-disable-next-line react/prop-types
-const Accordion = ({ title, element }) => {
+const Accordion = ({ element }) => {
   const [accordionOpen, setAccordionOpen] = useState(false);
-
   return (
     <div className="py-2">
       <button
         onClick={() => setAccordionOpen(!accordionOpen)}
         className="flex justify-between w-full"
       >
-        <span>{title}</span>
+        <span>{element[0]?.title}</span>
         {/* {accordionOpen ? <span>-</span> : <span>+</span>} */}
         <svg
           className="fill-indigo-500 shrink-0 ml-8"
@@ -48,11 +48,16 @@ const Accordion = ({ title, element }) => {
         {/* <div className="overflow-hidden">{answer}</div> */}
 
         <div className="overflow-hidden">
-          {element?.map((singleElement) => {
+          {element[0]?.element?.map((singleElement) => {
+            
+            {/* console.log(singleElement); */}
             return (
               <>
                 <div className="flex items-center space-x-2">
-                  <input type="checkbox" className="border border-slate-50"></input>
+                  <input type="checkbox" className="border border-slate-50" value={singleElement} onChange={(e) =>{
+                    console.log(element[0]?.title)
+                    console.log(e.target.value)
+                  }}></input>
                   <div className="my-0.5">{singleElement}</div>
                 </div>
               </>

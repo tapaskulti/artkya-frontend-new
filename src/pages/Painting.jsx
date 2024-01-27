@@ -15,45 +15,643 @@ import Accordion from "../components/Accordion";
 import { useState } from "react";
 // import ArtItem from "../components/ArtItem";
 
-const LandingPage = () => {
+const Painting = () => {
+  // const body = [{
+  //   title:"STYLE",
+  //   element: [
+  //     "Abstract",
+  //     "Fine Art",
+  //     "Modern",
+  //     "Abstract Expressionism",
+  //     "Figurative",
+  //     "Impressionism",
+  //     "Realism",
+  //     "Conceptual",
+  //     "Minimalism",
+  //     "Pop Art",
+  //     "Pop Art",
+  //     "Portraiture",
+  //     "Surrealism",
+  //     "Art Deco",
+  //     "Illustration",
+  //     "Street Art",
+  //     "Photorealism",
+  //     "Cubism",
+  //     "Folk",
+  //     "Documentary",
+  //     "Dada",
+  //   ]
+  // },{
+  //   title:"SUBJECT",
+  //   element: [
+  //     "Abstract",
+  //   "Landscape",
+  //   "Portrait",
+  //   "People",
+  //   "Animal",
+  //   "floral",
+  //   "Nature",
+  //   "women",
+  //   "Still Life",
+  //   "Seascape",
+  //   "Fantasy",
+  //   "Cities",
+  //   "Architecture",
+  //   "Body",
+  //   "Botanic",
+  //   "Beach",
+  //   "Geometric",
+  //   "Love",
+  //   "Culture",
+  //   "Men",
+  //   "Pop Culture/Celebrity",
+  //   "Erotic",
+  //   "World Culture",
+  //   "Children",
+  //   "Music",
+  //   "Religious",
+  //   "Popular culture",
+  //   "Classical mythology",
+  //   "Garden",
+  //   "Interiors",
+  //   "Places",
+  //   "Tree",
+  //   "Celebrity",
+  //   "Water",
+  //   "Boat",
+  //   "Horse",
+  //   "Food",
+  //   "Fashion",
+  //   "Political",
+  //   "Performing Arts",
+  //   "Religion",
+  //   "Fish",
+  //   "Graffiti",
+  //   "Outer Space",
+  //   "Mortality",
+  //   "Calligraphy",
+  //   "Cats",
+  //   "Family",
+  //   "Aerial",
+  //   "Dogs",
+  //   "Food & Drink",
+  //   "Light",
+  //   "Cartoon",
+  //   "Home",
+  //   "Travel",
+  //   "Humor",
+  //   "Sailboat",
+  //   "Cinema",
+  //   "Rural life",
+  //   "Seasons",
+  //   "Sport",
+  //   "Patterns",
+  //   "Car",
+  //   "Sports",
+  //   "Time",
+  //   "Automobile",
+  //   "Kids",
+  //   "Comics",
+  //   "Science/Technology",
+  //   "Politics",
+  //   "Language",
+  //   "Health & Beauty",
+  //   "Science",
+  //   "Ship",
+  //   "Typography",
+  //   "Transportation",
+  //   "Bicycle",
+  //   "Business",
+  //   "Airplane",
+  //   "Technology",
+  //   "Wall",
+  //   "Cows",
+  //   "Cuisine",
+  //   "Train",
+  //   "Education",
+  //   "Aeroplane",
+  //   "Yacht",
+  //   "Kitchen",
+  //   "Motorcycle",
+  //   "Bike",
+  //   "Motorbike",
+  //   "Motor",
+  //   ]
+  // }]
   const styleElement = [
-    "Abstract",
-    "Fine Art",
-    "Modern",
-    "Abstract Expressionism",
-    "Figurative",
-    "Impressionism",
-    "Realism",
-    "Conceptual",
-    "Minimalism",
-    "Pop Art",
-    "Pop Art",
-    "Portraiture",
-    "Surrealism",
-    "Art Deco",
-    "Illustration",
-    "Street Art",
-    "Photorealism",
-    "Cubism",
-    "Folk",
-    "Documentary",
-    "Dada",
+    {
+      title: "STYLE",
+      element: [
+        "Abstract",
+        "Fine Art",
+        "Modern",
+        "Abstract Expressionism",
+        "Figurative",
+        "Impressionism",
+        "Realism",
+        "Conceptual",
+        "Minimalism",
+        "Pop Art",
+        "Pop Art",
+        "Portraiture",
+        "Surrealism",
+        "Art Deco",
+        "Illustration",
+        "Street Art",
+        "Photorealism",
+        "Cubism",
+        "Folk",
+        "Documentary",
+        "Dada",
+      ],
+    },
   ];
   const subjectElement = [
-    "Abstract",
-    "Landscape",
-    "Portrait",
-    "People",
-    "Animal",
-    "floral",
-    "Nature",
-    "women",
-    "Still Life",
-    "Seascape",
-    "Fantasy",
-    "Cities",
-    "Architecture",
+    {
+      title: "SUBJECT",
+      element: [
+        "Abstract",
+        "Landscape",
+        "Portrait",
+        "People",
+        "Animal",
+        "floral",
+        "Nature",
+        "women",
+        "Still Life",
+        "Seascape",
+        "Fantasy",
+        "Cities",
+        "Architecture",
+        "Body",
+        "Botanic",
+        "Beach",
+        "Geometric",
+        "Love",
+        "Culture",
+        "Men",
+        "Pop Culture/Celebrity",
+        "Erotic",
+        "World Culture",
+        "Children",
+        "Music",
+        "Religious",
+        "Popular culture",
+        "Classical mythology",
+        "Garden",
+        "Interiors",
+        "Places",
+        "Tree",
+        "Celebrity",
+        "Water",
+        "Boat",
+        "Horse",
+        "Food",
+        "Fashion",
+        "Political",
+        "Performing Arts",
+        "Religion",
+        "Fish",
+        "Graffiti",
+        "Outer Space",
+        "Mortality",
+        "Calligraphy",
+        "Cats",
+        "Family",
+        "Aerial",
+        "Dogs",
+        "Food & Drink",
+        "Light",
+        "Cartoon",
+        "Home",
+        "Travel",
+        "Humor",
+        "Sailboat",
+        "Cinema",
+        "Rural life",
+        "Seasons",
+        "Sport",
+        "Patterns",
+        "Car",
+        "Sports",
+        "Time",
+        "Automobile",
+        "Kids",
+        "Comics",
+        "Science/Technology",
+        "Politics",
+        "Language",
+        "Health & Beauty",
+        "Science",
+        "Ship",
+        "Typography",
+        "Transportation",
+        "Bicycle",
+        "Business",
+        "Airplane",
+        "Technology",
+        "Wall",
+        "Cows",
+        "Cuisine",
+        "Train",
+        "Education",
+        "Aeroplane",
+        "Yacht",
+        "Kitchen",
+        "Motorcycle",
+        "Bike",
+        "Motorbike",
+        "Motor",
+      ],
+    },
   ];
+  const mediumElement = [
+    {
+      title: "MEDIUM",
+      element: [
+        "Acrylic",
+        "Oil",
+        "Watercolor",
+        "Ink",
+        "Spray Paint",
+        "Gesso",
+        "Paper",
+        "Paint",
+        "Gouache",
+        "Pastel",
+        "Pencil",
+        "Digital",
+        "Charcoal",
+        "Graphite",
+        "Color",
+        "Enamel",
+        "Marker",
+        "Tempera",
+        "Household",
+        "Airbrush",
+        "Fabric",
+        "Resin",
+        "Wax",
+        "Wood",
+        "Chalk",
+        "Textile",
+        "Plaster",
+        "Black & White",
+        "Metal",
+        "Photo",
+        "Ballpoint Pen",
+        "Found Objects",
+        "Conte",
+        "Latex",
+        "Stencil",
+        "Manipulated",
+        "Plastic",
+        "Fiber",
+        "Vector",
+        "Screenprinting",
+        "Encaustic",
+        "Monotype",
+        "Glass",
+        "Stone",
+        "C-type",
+        "Clay",
+        "Crayon",
+        "3D Sculpting",
+        "Lithograph",
+        "Environmental",
+        "Ceramic",
+        "Neon",
+        "Dye Transfer",
+        "Full spectrum",
+        "Paper mache",
+        "Gelatin",
+        "Marble",
+        "Photogram",
+        "Engraving",
+        "Mosaic",
+        "Woodcut",
+        "Silverpoint",
+        "Aquatint",
+        "Linocuts",
+        "Kinetic",
+        "Bronze",
+        "Steel",
+        "Algorithmic Art",
+        "Leather",
+        "Giclée",
+        "Lights",
+        "Interactive",
+        "Fiberglass",
+        "Rubber",
+        "Etching",
+        "Fractal",
+        "LED",
+        "Timber",
+        "Platinum",
+        "Sound",
+        "Polaroid",
+        "Drypoint",
+        "Granite",
+        "Pottery",
+        "Robotics",
+        "Pen and Ink",
+        "Decoupage",
+        "Lenticular",
+        "Taxidermy",
+        "Mezzotint",
+        "Pinhole",
+      ],
+    },
+  ];
+
+  const materialElement = [
+    {
+      title: "MEDIUM",
+      element: [
+        "Canvas",
+        "Paper",
+        "Wood",
+        "Other",
+        "Cardboard"
+        "Soft (Yarn, Cotton, Fabric)"
+        "Plastic"
+        "Aluminium"
+        "Glass"
+        "acrylic"
+        
+        
+        "Carbon Fibre"
+        
+        
+        "Linen"
+        
+        
+        "Oil"
+        
+        
+        "Canvas board"
+        
+        
+        "Bronze"
+        
+        
+        Steel
+        
+        
+        Stone
+        
+        
+        Panel
+        
+        
+        Marble
+        
+        
+        Ceramic
+        
+        
+        Iron
+        
+        
+        Oil Paint
+        
+        
+        Paint
+        
+        
+        Ink
+        
+        
+        Stainless Steel
+        
+        
+        Wood Panel
+        
+        
+        Acrylic Paint
+        
+        
+        Canvas Panel
+        
+        
+        Masonite
+        
+        
+        Watercolor
+        
+        
+        varnish
+        
+        
+        Stretched Canvas
+        
+        
+        Gesso
+        
+        
+        Gold Leaf
+        
+        
+        Sound
+        
+        
+        Watercolor Paper
+        
+        
+        Mdf
+        
+        
+        Resin
+        
+        
+        Acrylic On Gallery-wrapped Canvas
+        
+        
+        Oil On Canvas
+        
+        
+        Sand
+        
+        
+        Linen Canvas
+        
+        
+        Hardboard
+        
+        
+        High Quality Professional Oil Art Paints, Canvas, Covered With Protective Varnish
+        
+        
+        Mixed Media
+        
+        
+        Acrylic On Canvas
+        
+        
+        Acrylics
+        
+        
+        High Quality Professional Oil Art Paints, Italian Linen Canvas, Covered With Protective Varnish
+        
+        
+        Charcoal
+        
+        
+        Pencil
+        
+        
+        Silk
+        
+        
+        Encaustic
+        
+        
+        Plexiglass
+        
+        
+        Watercolour
+        
+        
+        Pastel
+        
+        
+        Plywood
+        
+        
+        Collage
+        
+        
+        Digital
+        
+        
+        Plaster
+        
+        
+        Acid Free Canson Paper
+        
+        
+        Gold
+        
+        
+        Mdf Board
+        
+        
+        Acrylic Paints
+        
+        
+        Mdf Wood Panel
+        
+        
+        spray paint
+        
+        
+        Newspaper
+        
+        
+        Frame
+        
+        
+        Marker
+        
+        
+        Oil Pastel
+        
+        
+        Raw Canvas
+        
+        
+        Wood Frame
+        
+        
+        Oil Paints
+        
+        
+        Palette Knife
+        
+        
+        Canvas Paper
+        
+        
+        Acrylic sealant
+        
+        
+        Carton
+        
+        
+        Unstretched Canvas
+        
+        
+        Wax
+        
+        
+        Graphite
+        
+        
+        Alcohol Ink
+        
+        
+        Rice Paper
+        
+        
+        Japanese Paper
+        
+        
+        Pigments
+        
+        
+        Arches 100 Percent Cotton Watercolor Paper
+        
+        
+        Fine Art Paper
+        
+        
+        Papyrus
+        
+        
+        Brush
+        
+        
+        Texture
+        
+        
+        Acid Free Foam Core Backing
+        
+        
+        Cotton Canvas
+        
+        
+        Glitter
+        
+        
+        Acrylic. Mixed Material.
+        
+        
+        Rolled Canvas
+        
+        
+        Silver Leaf
+        
+        
+        Photography
+        
+        
+        Yupo
+        
+        
+        canvasboard
+        
+        
+        Metal
+        
+        
+        Oil Painting
+        
+        
+        Textile"
+      ]
+    }
+  ]
+
   return (
     <>
       <div className="static">
@@ -66,14 +664,15 @@ const LandingPage = () => {
               Paintings
             </div>
             <div className="px-4 bg-white border-t border-b border-slate-200 rounded-lg mt-2.5">
-              <Accordion title="STYLE" element={styleElement} />
+              <Accordion element={styleElement} />
             </div>
             <div className="px-4 bg-white border-t border-b border-slate-200 rounded-lg mt-2.5">
-              <Accordion title="SUBJECT" element={subjectElement} />
+              <Accordion element={subjectElement} />
             </div>
             <div className="px-4 bg-white border-t border-b border-slate-200 rounded-lg mt-2.5">
-              <Accordion title="SUBJECT" element={subjectElement} />
+              <Accordion element={mediumElement} />
             </div>
+            <div></div>
           </div>
           <div className="w-4/6 mt-10 lg:flex">
             <div className="">
@@ -139,7 +738,7 @@ const LandingPage = () => {
   );
 };
 
-export default LandingPage;
+export default Painting;
 
 export const ExhibitionItem = ({ exhibitionName, year }) => {
   return (
