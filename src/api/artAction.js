@@ -16,12 +16,16 @@ export const createArtAction = async (payload) => {
 
 
 export const FiltersAction = async(payload)=>{
+ try {
   const response = await axios.post(
     `${VITE_BASE_URL}/art/filterArt`,
     payload.body
   );
   console.log("FiltersAction resposnse",response);
   return response;
+ } catch (error) {
+  console.log(error)
+ }
 }
 
 
