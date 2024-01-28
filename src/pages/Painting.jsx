@@ -1,6 +1,6 @@
 import Header from "../components/Header";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 // import { Link } from "react-router-dom";
 import Img1 from "../assets/Img1.jpg";
@@ -13,622 +13,74 @@ import Img12 from "../assets/img12.jpg";
 
 import { faPaintBrush } from "@fortawesome/free-solid-svg-icons";
 import Accordion from "../components/Accordion";
+import {
+  artistCountryElement,
+  colorElement,
+  featuredArtistElement,
+  materialElement,
+  mediumElement,
+  orientationElement,
+  priceElement,
+  sizeElement,
+  styleElement,
+  subjectElement,
+} from "../utlis/filterData";
+import { useDispatch } from "react-redux";
 
 // import ArtItem from "../components/ArtItem";
 
 const Painting = () => {
+  const dispatch = useDispatch();
   const [itemsToShow, setItemsToShow] = useState();
-  // const body = [{
-  //   title:"STYLE",
-  //   element: [
-  //     "Abstract",
-  //     "Fine Art",
-  //     "Modern",
-  //     "Abstract Expressionism",
-  //     "Figurative",
-  //     "Impressionism",
-  //     "Realism",
-  //     "Conceptual",
-  //     "Minimalism",
-  //     "Pop Art",
-  //     "Pop Art",
-  //     "Portraiture",
-  //     "Surrealism",
-  //     "Art Deco",
-  //     "Illustration",
-  //     "Street Art",
-  //     "Photorealism",
-  //     "Cubism",
-  //     "Folk",
-  //     "Documentary",
-  //     "Dada",
-  //   ]
-  // },{
-  //   title:"SUBJECT",
-  //   element: [
-  //     "Abstract",
-  //   "Landscape",
-  //   "Portrait",
-  //   "People",
-  //   "Animal",
-  //   "floral",
-  //   "Nature",
-  //   "women",
-  //   "Still Life",
-  //   "Seascape",
-  //   "Fantasy",
-  //   "Cities",
-  //   "Architecture",
-  //   "Body",
-  //   "Botanic",
-  //   "Beach",
-  //   "Geometric",
-  //   "Love",
-  //   "Culture",
-  //   "Men",
-  //   "Pop Culture/Celebrity",
-  //   "Erotic",
-  //   "World Culture",
-  //   "Children",
-  //   "Music",
-  //   "Religious",
-  //   "Popular culture",
-  //   "Classical mythology",
-  //   "Garden",
-  //   "Interiors",
-  //   "Places",
-  //   "Tree",
-  //   "Celebrity",
-  //   "Water",
-  //   "Boat",
-  //   "Horse",
-  //   "Food",
-  //   "Fashion",
-  //   "Political",
-  //   "Performing Arts",
-  //   "Religion",
-  //   "Fish",
-  //   "Graffiti",
-  //   "Outer Space",
-  //   "Mortality",
-  //   "Calligraphy",
-  //   "Cats",
-  //   "Family",
-  //   "Aerial",
-  //   "Dogs",
-  //   "Food & Drink",
-  //   "Light",
-  //   "Cartoon",
-  //   "Home",
-  //   "Travel",
-  //   "Humor",
-  //   "Sailboat",
-  //   "Cinema",
-  //   "Rural life",
-  //   "Seasons",
-  //   "Sport",
-  //   "Patterns",
-  //   "Car",
-  //   "Sports",
-  //   "Time",
-  //   "Automobile",
-  //   "Kids",
-  //   "Comics",
-  //   "Science/Technology",
-  //   "Politics",
-  //   "Language",
-  //   "Health & Beauty",
-  //   "Science",
-  //   "Ship",
-  //   "Typography",
-  //   "Transportation",
-  //   "Bicycle",
-  //   "Business",
-  //   "Airplane",
-  //   "Technology",
-  //   "Wall",
-  //   "Cows",
-  //   "Cuisine",
-  //   "Train",
-  //   "Education",
-  //   "Aeroplane",
-  //   "Yacht",
-  //   "Kitchen",
-  //   "Motorcycle",
-  //   "Bike",
-  //   "Motorbike",
-  //   "Motor",
-  //   ]
-  // }]
-  const styleElement = [
-    {
-      title: "STYLE",
-      element: [
-        "Abstract",
-        "Fine Art",
-        "Modern",
-        "Abstract Expressionism",
-        "Figurative",
-        "Impressionism",
-        "Realism",
-        "Conceptual",
-        "Minimalism",
-        "Pop Art",
-        "Pop Art",
-        "Portraiture",
-        "Surrealism",
-        "Art Deco",
-        "Illustration",
-        "Street Art",
-        "Photorealism",
-        "Cubism",
-        "Folk",
-        "Documentary",
-        "Dada",
-      ],
-    },
-  ];
-  const subjectElement = [
-    {
-      title: "SUBJECT",
-      element: [
-        "Abstract",
-        "Landscape",
-        "Portrait",
-        "People",
-        "Animal",
-        "floral",
-        "Nature",
-        "women",
-        "Still Life",
-        "Seascape",
-        "Fantasy",
-        "Cities",
-        "Architecture",
-        "Body",
-        "Botanic",
-        "Beach",
-        "Geometric",
-        "Love",
-        "Culture",
-        "Men",
-        "Pop Culture/Celebrity",
-        "Erotic",
-        "World Culture",
-        "Children",
-        "Music",
-        "Religious",
-        "Popular culture",
-        "Classical mythology",
-        "Garden",
-        "Interiors",
-        "Places",
-        "Tree",
-        "Celebrity",
-        "Water",
-        "Boat",
-        "Horse",
-        "Food",
-        "Fashion",
-        "Political",
-        "Performing Arts",
-        "Religion",
-        "Fish",
-        "Graffiti",
-        "Outer Space",
-        "Mortality",
-        "Calligraphy",
-        "Cats",
-        "Family",
-        "Aerial",
-        "Dogs",
-        "Food & Drink",
-        "Light",
-        "Cartoon",
-        "Home",
-        "Travel",
-        "Humor",
-        "Sailboat",
-        "Cinema",
-        "Rural life",
-        "Seasons",
-        "Sport",
-        "Patterns",
-        "Car",
-        "Sports",
-        "Time",
-        "Automobile",
-        "Kids",
-        "Comics",
-        "Science/Technology",
-        "Politics",
-        "Language",
-        "Health & Beauty",
-        "Science",
-        "Ship",
-        "Typography",
-        "Transportation",
-        "Bicycle",
-        "Business",
-        "Airplane",
-        "Technology",
-        "Wall",
-        "Cows",
-        "Cuisine",
-        "Train",
-        "Education",
-        "Aeroplane",
-        "Yacht",
-        "Kitchen",
-        "Motorcycle",
-        "Bike",
-        "Motorbike",
-        "Motor",
-      ],
-    },
-  ];
-  const mediumElement = [
-    {
-      title: "MEDIUM",
-      element: [
-        "Acrylic",
-        "Oil",
-        "Watercolor",
-        "Ink",
-        "Spray Paint",
-        "Gesso",
-        "Paper",
-        "Paint",
-        "Gouache",
-        "Pastel",
-        "Pencil",
-        "Digital",
-        "Charcoal",
-        "Graphite",
-        "Color",
-        "Enamel",
-        "Marker",
-        "Tempera",
-        "Household",
-        "Airbrush",
-        "Fabric",
-        "Resin",
-        "Wax",
-        "Wood",
-        "Chalk",
-        "Textile",
-        "Plaster",
-        "Black & White",
-        "Metal",
-        "Photo",
-        "Ballpoint Pen",
-        "Found Objects",
-        "Conte",
-        "Latex",
-        "Stencil",
-        "Manipulated",
-        "Plastic",
-        "Fiber",
-        "Vector",
-        "Screenprinting",
-        "Encaustic",
-        "Monotype",
-        "Glass",
-        "Stone",
-        "C-type",
-        "Clay",
-        "Crayon",
-        "3D Sculpting",
-        "Lithograph",
-        "Environmental",
-        "Ceramic",
-        "Neon",
-        "Dye Transfer",
-        "Full spectrum",
-        "Paper mache",
-        "Gelatin",
-        "Marble",
-        "Photogram",
-        "Engraving",
-        "Mosaic",
-        "Woodcut",
-        "Silverpoint",
-        "Aquatint",
-        "Linocuts",
-        "Kinetic",
-        "Bronze",
-        "Steel",
-        "Algorithmic Art",
-        "Leather",
-        "Giclée",
-        "Lights",
-        "Interactive",
-        "Fiberglass",
-        "Rubber",
-        "Etching",
-        "Fractal",
-        "LED",
-        "Timber",
-        "Platinum",
-        "Sound",
-        "Polaroid",
-        "Drypoint",
-        "Granite",
-        "Pottery",
-        "Robotics",
-        "Pen and Ink",
-        "Decoupage",
-        "Lenticular",
-        "Taxidermy",
-        "Mezzotint",
-        "Pinhole",
-      ],
-    },
-  ];
+  const [filterData, setFilterData] = useState({
+    style: [],
+    subject: [],
+    orientation: [],
+    medium: [],
+    material: [],
+    artistcountry: [],
+    featuredartist: [],
+  });
 
-  const materialElement = [
-    {
-      title: "MATERIAL",
-      element: [
-        "Canvas",
-        "Paper",
-        "Wood",
-        "Other",
-        "Cardboard",
-        "Soft (Yarn, Cotton, Fabric)",
-        "Plastic",
-        "Aluminium",
-        "Glass",
-        "acrylic",
-        "Carbon Fibre",
-        "Linen",
-        "Oil",
-        "Canvas board",
-        "Bronze",
-        "Steel",
-        "Stone",
-        "Panel",
-        "Marble",
-        "Ceramic",
-        "Iron",
-        "Oil Paint",
-        "Paint",
-        "Ink",
-        "Stainless Steel",
-        "Wood Panel",
-        "Acrylic Paint",
-        "Canvas Panel",
-        "Masonite",
-        "Watercolor",
-        "Varnish",
-        "Stretched Canvas",
-        "Gesso",
-        "Gold Leaf",
-        "Sound",
-        "Watercolor Paper",
-        "Mdf",
-        "Resin",
-        "Acrylic On Gallery-wrapped Canvas",
-        "Oil On Canvas",
-        "Sand",
-        "Linen Canvas",
-        "Hardboard",
-        "High Quality Professional Oil Art Paints, Canvas, Covered With Protective Varnish",
-        "Mixed Media",
-        "Acrylic On Canvas",
-        "Acrylics",
-        "High Quality Professional Oil Art Paints, Italian Linen Canvas, Covered With Protective Varnish",
-        "Charcoal",
-        "Pencil",
-        "Silk",
-        "Encaustic",
-        "Plexiglass",
-        "Watercolour",
-        "Pastel",
-        "Plywood",
-        "Collage",
-        "Digital",
-        "Plaster",
-        "Acid Free Canson Paper",
-        "Gold",
-        "Mdf Board",
-        "Acrylic Paints",
-        "Mdf Wood Panel",
-        "Spray paint",
-        "Newspaper",
-        "Frame",
-        "Marker",
-        "Oil Pastel",
-        "Raw Canvas",
-        "Wood Frame",
-        "Oil Paints",
-        "Palette Knife",
-        "Canvas Paper",
-        "Acrylic sealant",
-        "Carton",
-        "Unstretched Canvas",
-        "Wax",
-        "Graphite",
-        "Alcohol Ink",
-        "Rice Paper",
-        "Japanese Paper",
-        "Pigments",
-        "Arches 100 Percent Cotton Watercolor Paper",
-        "Fine Art Paper",
-        "Papyrus",
-        "Brush",
-        "Texture",
-        "Acid Free Foam Core Backing",
-        "Cotton Canvas",
-        "Glitter",
-        "Acrylic. Mixed Material",
-        "Rolled Canvas",
-        "Silver Leaf",
-        "Photography",
-        "Yupo",
-        "Canvasboard",
-        "Metal",
-        "Oil Painting",
-        "Textile",
-      ],
-    },
-  ];
+  const handleFilterData = (e) => {
+    const { value, checked, name } = e.target;
+    const newFilterData = { ...filterData };
 
-  const priceElement = [
-    {
-      title: "PRICE",
-      element: [
-        "Under ₹500",
-        "₹500 - ₹1,000",
-        "₹1,000 - ₹2,000",
-        "₹2,000 - ₹5,000",
-        "₹5,000 - ₹10,000",
-        "Over ₹10,000",
-      ],
-    },
-  ];
+    if (newFilterData[name]?.includes(value) === false && checked === true) {
+      newFilterData[name].push(value);
+    } else if (
+      newFilterData[name]?.includes(value) === true &&
+      checked === false
+    ) {
+      newFilterData[name] = newFilterData[name].filter(
+        (item) => item !== value
+      );
+    } else {
+      return;
+    }
+    setFilterData(newFilterData);
+  };
 
-  const sizeElement = [
-    {
-      title: "SIZE",
-      element: ["Small", "Medium", "Large", "Oversized"],
-    },
-  ];
+  console.log("filterData=============>", filterData);
 
-  const orientationElement = [
-    {
-      title: "ORIENTATION",
-      element: ["Horizontal", "Vertical", "Square"],
-    },
-  ];
-
-  const colorElement = [
-    {
-      title: "COLOR",
-      element: [],
-    },
-  ];
-
-  const artistCountryElement = [
-    {
-      title: "ARTIST COUNTRY",
-      element: [
-        "United States",
-        "United Kingdom",
-        "Germany",
-        "France",
-        "Spain",
-        "Italy",
-        "Canada",
-        "Netherlands",
-        "Ukraine",
-        "India",
-        "Poland",
-        "Australia",
-        "Hungary",
-        "Turkey",
-        "Serbia",
-        "Romania",
-        "Bulgaria",
-        "South Korea",
-        "Israel",
-        "Belgium",
-        "Czech Republic",
-        "Greece",
-        "Switzerland",
-        "Japan",
-        "Austria",
-        "Portugal",
-        "Pakistan",
-        "Brazil",
-        "Latvia",
-        "Mexico",
-        "Argentina",
-        "Slovakia",
-        "Armenia",
-        "China",
-        "Georgia",
-        "Vietnam",
-        "Indonesia",
-        "Lithuania",
-        "Sweden",
-        "South Africa",
-        "Moldova",
-        "Ireland",
-        "Slovenia",
-        "Norway",
-        "Kazakhstan",
-        "Nigeria",
-        "Estonia",
-        "Thailand",
-        "Croatia",
-        "Finland",
-        "Colombia",
-        "United Arab Emirates",
-        "Egypt",
-        "Sri Lanka",
-        "Denmark",
-        "Cyprus",
-        "New Zealand",
-        "Macedonia",
-        "Uruguay",
-        "Chile",
-        "Singapore",
-        "Hong Kong",
-        "Azerbaijan",
-        "Kenya",
-        "Bangladesh",
-        "Uzbekistan",
-        "Mozambique",
-        "Luxembourg",
-        "Malaysia",
-        "Ghana",
-        "Taiwan",
-        "Lebanon",
-        "Philippines",
-        "Montenegro",
-        "Costa Rica",
-        "Bosnia and Herzegovina",
-        "Ecuador",
-        "Saint Martin",
-        "Peru",
-        "Venezuela",
-        "Iceland",
-        "United States Minor Outlying Islands",
-        "Kyrgyzstan",
-        "Albania",
-        "Jamaica",
-        "Uganda",
-        "Malta",
-        "Morocco",
-        "Trinidad and Tobago",
-        "Qatar",
-        "Puerto Rico",
-        "Saudi Arabia",
-        "Paraguay",
-        "Sint Maarten",
-        "Tunisia",
-        "Russia",
-        "Jordan",
-        "Kosovo",
-        "Monaco",
-        "Nicaragua",
-      ],
-    },
-  ];
-
-  const featuredArtistElement = [
-    {
-      title: "FEATURED ARTIST",
-      element: [
-        "Artkya Catalog",
-        "Inside The Studio",
-        "Rising Stars",
-        "One To Watch",
-        "The Other Art Fair",
-      ],
-    },
-  ];
+  useEffect(() => {
+    const filterDataPayload = {
+      style: filterData?.style,
+      subject: filterData?.subject,
+      orientation: filterData?.orientation,
+      medium: filterData?.medium,
+      material: filterData?.material,
+      artistcountry: filterData?.artistcountry,
+      featuredartist: filterData?.featuredartist,
+    };
+   
+    dispatch({
+      type: "FILTER_ART",
+      payload: {
+        body:filterDataPayload
+      },
+    });
+  }, [filterData]);
 
   const showmore = () => {
     setItemsToShow(styleElement.length);
@@ -650,7 +102,36 @@ const Painting = () => {
               Paintings
             </div>
             <div className="px-4 bg-white border-t border-b border-slate-200 rounded-lg mt-2.5">
-              <Accordion element={styleElement} />
+              <Accordion
+                element={styleElement}
+                onCheckChange={(e) => {
+                  console.log(e.target.value);
+                  console.log(e.target.checked);
+                  if (
+                    filterData.style?.includes(e.target?.value) === false &&
+                    e.target?.checked === true
+                  ) {
+                    setFilterData({
+                      ...filterData,
+                      style: [...filterData.style, e.target?.value],
+                    });
+                  } else if (
+                    filterData.style?.includes(e.target?.value) === true &&
+                    e.target?.checked === false
+                  ) {
+                    setFilterData({
+                      ...filterData,
+                      styles: (filterData.style = filterData.style.filter(
+                        (singleValue) => {
+                          return singleValue !== e.target.value;
+                        }
+                      )),
+                    });
+                  } else {
+                    return;
+                  }
+                }}
+              />
 
               {/* {styleElement.slice(0, itemsToShow).map((c, ...rest) => (
                 <Accordion key={c.title} name={c.title} rest={rest} />
@@ -664,13 +145,31 @@ const Painting = () => {
               )} */}
             </div>
             <div className="px-4 bg-white border-t border-b border-slate-200 rounded-lg mt-2.5">
-              <Accordion element={subjectElement} />
+              <Accordion
+                element={subjectElement}
+                name={"subject"}
+                onCheckChange={(e) => {
+                  handleFilterData(e);
+                }}
+              />
             </div>
             <div className="px-4 bg-white border-t border-b border-slate-200 rounded-lg mt-2.5">
-              <Accordion element={mediumElement} />
+              <Accordion
+                element={mediumElement}
+                name={"medium"}
+                onCheckChange={(e) => {
+                  handleFilterData(e);
+                }}
+              />
             </div>
             <div className="px-4 bg-white border-t border-b border-slate-200 rounded-lg mt-2.5">
-              <Accordion element={materialElement} />
+              <Accordion
+                element={materialElement}
+                name={"material"}
+                onCheckChange={(e) => {
+                  handleFilterData(e);
+                }}
+              />
             </div>
             <div className="px-4 bg-white border-t border-b border-slate-200 rounded-lg mt-2.5">
               <Accordion element={priceElement} />
@@ -679,16 +178,34 @@ const Painting = () => {
               <Accordion element={sizeElement} />
             </div>
             <div className="px-4 bg-white border-t border-b border-slate-200 rounded-lg mt-2.5">
-              <Accordion element={orientationElement} />
+              <Accordion
+                element={orientationElement}
+                name={"orientation"}
+                onCheckChange={(e) => {
+                  handleFilterData(e);
+                }}
+              />
             </div>
             <div className="px-4 bg-white border-t border-b border-slate-200 rounded-lg mt-2.5">
               <Accordion element={colorElement} />
             </div>
             <div className="px-4 bg-white border-t border-b border-slate-200 rounded-lg mt-2.5">
-              <Accordion element={artistCountryElement} />
+              <Accordion
+                element={artistCountryElement}
+                name={"artistcountry"}
+                onCheckChange={(e) => {
+                  handleFilterData(e);
+                }}
+              />
             </div>
             <div className="px-4 bg-white border-t border-b border-slate-200 rounded-lg mt-2.5">
-              <Accordion element={featuredArtistElement} />
+              <Accordion
+                element={featuredArtistElement}
+                name={"featuredartist"}
+                onCheckChange={(e) => {
+                  handleFilterData(e);
+                }}
+              />
             </div>
           </div>
           <div className="w-4/6 mt-10 lg:flex">
