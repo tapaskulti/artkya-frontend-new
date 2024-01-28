@@ -17,7 +17,20 @@ import Accordion from "../components/Accordion";
 // import ArtItem from "../components/ArtItem";
 
 const Painting = () => {
-  const [itemsToShow, setItemsToShow] = useState();
+  const [toggleHide, setToggleHide] = useState(false);
+
+  const newstyleElement = styleElement.slice(0, 3);
+  const [buttonText, setButtonText] = useState("read more");
+
+  function handleClick() {
+    if (!toggleHide) {
+      setButtonText("hide");
+    } else {
+      setButtonText("read more");
+    }
+    setToggleHide(!toggleHide);
+  }
+
   // const body = [{
   //   title:"STYLE",
   //   element: [
@@ -630,14 +643,6 @@ const Painting = () => {
     },
   ];
 
-  const showmore = () => {
-    setItemsToShow(styleElement.length);
-  };
-
-  const showless = () => {
-    setItemsToShow(3);
-  };
-
   return (
     <>
       <div className="static">
@@ -651,17 +656,8 @@ const Painting = () => {
             </div>
             <div className="px-4 bg-white border-t border-b border-slate-200 rounded-lg mt-2.5">
               <Accordion element={styleElement} />
-
-              {/* {styleElement.slice(0, itemsToShow).map((c, ...rest) => (
-                <Accordion key={c.title} name={c.title} rest={rest} />
-              ))}
-              {styleElement.length > 3 && itemsToShow < 6 ? (
-                <button onClick={showmore}>Show More</button>
-              ) : itemsToShow > 3 && styleElement.length > 5 ? (
-                <button onClick={showless}>Show Less</button>
-              ) : (
-                ""
-              )} */}
+              {!toggleHide ? <div>{newstyleElement}</div> : <div>{styleElement}</div>}
+              <button onClick={() => handleClick()}>{buttonText}</button>
             </div>
             <div className="px-4 bg-white border-t border-b border-slate-200 rounded-lg mt-2.5">
               <Accordion element={subjectElement} />
