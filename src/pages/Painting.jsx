@@ -44,8 +44,9 @@ const Painting = () => {
     featuredartist: [],
   });
   const[searchCriteria,setSearchCriteria] = useState(undefined)
+  const[sortCriteria,setSortCriteria] = useState()
   const[searchInput,setSearchInput]=useState()
-  console.log(searchCriteria)
+ 
   // const [toggleHide, setToggleHide] = useState(false);
 
   // const newstyleElement = styleElement.slice(0, 3);
@@ -102,6 +103,30 @@ const Painting = () => {
     });
   }, [filterData]);
 
+  useEffect(()=>{
+    if(searchCriteria==="Art"){
+      dispatch({
+        type:"SEARCH_BY_ART_TITLE",
+        payload:searchInput
+      })
+    }else{
+      dispatch({
+        type:"SEARCH_BY_ARTIST",
+        payload:searchInput
+      })
+    }
+
+  },[searchInput,searchCriteria])
+
+
+  useEffect(()=>{
+    dispatch({
+      type:"SORT_ART",
+      payload:sortCriteria
+    })
+  },[sortCriteria])
+
+
   const options = [
     { value: "recomended", label: "Recomended" },
     { value: "newToOld", label: "New to Old" },
@@ -132,6 +157,10 @@ const Painting = () => {
             <input
               type="text"
               className="relative border border-l-transparent border-slate-300 py-1.5"
+              value={searchInput}
+              onChange={(e)=>{
+                setSearchInput(e.target.value)
+              }}
             />
           </div>
         </div>
@@ -142,6 +171,17 @@ const Painting = () => {
           <Select
             options={options}
             className="w-52 bg-white py-1.5 focus:outline-none focus:border-slate-300"
+            onChange={(e)=>{
+              if(e.label==="newToOld"){
+                setSortCriteria("newToOld")
+              }else if(e.label==="Price: Low to High"){
+                setSortCriteria("priceIncreasing")
+              }else if(e.label==="Price: High to Low"){
+                setSortCriteria("priceDecreacing")
+              }else{
+                setSortCriteria("")
+              }
+            }}
           />
         </div>
         <div className="mt-10 lg:flex">

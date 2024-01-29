@@ -41,6 +41,27 @@ try {
 }
 };
 
+export const searchArtByArtistAction = async (payload) => {  
+  try {
+    console.log("searchArtByArtistAction",payload)
+    const response = await axios.get(`${VITE_BASE_URL}/art/getArtByName?artByName=${payload}`);
+  
+    return response;
+  } catch (error) {
+    console.log(error)
+  }
+  };
+
+  export const searchArtByArtTitleAction = async (payload) => {  
+    try {
+      console.log("searchArtByArtTitleAction",payload)
+      const response = await axios.get(`${VITE_BASE_URL}/art/getArtByArtist?artist=${payload}`);
+    
+      return response;
+    } catch (error) {
+      console.log(error)
+    }
+    };
 
 
 

@@ -1,6 +1,6 @@
 
 import { call, put, takeEvery } from "redux-saga/effects";
-import { FiltersAction, getAllArtAction} from "../api/artAction";
+import { FiltersAction, getAllArtAction, searchArtByArtTitleAction, searchArtByArtistAction} from "../api/artAction";
 import { toast } from "react-toastify";
 import { setAllArt, setAllFilteredArt, setFilteredIsLoading, setIsLoading } from "../redux/app/art/artSlice";
 
@@ -71,6 +71,77 @@ export function* getAllArtSaga(action) {
       );
       yield put(setAllArt({ allArt: response?.data?.data }));
     }
+  } catch (error) {
+    toast.warning(error.message);
+  }
+}
+
+export function* searchArtByTitleSaga(action) {
+  
+  try {
+    yield put(
+      setFilteredIsLoading({
+              isFilteredDataLoading: true,
+          })
+        );
+    const response = yield call(searchArtByArtTitleAction, action.payload);
+
+    // console.log("response from art saga",response?.data?.data);
+    // if (response.status === 200) {
+    //   yield put(
+    //     setIsLoading({
+    //       isLoading: false,
+    //     })
+    //   );
+    //   yield put(setAllArt({ allArt: response?.data?.data }));
+    // }
+  } catch (error) {
+    toast.warning(error.message);
+  }
+}
+
+export function* searchArtByArtistSaga(action) {
+  
+  try {
+    yield put(
+      setFilteredIsLoading({
+              isFilteredDataLoading: true,
+          })
+        );
+    const response = yield call(searchArtByArtistAction, action.payload);
+
+    // console.log("response from art saga",response?.data?.data);
+    // if (response.status === 200) {
+    //   yield put(
+    //     setIsLoading({
+    //       isLoading: false,
+    //     })
+    //   );
+    //   yield put(setAllArt({ allArt: response?.data?.data }));
+    // }
+  } catch (error) {
+    toast.warning(error.message);
+  }
+}
+export function* sortArtSaga(action) {
+  
+  try {
+    yield put(
+      setFilteredIsLoading({
+              isFilteredDataLoading: true,
+          })
+        );
+    const response = yield call(searchArtByArtistAction, action.payload);
+
+    // console.log("response from art saga",response?.data?.data);
+    // if (response.status === 200) {
+    //   yield put(
+    //     setIsLoading({
+    //       isLoading: false,
+    //     })
+    //   );
+    //   yield put(setAllArt({ allArt: response?.data?.data }));
+    // }
   } catch (error) {
     toast.warning(error.message);
   }
@@ -221,7 +292,10 @@ export function* getAllArtSaga(action) {
 export function* watchAsyncArtSaga() {
   // yield takeEvery("CREATE_POST", createPostSaga);
   yield takeEvery("FILTER_ART", filterArtSaga);
-    yield takeEvery("ALL_ART", getAllArtSaga);
+  yield takeEvery("ALL_ART", getAllArtSaga);
+  yield takeEvery("SEARCH_BY_ART_TITLE", searchArtByTitleSaga);
+  yield takeEvery("SEARCH_BY_ARTIST", searchArtByArtistSaga); 
+  yield takeEvery("SORT_ART", sortArtSaga); 
   // yield takeEvery("CREATE_NONSELECT_ART", createNonselecctArtSaga);
 
   // yield takeEvery("ALL_NONSELECT_ART", getAllNonSelectArtSaga);
