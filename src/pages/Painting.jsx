@@ -128,7 +128,7 @@ const Painting = () => {
           </h2>
           <Select
             options={options}
-            className="w-64 bg-white px-3 py-1.5 focus:outline-none focus:border-slate-300"
+            className="w-52 bg-white py-1.5 focus:outline-none focus:border-slate-300"
           />
         </div>
         <div className="mt-10 lg:flex">
