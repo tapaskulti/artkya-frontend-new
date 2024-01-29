@@ -137,16 +137,7 @@ const Painting = () => {
             <div className="w-full bg-gray-50 border border-gray-200 backdrop-blur-lg rounded-md mt-6 px-3 py-2 text-xl text-center">
               Paintings
             </div>
-            <div className="px-4 bg-white border-t border-b border-slate-200 rounded-lg mt-2.5">
-              <Accordion
-                element={styleElement}
-                name={"style"}
-                onCheckChange={(e) => {
-                  console.log(e.target.value);
-                  console.log(e.target.checked);
-                  handleFilterData(e);
-                }}
-              />
+            <div className="px-4 bg-white border-t border-b border-slate-200 rounded-lg mt-2.5">            
 
               {/* {styleElement.slice(0, itemsToShow).map((c, ...rest) => (
                 <Accordion key={c.title} name={c.title} rest={rest} />
