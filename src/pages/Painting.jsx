@@ -26,6 +26,7 @@ import {
   subjectElement,
 } from "../utlis/filterData";
 import { useDispatch } from "react-redux";
+import Select from "react-select";
 
 // import ArtItem from "../components/ArtItem";
 
@@ -41,19 +42,19 @@ const Painting = () => {
     artistcountry: [],
     featuredartist: [],
   });
-  const [toggleHide, setToggleHide] = useState(false);
+  // const [toggleHide, setToggleHide] = useState(false);
 
-  const newstyleElement = styleElement.slice(0, 3);
-  const [buttonText, setButtonText] = useState("read more");
+  // const newstyleElement = styleElement.slice(0, 3);
+  // const [buttonText, setButtonText] = useState("read more");
 
-  function handleClick() {
-    if (!toggleHide) {
-      setButtonText("hide");
-    } else {
-      setButtonText("read more");
-    }
-    setToggleHide(!toggleHide);
-  }
+  // function handleClick() {
+  //   if (!toggleHide) {
+  //     setButtonText("hide");
+  //   } else {
+  //     setButtonText("read more");
+  //   }
+  //   setToggleHide(!toggleHide);
+  // }
 
   const handleFilterData = (e) => {
     const { value, checked, name } = e.target;
@@ -95,11 +96,24 @@ const Painting = () => {
     });
   }, [filterData]);
 
+  const options = [
+    { value: "recomended", label: "Recomended" },
+    { value: "newToOld", label: "New to Old" },
+    { value: "priceLowHigh", label: "Price: Low to High" },
+    { value: "priceHighLow", label: "Price: High to Low" },
+  ];
+
   return (
     <>
       <div className="static">
         <Header />
-        <h2 className="px-10">Painting</h2>
+        <div className="flex items-center justify-between px-10 mt-5">
+          <h2 className="text-slate-900 text-3xl font-thin">Original Paintings For Sale</h2>
+          <Select
+            options={options}
+            className="w-64 bg-white px-3 py-1.5 focus:outline-none focus:border-slate-300"
+          />
+        </div>
         <div className="mt-10 lg:flex">
           <div className="w-1/4 rounded-lg rounded-br-xl px-10">
             <h2>Category</h2>
