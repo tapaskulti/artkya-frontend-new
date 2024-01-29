@@ -2,7 +2,7 @@
 import { useState } from "react";
 
 // eslint-disable-next-line react/prop-types
-const Accordion = ({ element }) => {
+const Accordion = ({ element,onCheckChange,name}) => {
   const [accordionOpen, setAccordionOpen] = useState(false);
   return (
     <div className="py-2">
@@ -45,22 +45,15 @@ const Accordion = ({ element }) => {
             : "grid-rows-[0fr] opacity-0"
         }`}
       >
-        {/* <div className="overflow-hidden">{answer}</div> */}
-
         <div className="overflow-hidden">
           {element[0]?.element?.map((singleElement) => {
-            
-            {/* console.log(singleElement); */}
             return (
-              <>
+              <div key={singleElement?.title}>
                 <div className="flex items-center space-x-2">
-                  <input type="checkbox" className="border border-slate-50" value={singleElement} onChange={(e) =>{
-                    console.log(element[0]?.title)
-                    console.log(e.target.value)
-                  }}></input>
+                  <input type="checkbox" className="border border-slate-50" name={name} value={singleElement} onChange={onCheckChange}></input>
                   <div className="my-0.5">{singleElement}</div>
                 </div>
-              </>
+              </div>
             );
           })}
         </div>
@@ -70,3 +63,5 @@ const Accordion = ({ element }) => {
 };
 
 export default Accordion;
+
+
