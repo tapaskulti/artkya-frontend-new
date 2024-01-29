@@ -10,7 +10,9 @@ export const createArtAction = async (payload) => {
     });
 
     return response;
-  } catch (error) {}
+  } catch (error) {
+    console.log(error)
+  }
 };
 
 
@@ -27,6 +29,18 @@ export const FiltersAction = async(payload)=>{
   console.log(error)
  }
 }
+
+export const getAllArtAction = async (payload) => {  
+try {
+  console.log("all art action called")
+  const response = await axios.get(`${VITE_BASE_URL}/art/getAllArt`);
+
+  return response;
+} catch (error) {
+  console.log(error)
+}
+};
+
 
 
 
@@ -46,16 +60,6 @@ export const createNonSelectArtAction = async (payload) => {
   } catch (error) {}
 };
 
-export const getAllArtAction = async (payload) => {
-  let response;
-  if (payload) {
-    response = await axios.get(`${VITE_BASE_URL}/art?year=${payload}`);
-  } else {
-    response = await axios.get(`${VITE_BASE_URL}/art`);
-  }
-
-  return response;
-};
 
 export const getAllNonSelectArtAction = async (payload) => {
   let response;

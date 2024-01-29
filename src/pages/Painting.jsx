@@ -25,13 +25,14 @@ import {
   styleElement,
   subjectElement,
 } from "../utlis/filterData";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Select from "react-select";
 
 // import ArtItem from "../components/ArtItem";
 
 const Painting = () => {
   const dispatch = useDispatch();
+  const { filteredArt, allArt } = useSelector((state) => state.art);
   const [itemsToShow, setItemsToShow] = useState();
   const [filterData, setFilterData] = useState({
     style: [],
@@ -42,6 +43,9 @@ const Painting = () => {
     artistcountry: [],
     featuredartist: [],
   });
+  const[searchCriteria,setSearchCriteria] = useState(undefined)
+  const[searchInput,setSearchInput]=useState()
+  console.log(searchCriteria)
   // const [toggleHide, setToggleHide] = useState(false);
 
   // const newstyleElement = styleElement.slice(0, 3);
@@ -55,6 +59,8 @@ const Painting = () => {
   //   }
   //   setToggleHide(!toggleHide);
   // }
+
+
 
   const handleFilterData = (e) => {
     const { value, checked, name } = e.target;
@@ -114,6 +120,13 @@ const Painting = () => {
                 { value: "art", label: "Art" },
                 { value: "artist", label: "Artist" },
               ]}
+              onChange={(e)=>{
+                if(e.label==="Art"){
+                  setSearchCriteria("Art")
+                }else{
+                  setSearchCriteria("Artist")
+                }
+              }}
               className="rounded-none absolute -right-6 w-32 px-3 py-1.5 focus:outline-none focus:border-slate-300"
             />
             <input
@@ -237,57 +250,25 @@ const Painting = () => {
           <div className="w-4/6 mt-10 lg:flex">
             <div className="">
               {/* <div className="bg-gray-100 h-auto backdrop-blur-lg rounded-md w-full md:max-lg:max-w-screen-sm md:max-lg:mx-auto mt-6 px-3 py-2">Left</div> */}
-              <div className="mt-20">
+              <div className="mt-20 ">
                 <div className="h-auto mt-32 gap-10 lg:gap-16 columns-1 md:columns-2 lg:columns-3 2xl:columns-3 gap-y-16 [&>img:not(:first-child)]:mt-5 lg:[&>img:not(:first-child)]:mt-16">
-                  <div>
-                    <img src={Img1} alt="" />
+                  {allArt?.map((singleArt) => {
+                   return(
+                    <div key={singleArt._id} >
+                    <img src={singleArt?.thumbnail?.secure_url} alt="" />
                     <br />
                     <div>
-                      <ArtDetails />
+                      <ArtDetails
+                      title={singleArt?.title}
+                      width={singleArt?.width}
+                      height={singleArt?.height}
+                      depth={singleArt?.depth}
+                      price={singleArt?.price}
+                      />
                     </div>
                   </div>
-                  <div>
-                    <img src={Img3} alt="" />
-                    <br />
-                    <div>
-                      <ArtDetails />
-                    </div>
-                  </div>
-                  <div>
-                    <img src={Img14} alt="" />
-                    <br />
-                    <div>
-                      <ArtDetails />
-                    </div>
-                  </div>
-                  <div>
-                    <img src={Img6} alt="" />
-                    <br />
-                    <div>
-                      <ArtDetails />
-                    </div>
-                  </div>
-                  <div>
-                    <img src={Img8} alt="" />
-                    <br />
-                    <div>
-                      <ArtDetails />
-                    </div>
-                  </div>
-                  <div>
-                    <img src={Img9} alt="" />
-                    <br />
-                    <div>
-                      <ArtDetails />
-                    </div>
-                  </div>
-                  <div>
-                    <img src={Img12} alt="" />
-                    <br />
-                    <div>
-                      <ArtDetails />
-                    </div>
-                  </div>
+                   )
+                  })}
                 </div>
               </div>
             </div>
@@ -356,24 +337,32 @@ export const SkeletonLoader = () => {
   );
 };
 
-export const ArtDetails = () => {
+export const ArtDetails = ({
+  title,
+  width,
+  height,
+  depth,
+  price,
+  artist,
+  artistCountry,
+}) => {
   return (
     <div className="w-full text-black">
       <div className="text-sm font-normal lg:text-base xl:text-lg lg:items-start lg:justify-normal lg:flex-col">
         <div className="text-gray-500 lg:text-base xl:text-base">
-          ID: AK125436
+          {title}
         </div>
         <div className="-mt-1 text-sm font-semibold text-gray-500 lg:text-base xl:text-base md:text-sm">
-          <div className="lg:text-xs xl:text-xs">W 120 * H 300 inches</div>
+          <div className="lg:text-xs xl:text-xs"> {width} W x {height} H x {depth} D inches</div>
         </div>
       </div>
       <div className="flex justify-between text-sm font-semibold text-gray-500 xl:text-base md:text-sm my-5">
         <div>
-          <div className="text-sm">Elizabeth Becker</div>
-          <div className="text-xs -pt-2">United States</div>
+          <div className="text-sm">{artist}</div>
+          <div className="text-xs -pt-2">{artistCountry}</div>
         </div>
         <div>
-          <span className="text-sm">Price:</span> Print Copy $75
+          <span className="text-sm">Price:</span> Print Copy {price}
         </div>
       </div>
     </div>

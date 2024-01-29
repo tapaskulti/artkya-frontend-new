@@ -46,9 +46,9 @@ const Accordion = ({ element,onCheckChange,name}) => {
         }`}
       >
         <div className="overflow-hidden">
-          {element[0]?.element?.map((singleElement) => {
+          {element[0]?.element?.map((singleElement,index) => {
             return (
-              <div key={singleElement?.title}>
+              <div key={index}>
                 <div className="flex items-center space-x-2">
                   <input type="checkbox" className="border border-slate-50" name={name} value={singleElement} onChange={onCheckChange}></input>
                   <div className="my-0.5">{singleElement}</div>
