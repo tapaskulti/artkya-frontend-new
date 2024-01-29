@@ -13,15 +13,11 @@ import { AiOutlineUser } from "react-icons/ai";
 import { CiHeart } from "react-icons/ci";
 import { IoBagHandleOutline } from "react-icons/io5";
 import { useSelector } from "react-redux";
-import Select from "react-select";
 
 const Header = () => {
   // const {token, user} = useSelector((state) => state.user);
   const [dropDownOpen, setdropDownOpen] = useState(false);
-  const options = [
-    { value: "art", label: "Art" },
-    { value: "artist", label: "Artist" },
-  ];
+  
   return (
     <>
       <div className="items-center w-full scroll ">
@@ -112,17 +108,7 @@ const Header = () => {
               </ul>
             </div>
           </div>
-        </div>
-        <div className="flex justify-end px-10 py-2 border-b border-slate-200">
-          <div className=" flex items-center">
-          <Select
-              options={options}
-              className="rounded-none absolute -right-6 w-32 px-3 py-1.5 focus:outline-none focus:border-slate-300"
-            />
-          <input type="text" className="relative border border-l-transparent border-slate-300 py-1.5" />
-            
-          </div>
-        </div>
+        </div>        
       </div>
     </>
   );
