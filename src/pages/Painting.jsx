@@ -86,11 +86,11 @@ const Painting = () => {
       artistcountry: filterData?.artistcountry,
       featuredartist: filterData?.featuredartist,
     };
-   
+
     dispatch({
       type: "FILTER_ART",
       payload: {
-        body:filterDataPayload
+        body: filterDataPayload,
       },
     });
   }, [filterData]);
@@ -109,32 +109,11 @@ const Painting = () => {
             <div className="px-4 bg-white border-t border-b border-slate-200 rounded-lg mt-2.5">
               <Accordion
                 element={styleElement}
+                name={"style"}
                 onCheckChange={(e) => {
                   console.log(e.target.value);
                   console.log(e.target.checked);
-                  if (
-                    filterData.style?.includes(e.target?.value) === false &&
-                    e.target?.checked === true
-                  ) {
-                    setFilterData({
-                      ...filterData,
-                      style: [...filterData.style, e.target?.value],
-                    });
-                  } else if (
-                    filterData.style?.includes(e.target?.value) === true &&
-                    e.target?.checked === false
-                  ) {
-                    setFilterData({
-                      ...filterData,
-                      styles: (filterData.style = filterData.style.filter(
-                        (singleValue) => {
-                          return singleValue !== e.target.value;
-                        }
-                      )),
-                    });
-                  } else {
-                    return;
-                  }
+                  handleFilterData(e);
                 }}
               />
 
@@ -148,9 +127,17 @@ const Painting = () => {
               ) : (
                 ""
               )} */}
-              <Accordion element={styleElement} />
-              {!toggleHide ? <div>{newstyleElement}</div> : <div>{styleElement}</div>}
-              <button onClick={() => handleClick()}>{buttonText}</button>
+
+              {/* {!toggleHide ? (
+                <>
+                  <div>{newstyleElement}</div>
+                </>
+              ) : (
+                <>
+                  <div>{styleElement}</div>
+                </>
+              )} */}
+              {/* <button onClick={() => handleClick()}>{buttonText}</button> */}
             </div>
             <div className="px-4 bg-white border-t border-b border-slate-200 rounded-lg mt-2.5">
               <Accordion
