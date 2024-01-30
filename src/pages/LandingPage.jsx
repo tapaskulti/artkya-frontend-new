@@ -58,13 +58,15 @@ const LandingPage = () => {
             {/* <div className="bg-gray-100 h-auto backdrop-blur-lg rounded-md w-full md:max-lg:max-w-screen-sm md:max-lg:mx-auto mt-6 px-3 py-2">Left</div> */}
             <div className="mt-20 px-5 md:px-10">
               <div className="h-auto mt-32 gap-10 lg:gap-16 columns-1 md:columns-2 lg:columns-3 2xl:columns-4 gap-y-16 [&>img:not(:first-child)]:mt-5 lg:[&>img:not(:first-child)]:mt-16">
-                <div>
-                  <img src={Img1} alt="" />
-                  <br />
+                <Link to="/artistProfilePage">
                   <div>
-                    <ArtDetails />
+                    <img src={Img1} alt="" />
+                    <br />
+                    <div>
+                      <ArtDetails />
+                    </div>
                   </div>
-                </div>
+                </Link>
                 {/* <div>
                   <img src={Img2} alt="" />
                   <br />
@@ -419,7 +421,7 @@ export const ArtDetails = () => {
           ID: AK125436
         </div>
         <div className="-mt-1 text-sm font-semibold text-gray-500 lg:text-base xl:text-base md:text-sm">
-          <div className="lg:text-xs xl:text-xs">W 120 * H 300 inches</div>          
+          <div className="lg:text-xs xl:text-xs">W 120 * H 300 inches</div>
         </div>
       </div>
       <div className="flex justify-between text-sm font-semibold text-gray-500 xl:text-base md:text-sm my-5">
