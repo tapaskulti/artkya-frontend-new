@@ -10,23 +10,12 @@ import Img6 from "../assets/img6.jpg";
 import Img8 from "../assets/img8.jpg";
 import Img9 from "../assets/img9.jpg";
 import Img12 from "../assets/img12.jpg";
+import phouzdar_photo from "../assets/artist.jpg";
 
 import { faPaintBrush } from "@fortawesome/free-solid-svg-icons";
-import Accordion from "../components/Accordion";
-import {
-  artistCountryElement,
-  colorElement,
-  featuredArtistElement,
-  materialElement,
-  mediumElement,
-  orientationElement,
-  priceElement,
-  sizeElement,
-  styleElement,
-  subjectElement,
-} from "../utlis/filterData";
 import { useDispatch } from "react-redux";
 import Select from "react-select";
+import { Link } from "react-router-dom";
 
 // import ArtItem from "../components/ArtItem";
 
@@ -132,37 +121,63 @@ const Painting = () => {
           />
         </div>
         <div className="mt-10 lg:flex">
-          <div className="w-1/4 rounded-lg rounded-br-xl px-10">
-            <h2>Category</h2>
-            <div className="w-full bg-gray-50 border border-gray-200 backdrop-blur-lg rounded-md mt-6 px-3 py-2 text-xl text-center">
-              Paintings
-            </div>
-            <div className="px-4 bg-white border-t border-b border-slate-200 rounded-lg mt-2.5">            
+        <div className="relative mx-5 md:mx-0">
+            {/* background and phauzdar image */}
+            <div className="bg-gray-100 h-auto backdrop-blur-lg w-full md:max-lg:max-w-screen-sm md:max-lg:mx-auto lg:w-[23rem] md:px-10 px-5 md:mx-5  lg:mx-7 translate-y-20  rounded-lg rounded-br-xl">
+              <img
+                src={phouzdar_photo}
+                className="relative object-fill mx-auto transform -translate-y-20 border-8 border-white rounded-full w-52 h-52 "
+                alt="Phauzdar"
+              />
+              <div className="relative z-10 flex-col justify-center -translate-y-16">
+                <div className="mb-5 border-b-2 rounded-full">
+                  <div className="flex justify-center font-sans text-2xl font-semibold text-gray-600">
+                    Pranab Phauzdar{" "}
+                  </div>
 
-              {/* {styleElement.slice(0, itemsToShow).map((c, ...rest) => (
-                <Accordion key={c.title} name={c.title} rest={rest} />
-              ))}
-              {styleElement.length > 3 && itemsToShow < 6 ? (
-                <button onClick={showmore}>Show More</button>
-              ) : itemsToShow > 3 && styleElement.length > 5 ? (
-                <button onClick={showless}>Show Less</button>
-              ) : (
-                ""
-              )} */}
+                  <div className="flex justify-center text-gray-600">
+                    1957, Kolkata, India
+                  </div>
+                </div>
 
-              {/* {!toggleHide ? (
-                <>
-                  <div>{newstyleElement}</div>
-                </>
-              ) : (
-                <>
-                  <div>{styleElement}</div>
-                </>
-              )} */}
-              {/* <button onClick={() => handleClick()}>{buttonText}</button> */}
-            </div>
-            <div className="px-4 bg-white border-t border-b border-slate-200 rounded-lg mt-2.5">
-              dfksdf
+                <div className="text-sm tracking-wider text-justify text-gray-700 md:w-auto lg:w-auto ">
+                  Phauzdar studied Fine Arts in Kolkata and is an extremely
+                  modest artist who believes that his art should speak to the
+                  viewer and not his curriculum vitae. He lives and works at
+                  Kolkata, India.
+                </div>
+
+                <div className="pt-5">
+                  <div className="text-lg text-teal-600 border-b-2">
+                    Exhibitions
+                  </div>
+                  <div className="w-auto h-60 pt-2 space-y-2 overflow-y-auto lg:w-72">
+                    <ExhibitionItem
+                      exhibitionName="Group Exhibition at the Lalit Kala Academy New Delhi"
+                      year="1978-1979"
+                    />
+                    <ExhibitionItem
+                      exhibitionName="Solo Exhibition of colleges"
+                      year="1985"
+                    />
+                    <ExhibitionItem
+                      exhibitionName="Solo Exhibition oil paintings at the Academy of Fine Arts Kolkata"
+                      year="1986"
+                    />
+                    <ExhibitionItem
+                      exhibitionName="Jehangir Art Gallery Mumbai"
+                      year="1986"
+                    />
+                    <ExhibitionItem
+                      exhibitionName="Solo Exhibition of colleges"
+                      year="1985"
+                    />
+                  </div>
+                  <div className="my-3 text-sm text-right text-blue-700 hover:underline">
+                    <Link to="/aboutus">Read More</Link>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
           <div className="w-4/6 mt-10 lg:flex">
