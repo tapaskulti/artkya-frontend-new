@@ -43,10 +43,10 @@ const Painting = () => {
     artistcountry: [],
     featuredartist: [],
   });
-  const[searchCriteria,setSearchCriteria] = useState(undefined)
-  const[sortCriteria,setSortCriteria] = useState()
-  const[searchInput,setSearchInput]=useState()
- 
+  const [searchCriteria, setSearchCriteria] = useState("none");
+  const [sortCriteria, setSortCriteria] = useState("none");
+  const [searchInput, setSearchInput] = useState("");
+
   // const [toggleHide, setToggleHide] = useState(false);
 
   // const newstyleElement = styleElement.slice(0, 3);
@@ -60,8 +60,6 @@ const Painting = () => {
   //   }
   //   setToggleHide(!toggleHide);
   // }
-
-
 
   const handleFilterData = (e) => {
     const { value, checked, name } = e.target;
@@ -82,7 +80,7 @@ const Painting = () => {
     setFilterData(newFilterData);
   };
 
-  console.log("filterData=============>", filterData);
+  // console.log("filterData=============>", filterData);
 
   useEffect(() => {
     const filterDataPayload = {
@@ -98,37 +96,37 @@ const Painting = () => {
     dispatch({
       type: "FILTER_ART",
       payload: {
+        sortingCriteria: sortCriteria,
         body: filterDataPayload,
       },
     });
   }, [filterData]);
 
-  useEffect(()=>{
-    if(searchCriteria==="Art"){
+  useEffect(() => {
+    if (searchCriteria === "Art") {
       dispatch({
-        type:"SEARCH_BY_ART_TITLE",
-        payload:searchInput
-      })
-    }else{
+        type: "SEARCH_BY_ART_TITLE",
+        payload: searchInput,
+      });
+    } else {
       dispatch({
-        type:"SEARCH_BY_ARTIST",
-        payload:searchInput
-      })
+        type: "SEARCH_BY_ARTIST",
+        payload: searchInput,
+      });
     }
+  }, [searchInput, searchCriteria]);
 
-  },[searchInput,searchCriteria])
+  console.log("sortCriteria==>", sortCriteria);
 
-
-  useEffect(()=>{
+  useEffect(() => {
     dispatch({
-      type:"SORT_ART",
-      payload:sortCriteria
-    })
-  },[sortCriteria])
-
+      type: "ALL_ART",
+      payload: { sortCriteria, searchCriteria, searchInput },
+    });
+  }, [sortCriteria, searchCriteria, searchInput, dispatch]);
 
   const options = [
-    { value: "recomended", label: "Recomended" },
+    // { value: "recomended", label: "Recomended" },
     { value: "newToOld", label: "New to Old" },
     { value: "priceLowHigh", label: "Price: Low to High" },
     { value: "priceHighLow", label: "Price: High to Low" },
@@ -145,11 +143,11 @@ const Painting = () => {
                 { value: "art", label: "Art" },
                 { value: "artist", label: "Artist" },
               ]}
-              onChange={(e)=>{
-                if(e.label==="Art"){
-                  setSearchCriteria("Art")
-                }else{
-                  setSearchCriteria("Artist")
+              onChange={(e) => {
+                if (e.label === "Art") {
+                  setSearchCriteria("Art");
+                } else {
+                  setSearchCriteria("Artist");
                 }
               }}
               className="rounded-none absolute -right-6 w-32 px-3 py-1.5 focus:outline-none focus:border-slate-300"
@@ -158,8 +156,8 @@ const Painting = () => {
               type="text"
               className="relative border border-l-transparent border-slate-300 py-1.5"
               value={searchInput}
-              onChange={(e)=>{
-                setSearchInput(e.target.value)
+              onChange={(e) => {
+                setSearchInput(e.target.value);
               }}
             />
           </div>
@@ -171,15 +169,15 @@ const Painting = () => {
           <Select
             options={options}
             className="w-52 bg-white py-1.5 focus:outline-none focus:border-slate-300"
-            onChange={(e)=>{
-              if(e.label==="newToOld"){
-                setSortCriteria("newToOld")
-              }else if(e.label==="Price: Low to High"){
-                setSortCriteria("priceIncreasing")
-              }else if(e.label==="Price: High to Low"){
-                setSortCriteria("priceDecreacing")
-              }else{
-                setSortCriteria("")
+            onChange={(e) => {
+              if (e.label === "New to Old") {
+                setSortCriteria("newToOld");
+              } else if (e.label === "Price: Low to High") {
+                setSortCriteria("incresingPrice");
+              } else if (e.label === "Price: High to Low") {
+                setSortCriteria("decreasingPrice");
+              } else {
+                setSortCriteria("none");
               }
             }}
           />
@@ -293,21 +291,21 @@ const Painting = () => {
               <div className="mt-20 ">
                 <div className="h-auto mt-32 gap-10 lg:gap-16 columns-1 md:columns-2 lg:columns-3 2xl:columns-3 gap-y-16 [&>img:not(:first-child)]:mt-5 lg:[&>img:not(:first-child)]:mt-16">
                   {allArt?.map((singleArt) => {
-                   return(
-                    <div key={singleArt._id} >
-                    <img src={singleArt?.thumbnail?.secure_url} alt="" />
-                    <br />
-                    <div>
-                      <ArtDetails
-                      title={singleArt?.title}
-                      width={singleArt?.width}
-                      height={singleArt?.height}
-                      depth={singleArt?.depth}
-                      price={singleArt?.price}
-                      />
-                    </div>
-                  </div>
-                   )
+                    return (
+                      <div key={singleArt._id}>
+                        <img src={singleArt?.thumbnail?.secure_url} alt="" />
+                        <br />
+                        <div>
+                          <ArtDetails
+                            title={singleArt?.title}
+                            width={singleArt?.width}
+                            height={singleArt?.height}
+                            depth={singleArt?.depth}
+                            price={singleArt?.price}
+                          />
+                        </div>
+                      </div>
+                    );
                   })}
                 </div>
               </div>
@@ -389,11 +387,12 @@ export const ArtDetails = ({
   return (
     <div className="w-full text-black">
       <div className="text-sm font-normal lg:text-base xl:text-lg lg:items-start lg:justify-normal lg:flex-col">
-        <div className="text-gray-500 lg:text-base xl:text-base">
-          {title}
-        </div>
+        <div className="text-gray-500 lg:text-base xl:text-base">{title}</div>
         <div className="-mt-1 text-sm font-semibold text-gray-500 lg:text-base xl:text-base md:text-sm">
-          <div className="lg:text-xs xl:text-xs"> {width} W x {height} H x {depth} D inches</div>
+          <div className="lg:text-xs xl:text-xs">
+            {" "}
+            {width} W x {height} H x {depth} D inches
+          </div>
         </div>
       </div>
       <div className="flex justify-between text-sm font-semibold text-gray-500 xl:text-base md:text-sm my-5">

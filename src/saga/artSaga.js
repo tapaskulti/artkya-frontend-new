@@ -1,8 +1,17 @@
-
 import { call, put, takeEvery } from "redux-saga/effects";
-import { FiltersAction, getAllArtAction, searchArtByArtTitleAction, searchArtByArtistAction} from "../api/artAction";
+import {
+  FiltersAction,
+  getAllArtAction,
+  searchArtByArtTitleAction,
+  searchArtByArtistAction,
+} from "../api/artAction";
 import { toast } from "react-toastify";
-import { setAllArt, setAllFilteredArt, setFilteredIsLoading, setIsLoading } from "../redux/app/art/artSlice";
+import {
+  setAllArt,
+  setAllFilteredArt,
+  setFilteredIsLoading,
+  setIsLoading,
+} from "../redux/app/art/artSlice";
 
 // export function* createPostSaga(action) {
 //   try {
@@ -28,24 +37,22 @@ import { setAllArt, setAllFilteredArt, setFilteredIsLoading, setIsLoading } from
 //   }
 // }
 
-
-
 export function* filterArtSaga(action) {
-    yield put(
-        setFilteredIsLoading({
-                isFilteredDataLoading: true,
-            })
-          );
+  yield put(
+    setFilteredIsLoading({
+      isFilteredDataLoading: true,
+    })
+  );
   // console.log("filterArtSaga=============>",action.payload)
   try {
     const response = yield call(FiltersAction, action.payload);
-    if (response.status === 200) {
+    if (response?.status === 200) {
       yield put(
         setFilteredIsLoading({
           isuploading: false,
         })
       );
-      yield put(setAllFilteredArt({filteredArt:response?.data?.data}));
+      yield put(setAllFilteredArt({ filteredArt: response?.data?.data }));
     }
   } catch (error) {
     console.log(error);
@@ -53,7 +60,6 @@ export function* filterArtSaga(action) {
 }
 
 export function* getAllArtSaga(action) {
-  
   try {
     yield put(
       setIsLoading({
@@ -62,7 +68,7 @@ export function* getAllArtSaga(action) {
     );
     const response = yield call(getAllArtAction, action.payload);
 
-    // console.log("response from art saga",response?.data?.data);
+    console.log("response from art saga", response?.data?.data);
     if (response.status === 200) {
       yield put(
         setIsLoading({
@@ -77,13 +83,12 @@ export function* getAllArtSaga(action) {
 }
 
 export function* searchArtByTitleSaga(action) {
-  
   try {
     yield put(
       setFilteredIsLoading({
-              isFilteredDataLoading: true,
-          })
-        );
+        isFilteredDataLoading: true,
+      })
+    );
     const response = yield call(searchArtByArtTitleAction, action.payload);
 
     // console.log("response from art saga",response?.data?.data);
@@ -101,13 +106,12 @@ export function* searchArtByTitleSaga(action) {
 }
 
 export function* searchArtByArtistSaga(action) {
-  
   try {
     yield put(
       setFilteredIsLoading({
-              isFilteredDataLoading: true,
-          })
-        );
+        isFilteredDataLoading: true,
+      })
+    );
     const response = yield call(searchArtByArtistAction, action.payload);
 
     // console.log("response from art saga",response?.data?.data);
@@ -123,30 +127,6 @@ export function* searchArtByArtistSaga(action) {
     toast.warning(error.message);
   }
 }
-export function* sortArtSaga(action) {
-  
-  try {
-    yield put(
-      setFilteredIsLoading({
-              isFilteredDataLoading: true,
-          })
-        );
-    const response = yield call(searchArtByArtistAction, action.payload);
-
-    // console.log("response from art saga",response?.data?.data);
-    // if (response.status === 200) {
-    //   yield put(
-    //     setIsLoading({
-    //       isLoading: false,
-    //     })
-    //   );
-    //   yield put(setAllArt({ allArt: response?.data?.data }));
-    // }
-  } catch (error) {
-    toast.warning(error.message);
-  }
-}
-
 
 // export function* createNonselecctArtSaga(action) {
 //   try {
@@ -170,8 +150,6 @@ export function* sortArtSaga(action) {
 //     console.log(error);
 //   }
 // }
-
-
 
 // export function* getAllNonSelectArtSaga(action) {
 //   try {
@@ -294,8 +272,7 @@ export function* watchAsyncArtSaga() {
   yield takeEvery("FILTER_ART", filterArtSaga);
   yield takeEvery("ALL_ART", getAllArtSaga);
   yield takeEvery("SEARCH_BY_ART_TITLE", searchArtByTitleSaga);
-  yield takeEvery("SEARCH_BY_ARTIST", searchArtByArtistSaga); 
-  yield takeEvery("SORT_ART", sortArtSaga); 
+  yield takeEvery("SEARCH_BY_ARTIST", searchArtByArtistSaga);
   // yield takeEvery("CREATE_NONSELECT_ART", createNonselecctArtSaga);
 
   // yield takeEvery("ALL_NONSELECT_ART", getAllNonSelectArtSaga);
@@ -308,4 +285,3 @@ export function* watchAsyncArtSaga() {
   // yield takeEvery("PAYMENT", paymentSaga);
   // yield takeEvery("ORIGINAL_ART_MAIL", originalArtMailSaga);
 }
- 

@@ -3,15 +3,18 @@ import Routes from "./Routes";
 import { useDispatch } from "react-redux";
 
 const App = () => {
-
   const dispatch = useDispatch();
 
-  useEffect(()=>{
+  useEffect(() => {
     dispatch({
-      type:"ALL_ART"
-    })
-  },[dispatch])
-
+      type: "ALL_ART",
+      payload: {
+        sortCriteria:"none",
+        searchCriteria:"none",
+        searchInput:undefined
+      },
+    });
+  }, [dispatch]);
 
   return (
     <>
@@ -20,6 +23,6 @@ const App = () => {
       </div>
     </>
   );
-}
+};
 
 export default App;
