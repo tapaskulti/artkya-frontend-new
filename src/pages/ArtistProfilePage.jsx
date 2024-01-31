@@ -121,7 +121,7 @@ const Painting = () => {
           />
         </div>
         <div className="mt-10 lg:flex">
-        <div className="relative mx-5 md:mx-0">
+          <div className="relative mx-5 md:mx-0">
             {/* background and phauzdar image */}
             <div className="bg-gray-100 h-auto backdrop-blur-lg w-full md:max-lg:max-w-screen-sm md:max-lg:mx-auto lg:w-[23rem] md:px-10 px-5 md:mx-5  lg:mx-7 translate-y-20  rounded-lg rounded-br-xl">
               <img
@@ -148,8 +148,16 @@ const Painting = () => {
                 </div>
 
                 <div className="pt-5">
-                  <div className="text-lg text-teal-600 border-b-2">
-                    Exhibitions
+                  <div className="">
+                    <div className="text-lg text-teal-600 border-b-2">
+                      Info
+                    </div>
+                    <div className="text-lg text-teal-600 border-b-2">
+                      Education
+                    </div>
+                    <div className="text-lg text-teal-600 border-b-2">
+                      Exhibitions
+                    </div>
                   </div>
                   <div className="w-auto h-60 pt-2 space-y-2 overflow-y-auto lg:w-72">
                     <ExhibitionItem
@@ -256,8 +264,6 @@ export const ExhibitionItem = ({ exhibitionName, year }) => {
     </div>
   );
 };
-
-
 
 export const ArtDetails = () => {
   return (
