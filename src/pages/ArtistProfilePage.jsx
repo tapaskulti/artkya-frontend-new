@@ -178,7 +178,7 @@ const Painting = () => {
                         lives and works at Kolkata, India.
                     </div>
                   )}
-                  {activeTab === "tab2" && <div>Education</div>}
+                  {activeTab === "tab2" && <div className="mt-5">Education</div>}
                   {activeTab === "tab3" && (
                     <div className="w-auto h-60 mt-5 space-y-2 overflow-y-auto lg:w-72">
                       <ExhibitionItem
