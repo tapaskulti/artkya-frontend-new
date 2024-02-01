@@ -82,51 +82,8 @@ export function* getAllArtSaga(action) {
   }
 }
 
-export function* searchArtByTitleSaga(action) {
-  try {
-    yield put(
-      setFilteredIsLoading({
-        isFilteredDataLoading: true,
-      })
-    );
-    const response = yield call(searchArtByArtTitleAction, action.payload);
 
-    // console.log("response from art saga",response?.data?.data);
-    // if (response.status === 200) {
-    //   yield put(
-    //     setIsLoading({
-    //       isLoading: false,
-    //     })
-    //   );
-    //   yield put(setAllArt({ allArt: response?.data?.data }));
-    // }
-  } catch (error) {
-    toast.warning(error.message);
-  }
-}
 
-export function* searchArtByArtistSaga(action) {
-  try {
-    yield put(
-      setFilteredIsLoading({
-        isFilteredDataLoading: true,
-      })
-    );
-    const response = yield call(searchArtByArtistAction, action.payload);
-
-    // console.log("response from art saga",response?.data?.data);
-    // if (response.status === 200) {
-    //   yield put(
-    //     setIsLoading({
-    //       isLoading: false,
-    //     })
-    //   );
-    //   yield put(setAllArt({ allArt: response?.data?.data }));
-    // }
-  } catch (error) {
-    toast.warning(error.message);
-  }
-}
 
 // export function* createNonselecctArtSaga(action) {
 //   try {
@@ -271,8 +228,6 @@ export function* watchAsyncArtSaga() {
   // yield takeEvery("CREATE_POST", createPostSaga);
   yield takeEvery("FILTER_ART", filterArtSaga);
   yield takeEvery("ALL_ART", getAllArtSaga);
-  yield takeEvery("SEARCH_BY_ART_TITLE", searchArtByTitleSaga);
-  yield takeEvery("SEARCH_BY_ARTIST", searchArtByArtistSaga);
   // yield takeEvery("CREATE_NONSELECT_ART", createNonselecctArtSaga);
 
   // yield takeEvery("ALL_NONSELECT_ART", getAllNonSelectArtSaga);

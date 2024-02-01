@@ -8,6 +8,7 @@ import ArtistProfilePage from "./pages/ArtistProfilePage";
 import Painting from "./pages/Painting";
 import AboutUs from "./pages/AboutUs";
 import Contacts from "./pages/Contacts";
+import Favourites from "./pages/Favourites";
 
 const Routes = () => {
   return (
@@ -20,7 +21,7 @@ const Routes = () => {
         {/* <Route path="/:id" element={<ArtDetailPage />} /> */}
         <Route path="/artistProfilePage" element={<ArtistProfilePage />} />
         <Route path="/Painting" element={<Painting />} />
-        {/* <Route path="/admin" element={<AdminPage />} /> */}
+        <Route path="/favoutires" element={<Favourites />} />
         <Route path="/AboutUs" element={<AboutUs />} />
         <Route path="/Contacts" element={<Contacts />} />
         {/* <Route path="/termsandcondition" element={<TermsAndCondition />} />
