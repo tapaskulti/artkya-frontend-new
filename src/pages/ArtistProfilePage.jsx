@@ -87,18 +87,18 @@ const Painting = () => {
     });
   }, [filterData]);
 
-  const options = [
-    { value: "recomended", label: "Recomended" },
-    { value: "newToOld", label: "New to Old" },
-    { value: "priceLowHigh", label: "Price: Low to High" },
-    { value: "priceHighLow", label: "Price: High to Low" },
-  ];
+  // const options = [
+  //   { value: "recomended", label: "Recomended" },
+  //   { value: "newToOld", label: "New to Old" },
+  //   { value: "priceLowHigh", label: "Price: Low to High" },
+  //   { value: "priceHighLow", label: "Price: High to Low" },
+  // ];
 
   return (
     <>
       <div className="static">
         <Header />
-        <div className="flex justify-end px-10 py-2 border-b border-slate-200">
+        {/* <div className="flex justify-end px-10 py-2 border-b border-slate-200">
           <div className="flex items-center">
             <Select
               options={[
@@ -112,15 +112,15 @@ const Painting = () => {
               className="relative border border-l-transparent border-slate-300 py-1.5"
             />
           </div>
-        </div>
-        <div className="flex items-center justify-between px-10 mt-5">
+        </div> */}
+        <div className="px-10 mt-5">
           <h2 className="text-slate-900 text-3xl font-thin">
             Original Paintings For Sale
           </h2>
-          <Select
+          {/* <Select
             options={options}
             className="w-52 bg-white py-1.5 focus:outline-none focus:border-slate-300"
-          />
+          /> */}
         </div>
         <div className="mt-10 lg:flex">
           <div className="relative mx-5 md:mx-0">
