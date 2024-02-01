@@ -108,7 +108,9 @@ const Header = () => {
                 <li className="hover:text-amber-800 ">
                   <BsCart3  className="w-5 h-6" />
                 </li>
-                <li className="hover:text-amber-800 ">
+                <li className="hover:text-amber-800 " onClick={() => {
+                    navigate("/Accounts");
+                  }}>
                   <AiOutlineUser className="w-5 h-6" />
                 </li>
               </ul>

@@ -7,7 +7,7 @@ import { ArtDetails } from "./Painting";
 import { useSelector } from "react-redux";
 
 const Favourites = () => {
-  const { filteredArt, allArt } = useSelector((state) => state.art);
+  const { allArt } = useSelector((state) => state.art);
   const navigate = useNavigate();
   return (
     <div className="static">

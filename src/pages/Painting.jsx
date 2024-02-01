@@ -2,15 +2,6 @@ import Header from "../components/Header";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
 
-// import { Link } from "react-router-dom";
-import Img1 from "../assets/Img1.jpg";
-import Img3 from "../assets/img3.jpg";
-import Img14 from "../assets/img14.jpg";
-import Img6 from "../assets/img6.jpg";
-import Img8 from "../assets/img8.jpg";
-import Img9 from "../assets/img9.jpg";
-import Img12 from "../assets/img12.jpg";
-
 import { faPaintBrush } from "@fortawesome/free-solid-svg-icons";
 import Accordion from "../components/Accordion";
 import {
