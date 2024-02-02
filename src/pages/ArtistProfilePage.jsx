@@ -33,6 +33,8 @@ const Painting = () => {
   });
 
   const [activeTab, setActiveTab] = useState("tab1");
+
+  console.log("activeTab------->",activeTab)
   // const [toggleHide, setToggleHide] = useState(false);
 
   // const newstyleElement = styleElement.slice(0, 3);
@@ -159,7 +161,7 @@ const Painting = () => {
                     </button>
                     <button
                       onClick={() => setActiveTab("tab2")}
-                      className="bg-slate-300 rounded-tl rounded-tr px-5 py-1 text-slate-800 text-sm font-semibold"
+                      className={`${activeTab === "tab2" ?"bg-slate-300 rounded-tl rounded-tr px-5 py-1 text-slate-800": "bg-transparent"} text-sm font-semibold`}
                     >
                       Education
                     </button>
