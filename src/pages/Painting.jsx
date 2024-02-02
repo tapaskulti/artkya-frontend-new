@@ -2,15 +2,6 @@ import Header from "../components/Header";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
 
-// import { Link } from "react-router-dom";
-import Img1 from "../assets/Img1.jpg";
-import Img3 from "../assets/img3.jpg";
-import Img14 from "../assets/img14.jpg";
-import Img6 from "../assets/img6.jpg";
-import Img8 from "../assets/img8.jpg";
-import Img9 from "../assets/img9.jpg";
-import Img12 from "../assets/img12.jpg";
-
 import { faPaintBrush } from "@fortawesome/free-solid-svg-icons";
 import Accordion from "../components/Accordion";
 import {
@@ -25,13 +16,14 @@ import {
   styleElement,
   subjectElement,
 } from "../utlis/filterData";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Select from "react-select";
 
 // import ArtItem from "../components/ArtItem";
 
 const Painting = () => {
   const dispatch = useDispatch();
+  const { filteredArt, allArt } = useSelector((state) => state.art);
   const [itemsToShow, setItemsToShow] = useState();
   const [filterData, setFilterData] = useState({
     style: [],
@@ -42,6 +34,10 @@ const Painting = () => {
     artistcountry: [],
     featuredartist: [],
   });
+  const [searchCriteria, setSearchCriteria] = useState("none");
+  const [sortCriteria, setSortCriteria] = useState("none");
+  const [searchInput, setSearchInput] = useState("");
+
   // const [toggleHide, setToggleHide] = useState(false);
 
   // const newstyleElement = styleElement.slice(0, 3);
@@ -75,7 +71,7 @@ const Painting = () => {
     setFilterData(newFilterData);
   };
 
-  console.log("filterData=============>", filterData);
+  // console.log("filterData=============>", filterData);
 
   useEffect(() => {
     const filterDataPayload = {
@@ -91,13 +87,37 @@ const Painting = () => {
     dispatch({
       type: "FILTER_ART",
       payload: {
+        sortingCriteria: sortCriteria,
         body: filterDataPayload,
       },
     });
   }, [filterData]);
 
+  useEffect(() => {
+    if (searchCriteria === "Art") {
+      dispatch({
+        type: "SEARCH_BY_ART_TITLE",
+        payload: searchInput,
+      });
+    } else {
+      dispatch({
+        type: "SEARCH_BY_ARTIST",
+        payload: searchInput,
+      });
+    }
+  }, [searchInput, searchCriteria]);
+
+  console.log("sortCriteria==>", sortCriteria);
+
+  useEffect(() => {
+    dispatch({
+      type: "ALL_ART",
+      payload: { sortCriteria, searchCriteria, searchInput },
+    });
+  }, [sortCriteria, searchCriteria, searchInput, dispatch]);
+
   const options = [
-    { value: "recomended", label: "Recomended" },
+    // { value: "recomended", label: "Recomended" },
     { value: "newToOld", label: "New to Old" },
     { value: "priceLowHigh", label: "Price: Low to High" },
     { value: "priceHighLow", label: "Price: High to Low" },
@@ -114,11 +134,22 @@ const Painting = () => {
                 { value: "art", label: "Art" },
                 { value: "artist", label: "Artist" },
               ]}
+              onChange={(e) => {
+                if (e.label === "Art") {
+                  setSearchCriteria("Art");
+                } else {
+                  setSearchCriteria("Artist");
+                }
+              }}
               className="rounded-none absolute -right-6 w-32 px-3 py-1.5 focus:outline-none focus:border-slate-300"
             />
             <input
               type="text"
               className="relative border border-l-transparent border-slate-300 py-1.5"
+              value={searchInput}
+              onChange={(e) => {
+                setSearchInput(e.target.value);
+              }}
             />
           </div>
         </div>
@@ -129,6 +160,17 @@ const Painting = () => {
           <Select
             options={options}
             className="w-52 bg-white py-1.5 focus:outline-none focus:border-slate-300"
+            onChange={(e) => {
+              if (e.label === "New to Old") {
+                setSortCriteria("newToOld");
+              } else if (e.label === "Price: Low to High") {
+                setSortCriteria("incresingPrice");
+              } else if (e.label === "Price: High to Low") {
+                setSortCriteria("decreasingPrice");
+              } else {
+                setSortCriteria("none");
+              }
+            }}
           />
         </div>
         <div className="mt-10 lg:flex">
@@ -237,57 +279,25 @@ const Painting = () => {
           <div className="w-4/6 mt-10 lg:flex">
             <div className="">
               {/* <div className="bg-gray-100 h-auto backdrop-blur-lg rounded-md w-full md:max-lg:max-w-screen-sm md:max-lg:mx-auto mt-6 px-3 py-2">Left</div> */}
-              <div className="mt-20">
+              <div className="mt-20 ">
                 <div className="h-auto mt-32 gap-10 lg:gap-16 columns-1 md:columns-2 lg:columns-3 2xl:columns-3 gap-y-16 [&>img:not(:first-child)]:mt-5 lg:[&>img:not(:first-child)]:mt-16">
-                  <div>
-                    <img src={Img1} alt="" />
-                    <br />
-                    <div>
-                      <ArtDetails />
-                    </div>
-                  </div>
-                  <div>
-                    <img src={Img3} alt="" />
-                    <br />
-                    <div>
-                      <ArtDetails />
-                    </div>
-                  </div>
-                  <div>
-                    <img src={Img14} alt="" />
-                    <br />
-                    <div>
-                      <ArtDetails />
-                    </div>
-                  </div>
-                  <div>
-                    <img src={Img6} alt="" />
-                    <br />
-                    <div>
-                      <ArtDetails />
-                    </div>
-                  </div>
-                  <div>
-                    <img src={Img8} alt="" />
-                    <br />
-                    <div>
-                      <ArtDetails />
-                    </div>
-                  </div>
-                  <div>
-                    <img src={Img9} alt="" />
-                    <br />
-                    <div>
-                      <ArtDetails />
-                    </div>
-                  </div>
-                  <div>
-                    <img src={Img12} alt="" />
-                    <br />
-                    <div>
-                      <ArtDetails />
-                    </div>
-                  </div>
+                  {allArt?.map((singleArt) => {
+                    return (
+                      <div key={singleArt._id}>
+                        <img src={singleArt?.thumbnail?.secure_url} alt="" />
+                        <br />
+                        <div>
+                          <ArtDetails
+                            title={singleArt?.title}
+                            width={singleArt?.width}
+                            height={singleArt?.height}
+                            depth={singleArt?.depth}
+                            price={singleArt?.price}
+                          />
+                        </div>
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
             </div>
@@ -356,24 +366,33 @@ export const SkeletonLoader = () => {
   );
 };
 
-export const ArtDetails = () => {
+export const ArtDetails = ({
+  title,
+  width,
+  height,
+  depth,
+  price,
+  artist,
+  artistCountry,
+}) => {
   return (
     <div className="w-full text-black">
       <div className="text-sm font-normal lg:text-base xl:text-lg lg:items-start lg:justify-normal lg:flex-col">
-        <div className="text-gray-500 lg:text-base xl:text-base">
-          ID: AK125436
-        </div>
+        <div className="text-gray-500 lg:text-base xl:text-base">{title}</div>
         <div className="-mt-1 text-sm font-semibold text-gray-500 lg:text-base xl:text-base md:text-sm">
-          <div className="lg:text-xs xl:text-xs">W 120 * H 300 inches</div>
+          <div className="lg:text-xs xl:text-xs">
+            {" "}
+            {width} W x {height} H x {depth} D inches
+          </div>
         </div>
       </div>
       <div className="flex justify-between text-sm font-semibold text-gray-500 xl:text-base md:text-sm my-5">
         <div>
-          <div className="text-sm">Elizabeth Becker</div>
-          <div className="text-xs -pt-2">United States</div>
+          <div className="text-sm">{artist}</div>
+          <div className="text-xs -pt-2">{artistCountry}</div>
         </div>
         <div>
-          <span className="text-sm">Price:</span> Print Copy $75
+          <span className="text-sm">Price:</span> Print Copy {price}
         </div>
       </div>
     </div>

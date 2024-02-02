@@ -7,17 +7,18 @@ import {
   faSearch,
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { faOpencart } from "@fortawesome/free-brands-svg-icons";
 import { AiOutlineUser } from "react-icons/ai";
 import { CiHeart } from "react-icons/ci";
-import { IoBagHandleOutline } from "react-icons/io5";
+import { BsCart3 } from "react-icons/bs";
 import { useSelector } from "react-redux";
 
 const Header = () => {
   // const {token, user} = useSelector((state) => state.user);
   const [dropDownOpen, setdropDownOpen] = useState(false);
-  
+  const navigate = useNavigate();
+
   return (
     <>
       <div className="items-center w-full scroll ">
@@ -96,19 +97,26 @@ const Header = () => {
                     Register
                   </NavLink>
                 </li>
-                <li className="hover:text-amber-800">
+                <li
+                  className="hover:text-amber-800"
+                  onClick={() => {
+                    navigate("/favoutires");
+                  }}
+                >
                   <CiHeart className="w-5 h-6" />
                 </li>
                 <li className="hover:text-amber-800 ">
-                  <IoBagHandleOutline className="w-5 h-6" />
+                  <BsCart3  className="w-5 h-6" />
                 </li>
-                <li className="hover:text-amber-800 ">
+                <li className="hover:text-amber-800 " onClick={() => {
+                    navigate("/Accounts");
+                  }}>
                   <AiOutlineUser className="w-5 h-6" />
                 </li>
               </ul>
             </div>
           </div>
-        </div>        
+        </div>
       </div>
     </>
   );

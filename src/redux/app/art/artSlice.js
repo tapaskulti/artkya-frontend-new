@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
+  isLoading:false,
   isFilteredDataLoading: false,
   allArt: [],
   filteredArt: [],
@@ -10,6 +11,9 @@ const artSlice = createSlice({
   name: "art",
   initialState,
   reducers: {
+    setIsLoading(state, action) {
+      state.isLoading = action.payload.isLoading;
+    },
     setFilteredIsLoading(state, action) {
         state.isFilteredDataLoading = action.payload.isFilteredDataLoading;
       },
@@ -22,5 +26,5 @@ const artSlice = createSlice({
   },
 });
 
-export const { setAllArt, setAllFilteredArt ,setFilteredIsLoading} = artSlice.actions;
+export const { setAllArt, setAllFilteredArt ,setFilteredIsLoading,setIsLoading} = artSlice.actions;
 export const artReducer = artSlice.reducer;
