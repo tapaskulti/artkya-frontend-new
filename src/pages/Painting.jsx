@@ -18,6 +18,7 @@ import {
 } from "../utlis/filterData";
 import { useDispatch, useSelector } from "react-redux";
 import Select from "react-select";
+import { Link } from "react-router-dom";
 
 // import ArtItem from "../components/ArtItem";
 
@@ -284,7 +285,7 @@ const Painting = () => {
                   {allArt?.map((singleArt) => {
                     return (
                       <div key={singleArt._id}>
-                        <img src={singleArt?.thumbnail?.secure_url} alt="" />
+                        <Link to="/artDetailsPage"><img src={singleArt?.thumbnail?.secure_url} alt="" /></Link>
                         <br />
                         <div>
                           <ArtDetails
