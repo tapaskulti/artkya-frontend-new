@@ -41,11 +41,13 @@ const Account = () => {
                 isCondition={ActiveTab === "Orders" ? true : false}
               />
             </div>
-            <div
-              className={`flex w-full bg-slate-200 text-black font-semibold justify-center items-center py-4 text-2xl hover:bg-black hover:text-white`}
-              onClick={() => {}}
-            >
-              Logout
+
+            <div>
+              <AccountButtons
+                title={"Logout"}
+                onClick={() => {}}
+                isCondition={ActiveTab === "Logout" ? true : false}
+              />
             </div>
           </div>
           {/* BODY */}
@@ -79,9 +81,11 @@ export default Account;
 export const AccountButtons = ({ title, onClick, isCondition }) => {
   return (
     <div
-      className={`flex w-full ${
+      className={`flex cursor-pointer w-full ${
         isCondition ? "bg-black text-white" : "bg-slate-200 text-black"
-      }  font-semibold justify-center items-center py-4 text-2xl hover:bg-black hover:text-white`}
+      }  font-semibold justify-center items-center py-4 text-2xl ${
+        isCondition === false ? "hover:bg-slate-300" : ""
+      }`}
       onClick={onClick}
     >
       {title}

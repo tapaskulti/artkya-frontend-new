@@ -10,6 +10,7 @@ import AboutUs from "./pages/AboutUs";
 import Contacts from "./pages/Contacts";
 import Favourites from "./pages/Favourites";
 import Account from "./pages/accounts/Account";
+import Studio from "./pages/studio/Studio";
 
 const Routes = () => {
   return (
@@ -24,6 +25,7 @@ const Routes = () => {
         <Route path="/Painting" element={<Painting />} />
         <Route path="/favoutires" element={<Favourites />} />
         <Route path="/AboutUs" element={<AboutUs />} />
+        <Route path="/Studio" element={<Studio/>} />
         <Route path="/Contacts" element={<Contacts />} />
         <Route path="/Accounts" element={<Account />} />
         {/* <Route path="/disclaimer" element={<Disclaimer />} /> */}
