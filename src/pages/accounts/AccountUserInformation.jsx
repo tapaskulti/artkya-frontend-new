@@ -15,7 +15,7 @@ const AccountUserInformation = () => {
         type={"text"}
       />
       <div className="flex items-center">
-        <div className="w-[20%]">Allow me to view adult related content</div>
+        <div className="w-[20%] font-semibold">Allow me to view adult related content</div>
         <div className="">
           <input
             type="checkbox"
@@ -23,7 +23,7 @@ const AccountUserInformation = () => {
           />
         </div>
       </div>
-      <div className="flex items-center">
+      <div className="flex items-center font-semibold">
         <div className="w-[20%]">Deactivate Account</div>
       </div>
       <div className="flex justify-end pr-60">
@@ -46,7 +46,7 @@ export const UserDetailComponent = ({
 }) => {
   return (
     <div className="flex items-center">
-      <div className="w-[20%]">{title}</div>
+      <div className="w-[20%] font-semibold">{title}</div>
       <div className="w-[80%] pr-60">
         <input
           type={type}
