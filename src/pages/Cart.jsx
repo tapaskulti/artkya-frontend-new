@@ -19,7 +19,7 @@ const Cart = () => {
         </div>
       </div>
       {/* *************************************************** */}
-      <div className="my-10 bg-orange-300">
+      <div className="my-10">
         <div className="flex px-60 py-10 space-x-6">
           <div className="w-3/5 bg-slate-50  p-4">
             <div className="text-4xl font-semibold">Cart</div>
