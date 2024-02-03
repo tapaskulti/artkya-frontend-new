@@ -4,7 +4,7 @@ import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
 import ForgotPassword from "./pages/auth/ForgotPassword";
 // import ArtDetailPage from "./pages/ArtDetailPage";
-import ArtistProfilePage, { ArtDetails } from "./pages/ArtistProfilePage";
+import ArtistProfilePage from "./pages/ArtistProfilePage";
 import Painting from "./pages/Painting";
 import AboutUs from "./pages/AboutUs";
 import Contacts from "./pages/Contacts";
