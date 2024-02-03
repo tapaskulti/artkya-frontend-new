@@ -31,6 +31,10 @@ const Painting = () => {
     artistcountry: [],
     featuredartist: [],
   });
+
+  const [activeTab, setActiveTab] = useState("tab1");
+
+  console.log("activeTab------->",activeTab)
   // const [toggleHide, setToggleHide] = useState(false);
 
   // const newstyleElement = styleElement.slice(0, 3);
@@ -85,18 +89,18 @@ const Painting = () => {
     });
   }, [filterData]);
 
-  const options = [
-    { value: "recomended", label: "Recomended" },
-    { value: "newToOld", label: "New to Old" },
-    { value: "priceLowHigh", label: "Price: Low to High" },
-    { value: "priceHighLow", label: "Price: High to Low" },
-  ];
+  // const options = [
+  //   { value: "recomended", label: "Recomended" },
+  //   { value: "newToOld", label: "New to Old" },
+  //   { value: "priceLowHigh", label: "Price: Low to High" },
+  //   { value: "priceHighLow", label: "Price: High to Low" },
+  // ];
 
   return (
     <>
       <div className="static">
         <Header />
-        <div className="flex justify-end px-10 py-2 border-b border-slate-200">
+        {/* <div className="flex justify-end px-10 py-2 border-b border-slate-200">
           <div className="flex items-center">
             <Select
               options={[
@@ -110,18 +114,18 @@ const Painting = () => {
               className="relative border border-l-transparent border-slate-300 py-1.5"
             />
           </div>
-        </div>
-        <div className="flex items-center justify-between px-10 mt-5">
+        </div> */}
+        <div className="px-10 mt-5">
           <h2 className="text-slate-900 text-3xl font-thin">
             Original Paintings For Sale
           </h2>
-          <Select
+          {/* <Select
             options={options}
             className="w-52 bg-white py-1.5 focus:outline-none focus:border-slate-300"
-          />
+          /> */}
         </div>
         <div className="mt-10 lg:flex">
-        <div className="relative mx-5 md:mx-0">
+          <div className="relative mx-5 md:mx-0">
             {/* background and phauzdar image */}
             <div className="bg-gray-100 h-auto backdrop-blur-lg w-full md:max-lg:max-w-screen-sm md:max-lg:mx-auto lg:w-[23rem] md:px-10 px-5 md:mx-5  lg:mx-7 translate-y-20  rounded-lg rounded-br-xl">
               <img
@@ -148,31 +152,59 @@ const Painting = () => {
                 </div>
 
                 <div className="pt-5">
-                  <div className="text-lg text-teal-600 border-b-2">
-                    Exhibitions
+                  <div className="flex items-center space-x-5 justify-between text-lg text-teal-600 text-left border-b-2">
+                    <button
+                      onClick={() => setActiveTab("tab1")}
+                      className="bg-slate-300 rounded-tl rounded-tr px-5 py-1 text-slate-800 text-sm font-semibold"
+                    >
+                      Info
+                    </button>
+                    <button
+                      onClick={() => setActiveTab("tab2")}
+                      className={`${activeTab === "tab2" ?"bg-slate-300 rounded-tl rounded-tr px-5 py-1 text-slate-800": "bg-transparent"} text-sm font-semibold`}
+                    >
+                      Education
+                    </button>
+                    <button
+                      onClick={() => setActiveTab("tab3")}
+                      className="bg-slate-300 rounded-tl rounded-tr px-5 py-1 text-slate-800 text-sm font-semibold"
+                    >
+                      Exhibitions
+                    </button>
                   </div>
-                  <div className="w-auto h-60 pt-2 space-y-2 overflow-y-auto lg:w-72">
-                    <ExhibitionItem
-                      exhibitionName="Group Exhibition at the Lalit Kala Academy New Delhi"
-                      year="1978-1979"
-                    />
-                    <ExhibitionItem
-                      exhibitionName="Solo Exhibition of colleges"
-                      year="1985"
-                    />
-                    <ExhibitionItem
-                      exhibitionName="Solo Exhibition oil paintings at the Academy of Fine Arts Kolkata"
-                      year="1986"
-                    />
-                    <ExhibitionItem
-                      exhibitionName="Jehangir Art Gallery Mumbai"
-                      year="1986"
-                    />
-                    <ExhibitionItem
-                      exhibitionName="Solo Exhibition of colleges"
-                      year="1985"
-                    />
-                  </div>
+                  {activeTab === "tab1" && (
+                    <div className="text-slate-600 text-left mt-5 overflow-y-auto">
+                        Phauzdar studied Fine Arts in Kolkata and is an
+                        extremely modest artist who believes that his art should
+                        speak to the viewer and not his curriculum vitae. He
+                        lives and works at Kolkata, India.
+                    </div>
+                  )}
+                  {activeTab === "tab2" && <div className="mt-5">Education</div>}
+                  {activeTab === "tab3" && (
+                    <div className="w-auto h-60 mt-5 space-y-2 overflow-y-auto lg:w-72">
+                      <ExhibitionItem
+                        exhibitionName="Group Exhibition at the Lalit Kala Academy New Delhi"
+                        year="1978-1979"
+                      />
+                      <ExhibitionItem
+                        exhibitionName="Solo Exhibition of colleges"
+                        year="1985"
+                      />
+                      <ExhibitionItem
+                        exhibitionName="Solo Exhibition oil paintings at the Academy of Fine Arts Kolkata"
+                        year="1986"
+                      />
+                      <ExhibitionItem
+                        exhibitionName="Jehangir Art Gallery Mumbai"
+                        year="1986"
+                      />
+                      <ExhibitionItem
+                        exhibitionName="Solo Exhibition of colleges"
+                        year="1985"
+                      />
+                    </div>
+                  )}
                   <div className="my-3 text-sm text-right text-blue-700 hover:underline">
                     <Link to="/aboutus">Read More</Link>
                   </div>
@@ -256,8 +288,6 @@ export const ExhibitionItem = ({ exhibitionName, year }) => {
     </div>
   );
 };
-
-
 
 export const ArtDetails = () => {
   return (

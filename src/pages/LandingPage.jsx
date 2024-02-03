@@ -74,27 +74,33 @@ const LandingPage = () => {
                     <ArtDetails />
                   </div>
                 </div> */}
-                <div>
-                  <img src={Img3} alt="" />
-                  <br />
+                <Link to="/artistProfilePage">
                   <div>
-                    <ArtDetails />
+                    <img src={Img3} alt="" />
+                    <br />
+                    <div>
+                      <ArtDetails />
+                    </div>
                   </div>
-                </div>
-                <div>
-                  <img src={Img4} alt="" />
-                  <br />
+                </Link>
+                <Link to="/artistProfilePage">
                   <div>
-                    <ArtDetails />
+                    <img src={Img4} alt="" />
+                    <br />
+                    <div>
+                      <ArtDetails />
+                    </div>
                   </div>
-                </div>
-                <div>
-                  <img src={Img6} alt="" />
-                  <br />
+                </Link>
+                <Link to="/artistProfilePage">
                   <div>
-                    <ArtDetails />
+                    <img src={Img6} alt="" />
+                    <br />
+                    <div>
+                      <ArtDetails />
+                    </div>
                   </div>
-                </div>
+                </Link>
                 {/* <div>
                   <img src={Img7} alt="" />
                   <br />
@@ -102,125 +108,159 @@ const LandingPage = () => {
                     <ArtDetails />
                   </div>
                 </div> */}
-                <div>
-                  <img src={Img8} alt="" />
-                  <br />
+                <Link to="/artistProfilePage">
                   <div>
-                    <ArtDetails />
+                    <img src={Img8} alt="" />
+                    <br />
+                    <div>
+                      <ArtDetails />
+                    </div>
                   </div>
-                </div>
-                <div>
-                  <img src={Img9} alt="" />
-                  <br />
+                </Link>
+                <Link to="/artistProfilePage">
                   <div>
-                    <ArtDetails />
+                    <img src={Img9} alt="" />
+                    <br />
+                    <div>
+                      <ArtDetails />
+                    </div>
                   </div>
-                </div>
-                <div>
-                  <img src={Img10} alt="" />
-                  <br />
+                </Link>
+                <Link to="/artistProfilePage">
                   <div>
-                    <ArtDetails />
+                    <img src={Img10} alt="" />
+                    <br />
+                    <div>
+                      <ArtDetails />
+                    </div>
                   </div>
-                </div>
-                <div>
-                  <img src={Img11} alt="" />
-                  <br />
+                </Link>
+                <Link to="/artistProfilePage">
                   <div>
-                    <ArtDetails />
+                    <img src={Img11} alt="" />
+                    <br />
+                    <div>
+                      <ArtDetails />
+                    </div>
                   </div>
-                </div>
-                <div>
-                  <img src={Img12} alt="" />
-                  <br />
+                </Link>
+                <Link to="/artistProfilePage">
                   <div>
-                    <ArtDetails />
+                    <img src={Img12} alt="" />
+                    <br />
+                    <div>
+                      <ArtDetails />
+                    </div>
                   </div>
-                </div>
-                <div>
-                  <img src={Img13} alt="" />
-                  <br />
+                </Link>
+                <Link to="/artistProfilePage">
                   <div>
-                    <ArtDetails />
+                    <img src={Img13} alt="" />
+                    <br />
+                    <div>
+                      <ArtDetails />
+                    </div>
                   </div>
-                </div>
-                <div>
-                  <img src={Img14} alt="" />
-                  <br />
+                </Link>
+                <Link to="/artistProfilePage">
                   <div>
-                    <ArtDetails />
+                    <img src={Img14} alt="" />
+                    <br />
+                    <div>
+                      <ArtDetails />
+                    </div>
                   </div>
-                </div>
-                <div>
-                  <img src={Img15} alt="" />
-                  <br />
+                </Link>
+                <Link to="/artistProfilePage">
                   <div>
-                    <ArtDetails />
+                    <img src={Img15} alt="" />
+                    <br />
+                    <div>
+                      <ArtDetails />
+                    </div>
                   </div>
-                </div>
-                <div>
-                  <img src={Img16} alt="" />
-                  <br />
+                </Link>
+                <Link to="/artistProfilePage">
                   <div>
-                    <ArtDetails />
+                    <img src={Img16} alt="" />
+                    <br />
+                    <div>
+                      <ArtDetails />
+                    </div>
                   </div>
-                </div>
-                <div>
-                  <img src={Img17} alt="" />
-                  <br />
+                </Link>
+                <Link to="/artistProfilePage">
                   <div>
-                    <ArtDetails />
+                    <img src={Img17} alt="" />
+                    <br />
+                    <div>
+                      <ArtDetails />
+                    </div>
                   </div>
-                </div>
-                <div>
-                  <img src={Img18} alt="" />
-                  <br />
+                </Link>
+                <Link to="/artistProfilePage">
                   <div>
-                    <ArtDetails />
+                    <img src={Img18} alt="" />
+                    <br />
+                    <div>
+                      <ArtDetails />
+                    </div>
                   </div>
-                </div>
-                <div>
-                  <img src={Img19} alt="" />
-                  <br />
+                </Link>
+                <Link to="/artistProfilePage">
                   <div>
-                    <ArtDetails />
+                    <img src={Img19} alt="" />
+                    <br />
+                    <div>
+                      <ArtDetails />
+                    </div>
                   </div>
-                </div>
-                <div>
-                  <img src={Img20} alt="" />
-                  <br />
+                </Link>
+                <Link to="/artistProfilePage">
                   <div>
-                    <ArtDetails />
+                    <img src={Img20} alt="" />
+                    <br />
+                    <div>
+                      <ArtDetails />
+                    </div>
                   </div>
-                </div>
-                <div>
-                  <img src={Img21} alt="" />
-                  <br />
+                </Link>
+                <Link to="/artistProfilePage">
                   <div>
-                    <ArtDetails />
+                    <img src={Img21} alt="" />
+                    <br />
+                    <div>
+                      <ArtDetails />
+                    </div>
                   </div>
-                </div>
-                <div>
-                  <img src={Img22} alt="" />
-                  <br />
+                </Link>
+                <Link to="/artistProfilePage">
                   <div>
-                    <ArtDetails />
+                    <img src={Img22} alt="" />
+                    <br />
+                    <div>
+                      <ArtDetails />
+                    </div>
                   </div>
-                </div>
-                <div>
-                  <img src={Img23} alt="" />
-                  <br />
+                </Link>
+                <Link to="/artistProfilePage">
                   <div>
-                    <ArtDetails />
+                    <img src={Img23} alt="" />
+                    <br />
+                    <div>
+                      <ArtDetails />
+                    </div>
                   </div>
-                </div>
-                <div>
-                  <img src={Img24} alt="" />
-                  <br />
+                </Link>
+                <Link to="/artistProfilePage">
                   <div>
-                    <ArtDetails />
+                    <img src={Img24} alt="" />
+                    <br />
+                    <div>
+                      <ArtDetails />
+                    </div>
                   </div>
-                </div>
+                </Link>
                 <div>
                   <img src={Img25} alt="" />
                   <br />
