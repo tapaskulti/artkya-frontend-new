@@ -1,4 +1,3 @@
-import React from "react";
 import Header from "../components/Header";
 import { IoChevronBackCircleSharp } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
