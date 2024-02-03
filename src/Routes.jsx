@@ -12,6 +12,7 @@ import Favourites from "./pages/Favourites";
 import Account from "./pages/accounts/Account";
 import ArtDetailPage from "./pages/ArtDetailPage";
 import Studio from "./pages/studio/Studio";
+import Cart from "./pages/Cart";
 
 const Routes = () => {
   return (
@@ -30,7 +31,7 @@ const Routes = () => {
         <Route path="/Studio" element={<Studio/>} />
         <Route path="/Contacts" element={<Contacts />} />
         <Route path="/Accounts" element={<Account />} />
-        {/* <Route path="/disclaimer" element={<Disclaimer />} /> */}
+        <Route path="/Cart" element={<Cart />} />
         {/* <Route path="/:id/checkout" element={<ChekoutPage />} /> */}
       </RoutePath>
   );

@@ -105,7 +105,9 @@ const Header = () => {
                 >
                   <CiHeart className="w-5 h-6" />
                 </li>
-                <li className="hover:text-amber-800 ">
+                <li className="hover:text-amber-800 " onClick={() => {
+                    navigate("/Cart");
+                  }}>
                   <BsCart3  className="w-5 h-6" />
                 </li>
                 <li className="hover:text-amber-800 " onClick={() => {
