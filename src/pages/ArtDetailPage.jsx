@@ -9,7 +9,7 @@ import Select from "react-select";
 import { toast } from "react-toastify";
 import artPic from "../assets/artPic.jpg";
 import { TiTick } from "react-icons/ti";
-import tn01 from "../assets/tn01.jpg";
+// import tn01 from "../assets/tn01.jpg";
 
 const ArtDetailPage = () => {
   // const dispatch = useDispatch();
@@ -58,10 +58,14 @@ const ArtDetailPage = () => {
           <FontAwesomeIcon icon={faArrowLeft} className="pb-5 w-7 h-7" />
         </Link>
 
-        <div className="w-full md:flex md:justify-between md:space-x-20">
+        <div className="w-full md:flex md:justify-between md:space-x-16">
           {/* image */}
-          <div>
-            <img src={artPic} alt="" />
+          <div className="space-y-2">
+            <img src={artPic} alt="" className="w-16 h-16" />
+            <img src={artPic} alt="" className="w-16 h-16" />
+            <img src={artPic} alt="" className="w-16 h-16" />
+            <img src={artPic} alt="" className="w-16 h-16" />
+            <img src={artPic} alt="" className="w-16 h-16" />
           </div>
           <div className="w-1/2">
             <img
@@ -111,7 +115,7 @@ const ArtDetailPage = () => {
                   />
                 </div>
                 <div className="flex items-center justify-between">
-                  <div className="text-2xl text-slate-900">Price: USD 280</div>
+                  <div className="text-2xl text-slate-900 font-thin">Price: USD 280</div>
                   <button className="w-40 px-5 py-3 text-white bg-slate-800 text-base">Add to Cart</button>
                 </div>
                 <div className="flex justify-end text-base text-green-700 font-semibold mr-6 mt-6 cursor-pointer">Make an Offer!</div>
@@ -209,7 +213,7 @@ const ArtDetailPage = () => {
               )} */}
             </div>
 
-            <div className="pt-5 space-y-2">
+            {/* <div className="pt-5 space-y-2">
               <div>
                 <div className="px-2 py-2 font-semibold text-white uppercase bg-green-700 rounded-md cursor-pointer sm:w-1/2 md:w-2/3">
                   Buy Print Copy
@@ -223,7 +227,7 @@ const ArtDetailPage = () => {
               >
                 Buy Print Copy
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
