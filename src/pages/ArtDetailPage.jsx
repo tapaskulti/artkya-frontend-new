@@ -51,37 +51,53 @@ const ArtDetailPage = () => {
   return (
     <div className="w-screen">
       <Header />
-      <div className="w-screen px-10 py-10">
+      <div className="w-full px-32 py-10">
         <Link to="/">
           <FontAwesomeIcon icon={faArrowLeft} className="pb-5 w-7 h-7" />
         </Link>
 
-        <div className="md:flex md:justify-center">
+        <div className="w-full md:flex md:justify-between md:space-x-20">
           {/* image */}
 
-          <div className="">
+          <div className="w-1/2">
             <img
               src={artPic}
               alt={"here is the text"}
-              className="rounded-md shadow-xl md:w-[90%] lg:w-[80%] xl:w-[90%]  "
+              className="rounded-md shadow-xl md:w-full "
             />
           </div>
 
           {/* image detail */}
-          <div className="flex-col bg-slate-50 w-1/5 text-center">
-            <div className="flex justify-between text-left text-xl font-semibold">
+          <div className="w-1/3 text-center bg-slate-50">
+            <div className="flex justify-between text-xl font-semibold text-left">
               <button className="bg-slate-300 text-base w-1/2 py-2.5">
                 Original Art
               </button>
-              <button className="w-1/2 py-2.5 text-base">Print Art</button>
+              <button className="w-1/2 py-2.5 text-base">Print Copy</button>
             </div>
 
-            <div className="flex space-x-2 text-xl font-semibold md:text-2xl md:w-80 w-72 mt-5">
-              <div className="text-gray-700 font-semibold text-base">
-                Picture ID:
+            <div className="px-3 mt-5 text-xl font-semibold">
+              <div className="text-left">
+                <h2 className="text-lg italic text-slate-600">Blue Mirroring! Painting</h2>
+                <h2 className="text-sm text-red-600">Pranab Phauzdar</h2>
+                <h2 className="text-sm font-semibold text-gray-700">
+                  India
+                </h2>
+              </div>
+              <div className="px-0 py-3 space-y-1 text-sm text-left text-gray-700">
+                <h2>Painting, Acrylic on Canvas</h2>
+                <h2>Size: 101.6 W x 111.8 H x 2.5 D cm</h2>
+                <div className="flex items-center space-x-2">
+                  <h2>Year:</h2>
+                  <h2>2023</h2>
+                </div>
+                <h2 className="text-sm font-semibold text-gray-700">
+                  Picture ID:
+                </h2>
+                <button className="w-40 px-5 py-3 text-white bg-slate-800">Add to Cart</button>
               </div>
 
-              <div role="status">
+              {/* <div role="status">
                 <svg
                   aria-hidden="true"
                   className="w-8 h-8 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
@@ -99,14 +115,10 @@ const ArtDetailPage = () => {
                   />
                 </svg>
                 <span className="sr-only">Loading...</span>
-              </div>
+              </div> */}
             </div>
-            <div className="text-justify text-stone-700 pt-2 lg:w-80 xl:w-[500px]">
-              <h2>Abstract Art</h2>
-              <h2>Size: 101.6 W x 111.8 H x 2.5 D cm</h2>
-              <button className="bg-slate-800 w-40 px-5 py-3 text-white">Add to Cart</button>
-            </div>
-            <div className="items-center justify-start pt-2 space-x-6">
+
+            <div className="items-center justify-start px-3 pt-2 space-x-6">
               {/* <div className="flex items-center space-x-2">
                 <div className="text-lg text-gray-700">Size:</div>
                 {!isLoading ? (
@@ -135,10 +147,7 @@ const ArtDetailPage = () => {
                   </div>
                 )}
               </div> */}
-              <div className="flex items-center space-x-2">
-                <div className="text-lg text-gray-700">Year:</div>
-                <div className="text-base ">2023</div>
-              </div>
+
             </div>
 
             <div className="flex items-center space-x-2">
