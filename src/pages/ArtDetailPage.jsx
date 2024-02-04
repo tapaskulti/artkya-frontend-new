@@ -8,6 +8,8 @@ import { Link } from "react-router-dom";
 import Select from "react-select";
 import { toast } from "react-toastify";
 import artPic from "../assets/artPic.jpg";
+import { TiTick } from "react-icons/ti";
+import tn01 from "../assets/tn01.jpg";
 
 const ArtDetailPage = () => {
   // const dispatch = useDispatch();
@@ -58,7 +60,9 @@ const ArtDetailPage = () => {
 
         <div className="w-full md:flex md:justify-between md:space-x-20">
           {/* image */}
-
+          <div>
+            <img src={artPic} alt="" />
+          </div>
           <div className="w-1/2">
             <img
               src={artPic}
@@ -84,17 +88,44 @@ const ArtDetailPage = () => {
                   India
                 </h2>
               </div>
-              <div className="px-0 py-3 space-y-1 text-sm text-left text-gray-700">
+              <div className="py-3 space-y-1 text-sm text-left text-gray-700">
                 <h2>Painting, Acrylic on Canvas</h2>
                 <h2>Size: 101.6 W x 111.8 H x 2.5 D cm</h2>
-                <div className="flex items-center space-x-2">
-                  <h2>Year:</h2>
-                  <h2>2023</h2>
+                <div className="flex items-center space-x-6">
+                  <h2 className="text-sm font-semibold text-gray-700">
+                    Picture ID: AKP-2024
+                  </h2>
+                  <div className="flex items-center space-x-2">
+                    <h2>Year:</h2>
+                    <h2>2023</h2>
+                  </div>
                 </div>
-                <h2 className="text-sm font-semibold text-gray-700">
-                  Picture ID:
+                <div className="flex items-center space-x-2">
+                  <div className="py-5 text-base">Select Size: </div>
+                  <Select
+                    options={[
+                      { label: "8 * 10 inches", value: "8*10 inches" },
+                      { label: "16 * 20 inches", value: "16*20 inches" },
+                      { label: "20 * 30 inches", value: "20*30 inches" },
+                    ]}
+                  />
+                </div>
+                <div className="flex items-center justify-between">
+                  <div className="text-2xl text-slate-900">Price: USD 280</div>
+                  <button className="w-40 px-5 py-3 text-white bg-slate-800 text-base">Add to Cart</button>
+                </div>
+                <div className="flex justify-end text-base text-green-700 font-semibold mr-6 mt-6 cursor-pointer">Make an Offer!</div>
+              </div>
+              <div className="flex items-center">
+                <TiTick />
+                <h2 className="text-sm">Shipping included</h2>
+
+              </div>
+              <div className="flex items-center">
+                <TiTick />
+                <h2 className="text-sm">14-day satisfaction guarantee
+
                 </h2>
-                <button className="w-40 px-5 py-3 text-white bg-slate-800">Add to Cart</button>
               </div>
 
               {/* <div role="status">
@@ -150,19 +181,9 @@ const ArtDetailPage = () => {
 
             </div>
 
-            <div className="flex items-center space-x-2">
-              <div className="py-5 text-lg">Select Size : </div>
-              <Select
-                options={[
-                  { label: "8 * 10 inches", value: "8*10 inches" },
-                  { label: "16 * 20 inches", value: "16*20 inches" },
-                  { label: "20 * 30 inches", value: "20*30 inches" },
-                ]}
-              />
-            </div>
+
 
             <div className="flex items-center space-x-2">
-              <div className="text-lg text-gray-700">Price:</div>
               {/* {!isLoading ? (
                 <div className="text-xl font-semibold">{artDetail.Price}</div>
               ) : (
