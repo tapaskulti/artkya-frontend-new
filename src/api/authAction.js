@@ -22,7 +22,7 @@ export const loginAction = async (payload) => {
 export const accessToken = async (payload) => {
   // console.log("access token payload ---->", payload);
 
-  const response = await axios.post(
+  const response = await axios.get(
     `${VITE_BASE_URL}/user/access_Token?email=${payload.body}`
   );
   // console.log("access token action response", response);

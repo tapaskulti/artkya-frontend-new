@@ -2,8 +2,6 @@ import { call, put, takeEvery } from "redux-saga/effects";
 import {
   FiltersAction,
   getAllArtAction,
-  searchArtByArtTitleAction,
-  searchArtByArtistAction,
 } from "../api/artAction";
 import { toast } from "react-toastify";
 import {
@@ -12,6 +10,7 @@ import {
   setFilteredIsLoading,
   setIsLoading,
 } from "../redux/app/art/artSlice";
+import { all } from "axios";
 
 // export function* createPostSaga(action) {
 //   try {
@@ -81,6 +80,20 @@ export function* getAllArtSaga(action) {
     toast.warning(error.message);
   }
 }
+
+export function* getAllInitialArtSaga(action) {
+  try {
+
+    const [allArts, cart,wishlist] = yield all([
+      call(getAllArtAction,action.payload),
+      call()
+    ])
+    
+  } catch (error) {
+    toast.warning(error.message);
+  }
+}
+
 
 
 
@@ -228,6 +241,7 @@ export function* watchAsyncArtSaga() {
   // yield takeEvery("CREATE_POST", createPostSaga);
   yield takeEvery("FILTER_ART", filterArtSaga);
   yield takeEvery("ALL_ART", getAllArtSaga);
+  yield takeEvery("ALL_INITIAL_API", getAllInitialArtSaga);
   // yield takeEvery("CREATE_NONSELECT_ART", createNonselecctArtSaga);
 
   // yield takeEvery("ALL_NONSELECT_ART", getAllNonSelectArtSaga);

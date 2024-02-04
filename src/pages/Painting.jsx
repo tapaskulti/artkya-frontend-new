@@ -300,7 +300,7 @@ const Painting = () => {
                 <div className="h-auto mt-32 gap-10 lg:gap-16 columns-1 md:columns-2 lg:columns-3 2xl:columns-3 gap-y-16 [&>img:not(:first-child)]:mt-5 lg:[&>img:not(:first-child)]:mt-16">
                   {(filteredArt.length!==0?filteredArt:allArt)?.map((singleArt) => {
                     return (
-                      <div key={singleArt._id}>
+                      <div key={singleArt?._id}>
                         <Link to="/artDetailsPage"><img src={singleArt?.thumbnail?.secure_url} alt="" /></Link>
                         <br />
                         <div>
