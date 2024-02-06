@@ -2,13 +2,13 @@ import { call, put, takeEvery } from "redux-saga/effects";
 import {
   FiltersAction,
   getAllArtAction,
-  searchArtByArtTitleAction,
-  searchArtByArtistAction,
+  getArtByIdAction,
 } from "../api/artAction";
 import { toast } from "react-toastify";
 import {
   setAllArt,
   setAllFilteredArt,
+  setArtDetails,
   setFilteredIsLoading,
   setIsLoading,
 } from "../redux/app/art/artSlice";
@@ -82,9 +82,6 @@ export function* getAllArtSaga(action) {
   }
 }
 
-
-
-
 // export function* createNonselecctArtSaga(action) {
 //   try {
 //     yield put(
@@ -131,29 +128,32 @@ export function* getAllArtSaga(action) {
 //   }
 // }
 
-// export function* getArtDetailSaga(action) {
-//   try {
-//     yield put(
-//       setIsLoading({
-//         isLoading: true,
-//       })
-//     );
-//     const response = yield call(getArtAction, action.payload);
+export function* getArtDetailSaga(action) {
+  try {
+    yield put(
+      setIsLoading({
+        isLoading: true,
+      })
+    );
+    const response = yield call(getArtByIdAction, action.payload);
 
-//     if (response.status === 200) {
-//       yield put(
-//         getArtDetails({
-//           artDetail: response?.data?.artDetail,
-//         })
-//       );
-//       yield put(
-//         setIsLoading({
-//           isLoading: false,
-//         })
-//       );
-//     }
-//   } catch (error) {}
-// }
+    if (response.status === 200) {
+      console.log("getArtDetailSaga====>", response);
+      yield put(
+        setArtDetails({
+          artDetail: response?.data?.data,
+        })
+      );
+      yield put(
+        setIsLoading({
+          isLoading: false,
+        })
+      );
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}
 
 // export function* updateArtSaga(action) {
 //   console.log(action.payload, "saga");
@@ -228,10 +228,10 @@ export function* watchAsyncArtSaga() {
   // yield takeEvery("CREATE_POST", createPostSaga);
   yield takeEvery("FILTER_ART", filterArtSaga);
   yield takeEvery("ALL_ART", getAllArtSaga);
+  yield takeEvery("ART_DETAIL", getArtDetailSaga);
   // yield takeEvery("CREATE_NONSELECT_ART", createNonselecctArtSaga);
 
   // yield takeEvery("ALL_NONSELECT_ART", getAllNonSelectArtSaga);
-  // yield takeEvery("ART_DETAIL", getArtDetailSaga);
 
   // yield takeEvery("UPDATE_ART", updateArtSaga);
   // yield takeEvery("UPDATE_NONSELECT_ART", updateNonSelectArtSaga);

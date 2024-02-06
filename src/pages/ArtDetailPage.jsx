@@ -2,17 +2,29 @@
 import Header from "../components/Header";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 // import { useDispatch, useSelector } from "react-redux";
 // import { setBuyOriginalType, setPriceTobeCheckout } from "../redux/art-slice";
 import Select from "react-select";
 import { toast } from "react-toastify";
 import artPic from "../assets/artPic.jpg";
 import { TiTick } from "react-icons/ti";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
 // import tn01 from "../assets/tn01.jpg";
 
 const ArtDetailPage = () => {
-  // const dispatch = useDispatch();
+  let { id } = useParams();
+  const dispatch = useDispatch();
+  // console.log("artId======>",id)
+
+  useEffect(()=>{
+    dispatch({
+      type:"ART_DETAIL",
+      payload:id
+    })
+  },[id])
+  
 
   // useEffect(() => {
   //   dispatch(

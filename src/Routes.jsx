@@ -23,7 +23,7 @@ const Routes = () => {
         <Route path="/forgotPassword" element={<ForgotPassword />} />
         {/* <Route path="/:id" element={<ArtDetailPage />} /> */}
         <Route path="/artistProfilePage" element={<ArtistProfilePage />} />
-        <Route path="/artDetailPage" element={ <ArtDetailPage /> } />
+        <Route path="/artDetailPage/:id" element={ <ArtDetailPage /> } />
         <Route path="/Painting" element={<Painting />} />
         <Route path="/favoutires" element={<Favourites />} />
         <Route path="/AboutUs" element={<AboutUs />} />

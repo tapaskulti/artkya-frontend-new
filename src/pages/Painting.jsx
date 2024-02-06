@@ -317,7 +317,7 @@ const Painting = () => {
                                 </button>
                               </div>
                             </div>
-                            <Link to="/artDetailPage">
+                            <Link to={`/artDetailPage/${singleArt._id}`}>
                               <img
                                 src={singleArt?.thumbnail?.secure_url}
                                 alt=""
