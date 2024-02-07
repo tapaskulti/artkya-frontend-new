@@ -3,7 +3,6 @@ import LandingPage from "./pages/LandingPage";
 import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
 import ForgotPassword from "./pages/auth/ForgotPassword";
-// import ArtDetailPage from "./pages/ArtDetailPage";
 import ArtistProfilePage from "./pages/ArtistProfilePage";
 import Painting from "./pages/Painting";
 import AboutUs from "./pages/AboutUs";
@@ -24,7 +23,7 @@ const Routes = () => {
         <Route path="/forgotPassword" element={<ForgotPassword />} />
         {/* <Route path="/:id" element={<ArtDetailPage />} /> */}
         <Route path="/artistProfilePage" element={<ArtistProfilePage />} />
-        <Route path="/artDetailPage" element={ <ArtDetailPage /> } />
+        <Route path="/artDetailPage/:id" element={ <ArtDetailPage /> } />
         <Route path="/Painting" element={<Painting />} />
         <Route path="/favoutires" element={<Favourites />} />
         <Route path="/AboutUs" element={<AboutUs />} />
