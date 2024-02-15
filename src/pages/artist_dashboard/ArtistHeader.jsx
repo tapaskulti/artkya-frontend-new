@@ -1,4 +1,4 @@
-import { useState } from "react";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { 
   faImage, 
@@ -11,14 +11,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import "./styles.css";
 
-const ArtistHeader = () => {
-  const [activeTab, setActiveTab] = useState("Manage Artworks");
-
-  const handleTabClick = (tabName) => {
-    console.log('current tab  clicked',tabName);
-    setActiveTab(tabName);
-  };
-
+const ArtistHeader = ({ activeTab, handleTabClick }) => {
   return (
     <>
       <ul className="hidden text-sm font-medium text-center text-gray-500 shadow sm:flex dark:divide-gray-700 dark:text-gray-400">
@@ -26,11 +19,11 @@ const ArtistHeader = () => {
           <a
             href="#"
              onClick={() => handleTabClick("Manage Artworks")}
-            className={`inline-block w-full text-center p-4 dark:text-white${
+             className={`inline-block w-full text-center p-4 ${
               activeTab === "Manage Artworks" 
-              ? "text-gray-900 bg-gray-600" 
-              : "text-gray-500 bg-gray-700"
-            }`}
+              ? "dark:bg-gray-700" 
+              : "dark:bg-gray-500"
+          } dark:text-white `}
             aria-current={activeTab === "Manage Artworks" ? "page" : null}
           >
             <div className="flex flex-col items-center justify-center">
@@ -43,11 +36,11 @@ const ArtistHeader = () => {
           <a
             href="#"
              onClick={() => handleTabClick("Sales Dashboard")}
-             className={`inline-block w-full text-center p-4 dark:text-white${
+             className={`inline-block w-full text-center p-4 ${
               activeTab === "Sales Dashboard" 
-              ? "text-gray-900 bg-gray-600" 
-              : "text-gray-500 bg-gray-700"
-            }`}
+              ? "dark:bg-gray-700" 
+              : "dark:bg-gray-500"
+          } dark:text-white `}
             aria-current={activeTab === "Sales Dashboard" ? "page" : null}
           
           >
@@ -61,11 +54,11 @@ const ArtistHeader = () => {
           <a
             href="#"
              onClick={() => handleTabClick("Offers Dashboard")}
-             className={`inline-block w-full text-center p-4 dark:text-white${
+             className={`inline-block w-full text-center p-4 ${
               activeTab === "Offers Dashboard" 
-              ? "text-gray-900 bg-gray-600" 
-              : "text-gray-500 bg-gray-700"
-            }`}
+              ? "dark:bg-gray-700" 
+              : "dark:bg-gray-500"
+          } dark:text-white `}
             aria-current={activeTab === "Offers Dashboard" ? "page" : null}
           
           >
@@ -78,13 +71,13 @@ const ArtistHeader = () => {
         <li className="w-full">
           <a
             href="#"
-             onClick={() => handleTabClick("Offers Dashboard")}
-            className={`inline-block w-full text-center p-4 ${
-              activeTab === "Manage Artworks" 
-                ? "text-gray-900 bg-gray-100" 
-                : "text-gray-500 bg-white"
-            } border-r border-gray-200 dark:border-gray-700 focus:ring-4 focus:ring-blue-300 active focus:outline-none dark:text-white dark:bg-gray-700`}
-            aria-current={activeTab === "Manage Artworks" ? "page" : null}
+             onClick={() => handleTabClick("Addresses")}
+             className={`inline-block w-full text-center p-4 ${
+              activeTab === "Addresses" 
+              ? "dark:bg-gray-700" 
+              : "dark:bg-gray-500"
+          } dark:text-white `}
+            aria-current={activeTab === "Addresses" ? "page" : null}
           
           >
             <div className="flex flex-col items-center justify-center">
@@ -96,13 +89,13 @@ const ArtistHeader = () => {
         <li className="w-full">
           <a
             href="#"
-             onClick={() => handleTabClick("Manage Artworks")}
-            className={`inline-block w-full text-center p-4 ${
-              activeTab === "Manage Artworks" 
-                ? "text-gray-900 bg-gray-100" 
-                : "text-gray-500 bg-white"
-            } border-r border-gray-200 dark:border-gray-700 focus:ring-4 focus:ring-blue-300 active focus:outline-none dark:text-white dark:bg-gray-700`}
-            aria-current={activeTab === "Manage Artworks" ? "page" : null}
+             onClick={() => handleTabClick("Curator Notes")}
+             className={`inline-block w-full text-center p-4 ${
+              activeTab === "Curator Notes" 
+              ? "dark:bg-gray-700" 
+              : "dark:bg-gray-500"
+          } dark:text-white `}
+            aria-current={activeTab === "Curator Notes" ? "page" : null}
           
           >
             <div className="flex flex-col items-center justify-center">
@@ -114,13 +107,13 @@ const ArtistHeader = () => {
         <li className="w-full">
           <a
             href="#"
-             onClick={() => handleTabClick("Manage Artworks")}
-            className={`inline-block w-full text-center p-4 ${
-              activeTab === "Manage Artworks" 
-                ? "text-gray-900 bg-gray-100" 
-                : "text-gray-500 bg-white"
-            } border-r border-gray-200 dark:border-gray-700 focus:ring-4 focus:ring-blue-300 active focus:outline-none dark:text-white dark:bg-gray-700`}
-            aria-current={activeTab === "Manage Artworks" ? "page" : null}
+             onClick={() => handleTabClick("Account")}
+             className={`inline-block w-full text-center p-4 ${
+              activeTab === "Account" 
+              ? "dark:bg-gray-700" 
+              : "dark:bg-gray-500"
+          } dark:text-white `}
+            aria-current={activeTab === "Account" ? "page" : null}
           
           >
             <div className="flex flex-col items-center justify-center">
@@ -130,15 +123,17 @@ const ArtistHeader = () => {
           </a>
         </li>
         <li className="w-full">
+        {/* bg-gray-100 */}
+        {/* bg-white */}
           <a
             href="#"
-             onClick={() => handleTabClick("Manage Artworks")}
+             onClick={() => handleTabClick("Profile Information")}
             className={`inline-block w-full text-center p-4 ${
-              activeTab === "Manage Artworks" 
-                ? "text-gray-900 bg-gray-100" 
-                : "text-gray-500 bg-white"
-            } border-r border-gray-200 dark:border-gray-700 focus:ring-4 focus:ring-blue-300 active focus:outline-none dark:text-white dark:bg-gray-700`}
-            aria-current={activeTab === "Manage Artworks" ? "page" : null}
+              activeTab === "Profile Information" 
+                ? "dark:bg-gray-700" 
+                : "dark:bg-gray-500"
+            } dark:text-white `}
+            aria-current={activeTab === "Profile Information" ? "page" : null}
           
           >
             <div className="flex flex-col items-center justify-center">
