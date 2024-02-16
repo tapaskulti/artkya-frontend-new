@@ -123,8 +123,6 @@ const ArtistHeader = ({ activeTab, handleTabClick }) => {
           </a>
         </li>
         <li className="w-full">
-        {/* bg-gray-100 */}
-        {/* bg-white */}
           <a
             href="#"
              onClick={() => handleTabClick("Profile Information")}

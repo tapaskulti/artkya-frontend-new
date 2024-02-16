@@ -131,18 +131,22 @@ const ImageUploadForm = () => {
           <h1 className="block mb-2">Upload Art Image:</h1>
           <label
             htmlFor="imageInput"
-            className="block border border-gray-300 p-4 cursor-pointer relative w-30 h-30"
+            className="block imageInput"
             onClick={openModal}
           >
-            <input
-              id="imageInput"
-              type="file"
-              accept="image/*"
-              onChange={handleImageChange}
-              multiple={false}
-              className="hidden"
-            />
-            
+            <div className="addSign"></div>
+            <div className="text-center">
+              {images.length < 1 && (
+                <u>
+                  <small>ADD PRIMARY IMAGE</small>
+                </u>
+              )}
+              {images.length && (
+                <u>
+                  <small>ADD ADDITIONAL IMAGE</small>
+                </u>
+              )}
+            </div>
           </label>
         </div>
       </div>
@@ -169,12 +173,10 @@ const Modal = ({ onClose, onImageSelection }) => {
   return (
     <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center">
       <div className="bg-white p-8 rounded-lg w-full h-full md:w-3/4 lg:w-1/2 xl:w-1/3">
-     
         <h2 className="text-xl font-bold mb-4">Upload Image</h2>
         <div className="drop-zone mb-6">
-       
           <label htmlFor="modalImageInput" className="cursor-pointer">
-          <FontAwesomeIcon
+            <FontAwesomeIcon
               icon={faUpload}
               className="left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-gray-400 text-4xl"
             />
