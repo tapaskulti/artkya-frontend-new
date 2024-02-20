@@ -54,3 +54,31 @@
   width: 100%;
   text-align: center;
 }
+.custom-dropzone {
+  border: 2px dashed #0087f9;
+  border-radius: 4px;
+  padding: 20px;
+  text-align: center;
+}
+
+.dropzone-container {
+  border: 2px dashed gray;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px; /* Set the height of your dropzone container */
+}
+
+.dropzone {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.dropzone p {
+  margin: 0;
+}

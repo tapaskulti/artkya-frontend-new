@@ -141,7 +141,7 @@ const ImageUploadForm = () => {
                   <small>ADD PRIMARY IMAGE</small>
                 </u>
               )}
-              {images.length && (
+              {images.length > 1 && (
                 <u>
                   <small>ADD ADDITIONAL IMAGE</small>
                 </u>
@@ -172,13 +172,13 @@ const Modal = ({ onClose, onImageSelection }) => {
 
   return (
     <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center">
-      <div className="bg-white p-8 rounded-lg w-full h-full md:w-3/4 lg:w-1/2 xl:w-1/3">
+      <div className="bg-white p-8 rounded-lg  md:w-3/4 lg:w-1/2 xl:w-1/3">
         <h2 className="text-xl font-bold mb-4">Upload Image</h2>
-        <div className="drop-zone mb-6">
+        <div className="dropzone-container  mb-6">
           <label htmlFor="modalImageInput" className="cursor-pointer">
             <FontAwesomeIcon
               icon={faUpload}
-              className="left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-gray-400 text-4xl"
+              className="text-gray-500 text-4xl"
             />
             <input
               id="modalImageInput"
