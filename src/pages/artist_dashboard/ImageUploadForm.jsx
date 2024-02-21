@@ -171,48 +171,65 @@ const Modal = ({ onClose, onImageSelection }) => {
   };
 
   return (
-    <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center">
-      <div className="bg-white p-8 rounded-lg  md:w-3/4 lg:w-1/2 xl:w-1/3">
+    <div className="imageUploader">
+      <div className="innerImageUploader">
         <h2 className="text-xl font-bold mb-4">Upload Image</h2>
-        <div className="dropzone-container  mb-6">
-          <label htmlFor="modalImageInput" className="cursor-pointer">
-            <FontAwesomeIcon
-              icon={faUpload}
-              className="text-gray-500 text-4xl"
-            />
-            <input
-              id="modalImageInput"
-              type="file"
-              accept="image/*"
-              onChange={handleImageChange}
-              multiple={true}
-              className="hidden"
-            />
+        <div className="dropzone-container">
+          <label className="dropzoneInput cursor-pointer">
+            <div className="dropzoneInputInner">
+              <FontAwesomeIcon
+                icon={faUpload}
+                className="text-gray-500 uploadIcon"
+              />
+              <p className="mt-2">Drag and drop image here</p>
+              <p className="mt-2">or<u> BROWSE IMAGE</u></p>
+              <input
+                id="modalImageInput"
+                type="file"
+                accept="image/*"
+                onChange={handleImageChange}
+                multiple={true}
+                className="hidden"
+              />
+            </div>
           </label>
         </div>
-        <div className="image-req-text">
-          <p>Your image file must be:</p>
-          <ul className="ul-list">
-            <li>JPEG or PNG format</li>
-            <li>At least 1500W x 1200H pixels</li>
-            <li>Less than 50MB</li>
-          </ul>
+
+        <div className="flex imageUploaderFooter mt-6">
+          <div className="image-req-text">
+            <p>Your image file must be:</p>
+            <ul className="ul-list">
+              <li>
+                <i>JPEG or PNG format</i>
+              </li>
+              <li>
+                <i>At least 1500W x 1200H pixels</i>
+              </li>
+              <li>
+                <i>Less than 50MB</i>
+              </li>
+            </ul>
+          </div>
+          <div>
+            <div className="flex justify-end mt-6">
+              <button className="text-blue-500 mr-4" onClick={onClose}>
+                Cancel
+              </button>
+              <button
+                className="bg-blue-500 text-white px-4 py-2 rounded-md"
+                onClick={handleSubmit}
+              >
+                Submit
+              </button>
+            </div>
+            <div className="flex justify-end mt-6">
+              <p className="text-sm text-gray-500 ">
+                By clicking "Submit", I confirm that I am the copyright owner of
+                this image.
+              </p>
+            </div>
+          </div>
         </div>
-        <div className="flex justify-end mt-6">
-          <button className="text-blue-500 mr-4" onClick={onClose}>
-            Cancel
-          </button>
-          <button
-            className="bg-blue-500 text-white px-4 py-2 rounded-md"
-            onClick={handleSubmit}
-          >
-            Submit
-          </button>
-        </div>
-        <p className="text-sm text-gray-500 mt-4">
-          By clicking "Submit", I confirm that I am the copyright owner of this
-          image.
-        </p>
       </div>
     </div>
   );
