@@ -14,7 +14,16 @@ const App = () => {
         searchInput:undefined
       },
     });
-  }, [dispatch]);
+  },[dispatch])
+
+  useEffect(()=>{
+    dispatch({
+      type: "GET_CART_BY_ID",
+      // payload:user?._id
+    })
+  },[])
+
+
 
   return (
     <>

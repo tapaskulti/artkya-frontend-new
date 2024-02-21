@@ -10,7 +10,6 @@ import {
 import {
   setAuthUser,
   setAuthUserLoading,
-
   setError,
   setIsLoggedIn,
   setToken,
@@ -41,15 +40,14 @@ function* loginSaga(action) {
         type: "ACCESSTOKEN",
         payload: {
           body: action?.payload?.body?.email,
+          navigate:action?.payload?.navigate
         },
-      });
-      toast.success("Logged In Successfully");
+      });      
       yield put(
         setIsLoggedIn({
           setIsLoggedIn: false,
         })
       );
-      action.payload.navigate("/")
     }
   } catch (error) {
     toast.error(error?.response?.data?.message);
@@ -63,9 +61,11 @@ function* accessTokenSaga(action) {
     const response = yield call(accessToken, action.payload);
     if (response.status === 200) {
       yield put(setToken({ token: response?.data?.accessToken }));
-      localStorage.setItem("isLoggedin", true);
+      toast.success("Logged In Successfully");
+      action.payload.navigate("/")
     }
   } catch (error) {
+    console.log(error);
     toast.error(error?.response?.data.message);
     yield put(setError({ errMsg: error?.response?.data?.message }));
   }
@@ -75,7 +75,6 @@ function* logoutSaga(action) {
   try {
     console.log(action.payload);
     const response = yield call(logoutSagaAction, action.payload);
-    // console.log("logout response auth saga", response);
     if (response.status === 200) {
       toast.success(response.data.message);
       localStorage.removeItem("User_email");

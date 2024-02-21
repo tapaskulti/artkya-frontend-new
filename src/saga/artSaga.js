@@ -12,6 +12,7 @@ import {
   setFilteredIsLoading,
   setIsLoading,
 } from "../redux/app/art/artSlice";
+import { all } from "axios";
 
 // export function* createPostSaga(action) {
 //   try {
