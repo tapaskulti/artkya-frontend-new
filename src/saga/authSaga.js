@@ -10,30 +10,28 @@ import {
 import {
   setAuthUser,
   setAuthUserLoading,
-
   setError,
   setIsLoggedIn,
   setToken,
 } from "../redux/app/auth/auth-slice";
 
-
-function* registerSaga(action){
+function* registerSaga(action) {
   try {
-      console.log(action?.payload);
-     const response =  yield call (registerUserAction,action?.payload)
-     console.log("registerUserAction resposnse",response);
-     if(response.status===201){
-         toast.success(response?.data?.message)
-     }
+    console.log(action?.payload);
+    const response = yield call(registerUserAction, action?.payload);
+    console.log("registerUserAction resposnse", response);
+    if (response.status === 201) {
+      toast.success(response?.data?.message);
+    }
   } catch (error) {
-      toast.warning(error?.response?.data?.message)
+    toast.warning(error?.response?.data?.message);
   }
-  }
+}
 
 function* loginSaga(action) {
   try {
     const response = yield call(loginAction, action?.payload);
-    localStorage.setItem("User_email", action?.payload?.body?.email);
+    // localStorage.setItem("User_email", action?.payload?.body?.email);
     if (response.status === 200) {
       console.log("login response----->", response);
       yield put(setError({ errMsg: "" }));
@@ -41,6 +39,7 @@ function* loginSaga(action) {
         type: "ACCESSTOKEN",
         payload: {
           body: action?.payload?.body?.email,
+          navigate: action?.payload?.navigate,
         },
       });
       toast.success("Logged In Successfully");
@@ -49,7 +48,6 @@ function* loginSaga(action) {
           setIsLoggedIn: false,
         })
       );
-      action.payload.navigate("/")
     }
   } catch (error) {
     toast.error(error?.response?.data?.message);
@@ -63,9 +61,12 @@ function* accessTokenSaga(action) {
     const response = yield call(accessToken, action.payload);
     if (response.status === 200) {
       yield put(setToken({ token: response?.data?.accessToken }));
-      localStorage.setItem("isLoggedin", true);
+      localStorage.setItem("User_email", action.payload?.body);
+      
+      action.payload.navigate("/");
     }
   } catch (error) {
+    console.log(error);
     toast.error(error?.response?.data.message);
     yield put(setError({ errMsg: error?.response?.data?.message }));
   }
@@ -75,7 +76,6 @@ function* logoutSaga(action) {
   try {
     console.log(action.payload);
     const response = yield call(logoutSagaAction, action.payload);
-    // console.log("logout response auth saga", response);
     if (response.status === 200) {
       toast.success(response.data.message);
       localStorage.removeItem("User_email");
@@ -95,8 +95,8 @@ function* userLoggedInSaga(action) {
     const response = yield call(userLoggedInAction, action.payload);
     // console.log("logged in response in saga", response);
     if (response.status === 200) {
-      yield put(setAuthUser({ authUser: response?.data?.data }));
-      yield put(setAuthUserLoading({ authUserLoading:false }));
+      yield put(setAuthUser({ authUser: response?.data?.authUser }));
+      yield put(setAuthUserLoading({ authUserLoading: false }));
     }
   } catch (error) {
     console.log(error);
@@ -104,7 +104,7 @@ function* userLoggedInSaga(action) {
 }
 
 export function* watchAsyncAuthSaga() {
-  yield takeEvery("REGISTER",registerSaga)
+  yield takeEvery("REGISTER", registerSaga);
   yield takeEvery("LOGIN", loginSaga);
   yield takeEvery("ACCESSTOKEN", accessTokenSaga);
   yield takeEvery("LOGGED_IN_USER", userLoggedInSaga);

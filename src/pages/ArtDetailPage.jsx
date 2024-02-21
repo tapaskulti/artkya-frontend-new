@@ -2,17 +2,28 @@
 import Header from "../components/Header";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 // import { useDispatch, useSelector } from "react-redux";
 // import { setBuyOriginalType, setPriceTobeCheckout } from "../redux/art-slice";
 import Select from "react-select";
 import { toast } from "react-toastify";
 import artPic from "../assets/artPic.jpg";
 import { TiTick } from "react-icons/ti";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 // import tn01 from "../assets/tn01.jpg";
 
 const ArtDetailPage = () => {
-  // const dispatch = useDispatch();
+  let { id } = useParams();
+  const dispatch = useDispatch();
+  // console.log("artId======>",id)
+
+  useEffect(() => {
+    dispatch({
+      type: "ART_DETAIL",
+      payload: id,
+    });
+  }, [id]);
 
   // useEffect(() => {
   //   dispatch(
@@ -50,6 +61,16 @@ const ArtDetailPage = () => {
   //   });
   // }, []);
 
+  const [selectedImage, setSelectedImage] = useState();
+
+  const { artDetail } = useSelector((state) => state.art);
+
+  useEffect(() => {
+    if (artDetail) {
+      setSelectedImage(artDetail?.thumbnail?.secure_url);
+    }
+  }, [artDetail]);
+
   return (
     <div className="w-screen">
       <Header />
@@ -61,15 +82,27 @@ const ArtDetailPage = () => {
         <div className="w-full md:flex md:justify-between md:space-x-16">
           {/* image */}
           <div className="space-y-2">
-            <img src={artPic} alt="" className="w-16 h-16" />
-            <img src={artPic} alt="" className="w-16 h-16" />
-            <img src={artPic} alt="" className="w-16 h-16" />
-            <img src={artPic} alt="" className="w-16 h-16" />
-            <img src={artPic} alt="" className="w-16 h-16" />
+            {artDetail?.art?.map((singleArt) => {
+              return (
+                <div
+
+                  key={singleArt?.id}
+                  onClick={() => {
+                    setSelectedImage(singleArt?.secure_url);
+                  }}
+                >
+                  <img
+                    src={singleArt?.secure_url}
+                    alt=""
+                    className="w-16 h-16 cursor-pointer"
+                  />
+                </div>
+              );
+            })}
           </div>
           <div className="w-1/2">
             <img
-              src={artPic}
+              src={selectedImage}
               alt={"here is the text"}
               className="rounded-md shadow-xl md:w-full "
             />
@@ -86,11 +119,11 @@ const ArtDetailPage = () => {
 
             <div className="px-3 mt-5 text-xl font-semibold">
               <div className="text-left">
-                <h2 className="text-lg italic text-slate-600">Blue Mirroring! Painting</h2>
-                <h2 className="text-sm text-red-600">Pranab Phauzdar</h2>
-                <h2 className="text-sm font-semibold text-gray-700">
-                  India
+                <h2 className="text-lg italic text-slate-600">
+                  Blue Mirroring! Painting
                 </h2>
+                <h2 className="text-sm text-red-600">Pranab Phauzdar</h2>
+                <h2 className="text-sm font-semibold text-gray-700">India</h2>
               </div>
               <div className="py-3 space-y-1 text-sm text-left text-gray-700">
                 <h2>Painting, Acrylic on Canvas</h2>
@@ -115,21 +148,24 @@ const ArtDetailPage = () => {
                   />
                 </div>
                 <div className="flex items-center justify-between">
-                  <div className="text-2xl text-slate-900 font-thin">Price: USD 280</div>
-                  <button className="w-40 px-5 py-3 text-white bg-slate-800 text-base">Add to Cart</button>
+                  <div className="text-2xl text-slate-900 font-thin">
+                    Price: USD 280
+                  </div>
+                  <button className="w-40 px-5 py-3 text-white bg-slate-800 text-base">
+                    Add to Cart
+                  </button>
                 </div>
-                <div className="flex justify-end text-base text-green-700 font-semibold mr-6 mt-6 cursor-pointer">Make an Offer!</div>
+                <div className="flex justify-end text-base text-green-700 font-semibold mr-6 mt-6 cursor-pointer">
+                  Make an Offer!
+                </div>
               </div>
               <div className="flex items-center">
                 <TiTick />
                 <h2 className="text-sm">Shipping included</h2>
-
               </div>
               <div className="flex items-center">
                 <TiTick />
-                <h2 className="text-sm">14-day satisfaction guarantee
-
-                </h2>
+                <h2 className="text-sm">14-day satisfaction guarantee</h2>
               </div>
 
               {/* <div role="status">
@@ -182,10 +218,7 @@ const ArtDetailPage = () => {
                   </div>
                 )}
               </div> */}
-
             </div>
-
-
 
             <div className="flex items-center space-x-2">
               {/* {!isLoading ? (

@@ -30,7 +30,7 @@ export const FiltersAction = async (payload) => {
 
 export const getAllArtAction = async (payload) => {
   try {
-    console.log("all art action ========>",payload);
+    // console.log("all art action ========>", payload);
     const response = await axios.get(
       `${VITE_BASE_URL}/art/getAllArt?criteria=${payload?.sortCriteria}&searchCriteria=${payload?.searchCriteria}&searchInput=${payload?.searchInput}`
     );
@@ -41,30 +41,19 @@ export const getAllArtAction = async (payload) => {
   }
 };
 
-export const searchArtByArtistAction = async (payload) => {
-  try {
-    const response = await axios.get(
-      `${VITE_BASE_URL}/art/getArtByName?artByName=${payload}`
-    );
-
-    return response;
-  } catch (error) {
-    console.log(error);
-  }
+export const getArtByIdAction = async (payload) => {
+  console.log(payload);
+  const response = await axios.get(
+    `${VITE_BASE_URL}/art/getArtById?artID=${payload}`
+  );
+  console.log("getArtByIdAction====>", response);
+  return response;
 };
 
-export const searchArtByArtTitleAction = async (payload) => {
-  try {
-    console.log("searchArtByArtTitleAction", payload);
-    const response = await axios.get(
-      `${VITE_BASE_URL}/art/getArtByArtist?artist=${payload}`
-    );
 
-    return response;
-  } catch (error) {
-    console.log(error);
-  }
-};
+
+
+
 
 export const createNonSelectArtAction = async (payload) => {
   try {
@@ -91,14 +80,6 @@ export const getAllNonSelectArtAction = async (payload) => {
   } else {
     response = await axios.get(`${VITE_BASE_URL}/art/getallnonselectart`);
   }
-
-  return response;
-};
-
-export const getArtAction = async (payload) => {
-  const response = await axios.get(
-    `${VITE_BASE_URL}/art/artDetail?artId=${payload.artId}`
-  );
 
   return response;
 };

@@ -5,8 +5,12 @@ import { IoShieldCheckmarkSharp } from "react-icons/io5";
 import { TiLockClosed } from "react-icons/ti";
 import { AiFillDollarCircle } from "react-icons/ai";
 import { FaStar } from "react-icons/fa";
+import { useDispatch, useSelector } from "react-redux";
 
 const Cart = () => {
+  const { cartDetails } = useSelector((state) => state.cart);
+  const { authUser } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
   return (
     <div className="bg-slate-100 h-screen">
       <div className="bg-slate-50">
@@ -23,23 +27,74 @@ const Cart = () => {
         <div className="flex px-60 py-10 space-x-6">
           <div className="w-3/5 bg-slate-50  p-4">
             <div className="text-4xl font-semibold">Cart</div>
-            <div className="flex flex-col items-center space-y-5">
-              <HiOutlineShoppingCart className="text-[16rem] text-slate-300" />
-              <h1 className="text-xl">Your Cart Is Empty</h1>
-              <Link
-                to="/Painting"
-                className={`flex cursor-pointer w-72 bg-black text-white font-semibold justify-center items-center py-4 text-2xl `}
-              >
-                Browse Art
-              </Link>
-            </div>
+            {cartDetails?.arts?.length === 0 ? (
+              <div className="flex flex-col items-center space-y-5">
+                <HiOutlineShoppingCart className="text-[16rem] text-slate-300" />
+                <h1 className="text-xl">Your Cart Is Empty</h1>
+                <Link
+                  to="/Painting"
+                  className={`flex cursor-pointer w-72 bg-black text-white font-semibold justify-center items-center py-4 text-2xl `}
+                >
+                  Browse Art
+                </Link>
+              </div>
+            ) : (
+              <>
+                {cartDetails?.arts?.map((singleArt) => {
+                  return (
+                    <div className="space-y-3" key={singleArt?._id}>
+                      <div className=" bg-white border-t-2 flex p-3">
+                        <div className="w-[30%]">
+                          <img src={singleArt?.thumbnail?.secure_url} alt="" />
+                        </div>
+                        <div className="w-[70%] px-3 space-y-1">
+                          <div className="flex justify-between">
+                            <div>
+                              <h1 className="text-base italic">
+                                {singleArt?.title}
+                              </h1>
+                              <h1 className=" text-sm">Soo Beng Lim</h1>
+                              <h1 className=" text-xs">{singleArt?.subject}</h1>
+                            </div>
+                            <button
+                              className="bg-gray-300 text-white font-semibold rounded-full h-6 p-2 flex items-center"
+                              onClick={() => {
+                                dispatch({
+                                  type: "REMOVE_ART_FROM_CART",
+                                  payload: {
+                                    userId: authUser?._id,
+                                    artId: singleArt?._id,
+                                    artPrice: singleArt?.price,
+                                  },
+                                  
+                                });
+                              }}
+                            >
+                              X
+                            </button>
+                          </div>
+                          <div className="flex justify-between text-xs">
+                            <h1>Shipping</h1>
+                            <h1>Included</h1>
+                          </div>
+                          <div className="flex justify-between text-sm font-semibold">
+                            <h1>Artwork Total</h1>
+                            <h1>{singleArt?.price}</h1>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </>
+            )}
           </div>
           {/* ************************************************************************************************************** */}
           <div className="w-2/5 bg-slate-50 p-4 space-y-4">
             <div className="space-y-3">
-              <div className="flex text-2xl justify-between font-semibold">
+              <div className="flex text-xl justify-between font-semibold">
                 <h1>Estimated Total</h1>
-                <h1>₹87,04,048.60</h1>
+                <h1>₹{cartDetails?.totalPrice}</h1>
               </div>
               <h1>
                 All charges and refunds will be made in USD ($106,615) and may
@@ -85,13 +140,13 @@ const Cart = () => {
             {/* ************************************************************************************************************** */}
             <div className="flex space-x-3">
               <Link
-                className={`flex cursor-pointer w-72  text-black justify-center items-center py-4 text-2xl border border-black text-center `}
+                className={`flex cursor-pointer w-64  text-black justify-center items-center py-2 text-base border border-black text-center `}
               >
                 Enjoy Complimentary Advisory
               </Link>
 
               <Link
-                className={`flex cursor-pointer w-72  text-black justify-center items-center py-4 text-2xl text-center border border-black`}
+                className={`flex cursor-pointer w-64  text-black justify-center items-center py-2 text-l border border-black text-center`}
               >
                 Contact customer Support
               </Link>
@@ -108,11 +163,11 @@ export default Cart;
 export const CartCardComponent = ({ icon, mainText, subText }) => {
   return (
     <div className="">
-      <div className="flex caret-lime-400 px-4 space-x-6 py-3">
-        <div className="text-6xl">{icon}</div>
+      <div className="flex caret-lime-400 px-4 space-x-6 py-3 items-center">
+        <div className="text-4xl">{icon}</div>
         <div>
-          <h1 className="text-2xl">{mainText}</h1>
-          <h1>{subText}</h1>
+          <h1 className="text-lg">{mainText}</h1>
+          <h1 className="text-sm">{subText}</h1>
         </div>
       </div>
     </div>
