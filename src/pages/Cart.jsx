@@ -23,7 +23,8 @@ const Cart = () => {
         <div className="flex px-60 py-10 space-x-6">
           <div className="w-3/5 bg-slate-50  p-4">
             <div className="text-4xl font-semibold">Cart</div>
-            <div className="flex flex-col items-center space-y-5">
+            
+            <div className="flex flex-col items-center space-y-5 bg-green-100">
               <HiOutlineShoppingCart className="text-[16rem] text-slate-300" />
               <h1 className="text-xl">Your Cart Is Empty</h1>
               <Link
@@ -37,7 +38,7 @@ const Cart = () => {
           {/* ************************************************************************************************************** */}
           <div className="w-2/5 bg-slate-50 p-4 space-y-4">
             <div className="space-y-3">
-              <div className="flex text-2xl justify-between font-semibold">
+              <div className="flex text-xl justify-between font-semibold">
                 <h1>Estimated Total</h1>
                 <h1>₹87,04,048.60</h1>
               </div>
@@ -85,13 +86,13 @@ const Cart = () => {
             {/* ************************************************************************************************************** */}
             <div className="flex space-x-3">
               <Link
-                className={`flex cursor-pointer w-72  text-black justify-center items-center py-4 text-2xl border border-black text-center `}
+                className={`flex cursor-pointer w-64  text-black justify-center items-center py-2 text-base border border-black text-center `}
               >
                 Enjoy Complimentary Advisory
               </Link>
 
               <Link
-                className={`flex cursor-pointer w-72  text-black justify-center items-center py-4 text-2xl text-center border border-black`}
+                className={`flex cursor-pointer w-64  text-black justify-center items-center py-2 text-l border border-black text-center`}
               >
                 Contact customer Support
               </Link>
@@ -108,11 +109,11 @@ export default Cart;
 export const CartCardComponent = ({ icon, mainText, subText }) => {
   return (
     <div className="">
-      <div className="flex caret-lime-400 px-4 space-x-6 py-3">
-        <div className="text-6xl">{icon}</div>
+      <div className="flex caret-lime-400 px-4 space-x-6 py-3 items-center">
+        <div className="text-4xl">{icon}</div>
         <div>
-          <h1 className="text-2xl">{mainText}</h1>
-          <h1>{subText}</h1>
+          <h1 className="text-lg">{mainText}</h1>
+          <h1 className="text-sm">{subText}</h1>
         </div>
       </div>
     </div>

@@ -94,7 +94,7 @@ function* userLoggedInSaga(action) {
     const response = yield call(userLoggedInAction, action.payload);
     // console.log("logged in response in saga", response);
     if (response.status === 200) {
-      yield put(setAuthUser({ authUser: response?.data?.data }));
+      yield put(setAuthUser({ authUser: response?.data?.authUser }));
       yield put(setAuthUserLoading({ authUserLoading:false }));
     }
   } catch (error) {

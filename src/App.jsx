@@ -1,9 +1,10 @@
 import { useEffect } from "react";
 import Routes from "./Routes";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const App = () => {
   const dispatch = useDispatch();
+  const{token,authUser} = useSelector(state=>state.auth)
 
   useEffect(() => {
     dispatch({
@@ -17,11 +18,25 @@ const App = () => {
   },[dispatch])
 
   useEffect(()=>{
+    if(token){
+      dispatch({
+        type: "LOGGED_IN_USER",
+        payload:{
+          token:token
+        }
+      })
+    }
+
+  },[token])
+
+
+  useEffect(()=>{
+    if(authUser)
     dispatch({
       type: "GET_CART_BY_ID",
-      // payload:user?._id
+      payload:authUser?._id
     })
-  },[])
+  },[authUser])
 
 
 
