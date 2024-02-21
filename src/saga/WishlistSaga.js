@@ -1,13 +1,17 @@
 import { toast } from "react-toastify";
-import { call, takeEvery } from "redux-saga/effects";
+import { call, put, takeEvery } from "redux-saga/effects";
+import { setAllWishlist } from "../redux/app/wishlist/wishlistSlice";
+import { getWishlistByIdAction } from "../api/wishlistAction";
 
 export function* getWishlistByIdSaga(action) {
-    try {
-  
-      
-      
+    try {  
+      const response = yield call(getWishlistByIdAction, action.payload);
+      console.log("getWishlistById res=>", response);
+      if (response.status === 200) {
+        yield put(setAllWishlist({wishlistDetails:response?.data?.data}))
+      }      
     } catch (error) {
-      toast.warning(error.message);
+      console.log(error.message);
     }
   }
 
@@ -16,7 +20,7 @@ export function* getWishlistByIdSaga(action) {
     //  const response = yield call(addArtToCartSaga, action.payload);
       
     } catch (error) {
-      toast.warning(error.message);
+      console.log(error.message);
     }
   }
 
@@ -24,6 +28,6 @@ export function* getWishlistByIdSaga(action) {
   export function* watchAsyncWishlistSaga() {
     
     yield takeEvery("GET_WISHLIST_BY_ID", getWishlistByIdSaga);
-    yield takeEvery("ADD_ART_TO_WISHLIST", addArtToCartSaga)        
+    yield takeEvery("ADD_ART_TO_WISHLIST", addArtToWishlistSaga)        
    
   }
