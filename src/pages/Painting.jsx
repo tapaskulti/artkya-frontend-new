@@ -20,7 +20,7 @@ import { FaHeart, FaPlus } from "react-icons/fa";
 import { FaCartShopping } from "react-icons/fa6";
 import { useDispatch, useSelector } from "react-redux";
 import Select from "react-select";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { setAllFilteredArt } from "../redux/app/art/artSlice";
 
 // import ArtItem from "../components/ArtItem";
@@ -28,6 +28,8 @@ import { setAllFilteredArt } from "../redux/app/art/artSlice";
 const Painting = () => {
   const dispatch = useDispatch();
   const { filteredArt, allArt } = useSelector((state) => state.art);
+  const { authUser } = useSelector((state) => state.auth);
+  const navigate = useNavigate();
   const [itemsToShow, setItemsToShow] = useState();
   const [filterData, setFilterData] = useState({
     style: [],
@@ -312,7 +314,20 @@ const Painting = () => {
                                 <button className="bg-white w-7 h-7 rounded-full flex justify-center pt-1.5">
                                   <FaHeart />
                                 </button>
-                                <button className="bg-white w-7 h-7 rounded-full flex justify-center pt-1.5">
+                                <button
+                                  className="bg-white w-7 h-7 rounded-full flex justify-center pt-1.5"
+                                  onClick={() => {
+                                    dispatch({
+                                      type: "ADD_ART_TO_CART",
+                                      payload: {
+                                        userId: authUser?._id,
+                                        artId: singleArt?._id,
+                                        artPrice: singleArt?.price,
+                                        navigate
+                                      },
+                                    });
+                                  }}
+                                >
                                   <FaCartShopping />
                                 </button>
                               </div>

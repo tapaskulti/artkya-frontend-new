@@ -6,7 +6,6 @@ import { TiLockClosed } from "react-icons/ti";
 import { AiFillDollarCircle } from "react-icons/ai";
 import { FaStar } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
-import artPic from "../assets/artPic.jpg";
 
 const Cart = () => {
   const { cartDetails } = useSelector((state) => state.cart);
@@ -67,6 +66,7 @@ const Cart = () => {
                                     artId: singleArt?._id,
                                     artPrice: singleArt?.price,
                                   },
+                                  
                                 });
                               }}
                             >
