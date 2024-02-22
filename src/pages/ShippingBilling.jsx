@@ -49,9 +49,9 @@ const Cart = () => {
                 All charges and refunds will be made in USD ($106,615) and may
                 be subject to exchange rate fluctuations.
               </h1>
-              <Link to="/">
+              <Link to="/paymentPage">
                 <button className="flex w-full bg-[#80bc30] hover:bg-[#89c043] text-white text-xl font-semibold mt-5 px-10 py-4 justify-center">
-                  Checkout
+                  Place Order
                 </button>
               </Link>
             </div>
