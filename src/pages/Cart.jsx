@@ -24,8 +24,8 @@ const Cart = () => {
       </div>
       {/* *************************************************** */}
       <div className="my-10">
-        <div className="flex px-60 py-10 space-x-6">
-          <div className="w-3/5 bg-slate-50  p-4">
+        <div className="flex justify-center px-64 py-10 space-x-6">
+          <div className="w-2/5 bg-slate-50  p-4">
             <div className="text-4xl font-semibold">Cart</div>
             {cartDetails?.arts?.length === 0 ? (
               <div className="flex flex-col items-center space-y-5">
@@ -89,7 +89,7 @@ const Cart = () => {
             )}
           </div>
           {/* ************************************************************************************************************** */}
-          <div className="w-2/5 bg-slate-50 p-4 space-y-4">
+          <div className="w-1/3 bg-slate-50 p-4 space-y-4">
             <div className="space-y-3">
               <div className="flex text-xl justify-between font-semibold">
                 <h1>Estimated Total</h1>
