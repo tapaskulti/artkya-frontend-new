@@ -30,6 +30,13 @@ const Cart = () => {
             <div>
               <AccordionContinue className="block" />
             </div>
+            <div className="mx-4">
+              <Link to="/ShippingBilling">
+                <button className="flex w-full bg-[#80bc30] hover:bg-[#89c043] text-white text-xl font-semibold mt-5 px-10 py-4 justify-center">
+                  Place Order
+                </button>
+              </Link>
+            </div>
           </div>
           {/* ************************************************************************************************************** */}
           <div className="w-1/3 bg-slate-50 p-4 space-y-4">
@@ -42,9 +49,11 @@ const Cart = () => {
                 All charges and refunds will be made in USD ($106,615) and may
                 be subject to exchange rate fluctuations.
               </h1>
-              <div className="flex bg-[#80bc30] text-white text-xl font-semibold px-10 py-4 justify-center">
-                Checkout
-              </div>
+              <Link to="/">
+                <button className="flex w-full bg-[#80bc30] hover:bg-[#89c043] text-white text-xl font-semibold mt-5 px-10 py-4 justify-center">
+                  Checkout
+                </button>
+              </Link>
             </div>
             {/* ************************************************************************************************************** */}
             <div>
