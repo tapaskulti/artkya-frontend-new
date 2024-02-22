@@ -42,7 +42,7 @@
   /* max-width: 800px;  */
   /* max-height: 80vh;  */
   background: white;
-  border: dotted 1px gray;
+  /* border: dotted 1px gray; */
   padding: 40px;
   display: flex;
   flex-direction: column;
@@ -50,7 +50,7 @@
 }
 
 .dropzone-container {
-  border: 2px dashed gray;
+  /* border: 2px dashed gray; */
   height: 75%;
   width: 100%;
 }
