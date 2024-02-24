@@ -12,11 +12,7 @@ import Account from "./pages/accounts/Account";
 import ArtDetailPage from "./pages/ArtDetailPage";
 import Studio from "./pages/studio/Studio";
 import Cart from "./pages/Cart";
-
-import ArtistMainPage from "./pages/artist_dashboard/ArtistMainPage";
-
 import ShippingBilling from "./pages/ShippingBilling";
-
 
 const Routes = () => {
   return (
@@ -36,9 +32,6 @@ const Routes = () => {
         <Route path="/Contacts" element={<Contacts />} />
         <Route path="/Accounts" element={<Account />} />
         <Route path="/Cart" element={<Cart />} />
-
-        <Route path="/Artist" element={<ArtistMainPage />} />
-
         <Route path="/ShippingBilling" element={<ShippingBilling />} />
         {/* <Route path="/:id/checkout" element={<ChekoutPage />} /> */}
       </RoutePath>
