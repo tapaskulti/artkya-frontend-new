@@ -65,11 +65,6 @@ const Header = () => {
             <div className="flex items-center space-x-24">
               <ul className="hidden md:flex space-x-10 font-sans text-base cursor-pointer  text-[#000000] ">
                 <li className="hover:text-amber-800 ">
-                  <NavLink className="border-black" to="/Artist">
-                    Sell Art
-                  </NavLink>
-                </li>
-                <li className="hover:text-amber-800 ">
                   <NavLink className="border-black" to="/">
                     Home
                   </NavLink>
