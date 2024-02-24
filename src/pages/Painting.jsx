@@ -28,7 +28,6 @@ import { setAllFilteredArt } from "../redux/app/art/artSlice";
 const Painting = () => {
   const dispatch = useDispatch();
   const { filteredArt, allArt } = useSelector((state) => state.art);
-  const [itemsToShow, setItemsToShow] = useState();
   const [filterData, setFilterData] = useState({
     style: [],
     subject: [],
