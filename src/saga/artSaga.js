@@ -70,7 +70,7 @@ export function* getAllArtSaga(action) {
     const response = yield call(getAllArtAction, action.payload);
 
     console.log("response from art saga", response?.data?.data);
-    if (response.status === 200) {
+    if (response?.status === 200) {
       yield put(
         setIsLoading({
           isLoading: false,

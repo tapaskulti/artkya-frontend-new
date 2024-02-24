@@ -7,6 +7,9 @@ import { useSelector } from "react-redux";
 
 const Favourites = () => {
   const { allArt } = useSelector((state) => state.art);
+  const { authUser } = useSelector((state) => state.auth);
+  const { wishlistDetails } = useSelector((state) => state.wishlist);
+
   const navigate = useNavigate();
   return (
     <div className="static">
@@ -24,7 +27,12 @@ const Favourites = () => {
 
         {/* text */}
         <div>
-          <div className="text-xl font-bold">Abhisek Biswas's Favorites</div>
+          <div className="text-xl font-bold">
+            {`${authUser?.firstName ? authUser?.firstName : ""} ${
+              authUser?.lastName ? authUser?.lastName : ""
+            }${authUser?.firstName ? "'s" : ""}`}{" "}
+            Favorites
+          </div>
           <div
             className="flex items-center space-x-1 cursor-pointer"
             onClick={() => {
@@ -44,6 +52,9 @@ const Favourites = () => {
           {/* <div className="bg-gray-100 h-auto backdrop-blur-lg rounded-md w-full md:max-lg:max-w-screen-sm md:max-lg:mx-auto mt-6 px-3 py-2">Left</div> */}
           <div className="">
             <div className="h-auto gap-10 lg:gap-16 columns-1 md:columns-2 lg:columns-3 2xl:columns-3 gap-y-16 [&>img:not(:first-child)]:mt-5 lg:[&>img:not(:first-child)]:mt-16">
+              {/* {
+                wishlistDetails?arts
+              } */}
               {allArt?.map((singleArt) => {
                 return (
                   <div key={singleArt._id}>

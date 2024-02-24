@@ -50,6 +50,11 @@ export const getArtByIdAction = async (payload) => {
   return response;
 };
 
+
+
+
+
+
 export const createNonSelectArtAction = async (payload) => {
   try {
     const response = await axios.post(
