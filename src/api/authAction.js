@@ -42,10 +42,11 @@ export const logoutSagaAction = async (payload) => {
 };
 
 export const userLoggedInAction = async (payload) => {
-  const response = await axios.get(`${VITE_BASE_URL}/user/loggedInUser`, {
+  const response = await axios.get(`${VITE_BASE_URL}/user/authUser`, {
     headers: {
       Authorization: payload?.token,
     },
   });
+
   return response;
 };

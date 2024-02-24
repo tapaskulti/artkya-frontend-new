@@ -1,8 +1,11 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react";
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import paypal from "../assets/paypal-logo.png";
 
 // eslint-disable-next-line react/prop-types
-const Accordion = ({ element,onCheckChange,name}) => {
+const Accordion = ({ element, onCheckChange, name }) => {
   const [accordionOpen, setAccordionOpen] = useState(false);
   return (
     <div className="py-2">
@@ -46,11 +49,17 @@ const Accordion = ({ element,onCheckChange,name}) => {
         }`}
       >
         <div className="overflow-hidden">
-          {element[0]?.element?.map((singleElement,index) => {
+          {element[0]?.element?.map((singleElement, index) => {
             return (
               <div key={index}>
                 <div className="flex items-center space-x-2">
-                  <input type="checkbox" className="border border-slate-50" name={name} value={singleElement} onChange={onCheckChange}></input>
+                  <input
+                    type="checkbox"
+                    className="border border-slate-50"
+                    name={name}
+                    value={singleElement}
+                    onChange={onCheckChange}
+                  ></input>
                   <div className="my-0.5">{singleElement}</div>
                 </div>
               </div>
@@ -64,4 +73,190 @@ const Accordion = ({ element,onCheckChange,name}) => {
 
 export default Accordion;
 
-
+export const AccordionContinue = () => {
+  const { cartDetails } = useSelector((state) => state.cart);
+  return (
+    <div>
+      <div className="collapse collapse-arrow bg-white/90 border-b border-t border-slate-200 rounded-none my-2">
+        <input type="radio" name="my-accordion-2" />
+        <div className="collapse collapse-title text-base font-medium">
+          Your Cart
+        </div>
+        <div className="collapse-content">
+          {cartDetails?.arts?.map((singleArt) => {
+            return (
+              <div className="space-y-3" key={singleArt?._id}>
+                <div className=" bg-white border-t-2 flex p-3">
+                  <div className="w-[30%]">
+                    <img src={singleArt?.thumbnail?.secure_url} alt="" />
+                  </div>
+                  <div className="w-[70%] px-3 space-y-1">
+                    <div className="flex justify-between">
+                      <div>
+                        <h1 className="text-base italic">{singleArt?.title}</h1>
+                        <h1 className=" text-sm">Soo Beng Lim</h1>
+                        <h1 className=" text-xs">{singleArt?.subject}</h1>
+                      </div>
+                      <button
+                        className="bg-gray-300 text-white font-semibold rounded-full h-6 p-2 flex items-center"
+                        onClick={() => {
+                          dispatch({
+                            type: "REMOVE_ART_FROM_CART",
+                            payload: {
+                              userId: authUser?._id,
+                              artId: singleArt?._id,
+                              artPrice: singleArt?.price,
+                            },
+                          });
+                        }}
+                      >
+                        X
+                      </button>
+                    </div>
+                    <div className="flex justify-between text-xs">
+                      <h1>Shipping</h1>
+                      <h1>Included</h1>
+                    </div>
+                    <div className="flex justify-between text-sm font-semibold">
+                      <h1>Artwork Total</h1>
+                      <h1>{singleArt?.price}</h1>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+      <div className="collapse collapse-arrow bg-white/90 border-b border-t border-slate-200 rounded-none my-2">
+        <input type="radio" name="my-accordion-2" />
+        <div className="collapse-title text-base font-medium">
+          Shipping Address
+        </div>
+        <div className="collapse-content">
+          <div className="space-y-5">
+            <div className="flex items-center space-x-5">
+              <input
+                type="text"
+                placeholder="First Name*"
+                className="w-full border text-slate-400 border-slate-200 rounded-md px-3 py-3 focus:border-none focus:outline-slate-400 focus:outline-1"
+              />
+              <input
+                type="text"
+                placeholder="Last Name*"
+                className="w-full border border-slate-200 rounded-md px-3 py-3 focus:border-none focus:outline-slate-400 focus:outline-1"
+              />
+            </div>
+            <input
+              type="text"
+              placeholder="Address1*"
+              className="w-full border text-slate-400 border-slate-200 rounded-md px-3 py-3 focus:border-none focus:outline-slate-400 focus:outline-1"
+            />
+            <input
+              type="text"
+              placeholder="Address2"
+              className="w-full border text-slate-400 border-slate-200 rounded-md px-3 py-3 focus:border-none focus:outline-slate-400 focus:outline-1"
+            />
+            <div className="flex items-center space-x-5">
+              <input
+                type="text"
+                placeholder="Country*"
+                className="w-full border text-slate-400 border-slate-200 rounded-md px-3 py-3 focus:border-none focus:outline-slate-400 focus:outline-1"
+              />
+              <input
+                type="text"
+                placeholder="City*"
+                className="w-full border border-slate-200 rounded-md px-3 py-3 focus:border-none focus:outline-slate-400 focus:outline-1"
+              />
+            </div>
+            <div className="flex items-center space-x-5">
+              <input
+                type="text"
+                placeholder="State/Region*"
+                className="w-full border text-slate-400 border-slate-200 rounded-md px-3 py-3 focus:border-none focus:outline-slate-400 focus:outline-1"
+              />
+              <input
+                type="text"
+                placeholder="Zip/Postal Code*"
+                className="w-full border border-slate-200 rounded-md px-3 py-3 focus:border-none focus:outline-slate-400 focus:outline-1"
+              />
+            </div>
+            <div className="flex items-center space-x-5">
+              <input
+                type="text"
+                placeholder="Email*"
+                className="w-full border text-slate-400 border-slate-200 rounded-md px-3 py-3 focus:border-none focus:outline-slate-400 focus:outline-1"
+              />
+              <input
+                type="text"
+                placeholder="Phone Number*"
+                className="w-full border border-slate-200 rounded-md px-3 py-3 focus:border-none focus:outline-slate-400 focus:outline-1"
+              />
+            </div>
+          </div>
+          <div className="py-3">
+            <div className="flex justify-end text-sm pr-5">
+              Kolkata Station Road
+              <br />
+              Kolkata, West Bengal 700004
+            </div>
+            <div className="mt-5">
+              <div className="flex items-start relative">
+                <input type="radio" className="w-[5%] mt-1.5" />
+                <div className="w-[75%] px-3 text-sm">
+                  Tapas Chandra
+                  <br />
+                  Kolkata Station Road Kolkata, Kolkata Station Road Kolkata,
+                  Kolkata Station Road Kolkata, Kolkata Station Road Kolkata
+                  <br /> West Bengal 700004 IN
+                  <br /> 98321465978
+                </div>
+                <h2 className="text-slate-900 text-base hover:no-underline underline cursor-pointer">
+                  Delete
+                </h2>
+              </div>
+            </div>
+            <Link to="/ShippingBilling">
+              <button className="flex w-full bg-slate-800 hover:bg-slate-700 text-white text-xl font-semibold mt-5 px-10 py-4 justify-center">
+                Save and Continue
+              </button>
+            </Link>
+          </div>
+        </div>
+      </div>
+      <div className="collapse collapse-arrow bg-white/90 border-b border-t border-slate-200 rounded-none my-2">
+        <input type="radio" name="my-accordion-2" className="" />
+        <div className="collapse-title text-base font-medium">
+          Payment Method
+        </div>
+        <div className="collapse-content">
+          <div className="space-y-5">
+            <div className="flex space-x-3">
+              <input type="radio" />
+              <h2 className="text-base">Credit or Debit Card</h2>
+            </div>
+            <div>bank................</div>
+            <div>
+              <h2 className="text-slate-900 font-semibold text-base py-3">
+                Billing Address
+              </h2>
+              <div className="flex space-x-3">
+                <input type="checkbox" />
+                <h2 className="text-base">Same as shipping address</h2>
+              </div>
+            </div>
+            <div className="flex space-x-3 pt-10">
+              <input type="radio" />
+              <img src={paypal} className="w-20 h-5" />
+            </div>
+          </div>
+          <Link to="/ShippingBilling">
+            <button className="flex w-full bg-slate-800 hover:bg-slate-700 text-white text-xl font-semibold mt-5 px-10 py-4 justify-center">
+              Save and Continue
+            </button>
+          </Link>
+        </div>
+      </div>
+    </div>
+  );
+};
