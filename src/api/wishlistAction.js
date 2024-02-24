@@ -1,7 +1,7 @@
 import axios from "axios";
 const VITE_BASE_URL = import.meta.env.VITE_BASE_URL;
 
-export const createCartAction = async (payload) => {
+export const createWishlistAction = async (payload) => {
   // console.log("Action payload---->", payload);
   const response = await axios.post(
     `${VITE_BASE_URL}/wishlist/createWishlist?userId=${payload}`,
