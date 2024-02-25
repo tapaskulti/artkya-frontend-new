@@ -1,7 +1,7 @@
 import axios from "axios";
 const VITE_BASE_URL = import.meta.env.VITE_BASE_URL;
 
-export const createCartAction = async (payload) => {
+export const createWishlistAction = async (payload) => {
   // console.log("Action payload---->", payload);
   const response = await axios.post(
     `${VITE_BASE_URL}/wishlist/createWishlist?userId=${payload}`,
@@ -20,7 +20,7 @@ export const addToWishlistAction = async (payload) => {
 };
 
 export const removeFromWishlistAction = async (payload) => {
-  // console.log("Action payload---->", payload);
+ 
   const response = await axios.patch(
     `${VITE_BASE_URL}/wishlist/removeFromWishList?userId=${payload?.userId}&artId=${payload?.artId}`,
   );
@@ -29,7 +29,7 @@ export const removeFromWishlistAction = async (payload) => {
 };
 
 export const getWishlistByIdAction = async (payload) => {
-  // console.log("Action payload---->", payload);
+  console.log("Action payload---->", payload);
   const response = await axios.get(
     `${VITE_BASE_URL}/wishlist/wishlistByUserId?userId=${payload}`,
   );

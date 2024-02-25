@@ -43,6 +43,16 @@ const App = () => {
   useEffect(() => {
     if (authUser) {
       dispatch({
+        type: "CREATE_CART_BY_ID",
+        payload: authUser?._id,
+      });
+
+      dispatch({
+        type: "CREATE_WISHLIST_BY_ID",
+        payload: authUser?._id,
+      });
+
+      dispatch({
         type: "GET_CART_BY_ID",
         payload: authUser?._id,
       });

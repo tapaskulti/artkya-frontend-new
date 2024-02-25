@@ -311,7 +311,18 @@ const Painting = () => {
                                 <button className="bg-white w-7 h-7 rounded-full flex justify-center pt-1.5">
                                   <FaPlus />
                                 </button>
-                                <button className="bg-white w-7 h-7 rounded-full flex justify-center pt-1.5">
+                                <button 
+                                className="bg-white w-7 h-7 rounded-full flex justify-center pt-1.5"
+                                onClick={() => {
+                                  dispatch({
+                                    type: "ADD_ART_TO_WISHLIST",
+                                    payload: {
+                                      userId: authUser?._id,
+                                      artId: singleArt?._id,                
+                                    },
+                                  });
+                                }}
+                                >
                                   <FaHeart />
                                 </button>
                                 <button
