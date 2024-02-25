@@ -6,11 +6,20 @@ import { TiLockClosed } from "react-icons/ti";
 import { AiFillDollarCircle } from "react-icons/ai";
 import { FaStar } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
 
 const Cart = () => {
   const { cartDetails } = useSelector((state) => state.cart);
   const { authUser } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch({
+      type: "GET_CART_BY_ID",
+      payload: authUser?._id,
+    });
+  }, []);
+
   return (
     <div className="bg-slate-100 h-screen">
       <div className="bg-slate-50">

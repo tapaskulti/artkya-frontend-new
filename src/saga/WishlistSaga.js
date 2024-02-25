@@ -27,7 +27,9 @@ export function* getWishlistByIdSaga(action) {
   export function* addArtToWishlistSaga(action) {
     try {        
      const response = yield call(addToWishlistAction, action.payload);
-      
+      if(response.status===200){
+        toast.success("Added To Wishlist")
+      }
     } catch (error) {
       console.log(error.message);
     }
@@ -46,6 +48,6 @@ export function* getWishlistByIdSaga(action) {
     yield takeEvery("CREATE_WISHLIST_BY_ID", createWishlistByIdSaga);
     yield takeEvery("GET_WISHLIST_BY_ID", getWishlistByIdSaga);
     yield takeEvery("ADD_ART_TO_WISHLIST", addArtToWishlistSaga)   
-    yield takeEvery("REMOVE_ART_FROM_WISHLIST", removeArtFromWishlistSaga);     
+    yield takeEvery("REMOVE_ART_FROM_WISHLIST", removeArtFromWishlistSaga);  
    
   }
