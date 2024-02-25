@@ -20,7 +20,7 @@ export const addToWishlistAction = async (payload) => {
 };
 
 export const removeFromWishlistAction = async (payload) => {
-  // console.log("Action payload---->", payload);
+ 
   const response = await axios.patch(
     `${VITE_BASE_URL}/wishlist/removeFromWishList?userId=${payload?.userId}&artId=${payload?.artId}`,
   );
@@ -29,7 +29,7 @@ export const removeFromWishlistAction = async (payload) => {
 };
 
 export const getWishlistByIdAction = async (payload) => {
-  // console.log("Action payload---->", payload);
+  console.log("Action payload---->", payload);
   const response = await axios.get(
     `${VITE_BASE_URL}/wishlist/wishlistByUserId?userId=${payload}`,
   );
