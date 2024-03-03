@@ -2,10 +2,7 @@ import { useState } from "react";
 import logo from "../assets/logo.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faBars,
-  faHeart,
-  faSearch,
-  faUser,
+  faBars
 } from "@fortawesome/free-solid-svg-icons";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { faOpencart } from "@fortawesome/free-brands-svg-icons";

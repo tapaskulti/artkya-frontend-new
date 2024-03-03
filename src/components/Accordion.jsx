@@ -1,12 +1,40 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import paypal from "../assets/paypal-logo.png";
+import { CreditCard, PaymentForm } from "react-square-web-payments-sdk";
+import { toast } from "react-toastify";
+import SquareLogoPoweredBy from "../assets/powered-by-square-logo.png";
 
 // eslint-disable-next-line react/prop-types
 const Accordion = ({ element, onCheckChange, name }) => {
-  const [accordionOpen, setAccordionOpen] = useState(false);
+  const [accordionOpen, setAccordionOpen] = useState(false)
+  const [shippingAddress, setShippingAddress] = useState({
+    firstName: "",
+    lastName: "",
+    address1: "",
+    address2: "",
+    country: "",
+    city: "",
+    state: "",
+    postalCode: "",
+    Email: "",
+    PhoneNumber: "",
+  });
+  const [billingAddress, setBillingAddress] = useState({
+    firstName: "",
+    lastName: "",
+    address1: "",
+    address2: "",
+    country: "",
+    city: "",
+    state: "",
+    postalCode: "",
+    Email: "",
+    PhoneNumber: "",
+  });
+
   return (
     <div className="py-2">
       <button
@@ -74,7 +102,10 @@ const Accordion = ({ element, onCheckChange, name }) => {
 export default Accordion;
 
 export const AccordionContinue = () => {
+  const dispatch = useDispatch();
   const { cartDetails } = useSelector((state) => state.cart);
+  const { authUser } = useSelector((state) => state.auth);
+
   return (
     <div>
       <div className="collapse collapse-arrow bg-white/90 border-b border-t border-slate-200 rounded-none my-2">
@@ -235,7 +266,58 @@ export const AccordionContinue = () => {
               <input type="radio" />
               <h2 className="text-base">Credit or Debit Card</h2>
             </div>
-            <div>bank................</div>
+            <div>
+              <div className="flex items-center justify-start pb-2 space-x-3">
+                <div>Powered by</div>
+                <img
+                  src={SquareLogoPoweredBy}
+                  alt=""
+                  className="w-16 h-auto text-left"
+                />
+              </div>
+              {/*            
+              <PaymentForm
+                applicationId={import.meta.env.REACT_APP_SQUARE_APP_ID}            
+                cardTokenizeResponseReceived={async (token, buyer) => {
+                  console.info({ token, buyer });
+
+                  const response = await fetch(
+                    `${
+                      import.meta.env.REACT_APP_BASE_URL
+                    }/art/payment?amount=${""}`,
+                    {
+                      method: "POST",
+                      headers: {
+                        "Content-Type": "application/json",
+                      },
+                      body: JSON.stringify({
+                        sourceId: token?.token,
+                        price: "",
+                      }),
+                    }
+                  );
+
+                  console.log(response);
+                  // dispatch({
+                  //     type: "PAYMENT",
+                  //     payload: {
+                  //         body: {
+                  //             sourceId: token?.token,
+                  //         }
+                  //     }
+                  // })
+                  if (response.status === 200) {
+                    toast.success("Payment success");
+
+                    alert(JSON.stringify(await response.json(), null, 2));
+                  }
+                }}
+                locationId="LTCZQNC840HDJ"
+              >
+                <CreditCard />
+              </PaymentForm>
+               */}
+            </div>
             <div>
               <h2 className="text-slate-900 font-semibold text-base py-3">
                 Billing Address

@@ -68,7 +68,8 @@ export const createNonSelectArtAction = async (payload) => {
     );
 
     return response;
-  } catch (error) {}
+  } catch (error) {
+      }
 };
 
 export const getAllNonSelectArtAction = async (payload) => {
