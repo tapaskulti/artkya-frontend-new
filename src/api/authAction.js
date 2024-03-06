@@ -50,3 +50,12 @@ export const userLoggedInAction = async (payload) => {
 
   return response;
 };
+
+export const updateUserAddressAction = async (payload) => {
+  const response = await axios.patch(
+    `${VITE_BASE_URL}/user/updateUserAddress?userId=${payload?.userId}`,
+    payload.body
+  );
+
+  return response;
+};

@@ -6,6 +6,7 @@ import {
   loginAction,
   logoutSagaAction,
   registerUserAction,
+  updateUserAddressAction,
 } from "../api/authAction";
 import {
   setAuthUser,
@@ -103,10 +104,22 @@ function* userLoggedInSaga(action) {
   }
 }
 
+function* addShippingAddressSaga(action) {
+  try {
+    const response = yield call(updateUserAddressAction, action.payload);
+    console.log(response)
+    // if (response.status === 200) {
+    // }
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 export function* watchAsyncAuthSaga() {
   yield takeEvery("REGISTER", registerSaga);
   yield takeEvery("LOGIN", loginSaga);
   yield takeEvery("ACCESSTOKEN", accessTokenSaga);
   yield takeEvery("LOGGED_IN_USER", userLoggedInSaga);
   yield takeEvery("LOGOUT_SAGA", logoutSaga);
+  yield takeEvery("ADD_SHIPPING_ADDRESS", addShippingAddressSaga);
 }

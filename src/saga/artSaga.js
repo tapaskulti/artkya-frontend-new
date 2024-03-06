@@ -12,7 +12,7 @@ import {
   setFilteredIsLoading,
   setIsLoading,
 } from "../redux/app/art/artSlice";
-import { all } from "axios";
+
 
 // export function* createPostSaga(action) {
 //   try {
@@ -83,51 +83,6 @@ export function* getAllArtSaga(action) {
   }
 }
 
-// export function* createNonselecctArtSaga(action) {
-//   try {
-//     yield put(
-//       setIsUploading({
-//         isuploading: true,
-//       })
-//     );
-//     const response = yield call(createNonSelectArtAction, action.payload);
-//     if (response.status === 200) {
-//       yield put(
-//         setIsUploading({
-//           isuploading: false,
-//         })
-//       );
-//       yield put({
-//         type: "ALL_NONSELECT_ART",
-//       });
-//     }
-//   } catch (error) {
-//     console.log(error);
-//   }
-// }
-
-// export function* getAllNonSelectArtSaga(action) {
-//   try {
-//     yield put(
-//       setIsArtListLoading({
-//         isArtListLoading: true,
-//       })
-//     );
-//     const response = yield call(getAllNonSelectArtAction, action.payload);
-//     if (response.status === 200) {
-//       yield put(
-//         setIsArtListLoading({
-//           isArtListLoading: false,
-//         })
-//       );
-//       yield put(
-//         setNonSelectedArts({ nonselectedArts: response?.data?.allArts })
-//       );
-//     }
-//   } catch (error) {
-//     toast.warning(error.message);
-//   }
-// }
 
 export function* getArtDetailSaga(action) {
   try {
@@ -167,15 +122,6 @@ export function* getArtDetailSaga(action) {
 //   }
 // }
 
-// export function* updateNonSelectArtSaga(action) {
-//   const response = yield call(updateNonSelectArtAction, action.payload);
-
-//   if (response.status === 200) {
-//     yield put({
-//       type: "ALL_NONSELECT_ART",
-//     });
-//   }
-// }
 
 // export function* paymentSaga(action) {
 //   try {
@@ -204,19 +150,6 @@ export function* getArtDetailSaga(action) {
 //   }
 // }
 
-// export function* deleteNonSelectArtSaga(action) {
-//   try {
-//     const response = yield call(deleteNonSelectArtAction, action.payload);
-//     if (response.status === 200) {
-//       toast.success("Art deleted");
-//       yield put({
-//         type: "ALL_NONSELECT_ART",
-//       });
-//     }
-//   } catch (error) {
-//     toast.error(error);
-//   }
-// }
 
 // export function* originalArtMailSaga(actions) {
 //   const response = yield call(originalArtMailAction, actions.payload);
@@ -230,14 +163,8 @@ export function* watchAsyncArtSaga() {
   yield takeEvery("FILTER_ART", filterArtSaga);
   yield takeEvery("ALL_ART", getAllArtSaga);
   yield takeEvery("ART_DETAIL", getArtDetailSaga);
-  // yield takeEvery("CREATE_NONSELECT_ART", createNonselecctArtSaga);
-
-  // yield takeEvery("ALL_NONSELECT_ART", getAllNonSelectArtSaga);
-
   // yield takeEvery("UPDATE_ART", updateArtSaga);
-  // yield takeEvery("UPDATE_NONSELECT_ART", updateNonSelectArtSaga);
   // yield takeEvery("DELETE_ART", deleteArtSaga);
-  // yield takeEvery("DELETE_NONSELECT_ART", deleteNonSelectArtSaga);
   // yield takeEvery("PAYMENT", paymentSaga);
   // yield takeEvery("ORIGINAL_ART_MAIL", originalArtMailSaga);
 }

@@ -51,48 +51,6 @@ export const getArtByIdAction = async (payload) => {
 };
 
 
-
-
-
-
-export const createNonSelectArtAction = async (payload) => {
-  try {
-    const response = await axios.post(
-      `${VITE_BASE_URL}/art/createNonSelectArt`,
-      payload.body,
-      {
-        headers: {
-          Authorization: payload.token,
-        },
-      }
-    );
-
-    return response;
-  } catch (error) {
-      }
-};
-
-export const getAllNonSelectArtAction = async (payload) => {
-  let response;
-  if (payload) {
-    response = await axios.get(
-      `${VITE_BASE_URL}/art/getallnonselectart?year=${payload}`
-    );
-  } else {
-    response = await axios.get(`${VITE_BASE_URL}/art/getallnonselectart`);
-  }
-
-  return response;
-};
-
-export const getNonSelectArtAction = async (payload) => {
-  const response = await axios.get(
-    `${VITE_BASE_URL}/art/getnonselectart?artId=${payload.artId}`
-  );
-
-  return response;
-};
-
 export const updateArtAction = async (payload) => {
   const response = await axios.patch(
     `${VITE_BASE_URL}/art/updateart?id=${payload.id}`,
@@ -107,32 +65,8 @@ export const updateArtAction = async (payload) => {
   return response;
 };
 
-export const updateNonSelectArtAction = async (payload) => {
-  const response = await axios.patch(
-    `${VITE_BASE_URL}/art/updatenonselectart?id=${payload.id}`,
-    payload.body,
-    {
-      headers: {
-        Authorization: payload.token,
-      },
-    }
-  );
 
-  return response;
-};
 
-export const deleteNonSelectArtAction = async (payload) => {
-  const response = await axios.delete(
-    `${VITE_BASE_URL}/art/deletenonselectart?id=${payload.id}`,
-    {
-      headers: {
-        Authorization: payload.token,
-      },
-    }
-  );
-
-  return response;
-};
 
 export const deleteArtAction = async (payload) => {
   const response = await axios.delete(
@@ -164,3 +98,4 @@ export const originalArtMailAction = async (payload) => {
 
   return response;
 };
+
