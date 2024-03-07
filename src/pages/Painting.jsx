@@ -141,6 +141,7 @@ const Painting = () => {
     { value: "priceLowHigh", label: "Price: Low to High" },
     { value: "priceHighLow", label: "Price: High to Low" },
   ];
+  
 
   return (
     <>
@@ -173,7 +174,7 @@ const Painting = () => {
           </div>
         </div>
         <div className="flex items-center justify-between px-10 mt-5">
-          <h2 className="text-slate-900 text-3xl font-thin">
+          <h2 className="text-3xl font-thin text-slate-900">
             Original Paintings For Sale
           </h2>
           <Select
@@ -193,9 +194,9 @@ const Painting = () => {
           />
         </div>
         <div className="mt-10 lg:flex">
-          <div className="w-1/3 rounded-lg rounded-br-xl px-10">
+          <div className="w-[30%] rounded-lg rounded-br-xl px-10">
             <h2>Category</h2>
-            <div className="w-full bg-gray-50 border border-gray-200 backdrop-blur-lg rounded-md mt-6 px-3 py-2 text-xl text-center">
+            <div className="w-full px-3 py-2 mt-6 text-xl text-center border border-gray-200 rounded-md bg-gray-50 backdrop-blur-lg">
               Paintings
             </div>
             <div className="px-4 bg-white border-t border-b border-slate-200 rounded-lg mt-2.5">
@@ -297,7 +298,7 @@ const Painting = () => {
           </div>
           <div className="w-2/3 mt-10 lg:flex">
             <div className="">
-              {/* <div className="bg-gray-100 h-auto backdrop-blur-lg rounded-md w-full md:max-lg:max-w-screen-sm md:max-lg:mx-auto mt-6 px-3 py-2">Left</div> */}
+              {/* <div className="w-full h-auto px-3 py-2 mt-6 bg-gray-100 rounded-md backdrop-blur-lg md:max-lg:max-w-screen-sm md:max-lg:mx-auto">Left</div> */}
               <div className="mt-20 ">
                 <div className="h-auto mt-32 gap-10 lg:gap-16 columns-1 md:columns-2 lg:columns-3 2xl:columns-3 gap-y-16 [&>img:not(:first-child)]:mt-5 lg:[&>img:not(:first-child)]:mt-16">
                   {(filteredArt.length !== 0 ? filteredArt : allArt)?.map((singleArt) => {
@@ -305,7 +306,7 @@ const Painting = () => {
                       <div key={singleArt._id}>
                         <div className="relative group">
                           <div className="hidden group-hover:block animation-duration: 3s">
-                            <div className="flex absolute space-x-1 right-3 top-3 ">
+                            <div className="absolute flex space-x-1 right-3 top-3 ">
                               <button className="bg-white w-7 h-7 rounded-full flex justify-center pt-1.5"><FaPlus /></button>
                               <button className="bg-white w-7 h-7 rounded-full flex justify-center pt-1.5"><FaHeart /></button>
                               <button className="bg-white w-7 h-7 rounded-full flex justify-center pt-1.5"><FaCartShopping /></button>
@@ -416,7 +417,7 @@ export const ArtDetails = ({
           </div>
         </div>
       </div>
-      <div className="flex justify-between text-sm font-semibold text-gray-500 xl:text-base md:text-sm my-5">
+      <div className="flex justify-between my-5 text-sm font-semibold text-gray-500 xl:text-base md:text-sm">
         <div>
           <div className="text-sm">{artist}</div>
           <div className="text-xs -pt-2">{artistCountry}</div>

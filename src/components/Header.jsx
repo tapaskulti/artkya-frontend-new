@@ -21,7 +21,7 @@ const Header = () => {
 
   return (
     <>
-      <div className="items-center w-full scroll ">
+      <div className="fixed z-20 items-center w-full scroll">
         <div className={`${dropDownOpen ? "visible" : "hidden"}`}>
           <div>
             <ul className="md:flex font-sans text-base space-y-2 cursor-pointer text-[#000000] p-5">

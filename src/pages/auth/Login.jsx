@@ -47,19 +47,19 @@ const Login = () => {
 
   return (
     <div>
-      <Header className="bg-black header fixed z-10" />
-      <div className="overflow-y-auto scrollbar pt-20">
-        <div className="px-32 md:px-20 lg:px-52 xl:px-64 2xl:px-96 3xl:px-[480px]">
-          <div className="bg-white border border-slate-500 flex rounded-lg">
-            <div className=" w-1/2 justify-start hidden md:flex">
+      <Header className="fixed z-10 bg-black header" />
+      <div className="py-20 overflow-y-auto scrollbar">
+        <div className="px-32 pt-10 md:px-20 lg:px-52 xl:px-64 2xl:px-96 3xl:px-[480px]">
+          <div className="flex bg-white border rounded-lg border-slate-500">
+            <div className="justify-start hidden w-1/2 md:flex">
               <img
                 src={LoginImage}
                 alt=""
                 className="w-full h-auto text-left"
               />
             </div>
-            <div className="w-full md:w-1/2 py-12 md:py-10 2xl:py-14 3xl:py-16">
-              <div className=" h-full mr-8 md:mr-8 lg:mr-12 lg:px-2 3xl:px-6 3xl:py-8">
+            <div className="w-full py-12 md:w-1/2 md:py-10 2xl:py-14 3xl:py-16">
+              <div className="h-full mr-8 md:mr-8 lg:mr-12 lg:px-2 3xl:px-6 3xl:py-8">
                 <h1 className="root text-slate-800 text-left text-2xl md:text-[16px] lg:text-3xl">
                   Welcome back to Logo!
                 </h1>
@@ -127,7 +127,7 @@ const Login = () => {
                   </div>
 
                   <Link to="/forgotpassword">
-                    <h1 className="text-black text-base text-right mt-1">
+                    <h1 className="mt-1 text-base text-right text-black">
                       Forgot Password?
                     </h1>
                   </Link>
@@ -140,7 +140,7 @@ const Login = () => {
                     >
                       LOGIN
                     </button>
-                    <h2 className="py-3 text-center font-bold">OR</h2>
+                    <h2 className="py-3 font-bold text-center">OR</h2>
                     <button
                       type="submit"
                       className="w-full flex items-center space-x-2 justify-center bg-blue-900 rounded-md px-4 py-2.5 text-lg font-semibold text-white"
@@ -148,11 +148,11 @@ const Login = () => {
                     >
                       <FontAwesomeIcon
                         icon={faFacebook}
-                        className="text-base w-6 h-5 font-thin"
+                        className="w-6 h-5 text-base font-thin"
                       />
                       <h2>Login with Facebook</h2>
                     </button>
-                    <h2 className="py-3 text-center font-bold">OR</h2>
+                    <h2 className="py-3 font-bold text-center">OR</h2>
                     <button
                       type="submit"
                       className="w-full flex items-center space-x-2 justify-center bg-white border border-slate-300 rounded-md px-4 py-2.5 text-lg font-semibold text-white"
@@ -162,11 +162,11 @@ const Login = () => {
                       <h2 className="text-black">Login with Google</h2>
                     </button>
                   </div>
-                  <h1 className="text-black text-base text-center mt-6">
+                  <h1 className="mt-6 text-base text-center text-black">
                     Don't have an account?{" "}
                     <Link
                       to="/register"
-                      className="text-underline font-semibold"
+                      className="font-semibold text-underline"
                     >
                       Register.
                     </Link>
