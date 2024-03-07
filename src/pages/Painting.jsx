@@ -20,7 +20,7 @@ import { FaHeart, FaPlus } from "react-icons/fa";
 import { FaCartShopping } from "react-icons/fa6";
 import { useDispatch, useSelector } from "react-redux";
 import Select from "react-select";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { setAllFilteredArt } from "../redux/app/art/artSlice";
 
 // import ArtItem from "../components/ArtItem";
@@ -28,6 +28,8 @@ import { setAllFilteredArt } from "../redux/app/art/artSlice";
 const Painting = () => {
   const dispatch = useDispatch();
   const { filteredArt, allArt } = useSelector((state) => state.art);
+  const { authUser } = useSelector((state) => state.auth);
+  const navigate = useNavigate();
   const [itemsToShow, setItemsToShow] = useState();
   const [filterData, setFilterData] = useState({
     style: [],
@@ -52,10 +54,9 @@ const Painting = () => {
       filterData?.artistcountry?.length === 0 ||
       filterData?.featuredartist?.length === 0
     ) {
-      dispatch(setAllFilteredArt({ filteredArt: [] }))
+      dispatch(setAllFilteredArt({ filteredArt: [] }));
     }
-  }, [filterData])
-
+  }, [filterData]);
 
   // const [toggleHide, setToggleHide] = useState(false);
 
@@ -301,34 +302,70 @@ const Painting = () => {
               {/* <div className="w-full h-auto px-3 py-2 mt-6 bg-gray-100 rounded-md backdrop-blur-lg md:max-lg:max-w-screen-sm md:max-lg:mx-auto">Left</div> */}
               <div className="mt-20 ">
                 <div className="h-auto mt-32 gap-10 lg:gap-16 columns-1 md:columns-2 lg:columns-3 2xl:columns-3 gap-y-16 [&>img:not(:first-child)]:mt-5 lg:[&>img:not(:first-child)]:mt-16">
-                  {(filteredArt.length !== 0 ? filteredArt : allArt)?.map((singleArt) => {
-                    return (
-                      <div key={singleArt._id}>
-                        <div className="relative group">
-                          <div className="hidden group-hover:block animation-duration: 3s">
-                            <div className="absolute flex space-x-1 right-3 top-3 ">
-                              <button className="bg-white w-7 h-7 rounded-full flex justify-center pt-1.5"><FaPlus /></button>
-                              <button className="bg-white w-7 h-7 rounded-full flex justify-center pt-1.5"><FaHeart /></button>
-                              <button className="bg-white w-7 h-7 rounded-full flex justify-center pt-1.5"><FaCartShopping /></button>
+                  {(filteredArt.length !== 0 ? filteredArt : allArt)?.map(
+                    (singleArt) => {
+                      return (
+                        <div key={singleArt._id}>
+                          <div className="relative group">
+                            <div className="hidden group-hover:block animation-duration: 3s">
+                              <div className="flex absolute space-x-1 right-3 top-3 ">
+                                <button className="bg-white w-7 h-7 rounded-full flex justify-center pt-1.5">
+                                  <FaPlus />
+                                </button>
+                                <button 
+                                className="bg-white w-7 h-7 rounded-full flex justify-center pt-1.5"
+                                onClick={() => {
+                                  dispatch({
+                                    type: "ADD_ART_TO_WISHLIST",
+                                    payload: {
+                                      userId: authUser?._id,
+                                      artId: singleArt?._id,                
+                                    },
+                                  });
+                                }}
+                                >
+                                  <FaHeart />
+                                </button>
+                                <button
+                                  className="bg-white w-7 h-7 rounded-full flex justify-center pt-1.5"
+                                  onClick={() => {
+                                    dispatch({
+                                      type: "ADD_ART_TO_CART",
+                                      payload: {
+                                        userId: authUser?._id,
+                                        artId: singleArt?._id,
+                                        artPrice: singleArt?.price,
+                                        navigate
+                                      },
+                                    });
+                                  }}
+                                >
+                                  <FaCartShopping />
+                                </button>
+                              </div>
                             </div>
+                            <Link to={`/artDetailPage/${singleArt._id}`}>
+                              <img
+                                src={singleArt?.thumbnail?.secure_url}
+                                alt=""
+                                className="w-full"
+                              />
+                            </Link>
                           </div>
-                          <Link to="/artDetailsPage">
-                            <img src={singleArt?.thumbnail?.secure_url} alt="" className="w-full" />
-                          </Link>
+                          <br />
+                          <div>
+                            <ArtDetails
+                              title={singleArt?.title}
+                              width={singleArt?.width}
+                              height={singleArt?.height}
+                              depth={singleArt?.depth}
+                              price={singleArt?.price}
+                            />
+                          </div>
                         </div>
-                        <br />
-                        <div>
-                          <ArtDetails
-                            title={singleArt?.title}
-                            width={singleArt?.width}
-                            height={singleArt?.height}
-                            depth={singleArt?.depth}
-                            price={singleArt?.price}
-                          />
-                        </div>
-                      </div>
-                    );
-                  })}
+                      );
+                    }
+                  )}
                 </div>
               </div>
             </div>
@@ -429,5 +466,3 @@ export const ArtDetails = ({
     </div>
   );
 };
-
-
