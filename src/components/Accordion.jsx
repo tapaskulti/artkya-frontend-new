@@ -447,15 +447,15 @@ export const AccordionContinue = () => {
                   className="w-16 h-auto text-left"
                 />
               </div>
-              {/*            
+                         
               <PaymentForm
-                applicationId={import.meta.env.REACT_APP_SQUARE_APP_ID}            
+                applicationId={import.meta.env.VITE_BASE_SQUARE_APP_ID}            
                 cardTokenizeResponseReceived={async (token, buyer) => {
                   console.info({ token, buyer });
 
                   const response = await fetch(
                     `${
-                      import.meta.env.REACT_APP_BASE_URL
+                      import.meta.env.VITE_BASE_URL
                     }/art/payment?amount=${""}`,
                     {
                       method: "POST",
@@ -488,7 +488,7 @@ export const AccordionContinue = () => {
               >
                 <CreditCard />
               </PaymentForm>
-               */}
+              
             </div>
             <div>
               <h2 className="text-slate-900 font-semibold text-base py-3">
