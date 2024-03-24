@@ -1,6 +1,6 @@
 import Header from "../components/Header";
 // import phouzdar_photo from "../assets/artist1.jpg";
-import Img1 from "../assets/Img1.jpg";
+// import Img1 from "../assets/Img1.jpg";
 // import Img2 from "../assets/img2.jpg";
 import Img3 from "../assets/img3.jpg";
 import Img4 from "../assets/img4.jpg";
