@@ -59,10 +59,9 @@ const ArtworkForm = () => {
       <div className="container mx-auto py-8">
         <div className="flex items-center justify-between w-full">
           <div className="flex justify-between w-full mt-1">
-            {currentStep === 1 && <ImageUploadForm/>}
-            {currentStep === 2 && <div>Step 2 content</div>}
-            {currentStep === 3 && <div>Step 3 content</div>}
-            {currentStep === 4 && <div>Step 4 content</div>}
+            {currentStep && <ImageUploadForm  currentStep={currentStep}
+          nextStep={nextStep}
+          prevStep={prevStep}/>}
           </div>
         </div>
       </div>

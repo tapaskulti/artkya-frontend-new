@@ -4,29 +4,64 @@ import { useDropzone } from "react-dropzone";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash, faUpload } from "@fortawesome/free-solid-svg-icons";
 import "./styles.css";
-import ImageCropper from '../components/ImageCropper'; 
+import ImageCropper from "../components/ImageCropper";
 
-const Dropzone = ({ closeModal, handleDropZoneImageSelection,isThumbnailImage }) => {
+const Dropzone = ({
+  closeModal,
+  handleDropZoneImageSelection,
+  isThumbnailImage,
+}) => {
   const [files, setFiles] = useState([]);
+  const [isCroppingShow, setIsCroppingShow] = useState(isThumbnailImage);
   const [seletcedFiles, setSeletcedFiles] = useState([]);
   const [croppedArea, setCroppedArea] = useState(null);
   const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
-  const handleCropCompleted = (area, pixels) => {
+
+  const handleCropCompleted = (area, pixels, croppedImage) => {
     setCroppedArea(area);
     setCroppedAreaPixels(pixels);
   };
+  const onCloseImageCropper = (indexOrBlobFile) => {
+
+    if (indexOrBlobFile) {
+      // white logic to convert blob to image file
+      handleDropZoneImageSelection([indexOrBlobFile]);
+      closeModal();
+    }else{
+      setSeletcedFiles([]);
+      setFiles([])
+      handleDropZoneImageSelection([])
+    }
+    setIsCroppingShow(false);
+   
+  };
+
   const { getRootProps, getInputProps, open } = useDropzone({
-    accept: {
-      "image/*": [".jpeg", ".jpg", ".png"],
-    },
-    onDrop: (acceptedFiles) => {
+    accept: "image/jpeg, image/jpg, image/png",
+    onDrop: async (acceptedFiles) => {
       setSeletcedFiles(acceptedFiles);
-      setFiles(
-        acceptedFiles.map((file) => ({
-          ...file,
-          preview: URL.createObjectURL(file),
-        }))
+
+      const filesWithDimensions = await Promise.all(
+        acceptedFiles.map(async (file) => {
+          const image = new Image();
+          image.src = URL.createObjectURL(file);
+          const dimensions = await new Promise((resolve) => {
+            image.onload = function () {
+              resolve(`${this.width} X ${this.height} px`);
+            };
+          });
+          // Convert size to MB
+          const sizeInMB = (file.size / (1024 * 1024)).toFixed(2) + "Mb";
+          return {
+            ...file,
+            preview: URL.createObjectURL(file),
+            size: file.size,
+            dimensions: dimensions,
+          };
+        })
       );
+
+      setFiles(filesWithDimensions);
     },
   });
 
@@ -36,15 +71,20 @@ const Dropzone = ({ closeModal, handleDropZoneImageSelection,isThumbnailImage })
   };
 
   const thumbs = files.map((file) => (
-    <div key={file.name} className="previewImg border rounded-none">
-      {
-        isThumbnailImage? <ImageCropper
-        image={file.preview}
-        aspectRatio={1/1}
-        onCropCompleted={handleCropCompleted}
-      />:<img src={file.preview} alt={file.name} />
-      }
-     
+    <div key={file.name}>
+      {isCroppingShow ? (
+        <ImageCropper
+          image={file}
+          aspectRatio={4 / 3}
+          onCropCompleted={handleCropCompleted}
+          onCloseImageCropper={onCloseImageCropper}
+        />
+      ) : (
+        <div className="previewImg border rounded-none">
+          <img src={file.preview} alt={file.name} />
+        </div>
+      )}
+
       <button className="deleteIcon" onClick={removeFile(file)}>
         X
       </button>
@@ -60,7 +100,7 @@ const Dropzone = ({ closeModal, handleDropZoneImageSelection,isThumbnailImage })
   return (
     <div className="imageUploader">
       <div className="innerImageUploader">
-        <h2 className="text-xl font-bold mb-4">Upload Image</h2>
+        <h2 className="text-xl font-bold mb-1">Upload Image</h2>
         <div
           {...getRootProps({ className: "dropzone" })}
           onClick={(e) => e.stopPropagation()}
@@ -101,7 +141,7 @@ const Dropzone = ({ closeModal, handleDropZoneImageSelection,isThumbnailImage })
               </button>
               <button
                 className="bg-blue-500 text-white px-4 py-2 rounded-md"
-                onClick={() => handleDropZoneImageSelection(seletcedFiles,croppedArea,croppedAreaPixels)}
+                onClick={() => handleDropZoneImageSelection(seletcedFiles)}
               >
                 Submit
               </button>
@@ -118,6 +158,5 @@ const Dropzone = ({ closeModal, handleDropZoneImageSelection,isThumbnailImage })
     </div>
   );
 };
-
 
 export default Dropzone;

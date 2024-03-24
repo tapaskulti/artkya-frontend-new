@@ -1,58 +1,149 @@
- /* Dropzone component */
+/* Dropzone component */
 
-  .dropzone {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px;
-    border-width: 2px;
-    border-radius: 2px;
-    border-color: #eeeeee;
-    border-style: dashed;
-    background-color: #fafafa;
-    color: #bdbdbd;
-    outline: none;
-    transition: border 0.24s ease-in-out;
-  }
+.dropzone {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  border-width: 2px;
+  border-radius: 2px;
+  border-color: #eeeeee;
+  border-style: dashed;
+  background-color: #fafafa;
+  color: #bdbdbd;
+  outline: none;
+  transition: border 0.24s ease-in-out;
+}
+.imageCropper {
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+.accordionHeader{
+  margin-left: 5px;
+}
+.imageCropperBody{
+  position: relative;
+  margin: 40px auto;
+  display: block;
+  background-color: #fff;
+  width: 90%;
+  height: 90%;
+}
+.cropTitle{
+  font-family: "Crimson Text";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 30px;
+  line-height: 39px;
+  color: rgb(51, 51, 51);
+  margin-top: 0px;
+  padding: 2rem;
+}
+.formTitle{
+  font-family: "Crimson Text";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 30px;
+  line-height: 39px;
+  color: rgb(51, 51, 51);
+  margin-top: 0px;
+}
+.cropperZone{
+  position: relative;
+  margin: auto;
+  display: flex;
+  background-color: #fff;
+  width: 90%;
+  height: 60%;
+}
+.crop-container {
+  position: relative;
+  margin:0 auto;
+  width: 70%;
+  height: 100%;
+  max-height: 500px;
+  background-color: rgb(153, 153, 153);
+  background-image:linear-gradient(45deg, rgb(128, 128, 128) 25%, transparent 25%), linear-gradient(-45deg, rgb(128, 128, 128) 25%, transparent 25%), linear-gradient(45deg, transparent 75%, rgb(128, 128, 128) 75%), linear-gradient(-45deg, transparent 75%, rgb(128, 128, 128) 75%);
+  background-size: 20px 20px;
+  background-position: 0px 0px, 0px 10px, 10px -10px, -10px 0px;
+}
+.cropperZoneFooter{
+  display: block;
+  position: relative;
+  background-color: #fff;
+  width: 100%;
+  height: 20%;
+}
+ .croppreview {
+  width: 20%; /* Maintain previous size */
+  padding: 0;
   
-  .dropzone:focus {
-    border-color: #2196f3;
-    
-  }
+}
+.okCencle {
+  display: block;
+  position: relative;
+margin-top: 5px;
+}
+.resetOrClose{
+  display: flex;
+  width: 58%;
+  float: right;
+  justify-content: space-between;
+  margin-right: 10rem;
+}
+.okCencle  .btn{
+  display: flex;
+  width: 50%;
+  float: right;
+  justify-content: space-around;
+  position: relative;
+margin-top: 4rem;
+}
+.okCencle i{
+  margin-top: 1rem;
+  display: flex;
+  width: 51%;
+  float: right;
+}
 
-  .uploadIcon {
-    font-size: 5rem; 
-  }
+.dropzone:focus {
+  border-color: #2196f3;
+}
 
-  .previewImg{
-    top: 40px;
-    /* transform: translateX(-50%); */
+.uploadIcon {
+  font-size: 5rem;
+}
+
+/* transform: translateX(-50%); */
+.previewImg{
     z-index: 1000;
-    position: absolute;
-    width: 80%;
-    height: 80%;
-    text-align: top;
+    position: relative;
+    width: 400px;
+    height: 400px;
     background: transparent;
   }
-  .deleteIcon {
-    position: absolute;
-    top: 0px;
-    right: 0px;
-    background: none;
-    border-radius:0% 0% 0% 50%;
-    color: black;
-    cursor: pointer;
-    font-size: 14px;
-    padding: 0px 5px;
-    background-color: white;
-    border: solid 1px black;
-  }
-  .ul-list li {
-   padding: 0;
-   margin: 0;
-   font-style: italic;
-   font-size: 12px;
-  }
- 
- 
+.deleteIcon {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  background: none;
+  border-radius: 0% 0% 0% 50%;
+  color: black;
+  cursor: pointer;
+  font-size: 14px;
+  padding: 0px 5px;
+  background-color: white;
+  border: solid 1px black;
+}
+.ul-list li {
+  padding: 0;
+  margin: 0;
+  font-style: italic;
+  font-size: 12px;
+}

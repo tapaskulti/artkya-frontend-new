@@ -128,3 +128,15 @@
 .dropzone p {
   margin: 0;
 }
+.dimensions{
+  display: flex;
+  justify-content: space-between;
+}
+.dimensions input{
+  margin-right: 5px;
+
+}
+
+.keywords-container{
+  display: flex;
+}
