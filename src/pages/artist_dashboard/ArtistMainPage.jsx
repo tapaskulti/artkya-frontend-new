@@ -27,7 +27,7 @@ const ArtistMainPage = () => {
               />
               {activeTab === "Manage Artworks" && <ArtWorkManager />}
               {activeTab === "Sales Dashboard" && <SalesDashboard />}
-              {activeTab === "Manage Artworks" && <ArtWorkManager />}
+              {/* {activeTab === "Manage Artworks" && <ArtWorkManager />} */}
               {activeTab === "Addresses" && <AddressManagement />}
               {activeTab === "Profile Information" && <ProfileInformation />}
             </div>
