@@ -1,10 +1,10 @@
-// ImageUploadForm component
 import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faImage,
   faChevronDown,
   faChevronRight,
+  faCheckCircle
 } from "@fortawesome/free-solid-svg-icons";
 import Dropzone from "../../components/Dropzone";
 
@@ -13,7 +13,7 @@ import {
   AccordionHeader,
   AccordionBody,
 } from "@material-tailwind/react";
-const ImageUploadForm = ({ currentStep, nextStep, prevStep }) => {
+const ImageUploadForm = ({ currentStep, nextStep, prevStep,HandlecheckForNextBtnSubmit }) => {
   const [step, setStep] = useState(1);
 
   useEffect(() => {
@@ -45,6 +45,52 @@ const ImageUploadForm = ({ currentStep, nextStep, prevStep }) => {
   const [depth, setDepth] = useState(1);
   const [keywords, setKeywords] = useState();
   const [description, setDescription] = useState("");
+  const [sellingPrice, setSellingPrice] = useState("");
+  const [offerPrice, setOfferPrice] = useState("");
+  const [platformFee, setPlatformFee] = useState("");
+  const [validationErr, setValidationErr] = useState("");
+  const [spErr, setSpErr] = useState("");
+  const [opErr, ertOpErr] = useState("");
+  const [isPriceFormErr, setIsPriceFormErr] = useState(false);
+  useEffect(() => {
+    setIsPriceFormErr(false);
+    setValidationErr("");
+    setSpErr("");
+    ertOpErr("");
+
+    if (!sellingPrice) {
+      setIsPriceFormErr(true);
+      setSpErr("Please Enter Selling Price");
+      return;
+    }
+
+    if (!/^\d*\.?\d*$/.test(sellingPrice)) {
+      setIsPriceFormErr(true);
+      setSpErr("Please Enter Number only for Selling Price");
+      return;
+    }
+
+    if (offerPrice && !/^\d*\.?\d*$/.test(offerPrice)) {
+      setIsPriceFormErr(true);
+      ertOpErr("Please Enter Number only for Offer Price");
+      return;
+    }
+
+    if (offerPrice && sellingPrice < offerPrice) {
+      setValidationErr("Offer Price cannot be more than Selling Price");
+      setIsPriceFormErr(true);
+    } else if (!isPriceFormErr) {
+      setPlatformFee((offerPrice * 0.2).toFixed(2));
+    }
+  }, [sellingPrice, offerPrice, isPriceFormErr]);
+  useEffect(() => {
+    if (currentStep == 1 && title && images.length > 0) {
+      HandlecheckForNextBtnSubmit(false)
+      console.log(false);
+    } else {
+      HandlecheckForNextBtnSubmit(true)
+    }
+  }, [title,images ,currentStep]);
   const handleOpen = (value) => setOpen(open === value ? 0 : value);
   const handleChange = (value, setState) => {
     setState(value);
@@ -108,9 +154,8 @@ const ImageUploadForm = ({ currentStep, nextStep, prevStep }) => {
                 <img
                   src={image.src}
                   alt={`Preview ${index + 1}`}
-                  className={`max-w-full ${
-                    index === 0 ? "w-100 h-100" : "w-40 h-40"
-                  }`}
+                  className={`max-w-full ${index === 0 ? "w-100 h-100" : "w-40 h-40"
+                    }`}
                 />
               </div>
             ))}
@@ -123,7 +168,6 @@ const ImageUploadForm = ({ currentStep, nextStep, prevStep }) => {
         </div>
       </div>
       <div className="w-2/3 p-4">
-        {/* sstep 1 fpr image upload */}
         {step === 1 && (
           <>
             <div className="formTitle">
@@ -131,16 +175,25 @@ const ImageUploadForm = ({ currentStep, nextStep, prevStep }) => {
             </div>
             <Accordion open={open === 1}>
               <AccordionHeader onClick={() => handleOpen(1)}>
-                <div className="flex justify-between items-center">
-                  <FontAwesomeIcon
-                    icon={open === 1 ? faChevronDown : faChevronRight}
-                  />
-                  <span className="accordionHeader"> Title</span>
+                <div className="w-full flex justify-between items-center">
+                  <div className="flex  justify-between items-center">
+                    <FontAwesomeIcon
+                      icon={open === 1 ? faChevronDown : faChevronRight}
+                    />
+                    <span className="accordionHeader">Title</span>
+                  </div>
+                  <div>
+                    <FontAwesomeIcon
+                      icon={faCheckCircle}
+                      className={title ? 'text-green-500' : 'text-red-500'}
+                    />
+                  </div>
                 </div>
+
               </AccordionHeader>
               <AccordionBody>
                 <div className="upload-title">
-                  <label htmlFor="titleInput" className="block mb-2">
+                  <label htmlFor="titleInput" className="block mt-5">
                     Title:
                   </label>
                   <input
@@ -157,15 +210,24 @@ const ImageUploadForm = ({ currentStep, nextStep, prevStep }) => {
             <div className="upload-image h-10">
               <Accordion open={open === 2}>
                 <AccordionHeader onClick={() => handleOpen(2)}>
-                  <div className="flex justify-between items-center">
-                    <FontAwesomeIcon
-                      icon={open === 2 ? faChevronDown : faChevronRight}
-                    />
-                    <span className="accordionHeader"> Image</span>
+                  <div className="w-full flex justify-between items-center">
+                    <div className="flex justify-between items-center">
+                      <FontAwesomeIcon
+                        icon={open === 2 ? faChevronDown : faChevronRight}
+                      />
+                      <span className="accordionHeader"> Image</span>
+                    </div>
+                    <div>
+                      <FontAwesomeIcon
+                        icon={faCheckCircle}
+                        className={images.length > 0 ? 'text-green-500' : 'text-red-500'}
+                      />
+                    </div>
                   </div>
+
                 </AccordionHeader>
                 <AccordionBody>
-                  <h1 className="block mb-2">Upload Art Image:</h1>
+                  <h1 className="block mt-5">Upload Art Image:</h1>
                   <label
                     htmlFor="imageInput"
                     className="block imageInput"
@@ -210,7 +272,7 @@ const ImageUploadForm = ({ currentStep, nextStep, prevStep }) => {
               </AccordionHeader>
               <AccordionBody>
                 <div className="upload-title">
-                  <label htmlFor="year" className="block mb-2">
+                  <label htmlFor="year" className="block mt-5">
                     Category:
                   </label>
                   <div className="relative w-full">
@@ -227,7 +289,7 @@ const ImageUploadForm = ({ currentStep, nextStep, prevStep }) => {
                   </div>
                 </div>
                 <div className="upload-title">
-                  <label htmlFor="year" className="block mb-2">
+                  <label htmlFor="year" className="block mt-5">
                     Subject:
                   </label>
                   <div className="relative w-full">
@@ -242,7 +304,7 @@ const ImageUploadForm = ({ currentStep, nextStep, prevStep }) => {
                   </div>
                 </div>
                 <div className="upload-title">
-                  <label htmlFor="year" className="block mb-2">
+                  <label htmlFor="year" className="block mt-5">
                     Year:
                   </label>
                   <div className="relative w-full">
@@ -279,7 +341,7 @@ const ImageUploadForm = ({ currentStep, nextStep, prevStep }) => {
               </AccordionHeader>
               <AccordionBody>
                 <div className="upload-title">
-                  <label htmlFor="year" className="block mb-2">
+                  <label htmlFor="year" className="block mt-5">
                     Mediums:
                   </label>
                   <div className="relative w-full">
@@ -294,7 +356,7 @@ const ImageUploadForm = ({ currentStep, nextStep, prevStep }) => {
                   </div>
                 </div>
                 <div className="upload-title">
-                  <label htmlFor="year" className="block mb-2">
+                  <label htmlFor="year" className="block mt-5">
                     Materials:
                   </label>
                   <div className="relative w-full">
@@ -311,7 +373,7 @@ const ImageUploadForm = ({ currentStep, nextStep, prevStep }) => {
                   </div>
                 </div>
                 <div className="upload-title">
-                  <label htmlFor="year" className="block mb-2">
+                  <label htmlFor="year" className="block mt-5">
                     Styles:
                   </label>
                   <div className="relative w-full">
@@ -338,7 +400,7 @@ const ImageUploadForm = ({ currentStep, nextStep, prevStep }) => {
               </AccordionHeader>
               <AccordionBody>
                 <div className="upload-title">
-                  <label htmlFor="titleInput" className="block mb-2">
+                  <label htmlFor="titleInput" className="block mt-5">
                     It’s very important that you provide accurate dimensions as
                     collectors and trade clients need to know the exact size of
                     the artwork before purchasing it. For flat artworks, such as
@@ -406,7 +468,7 @@ const ImageUploadForm = ({ currentStep, nextStep, prevStep }) => {
               </AccordionHeader>
               <AccordionBody>
                 <div className="upload-title">
-                  <label htmlFor="titleInput" className="block mb-2">
+                  <label htmlFor="titleInput" className="block mt-5">
                     Keywords
                   </label>
                   <p>
@@ -430,26 +492,29 @@ const ImageUploadForm = ({ currentStep, nextStep, prevStep }) => {
                   <div className="keywords-container">
                     {keywords &&
                       keywords.length > 0 &&
-                      (keywords.trim()).split(" ").map((keyword, index) => (
-                        <div
-                          key={index}
-                          className="keyword-item flex items-center space-x-2 bg-gray-100 px-2 py-1 mx-2 rounded-md"
-                        >
-                          <span className="text-sm flex-1 truncate">
-                            {keyword}
-                          </span>
-                          <button
-                            onClick={() => handleRemoveKeyword(index)}
-                            className="focus:outline-none bg-transparent hover:bg-gray-200 text-red-500 font-semibold py-1 px-2 rounded"
+                      keywords
+                        .trim()
+                        .split(" ")
+                        .map((keyword, index) => (
+                          <div
+                            key={index}
+                            className="keyword-item flex items-center space-x-2 bg-gray-100 px-2 py-1 mx-2 rounded-md"
                           >
-                            X
-                          </button>
-                        </div>
-                      ))}
+                            <span className="text-sm flex-1 truncate">
+                              {keyword}
+                            </span>
+                            <button
+                              onClick={() => handleRemoveKeyword(index)}
+                              className="focus:outline-none bg-transparent hover:bg-gray-200 text-red-500 font-semibold py-1 px-2 rounded"
+                            >
+                              X
+                            </button>
+                          </div>
+                        ))}
                   </div>
                 </div>
                 <div className="upload-title mt-5">
-                  <label htmlFor="year" className="block mb-2">
+                  <label htmlFor="year" className="block mt-5">
                     Description:
                   </label>
                   <p>
@@ -492,7 +557,74 @@ const ImageUploadForm = ({ currentStep, nextStep, prevStep }) => {
         )}
         {step === 3 && (
           <>
-            <div>thsis is 3 </div>
+            <Accordion open={open === 1}>
+              <AccordionHeader onClick={() => handleOpen(1)}>
+                <div className="flex justify-between items-center">
+                  <FontAwesomeIcon
+                    icon={open === 1 ? faChevronDown : faChevronRight}
+                  />
+                  <span className="accordionHeader">
+                    Seller Price, Offer Price, Platform Charge
+                  </span>
+                </div>
+              </AccordionHeader>
+              <AccordionBody>
+                <div className="upload-title">
+                  <label htmlFor="sellerPrice" className="block mt-5">
+                    Seller Price:
+                  </label>
+                  <div className="relative w-full">
+                    <input
+                      type="text"
+                      id="sellerPrice"
+                      pattern="[0-9]+([.,][0-9]+)?"
+                      title="Please enter a valid number"
+                      value={sellingPrice}
+                      onChange={(e) =>
+                        handleChange(e.target.value, setSellingPrice)
+                      }
+                      className="w-full mt-3 px-3 py-2 border rounded-md"
+                    />
+                    <span style={{ color: "red", fontStyle: "italic" }}>
+                      {spErr}
+                    </span>
+                  </div>
+                </div>
+                <div className="upload-title">
+                  <label htmlFor="offerPrice" className="block mt-5">
+                    Offer Price:
+                  </label>
+                  <div className="relative w-full">
+                    <input
+                      type="text"
+                      id="offerPrice"
+                      value={offerPrice}
+                      onChange={(e) =>
+                        handleChange(e.target.value, setOfferPrice)
+                      }
+                      className="w-full mt-3 px-3 py-2 border rounded-md"
+                    />
+                    <span style={{ color: "red", fontStyle: "italic" }}>
+                      {opErr || validationErr}
+                    </span>
+                  </div>
+                </div>
+                <div className="upload-title">
+                  <label htmlFor="platformCharge" className="block mt-5">
+                    Platform Charge:
+                  </label>
+                  <div className="relative w-full">
+                    <input
+                      type="text"
+                      id="platformCharge"
+                      value={platformFee}
+                      disabled
+                      className="w-full mt-3 px-3 py-2 border rounded-md"
+                    />
+                  </div>
+                </div>
+              </AccordionBody>
+            </Accordion>
           </>
         )}
         {step === 4 && (
