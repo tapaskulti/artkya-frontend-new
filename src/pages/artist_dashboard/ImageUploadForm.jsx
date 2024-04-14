@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import SearchableDropdown from '../../components/SearchableDropdown';
 import SearchableDropdownMultiSelect from '../../components/SearchableDropdownMultiSelect';
+import axios from 'axios';
 import {
   CategoryItem,
   subjectElement,
@@ -120,6 +121,8 @@ const ImageUploadForm = ({ currentStep, nextStep, prevStep, HandlecheckForNextBt
 
 
   useEffect(() => {
+    HandlecheckForNextBtnSubmit(false)
+    return; //delete this 2 line 
     if (currentStep == 1 && title && images.length > 0) {
       HandlecheckForNextBtnSubmit(false)
 
@@ -189,6 +192,43 @@ const ImageUploadForm = ({ currentStep, nextStep, prevStep, HandlecheckForNextBt
 
   const handlePrintOption = (key) => {
     setPrintOption(key)
+  }
+
+  const finalFormSubmission = async () => {
+    try {
+      const artFormData = {
+        images,
+        title,
+        category,
+        subject,
+        selectedYear,
+        mediums,
+        materials,
+        styles,
+        width,
+        height,
+        depth,
+        keywords,
+        description,
+        sellingPrice,
+        offerPrice,
+        platformFee,
+        printOption,
+        isUnique
+      };
+      console.log('artFormData',artFormData);
+     await axios.post('http://localhost:3000/upload', artFormData)
+              .then(response => {
+                // Handle success
+                console.log('Submission successful:', response.data);
+              })
+              .catch(error => {
+                // Handle error
+                console.error('Error submitting data:', error);
+              });
+    } catch (error) {
+      console.log('Error while submiting a Art Data',error);
+    }
   }
   return (
     <div className="block w-full">
@@ -779,13 +819,13 @@ const ImageUploadForm = ({ currentStep, nextStep, prevStep, HandlecheckForNextBt
           />
         )}
       </div>
-      <div className="row-12">
+      <div className="w-full text-center">
         {currentStep == 4 && (
           <button
-            onClick={prevStep}
+            onClick={()=>finalFormSubmission()}
             className="cursor-pointer bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded"
           >
-            Final Submission 1
+            Final Submission
           </button>
         )}
       </div>

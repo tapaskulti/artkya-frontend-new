@@ -98,14 +98,6 @@ const ArtworkForm = () => {
                 Save & Continue 
               </button>
             )}
-            {currentStep == totalSteps && (
-              <button
-                onClick={prevStep}
-                className="cursor-pointer bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded"
-              >
-               Final Submission
-              </button>
-            )}
           </div>
         </div>
       </div>
