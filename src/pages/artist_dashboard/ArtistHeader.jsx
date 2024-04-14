@@ -13,17 +13,17 @@ import "./styles.css";
 
 const ArtistHeader = ({ activeTab, handleTabClick }) => {
   return (
-    <>
-      <ul className="hidden text-sm font-medium text-center text-gray-500 shadow sm:flex dark:divide-gray-700 dark:text-gray-400">
-        <li className="w-full">
+    <div className="bg-current">
+      <ul className="hidden text-sm font-medium text-center text-white shadow sm:flex ">
+        <li className="w-full border-2 border-white hover:bg-slate-400">
           <a
             href="#"
              onClick={() => handleTabClick("Manage Artworks")}
              className={`inline-block w-full text-center p-4 ${
               activeTab === "Manage Artworks" 
-              ? "dark:bg-gray-700" 
-              : "dark:bg-gray-500"
-          } dark:text-white `}
+              ? "bg-teal-50 text-black" 
+              : ""
+          }  `}
             aria-current={activeTab === "Manage Artworks" ? "page" : null}
           >
             <div className="flex flex-col items-center justify-center">
@@ -32,15 +32,15 @@ const ArtistHeader = ({ activeTab, handleTabClick }) => {
             </div>
           </a>
         </li>
-        <li className="w-full">
+        <li className="w-full border-2 border-white hover:bg-slate-400">
           <a
             href="#"
              onClick={() => handleTabClick("Sales Dashboard")}
              className={`inline-block w-full text-center p-4 ${
               activeTab === "Sales Dashboard" 
-              ? "dark:bg-gray-700" 
-              : "dark:bg-gray-500"
-          } dark:text-white `}
+              ? "bg-teal-50 text-black" 
+              : ""
+          }  `}
             aria-current={activeTab === "Sales Dashboard" ? "page" : null}
           
           >
@@ -50,15 +50,15 @@ const ArtistHeader = ({ activeTab, handleTabClick }) => {
             </div>
           </a>
         </li>
-        <li className="w-full">
+        <li className="w-full border-2 border-white hover:bg-slate-400">
           <a
             href="#"
              onClick={() => handleTabClick("Offers Dashboard")}
              className={`inline-block w-full text-center p-4 ${
               activeTab === "Offers Dashboard" 
-              ? "dark:bg-gray-700" 
-              : "dark:bg-gray-500"
-          } dark:text-white `}
+              ? "bg-teal-50 text-black" 
+              : ""
+          }  `}
             aria-current={activeTab === "Offers Dashboard" ? "page" : null}
           
           >
@@ -68,15 +68,15 @@ const ArtistHeader = ({ activeTab, handleTabClick }) => {
             </div>
           </a>
         </li>
-        <li className="w-full">
+        <li className="w-full border-2 border-white hover:bg-slate-400">
           <a
             href="#"
              onClick={() => handleTabClick("Addresses")}
              className={`inline-block w-full text-center p-4 ${
               activeTab === "Addresses" 
-              ? "dark:bg-gray-700" 
-              : "dark:bg-gray-500"
-          } dark:text-white `}
+              ? "bg-teal-50 text-black" 
+              : ""
+          }  `}
             aria-current={activeTab === "Addresses" ? "page" : null}
           
           >
@@ -86,15 +86,15 @@ const ArtistHeader = ({ activeTab, handleTabClick }) => {
             </div>
           </a>
         </li>
-        <li className="w-full">
+        <li className="w-full border-2 border-white hover:bg-slate-400">
           <a
             href="#"
              onClick={() => handleTabClick("Curator Notes")}
              className={`inline-block w-full text-center p-4 ${
               activeTab === "Curator Notes" 
-              ? "dark:bg-gray-700" 
-              : "dark:bg-gray-500"
-          } dark:text-white `}
+              ? "bg-teal-50 text-black" 
+              : ""
+          }  `}
             aria-current={activeTab === "Curator Notes" ? "page" : null}
           
           >
@@ -104,15 +104,15 @@ const ArtistHeader = ({ activeTab, handleTabClick }) => {
             </div>
           </a>
         </li>
-        <li className="w-full">
+        <li className="w-full border-2 border-white hover:bg-slate-400">
           <a
             href="#"
              onClick={() => handleTabClick("Account")}
              className={`inline-block w-full text-center p-4 ${
               activeTab === "Account" 
-              ? "dark:bg-gray-700" 
-              : "dark:bg-gray-500"
-          } dark:text-white `}
+              ? "bg-teal-50 text-black" 
+              : ""
+          }  `}
             aria-current={activeTab === "Account" ? "page" : null}
           
           >
@@ -122,15 +122,15 @@ const ArtistHeader = ({ activeTab, handleTabClick }) => {
             </div>
           </a>
         </li>
-        <li className="w-full">
+        <li className="w-full border-2 border-white hover:bg-slate-400">
           <a
             href="#"
              onClick={() => handleTabClick("Profile Information")}
             className={`inline-block w-full text-center p-4 ${
               activeTab === "Profile Information" 
-                ? "dark:bg-gray-700" 
-                : "dark:bg-gray-500"
-            } dark:text-white `}
+              ? "bg-teal-50 text-black" 
+              : ""
+            }  `}
             aria-current={activeTab === "Profile Information" ? "page" : null}
           
           >
@@ -141,7 +141,7 @@ const ArtistHeader = ({ activeTab, handleTabClick }) => {
           </a>
         </li>
       </ul>
-    </>
+    </div>
   );
 };
 
