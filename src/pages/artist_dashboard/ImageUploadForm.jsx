@@ -73,22 +73,24 @@ const ImageUploadForm = ({ currentStep, nextStep, prevStep, HandlecheckForNextBt
 
   useEffect(() => {
     const rectElement = document.getElementById("rect");
-    let h = parseFloat(height);
-    let w = parseFloat(width);
-    if (w && h && !isNaN(w) && !isNaN(h)) {
-      if (w > 10 || h > 10) {
-        w /= Math.pow(10, Math.floor(Math.log10(w)));
-        h /= Math.pow(10, Math.floor(Math.log10(h)));
+    if (rectElement) {
+      let h = parseFloat(height);
+      let w = parseFloat(width);
+      if (w && h && !isNaN(w) && !isNaN(h)) {
+        if (w > 10 || h > 10) {
+          w /= Math.pow(10, Math.floor(Math.log10(w)));
+          h /= Math.pow(10, Math.floor(Math.log10(h)));
+        }
+        rectElement.style.width = w / 2 + "in";
+        rectElement.style.height = h / 2 + "in";
       }
-      rectElement.style.width = w / 2 + "in";
-      rectElement.style.height = h / 2 + "in";
-    }
-    if (w || h) {
-      if (!w) {
-        rectElement.style.width = 0 + "in";
-      }
-      if (!h) {
-        rectElement.style.height = 0 + "in";
+      if (w || h) {
+        if (!w) {
+          rectElement.style.width = 0 + "in";
+        }
+        if (!h) {
+          rectElement.style.height = 0 + "in";
+        }
       }
     }
 
@@ -777,14 +779,17 @@ const ImageUploadForm = ({ currentStep, nextStep, prevStep, HandlecheckForNextBt
           />
         )}
       </div>
-      {currentStep == 4 && (
-              <button
-                onClick={prevStep}
-                className="cursor-pointer bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded"
-              >
-               Final Submission 1
-              </button>
-            )}
+      <div className="row-12">
+        {currentStep == 4 && (
+          <button
+            onClick={prevStep}
+            className="cursor-pointer bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded"
+          >
+            Final Submission 1
+          </button>
+        )}
+      </div>
+
     </div>
   );
 };

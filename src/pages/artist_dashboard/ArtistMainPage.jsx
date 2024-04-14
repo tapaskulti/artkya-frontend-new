@@ -18,8 +18,8 @@ const ArtistMainPage = () => {
     <>
       <div className="">
         <Header />
-        <div className="mt-10 lg:flex ">
-          <div className="w-full py-24 lg:py-5 ">
+        <div className="mt lg:flex ">
+          <div className="w-full">
             <div className="">
               <ArtistHeader
                 activeTab={activeTab}
