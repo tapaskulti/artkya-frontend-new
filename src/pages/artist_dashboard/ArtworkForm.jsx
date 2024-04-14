@@ -34,7 +34,6 @@ const StepProgressBar = ({ currentStep, totalSteps }) => {
 
 const ArtworkForm = () => {
   const [currentStep, setCurrentStep] = useState(1);
-
   const [isNextBtnAvailable, setIsNextAvailable] = useState(true);
   const totalSteps = 4;
   // Function to handle progressing to the next step
@@ -78,14 +77,15 @@ const ArtworkForm = () => {
       <div className="container mx-auto py-8">
         <div className="flex items-center justify-between w-full   mt-1">
           <div className="flex justify-between w-full">
-            {currentStep !== totalSteps && (
-              <button
+          <button
                 onClick={prevStep}
-                className="cursor-pointer bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded"
+                className={`cursor-pointer py-2 px-4 rounded 
+                        ${currentStep > 1 ?
+                    'bg-blue-500 hover:bg-blue-600 text-white' :
+                    'bg-gray-300 text-gray-600 cursor-not-allowed'}`}
               >
-                Save & Exit
+                Back
               </button>
-            )}
             {currentStep !== totalSteps && (
               <button
                 onClick={nextStep}
@@ -95,7 +95,7 @@ const ArtworkForm = () => {
                     'bg-blue-500 hover:bg-blue-600 text-white' :
                     'bg-gray-300 text-gray-600 cursor-not-allowed'}`}
               >
-                Save & Continue
+                Save & Continue 
               </button>
             )}
             {currentStep == totalSteps && (
@@ -103,7 +103,7 @@ const ArtworkForm = () => {
                 onClick={prevStep}
                 className="cursor-pointer bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded"
               >
-                Final Submite
+               Final Submission
               </button>
             )}
           </div>

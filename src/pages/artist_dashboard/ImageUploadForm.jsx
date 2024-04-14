@@ -29,14 +29,16 @@ import {
 } from "@material-tailwind/react";
 const ImageUploadForm = ({ currentStep, nextStep, prevStep, HandlecheckForNextBtnSubmit }) => {
   const [step, setStep] = useState(1);
-
+ 
   useEffect(() => {
     setStep(currentStep);
+    setOpen(1)
   }, [currentStep]);
 
   const handleNextStep = () => {
     setStep((prevStep) => Math.min(prevStep + 1, 4));
     nextStep();
+   
   };
 
   const handlePrevStep = () => {
@@ -48,7 +50,7 @@ const ImageUploadForm = ({ currentStep, nextStep, prevStep, HandlecheckForNextBt
   const [modalOpen, setModalOpen] = useState(false);
   const [open, setOpen] = useState(1);
   const [title, setTitle] = useState("");
-  const [category, setCategory] = useState("");
+  const [category, setCategory] = useState("Paintings");
   const [subject, setSubject] = useState("");
   const [selectedYear, setSelectedYear] = useState("");
   const [mediums, setMediums] = useState("");
@@ -66,6 +68,8 @@ const ImageUploadForm = ({ currentStep, nextStep, prevStep, HandlecheckForNextBt
   const [validationErr, setValidationErr] = useState("");
   const [spErr, setSpErr] = useState("");
   const [opErr, setOpErr] = useState("");
+  const [printOption, setPrintOption] = useState("");
+  const [isUnique, setIsUnique] = useState(false);
 
   useEffect(() => {
     const rectElement = document.getElementById("rect");
@@ -128,8 +132,9 @@ const ImageUploadForm = ({ currentStep, nextStep, prevStep, HandlecheckForNextBt
         HandlecheckForNextBtnSubmit(true)
       }
   }, [title, images, currentStep, category, subject, selectedYear, mediums, materials, styles, width, height, depth, keywords, description, sellingPrice, offerPrice, platformFee, spErr, opErr, validationErr]);
+
   const handleOpen = (value) => setOpen(open === value ? 0 : value);
-  
+
   const handleKeyPusher = (newKey) => {
     if (newKey.length < 3) {
       alert('Keywords must be at least 2 characters.')
@@ -180,6 +185,9 @@ const ImageUploadForm = ({ currentStep, nextStep, prevStep, HandlecheckForNextBt
     closeModal();
   };
 
+  const handlePrintOption = (key) => {
+    setPrintOption(key)
+  }
   return (
     <div className="flex w-full">
       <div className="w-1/3 p-4">
@@ -696,7 +704,66 @@ const ImageUploadForm = ({ currentStep, nextStep, prevStep, HandlecheckForNextBt
         )}
         {step === 4 && (
           <>
-            <div>thsis is 4 </div>
+            <Accordion open={open === 1}>
+              <AccordionHeader onClick={() => handleOpen(1)}>
+                <div className="w-full flex justify-between items-center">
+                  <div className="flex justify-between items-center">
+                    <FontAwesomeIcon
+                      icon={open === 1 ? faChevronDown : faChevronRight}
+                    />
+                    <span className="accordionHeader">Printing</span>
+                  </div>
+                  <div>
+                    <FontAwesomeIcon
+                      icon={faCheckCircle}
+                      className={printOption ? 'text-green-500' : 'text-red-500'}
+                    />
+                  </div>
+                </div>
+              </AccordionHeader>
+              <AccordionBody>
+                <div className="upload-title">
+                  <label htmlFor="printOption" className="block mb-2 font-bold">
+                    Original Or Printed Copy:
+                  </label>
+                  <div className="flex items-center space-x-4">
+                    <label className="inline-flex items-center">
+                      <input
+                        type="radio"
+                        className="form-radio text-blue-500"
+                        name="printOption"
+                        value="Original"
+                        checked={printOption === 'Original'}
+                        onChange={() => handlePrintOption('Original')}
+                      />
+                      <span className="ml-2">Original</span>
+                    </label>
+                    <label className="inline-flex items-center">
+                      <input
+                        type="radio"
+                        className="form-radio text-blue-500"
+                        name="printOption"
+                        value="Printed"
+                        checked={printOption === 'Printed'}
+                        onChange={() => handlePrintOption('Printed')}
+                      />
+                      <span className="ml-2">Printed</span>
+                    </label>
+                  </div>
+                  <label htmlFor="uniqueCheckbox" className="block mt-5 font-bold">
+                    <input
+                      type="checkbox"
+                      id="uniqueCheckbox"
+                      checked={isUnique}
+                      onChange={() => setIsUnique(!isUnique)}
+                      className="mr-2"
+                    />
+                    Unique in Universe
+                  </label>
+                </div>
+              </AccordionBody>
+            </Accordion>
+
           </>
         )}
       </div>
