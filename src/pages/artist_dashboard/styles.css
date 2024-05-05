@@ -134,9 +134,17 @@
 }
 .dimensions input{
   margin-right: 5px;
-
 }
-
+#rect {
+padding: auto;
+margin: auto;
+margin-top: 10px;
+border: solid 2px aquamarine;
+background-color: aquamarine;
+}
+#rect p {
+  text-align: center;
+}
 .keywords-container{
   display: flex;
 }
