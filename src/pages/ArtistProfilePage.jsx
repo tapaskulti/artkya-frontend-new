@@ -14,7 +14,7 @@ import phouzdar_photo from "../assets/artist.jpg";
 
 import { faPaintBrush } from "@fortawesome/free-solid-svg-icons";
 import { useDispatch } from "react-redux";
-import Select from "react-select";
+
 import { Link } from "react-router-dom";
 
 // import ArtItem from "../components/ArtItem";
@@ -218,7 +218,7 @@ const Painting = () => {
               <div className="mt-20">
                 <div className="h-auto mt-32 gap-10 lg:gap-16 columns-1 md:columns-2 lg:columns-3 2xl:columns-3 gap-y-16 [&>img:not(:first-child)]:mt-5 lg:[&>img:not(:first-child)]:mt-16">
                   <div>
-                    <img src={Img1} alt="" />
+                    <img src={""} alt="" />
                     <br />
                     <div>
                       <ArtDetails />

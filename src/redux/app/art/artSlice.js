@@ -6,6 +6,7 @@ const initialState = {
   allArt: [],
   filteredArt: [],
   artDetail: {},
+  artType:"originalArt"
 };
 
 const artSlice = createSlice({
