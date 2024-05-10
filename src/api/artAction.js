@@ -3,10 +3,10 @@ const VITE_BASE_URL = import.meta.env.VITE_BASE_URL;
 
 export const createArtAction = async (payload) => {
   try {
-    const response = await axios.post(`${VITE_BASE_URL}/art`, payload.body, {
-      headers: {
-        Authorization: payload.token,
-      },
+    const response = await axios.post(`${VITE_BASE_URL}/createArt`, payload.body, {
+      // headers: {
+      //   Authorization: payload.token,
+      // },
     });
 
     return response;

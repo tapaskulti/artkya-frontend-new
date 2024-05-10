@@ -1,6 +1,7 @@
 import { call, put, takeEvery } from "redux-saga/effects";
 import {
   FiltersAction,
+  createArtAction,
   getAllArtAction,
   getArtByIdAction,
 } from "../api/artAction";
@@ -14,29 +15,29 @@ import {
 } from "../redux/app/art/artSlice";
 
 
-// export function* createPostSaga(action) {
-//   try {
-//     yield put(
-//       setIsUploading({
-//         isuploading: true,
-//       })
-//     );
-//     console.log(action.payload, "action payload");
-//     const response = yield call(createArtAction, action.payload);
-//     if (response.status === 200) {
-//       yield put(
-//         setIsUploading({
-//           isuploading: false,
-//         })
-//       );
-//       yield put({
-//         type: "ALL_ART",
-//       });
-//     }
-//   } catch (error) {
-//     console.log(error);
-//   }
-// }
+export function* createPostSaga(action) {
+  try {
+    // yield put(
+    //   setIsUploading({
+    //     isuploading: true,
+    //   })
+    // );
+    console.log(action.payload, "action payload");
+    const response = yield call(createArtAction, action.payload);
+    if (response.status === 200) {
+      // yield put(
+      //   setIsUploading({
+      //     isuploading: false,
+      //   })
+      // );
+      yield put({
+        type: "ALL_ART",
+      });
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}
 
 export function* filterArtSaga(action) {
   yield put(
@@ -123,43 +124,8 @@ export function* getArtDetailSaga(action) {
 // }
 
 
-// export function* paymentSaga(action) {
-//   try {
-//     const response = yield call(paymentAction, action.payload);
-//     console.log(response.data, "payment");
-//     if (response.status === 200) {
-//       toast.success("Payment Success");
-//       alert(response.data.payment);
-//     }
-//   } catch (error) {
-//     toast.error(error);
-//   }
-// }
-
-// export function* deleteArtSaga(action) {
-//   try {
-//     const response = yield call(deleteArtAction, action.payload);
-//     if (response.status === 200) {
-//       toast.success("Art deleted");
-//       yield put({
-//         type: "ALL_ART",
-//       });
-//     }
-//   } catch (error) {
-//     toast.error(error);
-//   }
-// }
-
-
-// export function* originalArtMailSaga(actions) {
-//   const response = yield call(originalArtMailAction, actions.payload);
-//   console.log(response, "response mail");
-//   if (response.status === 200) {
-//     toast.success("Email sent successfully");
-//   }
-// }
 export function* watchAsyncArtSaga() {
-  // yield takeEvery("CREATE_POST", createPostSaga);
+  yield takeEvery("CREATE_POST", createPostSaga);
   yield takeEvery("FILTER_ART", filterArtSaga);
   yield takeEvery("ALL_ART", getAllArtSaga);
   yield takeEvery("ART_DETAIL", getArtDetailSaga);

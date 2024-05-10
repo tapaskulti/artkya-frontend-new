@@ -72,6 +72,12 @@ const ImageUploadForm = ({ currentStep, nextStep, prevStep, HandlecheckForNextBt
   const [printOption, setPrintOption] = useState("");
   const [isUnique, setIsUnique] = useState(false);
 
+
+
+
+  console.log("images====>",images)
+  console.log("title====>",title)
+
   useEffect(() => {
     const rectElement = document.getElementById("rect");
     if (rectElement) {
