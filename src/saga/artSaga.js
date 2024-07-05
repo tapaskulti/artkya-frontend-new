@@ -12,24 +12,25 @@ import {
   setArtDetails,
   setFilteredIsLoading,
   setIsLoading,
+  setIsUploading,
 } from "../redux/app/art/artSlice";
 
 
 export function* createPostSaga(action) {
   try {
-    // yield put(
-    //   setIsUploading({
-    //     isuploading: true,
-    //   })
-    // );
+    yield put(
+      setIsUploading({
+        isuploading: true,
+      })
+    );
     console.log(action.payload, "action payload");
     const response = yield call(createArtAction, action.payload);
     if (response.status === 200) {
-      // yield put(
-      //   setIsUploading({
-      //     isuploading: false,
-      //   })
-      // );
+      yield put(
+        setIsUploading({
+          isuploading: false,
+        })
+      );
       yield put({
         type: "ALL_ART",
       });
