@@ -2,6 +2,7 @@ import { call, put, takeEvery } from "redux-saga/effects";
 import {
   FiltersAction,
   createArtAction,
+  createDraftAction,
   getAllArtAction,
   getArtByIdAction,
 } from "../api/artAction";
@@ -25,6 +26,30 @@ export function* createPostSaga(action) {
     );
     console.log(action.payload, "action payload");
     const response = yield call(createArtAction, action.payload);
+    if (response?.status === 200) {
+      yield put(
+        setIsUploading({
+          isuploading: false,
+        })
+      );
+      yield put({
+        type: "ALL_ART",
+      });
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export function* createDraftSaga(action) {
+  try {
+    yield put(
+      setIsUploading({
+        isuploading: true,
+      })
+    );
+    console.log(action.payload, "action payload");
+    const response = yield call(createDraftAction, action.payload);
     if (response.status === 200) {
       yield put(
         setIsUploading({
@@ -127,6 +152,7 @@ export function* getArtDetailSaga(action) {
 
 export function* watchAsyncArtSaga() {
   yield takeEvery("CREATE_POST", createPostSaga);
+  yield takeEvery("CREATE_DRAFT", createDraftSaga);
   yield takeEvery("FILTER_ART", filterArtSaga);
   yield takeEvery("ALL_ART", getAllArtSaga);
   yield takeEvery("ART_DETAIL", getArtDetailSaga);

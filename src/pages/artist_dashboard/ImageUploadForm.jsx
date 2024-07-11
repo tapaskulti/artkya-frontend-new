@@ -28,6 +28,7 @@ import {
   AccordionHeader,
   AccordionBody,
 } from "@material-tailwind/react";
+import { useDispatch } from "react-redux";
 const ImageUploadForm = ({ currentStep, nextStep, prevStep, HandlecheckForNextBtnSubmit }) => {
   const [step, setStep] = useState(1);
 
@@ -77,6 +78,36 @@ const ImageUploadForm = ({ currentStep, nextStep, prevStep, HandlecheckForNextBt
 
   console.log("images====>",images)
   console.log("title====>",title)
+  console.log("mediums====>",mediums)
+  console.log("materials====>",materials)
+
+  const dispatch = useDispatch()
+  const formData = new FormData();
+
+  formData.append("title", title);
+  formData.append("images", images);
+  formData.append("thumbnail", images[0]);
+  formData.append("category", category);
+  formData.append("subject", subject);
+  formData.append("selectedYear", selectedYear);
+  formData.append("mediums", mediums);
+  formData.append("materials", materials);
+  formData.append("styles", styles);
+  formData.append("width", width);
+  formData.append("height", height);
+  formData.append("depth", depth); 
+  formData.append("sellingPrice", sellingPrice); 
+  formData.append("printOption", printOption); 
+  
+  // dispatch({
+  //   type:"CREATE_DRAFT",
+  //   payload:{
+  //     body:formData
+  //   }
+  // })
+
+
+ 
 
   useEffect(() => {
     const rectElement = document.getElementById("rect");
@@ -222,16 +253,42 @@ const ImageUploadForm = ({ currentStep, nextStep, prevStep, HandlecheckForNextBt
         printOption,
         isUnique
       };
-      console.log('artFormData',artFormData);
-     await axios.post('http://localhost:3000/upload', artFormData)
-              .then(response => {
-                // Handle success
-                console.log('Submission successful:', response.data);
-              })
-              .catch(error => {
-                // Handle error
-                console.error('Error submitting data:', error);
-              });
+    //   console.log('artFormData',artFormData);
+    //  await axios.post('http://localhost:3000/upload', artFormData)
+    //           .then(response => {
+    //             // Handle success
+    //             console.log('Submission successful:', response.data);
+    //           })
+    //           .catch(error => {
+    //             // Handle error
+    //             console.error('Error submitting data:', error);
+    //           });
+    const payloadBody = {
+      // images,
+      title:title,
+      category:category,
+      subject:subject,
+      year:selectedYear,
+      medium:mediums,
+      materials:materials,
+      styles:styles,
+      width:width,
+      height:height,
+      depth:depth,
+      keywords:keywords,
+      description:description,
+      price:sellingPrice,
+      // offerPrice,
+      // platformFee,
+      // printOption,
+      // isUnique
+    }
+    dispatch({
+      type:"CREATE_POST",
+      payload:{
+        body:formData
+      }
+    })
     } catch (error) {
       console.log('Error while submiting a Art Data',error);
     }
