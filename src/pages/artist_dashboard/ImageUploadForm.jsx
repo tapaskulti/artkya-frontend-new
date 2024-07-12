@@ -84,20 +84,23 @@ const ImageUploadForm = ({ currentStep, nextStep, prevStep, HandlecheckForNextBt
   const dispatch = useDispatch()
   const formData = new FormData();
 
+  
   formData.append("title", title);
   formData.append("images", images);
-  formData.append("thumbnail", images[0]);
+  formData.append("thumbnail", images[0].file);
   formData.append("category", category);
   formData.append("subject", subject);
-  formData.append("selectedYear", selectedYear);
-  formData.append("mediums", mediums);
-  formData.append("materials", materials);
-  formData.append("styles", styles);
+  formData.append("year", selectedYear);
+  formData.append("medium", JSON.stringify(mediums));
+  formData.append("materials",JSON.stringify(materials));
+  formData.append("styles",JSON.stringify(styles));
   formData.append("width", width);
   formData.append("height", height);
   formData.append("depth", depth); 
-  formData.append("sellingPrice", sellingPrice); 
+  formData.append("price", sellingPrice); 
   formData.append("printOption", printOption); 
+
+
   
   // dispatch({
   //   type:"CREATE_DRAFT",
