@@ -32,7 +32,8 @@ function* registerSaga(action) {
 function* loginSaga(action) {
   try {
     const response = yield call(loginAction, action?.payload);
-    // localStorage.setItem("User_email", action?.payload?.body?.email);
+    localStorage.setItem("User_email", action?.payload?.body?.email);
+    localStorage.setItem("loggedIn",true);
     if (response.status === 200) {
       console.log("login response----->", response);
       yield put(setError({ errMsg: "" }));
@@ -80,7 +81,7 @@ function* logoutSaga(action) {
     if (response.status === 200) {
       toast.success(response.data.message);
       localStorage.removeItem("User_email");
-      localStorage.setItem("isLoggedin", false);
+      localStorage.setItem("loggedIn", false);
       yield put(setIsLoggedIn({ isLoggedin: false }));
       yield put(setToken({ token: "" }));
       yield put(setAuthUser({ authUser: {} }));

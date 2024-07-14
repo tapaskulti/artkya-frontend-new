@@ -109,9 +109,6 @@ const ImageUploadForm = ({ currentStep, nextStep, prevStep, HandlecheckForNextBt
   //   }
   // })
 
-
- 
-
   useEffect(() => {
     const rectElement = document.getElementById("rect");
     if (rectElement) {

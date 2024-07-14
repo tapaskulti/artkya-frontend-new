@@ -31,9 +31,9 @@ export const accessToken = async (payload) => {
 
 export const logoutSagaAction = async (payload) => {
   let config = {
-    method: "get",
+    method: "post",
     maxBodyLength: Infinity,
-    url: `${VITE_BASE_URL}/user/logout?email=${payload.body.userEmailload}`,
+    url: `${VITE_BASE_URL}/user/logout?email=${payload.email}`,
     headers: {},
   };
   const response = await axios.request(config);
