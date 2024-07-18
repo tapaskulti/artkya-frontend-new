@@ -1,9 +1,7 @@
 import { useState } from "react";
 import logo from "../assets/logo.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faBars
-} from "@fortawesome/free-solid-svg-icons";
+import { faBars } from "@fortawesome/free-solid-svg-icons";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { faOpencart } from "@fortawesome/free-brands-svg-icons";
 import { AiOutlineUser } from "react-icons/ai";
@@ -12,7 +10,7 @@ import { BsCart3 } from "react-icons/bs";
 import { useSelector } from "react-redux";
 
 const Header = () => {
-  // const {token, user} = useSelector((state) => state.user);
+  const { token } = useSelector((state) => state.auth);
   const [dropDownOpen, setdropDownOpen] = useState(false);
   const navigate = useNavigate();
 
@@ -61,11 +59,16 @@ const Header = () => {
             </div>
             <div className="flex items-center space-x-24">
               <ul className="hidden md:flex space-x-10 font-sans text-base cursor-pointer  text-[#000000] ">
-              <li className="hover:text-amber-800 ">
-                  <NavLink className="border-black" to="/Artist">
-                    Sell Art
-                  </NavLink>
-                </li>
+                {token && (
+                  <>
+                    <li className="hover:text-amber-800 ">
+                      <NavLink className="border-black" to="/Artist">
+                        Sell Art
+                      </NavLink>
+                    </li>
+                  </>
+                )}
+
                 <li className="hover:text-amber-800 ">
                   <NavLink className="border-black" to="/">
                     Home
@@ -88,35 +91,49 @@ const Header = () => {
                 </li>
               </ul>
               <ul className="hidden md:flex space-x-3 font-sans text-base cursor-pointer font-medium  text-[#000000] ">
-                <li className="hover:text-amber-800 ">
-                  <NavLink className="border-black" to="/Login">
-                    Login
-                  </NavLink>
-                </li>
-                <span>|</span>
-                <li className="hover:text-amber-800 ">
-                  <NavLink className="border-black" to="/Register">
-                    Register
-                  </NavLink>
-                </li>
-                <li
-                  className="hover:text-amber-800"
-                  onClick={() => {
-                    navigate("/favoutires");
-                  }}
-                >
-                  <CiHeart className="w-5 h-6" />
-                </li>
-                <li className="hover:text-amber-800 " onClick={() => {
-                    navigate("/Cart");
-                  }}>
-                  <BsCart3  className="w-5 h-6" />
-                </li>
-                <li className="hover:text-amber-800 " onClick={() => {
-                    navigate("/Accounts");
-                  }}>
-                  <AiOutlineUser className="w-5 h-6" />
-                </li>
+                {token === "" && (
+                  <>
+                    <li className="hover:text-amber-800 ">
+                      <NavLink className="border-black" to="/Login">
+                        Login
+                      </NavLink>
+                    </li>
+                    <span>|</span>
+                    <li className="hover:text-amber-800 ">
+                      <NavLink className="border-black" to="/Register">
+                        Register
+                      </NavLink>
+                    </li>
+                  </>
+                )}
+                {token && (
+                  <>
+                    <li
+                      className="hover:text-amber-800"
+                      onClick={() => {
+                        navigate("/favoutires");
+                      }}
+                    >
+                      <CiHeart className="w-5 h-6" />
+                    </li>
+                    <li
+                      className="hover:text-amber-800 "
+                      onClick={() => {
+                        navigate("/Cart");
+                      }}
+                    >
+                      <BsCart3 className="w-5 h-6" />
+                    </li>
+                    <li
+                      className="hover:text-amber-800 "
+                      onClick={() => {
+                        navigate("/Accounts");
+                      }}
+                    >
+                      <AiOutlineUser className="w-5 h-6" />
+                    </li>
+                  </>
+                )}
               </ul>
             </div>
           </div>

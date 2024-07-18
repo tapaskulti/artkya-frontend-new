@@ -28,6 +28,7 @@ import {
   AccordionHeader,
   AccordionBody,
 } from "@material-tailwind/react";
+import { useDispatch } from "react-redux";
 const ImageUploadForm = ({ currentStep, nextStep, prevStep, HandlecheckForNextBtnSubmit }) => {
   const [step, setStep] = useState(1);
 
@@ -71,6 +72,42 @@ const ImageUploadForm = ({ currentStep, nextStep, prevStep, HandlecheckForNextBt
   const [opErr, setOpErr] = useState("");
   const [printOption, setPrintOption] = useState("");
   const [isUnique, setIsUnique] = useState(false);
+
+
+
+
+
+  const dispatch = useDispatch()
+  const formData = new FormData();
+
+  
+  formData.append("title", title);
+  formData.append("images", images);
+  formData.append("thumbnail", images[0]?.file);
+  formData.append("category", category);
+  formData.append("subject", subject);
+  formData.append("year", selectedYear);
+  formData.append("medium", JSON.stringify(mediums));
+  formData.append("materials",JSON.stringify(materials));
+  formData.append("styles",JSON.stringify(styles));
+  formData.append("width", width);
+  formData.append("height", height);
+  formData.append("depth", depth); 
+  formData.append("price", sellingPrice); 
+  formData.append("printOption", printOption); 
+
+
+  console.log("images====>",images)
+  console.log("title====>",title)
+  console.log("mediums====>",mediums)
+  console.log("materials====>",materials)
+  
+  // dispatch({
+  //   type:"CREATE_DRAFT",
+  //   payload:{
+  //     body:formData
+  //   }
+  // })
 
   useEffect(() => {
     const rectElement = document.getElementById("rect");
@@ -216,16 +253,42 @@ const ImageUploadForm = ({ currentStep, nextStep, prevStep, HandlecheckForNextBt
         printOption,
         isUnique
       };
-      console.log('artFormData',artFormData);
-     await axios.post('http://localhost:3000/upload', artFormData)
-              .then(response => {
-                // Handle success
-                console.log('Submission successful:', response.data);
-              })
-              .catch(error => {
-                // Handle error
-                console.error('Error submitting data:', error);
-              });
+    //   console.log('artFormData',artFormData);
+    //  await axios.post('http://localhost:3000/upload', artFormData)
+    //           .then(response => {
+    //             // Handle success
+    //             console.log('Submission successful:', response.data);
+    //           })
+    //           .catch(error => {
+    //             // Handle error
+    //             console.error('Error submitting data:', error);
+    //           });
+    const payloadBody = {
+      // images,
+      title:title,
+      category:category,
+      subject:subject,
+      year:selectedYear,
+      medium:mediums,
+      materials:materials,
+      styles:styles,
+      width:width,
+      height:height,
+      depth:depth,
+      keywords:keywords,
+      description:description,
+      price:sellingPrice,
+      // offerPrice,
+      // platformFee,
+      // printOption,
+      // isUnique
+    }
+    dispatch({
+      type:"CREATE_POST",
+      payload:{
+        body:formData
+      }
+    })
     } catch (error) {
       console.log('Error while submiting a Art Data',error);
     }
