@@ -7,15 +7,68 @@ import { faOpencart } from "@fortawesome/free-brands-svg-icons";
 import { AiOutlineUser } from "react-icons/ai";
 import { CiHeart } from "react-icons/ci";
 import { BsCart3 } from "react-icons/bs";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { InnerMenuComponent } from "./Menu";
 
 const Header = () => {
   const { token } = useSelector((state) => state.auth);
   const [dropDownOpen, setdropDownOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const { authUser } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   return (
     <>
+      {menuOpen && (
+        <>
+          <div className="absolute right-1 top-[70px] w-56 h-80 bg-white">
+            <div className="border-b">
+              <InnerMenuComponent name={"Create Artist Account"} />
+            </div>
+            <div className="border-b">
+              <InnerMenuComponent name={"View Profile"} onClick={() => {
+                  // navigate("/Accounts");
+                }}/>
+              <InnerMenuComponent name={"Favourites"} onClick={() => {
+                  navigate("/favoutires");
+                }}/>
+              <InnerMenuComponent name={"Collections"} onClick={() => {
+                  // navigate("/Accounts");
+                }}/>
+              <InnerMenuComponent name={"Orders"} onClick={() => {
+                  // navigate("/Accounts");
+                }}/>
+              <InnerMenuComponent name={"Offers"} onClick={() => {
+                  // navigate("/Accounts");
+                }}/>
+              <InnerMenuComponent
+                name={"Account"}
+                onClick={() => {
+                  navigate("/Accounts");
+                }}
+              />
+            </div>
+
+            <div>
+              <InnerMenuComponent
+                name={"Logout"}
+                onClick={() => {
+                  dispatch({
+                    type: "LOGOUT_SAGA",
+                    payload: {
+                      email: authUser?.email,
+                      body: {
+                        navigate: navigate,
+                      },
+                    },
+                  });
+                }}
+              />
+            </div>
+          </div>
+        </>
+      )}
       <div className="items-center w-full scroll ">
         <div className={`${dropDownOpen ? "visible" : "hidden"}`}>
           <div>
@@ -127,9 +180,11 @@ const Header = () => {
                     <li
                       className="hover:text-amber-800 "
                       onClick={() => {
-                        navigate("/Accounts");
+                        // navigate("/Accounts");
+                        setMenuOpen(!menuOpen);
                       }}
                     >
+                      {/* <MenuDefault buttonIcon={<AiOutlineUser  /> }/> */}
                       <AiOutlineUser className="w-5 h-6" />
                     </li>
                   </>
