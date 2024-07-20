@@ -75,7 +75,7 @@ const Cart = () => {
                                     artId: singleArt?._id,
                                     artPrice: singleArt?.price,
                                   },
-                                });
+                                });                                
                               }}
                             >
                               X

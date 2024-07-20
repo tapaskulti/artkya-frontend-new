@@ -9,43 +9,61 @@ import { CiHeart } from "react-icons/ci";
 import { BsCart3 } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
 import { InnerMenuComponent } from "./Menu";
+import { setHeaderMenuOpen } from "../redux/app/art/artSlice";
 
 const Header = () => {
   const { token } = useSelector((state) => state.auth);
+  const { headerMenuOpen } = useSelector((state) => state.art);
   const [dropDownOpen, setdropDownOpen] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false);
   const { authUser } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   return (
     <>
-      {menuOpen && (
+      {headerMenuOpen && (
         <>
-          <div className="absolute right-1 top-[70px] w-56 h-80 bg-white">
+          <div className="absolute right-1 top-[70px] w-56 h-80 bg-white z-20">
             <div className="border-b">
               <InnerMenuComponent name={"Create Artist Account"} />
             </div>
             <div className="border-b">
-              <InnerMenuComponent name={"View Profile"} onClick={() => {
+              <InnerMenuComponent
+                name={"View Profile"}
+                onClick={() => {
                   // navigate("/Accounts");
-                }}/>
-              <InnerMenuComponent name={"Favourites"} onClick={() => {
+                }}
+              />
+              <InnerMenuComponent
+                name={"Favourites"}
+                onClick={() => {
                   navigate("/favoutires");
-                }}/>
-              <InnerMenuComponent name={"Collections"} onClick={() => {
+                  dispatch(setHeaderMenuOpen({ headerMenuOpen: false }));
+                }}
+              />
+              <InnerMenuComponent
+                name={"Collections"}
+                onClick={() => {
                   // navigate("/Accounts");
-                }}/>
-              <InnerMenuComponent name={"Orders"} onClick={() => {
+                }}
+              />
+              <InnerMenuComponent
+                name={"Orders"}
+                onClick={() => {
                   // navigate("/Accounts");
-                }}/>
-              <InnerMenuComponent name={"Offers"} onClick={() => {
+                }}
+              />
+              <InnerMenuComponent
+                name={"Offers"}
+                onClick={() => {
                   // navigate("/Accounts");
-                }}/>
+                }}
+              />
               <InnerMenuComponent
                 name={"Account"}
                 onClick={() => {
                   navigate("/Accounts");
+                  dispatch(setHeaderMenuOpen({ headerMenuOpen: false }));
                 }}
               />
             </div>
@@ -63,6 +81,7 @@ const Header = () => {
                       },
                     },
                   });
+                  dispatch(setHeaderMenuOpen({ headerMenuOpen: false }));
                 }}
               />
             </div>
@@ -180,8 +199,8 @@ const Header = () => {
                     <li
                       className="hover:text-amber-800 "
                       onClick={() => {
-                        // navigate("/Accounts");
-                        setMenuOpen(!menuOpen);
+                        // navigate("/Accounts");                        
+                        dispatch(setHeaderMenuOpen({ headerMenuOpen: !headerMenuOpen }));
                       }}
                     >
                       {/* <MenuDefault buttonIcon={<AiOutlineUser  /> }/> */}

@@ -45,6 +45,10 @@ export function* removeArtFromCartSaga(action) {
   try {
     console.log(action.payload);
     const response = yield call(removeFromCartAction, action.payload);
+    yield put({
+      type: "GET_CART_BY_ID",
+      payload: action.payload?.userId,
+    });
   } catch (error) {
     console.log(error.message);
   }
