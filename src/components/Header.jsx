@@ -9,13 +9,16 @@ import { CiHeart } from "react-icons/ci";
 import { BsCart3 } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
 import { InnerMenuComponent } from "./Menu";
-import { setHeaderMenuOpen } from "../redux/app/art/artSlice";
+import {
+  setCreateArtistAcc,
+  setHeaderMenuOpen,
+} from "../redux/app/art/artSlice";
+import Modal from "./Modal";
 
 const Header = () => {
-  const { token } = useSelector((state) => state.auth);
-  const { headerMenuOpen } = useSelector((state) => state.art);
+  const { token, authUser } = useSelector((state) => state.auth);
+  const { headerMenuOpen, createArtistAcc } = useSelector((state) => state.art);
   const [dropDownOpen, setdropDownOpen] = useState(false);
-  const { authUser } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -25,7 +28,24 @@ const Header = () => {
         <>
           <div className="absolute right-1 top-[70px] w-56 h-80 bg-white z-20">
             <div className="border-b">
-              <InnerMenuComponent name={"Create Artist Account"} />
+              {authUser?.isArtist ? (
+                <>
+                  <InnerMenuComponent
+                    name={"View Artist Profile"}
+                    onClick={() => {}}
+                  />
+                </>
+              ) : (
+                <>
+                  <InnerMenuComponent
+                    name={"Create Artist Account"}
+                    onClick={() => {
+                      dispatch(setCreateArtistAcc({ createArtistAcc: true }));
+                      dispatch(setHeaderMenuOpen({ headerMenuOpen: false }));
+                    }}
+                  />
+                </>
+              )}
             </div>
             <div className="border-b">
               <InnerMenuComponent
@@ -88,6 +108,49 @@ const Header = () => {
           </div>
         </>
       )}
+
+      {createArtistAcc && (
+        <>
+          <Modal
+            open={createArtistAcc}
+            onClose={() => {
+              dispatch(setCreateArtistAcc({ createArtistAcc: false }));
+            }}
+            title={"Create an artist account ?"}
+            headerColour={"bg-blue-200"}
+            headertextColour={"text-white"}
+            buttonTwo={"Continue"}
+            buttonTwoClick={() => {
+              dispatch({
+                type: "CREATE_ARTIST",
+                payload: {
+                  body: {
+                    userId: authUser?._id,
+                    isArtist: true,
+                  },
+                },
+              });
+            }}
+            buttonOne={"Cancel"}
+            buttonOneClick={() => {
+              dispatch(setCreateArtistAcc({ createArtistAcc: false }));
+              dispatch(setHeaderMenuOpen({ headerMenuOpen: false }));
+            }}
+            modalWidth={"w-[400px]"}
+          >
+            <div className="flex flex-col items-center text-xl py-2 font-semibold">
+              <div>{`Are you Sure You Want to`}</div>
+              <div>{`create an artist account ?`}</div>
+            </div>
+            <div className="">
+              {`This action will create an "Artist" which will give you the
+              ability to upload and sell art once you complete your verification
+              process.This action cannot be reversed`}
+            </div>
+          </Modal>
+        </>
+      )}
+
       <div className="items-center w-full scroll ">
         <div className={`${dropDownOpen ? "visible" : "hidden"}`}>
           <div>
@@ -199,8 +262,10 @@ const Header = () => {
                     <li
                       className="hover:text-amber-800 "
                       onClick={() => {
-                        // navigate("/Accounts");                        
-                        dispatch(setHeaderMenuOpen({ headerMenuOpen: !headerMenuOpen }));
+                        // navigate("/Accounts");
+                        dispatch(
+                          setHeaderMenuOpen({ headerMenuOpen: !headerMenuOpen })
+                        );
                       }}
                     >
                       {/* <MenuDefault buttonIcon={<AiOutlineUser  /> }/> */}
