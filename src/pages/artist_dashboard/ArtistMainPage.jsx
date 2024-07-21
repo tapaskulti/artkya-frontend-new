@@ -5,6 +5,8 @@ import ArtWorkManager from "./ArtWorkManager";
 import SalesDashboard from "./SalesDashboard";
 import AddressManagement from "./Addresh/AddressManagement";
 import ProfileInformation from "./Profile/ProfileInformation"
+import Account from "./Account";
+import CuratorNote from "./CuratorNote";
 const ArtistMainPage = () => {
   const [activeTab, setActiveTab] = useState("Manage Artworks");
 
@@ -27,7 +29,8 @@ const ArtistMainPage = () => {
               />
               {activeTab === "Manage Artworks" && <ArtWorkManager />}
               {activeTab === "Sales Dashboard" && <SalesDashboard />}
-              {/* {activeTab === "Manage Artworks" && <ArtWorkManager />} */}
+              {activeTab === "Account" && <Account/>}
+              {activeTab === "Curator Notes" && <CuratorNote />}
               {activeTab === "Addresses" && <AddressManagement />}
               {activeTab === "Profile Information" && <ProfileInformation />}
             </div>
