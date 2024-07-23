@@ -5,7 +5,7 @@ const Account = () => {
   return (
     <div className="px-64">
       <div className="text-xl py-10">ACCOUNT</div>
-      <div className="border-2 border-gray-300 px-52 py-20">
+      <div className="border-2 border-gray-300 px-52 py-20 mb-20">
         <div className="text-xs font-bold">WHAT TYPE OF ARTIST ARE YOU?</div>
         <div className="">
           Most artists fall into the individual category. This information is
