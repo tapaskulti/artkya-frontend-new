@@ -9,7 +9,10 @@ import Select from "react-select";
 import { TiTick } from "react-icons/ti";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import Carousel from "react-multi-carousel";
+import "react-multi-carousel/lib/styles.css";
 // import tn01 from "../assets/tn01.jpg";
+import Art from "../assets/img4.jpg";
 
 const ArtDetailPage = () => {
   let { id } = useParams();
@@ -22,6 +25,27 @@ const ArtDetailPage = () => {
       payload: id,
     });
   }, [id]);
+
+
+const responsive = {
+  superLargeDesktop: {
+    // the naming can be any, depends on you.
+    breakpoint: { max: 4000, min: 3000 },
+    items: 5
+  },
+  desktop: {
+    breakpoint: { max: 3000, min: 1024 },
+    items: 3
+  },
+  tablet: {
+    breakpoint: { max: 1024, min: 464 },
+    items: 2
+  },
+  mobile: {
+    breakpoint: { max: 464, min: 0 },
+    items: 1
+  }
+};
 
 
   const [selectedImage, setSelectedImage] = useState();
@@ -133,6 +157,29 @@ const ArtDetailPage = () => {
             </div>
 
            
+          </div>
+          
+        </div>
+        <div className="mt-16">
+          <div>
+            <h2 className="pl-32 text-xl">More From Richard Kattman</h2>
+            <div>
+              <Carousel responsive={responsive}>
+                <div className="flex space-x-5">
+                  {/* {artDetail?.art?.map((singleArt) => {
+                  return(
+                    <div key={singleArt?.id}>
+                      <img
+                    src={singleArt?.secure_url}
+                    alt=""
+                    className="w-16 h-16 cursor-pointer"
+                  />
+                  </div>
+                  )})} */}
+                  <img src={Art} alt="" className="w-44 h-44" /><img src={Art} alt="" className="w-44 h-44" /><img src={Art} alt="" className="w-44 h-44" /><img src={Art} alt="" className="w-44 h-44" /><img src={Art} alt="" className="w-44 h-44" />
+                </div>
+              </Carousel>
+            </div>
           </div>
         </div>
       </div>
