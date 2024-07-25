@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
 
 // import { Link } from "react-router-dom";
-import Img1 from "../assets/img1.jpg";
+// import Img1 from "../assets/img1.jpg";
 import Img3 from "../assets/img3.jpg";
 import Img14 from "../assets/img14.jpg";
 import Img6 from "../assets/img6.jpg";
@@ -14,7 +14,7 @@ import phouzdar_photo from "../assets/artist.jpg";
 
 import { faPaintBrush } from "@fortawesome/free-solid-svg-icons";
 import { useDispatch } from "react-redux";
-import Select from "react-select";
+
 import { Link } from "react-router-dom";
 
 // import ArtItem from "../components/ArtItem";
@@ -34,7 +34,7 @@ const Painting = () => {
 
   const [activeTab, setActiveTab] = useState("tab1");
 
-  console.log("activeTab------->",activeTab)
+  console.log("activeTab------->", activeTab);
   // const [toggleHide, setToggleHide] = useState(false);
 
   // const newstyleElement = styleElement.slice(0, 3);
@@ -161,7 +161,11 @@ const Painting = () => {
                     </button>
                     <button
                       onClick={() => setActiveTab("tab2")}
-                      className={`${activeTab === "tab2" ?"bg-slate-300 rounded-tl rounded-tr px-5 py-1 text-slate-800": "bg-transparent"} text-sm font-semibold`}
+                      className={`${
+                        activeTab === "tab2"
+                          ? "bg-slate-300 rounded-tl rounded-tr px-5 py-1 text-slate-800"
+                          : "bg-transparent"
+                      } text-sm font-semibold`}
                     >
                       Education
                     </button>
@@ -174,13 +178,15 @@ const Painting = () => {
                   </div>
                   {activeTab === "tab1" && (
                     <div className="text-slate-600 text-left mt-5 overflow-y-auto">
-                        Phauzdar studied Fine Arts in Kolkata and is an
-                        extremely modest artist who believes that his art should
-                        speak to the viewer and not his curriculum vitae. He
-                        lives and works at Kolkata, India.
+                      Phauzdar studied Fine Arts in Kolkata and is an extremely
+                      modest artist who believes that his art should speak to
+                      the viewer and not his curriculum vitae. He lives and
+                      works at Kolkata, India.
                     </div>
                   )}
-                  {activeTab === "tab2" && <div className="mt-5">Education</div>}
+                  {activeTab === "tab2" && (
+                    <div className="mt-5">Education</div>
+                  )}
                   {activeTab === "tab3" && (
                     <div className="w-auto h-60 mt-5 space-y-2 overflow-y-auto lg:w-72">
                       <ExhibitionItem
@@ -218,7 +224,7 @@ const Painting = () => {
               <div className="mt-20">
                 <div className="h-auto mt-32 gap-10 lg:gap-16 columns-1 md:columns-2 lg:columns-3 2xl:columns-3 gap-y-16 [&>img:not(:first-child)]:mt-5 lg:[&>img:not(:first-child)]:mt-16">
                   <div>
-                    <img src={Img1} alt="" />
+                    <img src={""} alt="" />
                     <br />
                     <div>
                       <ArtDetails />

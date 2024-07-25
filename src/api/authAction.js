@@ -31,9 +31,9 @@ export const accessToken = async (payload) => {
 
 export const logoutSagaAction = async (payload) => {
   let config = {
-    method: "get",
+    method: "post",
     maxBodyLength: Infinity,
-    url: `${VITE_BASE_URL}/user/logout?email=${payload.body.userEmailload}`,
+    url: `${VITE_BASE_URL}/user/logout?email=${payload.email}`,
     headers: {},
   };
   const response = await axios.request(config);
@@ -47,6 +47,15 @@ export const userLoggedInAction = async (payload) => {
       Authorization: payload?.token,
     },
   });
+
+  return response;
+};
+
+export const updateUserAddressAction = async (payload) => {
+  const response = await axios.patch(
+    `${VITE_BASE_URL}/user/updateUserAddress?userId=${payload?.userId}`,
+    payload.body
+  );
 
   return response;
 };

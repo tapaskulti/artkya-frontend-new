@@ -1,27 +1,157 @@
 import { useState } from "react";
 import logo from "../assets/logo.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faBars,
-  faHeart,
-  faSearch,
-  faUser,
-} from "@fortawesome/free-solid-svg-icons";
+import { faBars } from "@fortawesome/free-solid-svg-icons";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { faOpencart } from "@fortawesome/free-brands-svg-icons";
 import { AiOutlineUser } from "react-icons/ai";
 import { CiHeart } from "react-icons/ci";
 import { BsCart3 } from "react-icons/bs";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { InnerMenuComponent } from "./Menu";
+import {
+  setCreateArtistAcc,
+  setHeaderMenuOpen,
+} from "../redux/app/art/artSlice";
+import Modal from "./Modal";
 
 const Header = () => {
-  // const {token, user} = useSelector((state) => state.user);
+  const { token, authUser } = useSelector((state) => state.auth);
+  const { headerMenuOpen, createArtistAcc } = useSelector((state) => state.art);
   const [dropDownOpen, setdropDownOpen] = useState(false);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   return (
     <>
-      <div className="fixed z-20 items-center w-full scroll">
+      {headerMenuOpen && (
+        <>
+          <div className="absolute right-1 top-[70px] w-56 h-80 bg-white z-20">
+            <div className="border-b">
+              {authUser?.isArtist ? (
+                <>
+                  <InnerMenuComponent
+                    name={"View Artist Profile"}
+                    onClick={() => {}}
+                  />
+                </>
+              ) : (
+                <>
+                  <InnerMenuComponent
+                    name={"Create Artist Account"}
+                    onClick={() => {
+                      dispatch(setCreateArtistAcc({ createArtistAcc: true }));
+                      dispatch(setHeaderMenuOpen({ headerMenuOpen: false }));
+                    }}
+                  />
+                </>
+              )}
+            </div>
+            <div className="border-b">
+              <InnerMenuComponent
+                name={"View Profile"}
+                onClick={() => {
+                  // navigate("/Accounts");
+                }}
+              />
+              <InnerMenuComponent
+                name={"Favourites"}
+                onClick={() => {
+                  navigate("/favoutires");
+                  dispatch(setHeaderMenuOpen({ headerMenuOpen: false }));
+                }}
+              />
+              <InnerMenuComponent
+                name={"Collections"}
+                onClick={() => {
+                  // navigate("/Accounts");
+                }}
+              />
+              <InnerMenuComponent
+                name={"Orders"}
+                onClick={() => {
+                  // navigate("/Accounts");
+                }}
+              />
+              <InnerMenuComponent
+                name={"Offers"}
+                onClick={() => {
+                  // navigate("/Accounts");
+                }}
+              />
+              <InnerMenuComponent
+                name={"Account"}
+                onClick={() => {
+                  navigate("/Accounts");
+                  dispatch(setHeaderMenuOpen({ headerMenuOpen: false }));
+                }}
+              />
+            </div>
+
+            <div>
+              <InnerMenuComponent
+                name={"Logout"}
+                onClick={() => {
+                  dispatch({
+                    type: "LOGOUT_SAGA",
+                    payload: {
+                      email: authUser?.email,
+                      body: {
+                        navigate: navigate,
+                      },
+                    },
+                  });
+                  dispatch(setHeaderMenuOpen({ headerMenuOpen: false }));
+                }}
+              />
+            </div>
+          </div>
+        </>
+      )}
+
+      {createArtistAcc && (
+        <>
+          <Modal
+            open={createArtistAcc}
+            onClose={() => {
+              dispatch(setCreateArtistAcc({ createArtistAcc: false }));
+            }}
+            title={"Create an artist account ?"}
+            headerColour={"bg-blue-200"}
+            headertextColour={"text-white"}
+            buttonTwo={"Continue"}
+            buttonTwoClick={() => {
+              dispatch({
+                type: "CREATE_ARTIST",
+                payload: {
+                  body: {
+                    userId: authUser?._id,
+                    isArtist: true,
+                  },
+                },
+              });
+            }}
+            buttonOne={"Cancel"}
+            buttonOneClick={() => {
+              dispatch(setCreateArtistAcc({ createArtistAcc: false }));
+              dispatch(setHeaderMenuOpen({ headerMenuOpen: false }));
+            }}
+            modalWidth={"w-[400px]"}
+          >
+            <div className="flex flex-col items-center text-xl py-2 font-semibold">
+              <div>{`Are you Sure You Want to`}</div>
+              <div>{`create an artist account ?`}</div>
+            </div>
+            <div className="">
+              {`This action will create an "Artist" which will give you the
+              ability to upload and sell art once you complete your verification
+              process.This action cannot be reversed`}
+            </div>
+          </Modal>
+        </>
+      )}
+
+      <div className="items-center w-full scroll ">
         <div className={`${dropDownOpen ? "visible" : "hidden"}`}>
           <div>
             <ul className="md:flex font-sans text-base space-y-2 cursor-pointer text-[#000000] p-5">
@@ -64,6 +194,16 @@ const Header = () => {
             </div>
             <div className="flex items-center space-x-24">
               <ul className="hidden md:flex space-x-10 font-sans text-base cursor-pointer  text-[#000000] ">
+                {token && (
+                  <>
+                    <li className="hover:text-amber-800 ">
+                      <NavLink className="border-black" to="/Artist">
+                        Sell Art
+                      </NavLink>
+                    </li>
+                  </>
+                )}
+
                 <li className="hover:text-amber-800 ">
                   <NavLink className="border-black" to="/">
                     Home
@@ -86,35 +226,53 @@ const Header = () => {
                 </li>
               </ul>
               <ul className="hidden md:flex space-x-3 font-sans text-base cursor-pointer font-medium  text-[#000000] ">
-                <li className="hover:text-amber-800 ">
-                  <NavLink className="border-black" to="/Login">
-                    Login
-                  </NavLink>
-                </li>
-                <span>|</span>
-                <li className="hover:text-amber-800 ">
-                  <NavLink className="border-black" to="/Register">
-                    Register
-                  </NavLink>
-                </li>
-                <li
-                  className="hover:text-amber-800"
-                  onClick={() => {
-                    navigate("/favoutires");
-                  }}
-                >
-                  <CiHeart className="w-5 h-6" />
-                </li>
-                <li className="hover:text-amber-800 " onClick={() => {
-                    navigate("/Cart");
-                  }}>
-                  <BsCart3  className="w-5 h-6" />
-                </li>
-                <li className="hover:text-amber-800 " onClick={() => {
-                    navigate("/Accounts");
-                  }}>
-                  <AiOutlineUser className="w-5 h-6" />
-                </li>
+                {token === "" && (
+                  <>
+                    <li className="hover:text-amber-800 ">
+                      <NavLink className="border-black" to="/Login">
+                        Login
+                      </NavLink>
+                    </li>
+                    <span>|</span>
+                    <li className="hover:text-amber-800 ">
+                      <NavLink className="border-black" to="/Register">
+                        Register
+                      </NavLink>
+                    </li>
+                  </>
+                )}
+                {token && (
+                  <>
+                    <li
+                      className="hover:text-amber-800"
+                      onClick={() => {
+                        navigate("/favoutires");
+                      }}
+                    >
+                      <CiHeart className="w-5 h-6" />
+                    </li>
+                    <li
+                      className="hover:text-amber-800 "
+                      onClick={() => {
+                        navigate("/Cart");
+                      }}
+                    >
+                      <BsCart3 className="w-5 h-6" />
+                    </li>
+                    <li
+                      className="hover:text-amber-800 "
+                      onClick={() => {
+                        // navigate("/Accounts");
+                        dispatch(
+                          setHeaderMenuOpen({ headerMenuOpen: !headerMenuOpen })
+                        );
+                      }}
+                    >
+                      {/* <MenuDefault buttonIcon={<AiOutlineUser  /> }/> */}
+                      <AiOutlineUser className="w-5 h-6" />
+                    </li>
+                  </>
+                )}
               </ul>
             </div>
           </div>

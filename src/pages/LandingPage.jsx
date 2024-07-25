@@ -1,6 +1,6 @@
 import Header from "../components/Header";
 // import phouzdar_photo from "../assets/artist1.jpg";
-import Img1 from "../assets/img1.jpg";
+// import Img1 from "../assets/Img1.jpg";
 // import Img2 from "../assets/img2.jpg";
 import Img3 from "../assets/img3.jpg";
 import Img4 from "../assets/img4.jpg";
@@ -60,7 +60,7 @@ const LandingPage = () => {
               <div className="h-auto mt-32 gap-10 lg:gap-16 columns-1 md:columns-2 lg:columns-3 2xl:columns-4 gap-y-16 [&>img:not(:first-child)]:mt-5 lg:[&>img:not(:first-child)]:mt-16">
                 <Link to="/artistProfilePage">
                   <div>
-                    <img src={Img1} alt="" />
+                    {/* <img src={Img1} alt="" /> */}
                     <br />
                     <div>
                       <ArtDetails />

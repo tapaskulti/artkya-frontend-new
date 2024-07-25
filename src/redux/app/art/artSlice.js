@@ -2,10 +2,14 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   isLoading: false,
+  isUploading: false,
   isFilteredDataLoading: false,
+  headerMenuOpen: false,
+  createArtistAcc: false,
   allArt: [],
   filteredArt: [],
   artDetail: {},
+  artType:"originalArt"
 };
 
 const artSlice = createSlice({
@@ -13,10 +17,19 @@ const artSlice = createSlice({
   initialState,
   reducers: {
     setIsLoading(state, action) {
+      state.isUploading = action.payload.isUploading;
+    },
+    setIsUploading(state, action) {
       state.isLoading = action.payload.isLoading;
     },
     setFilteredIsLoading(state, action) {
       state.isFilteredDataLoading = action.payload.isFilteredDataLoading;
+    },
+    setHeaderMenuOpen(state, action) {
+      state.headerMenuOpen = action.payload.headerMenuOpen;
+    },
+    setCreateArtistAcc(state, action) {
+      state.createArtistAcc = action.payload.createArtistAcc;
     },
     setAllArt(state, action) {
       state.allArt = action.payload.allArt;
@@ -36,5 +49,8 @@ export const {
   setFilteredIsLoading,
   setIsLoading,
   setArtDetails,
+  setIsUploading,
+  setHeaderMenuOpen,
+  setCreateArtistAcc
 } = artSlice.actions;
 export const artReducer = artSlice.reducer;
