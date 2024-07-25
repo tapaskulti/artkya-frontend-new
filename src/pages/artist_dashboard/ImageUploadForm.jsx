@@ -76,10 +76,6 @@ const ImageUploadForm = ({ currentStep, nextStep, prevStep, HandlecheckForNextBt
 
 
 
-  console.log("images====>",images)
-  console.log("title====>",title)
-  console.log("mediums====>",mediums)
-  console.log("materials====>",materials)
 
   const dispatch = useDispatch()
   const formData = new FormData();
@@ -87,7 +83,7 @@ const ImageUploadForm = ({ currentStep, nextStep, prevStep, HandlecheckForNextBt
   
   formData.append("title", title);
   formData.append("images", images);
-  formData.append("thumbnail", images[0].file);
+  formData.append("thumbnail", images[0]?.file);
   formData.append("category", category);
   formData.append("subject", subject);
   formData.append("year", selectedYear);
@@ -101,6 +97,10 @@ const ImageUploadForm = ({ currentStep, nextStep, prevStep, HandlecheckForNextBt
   formData.append("printOption", printOption); 
 
 
+  console.log("images====>",images)
+  console.log("title====>",title)
+  console.log("mediums====>",mediums)
+  console.log("materials====>",materials)
   
   // dispatch({
   //   type:"CREATE_DRAFT",

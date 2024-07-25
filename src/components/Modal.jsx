@@ -1,51 +1,63 @@
-import React from "react";
-import {
-  Button,
-  Dialog,
-  DialogHeader,
-  DialogBody,
-  DialogFooter,
-} from "@material-tailwind/react";
- 
-export function Modal() {
-  const [open, setOpen] = useState(false);
- 
-  const handleOpen = () => setOpen(!open);
- 
+import { IoClose } from "react-icons/io5";
+// eslint-disable-next-line react/prop-types
+export default function Modal({
+  open,
+  onClose,
+  children,
+  title,
+  headerColour,
+  headertextColour,
+  buttonOne,
+  buttonOneClick,
+  buttonTwo,
+  buttonTwoClick,
+  modalWidth,
+}) {
   return (
-    <>
-      <Button onClick={handleOpen} variant="gradient">
-        Open Dialog
-      </Button>
-      <Dialog
-        open={open}
-        handler={handleOpen}
-        animate={{
-          mount: { scale: 1, y: 0 },
-          unmount: { scale: 0.9, y: -100 },
-        }}
+    // backdrop
+    <div
+      onClick={onClose}
+      className={`
+        fixed inset-0 flex justify-center items-center transition-colors
+        ${open ? "visible bg-black/20" : "invisible"} absolute z-20
+      `}
+    >
+      {/* modal */}
+      <div
+        onClick={(e) => e.stopPropagation()}
+        className={`
+          bg-white rounded-xl shadow p-3 transition-all ${modalWidth}
+          ${open ? "scale-100 opacity-100" : "scale-125 opacity-0"}
+        `}
       >
-        <DialogHeader>Its a simple dialog.</DialogHeader>
-        <DialogBody>
-          The key to more success is to have a lot of pillows. Put it this way,
-          it took me twenty five years to get these plants, twenty five years of
-          blood sweat and tears, and I&apos;m never giving up, I&apos;m just
-          getting started. I&apos;m up to something. Fan luv.
-        </DialogBody>
-        <DialogFooter>
-          <Button
-            variant="text"
-            color="red"
-            onClick={handleOpen}
-            className="mr-1"
+        {/* Heading */}
+        <div
+          className={`${headerColour} flex justify-between items-center text-xl ${headertextColour} px-2 space-x-2 rounded-md py-2`}
+        >
+          <div className="">{title}</div>
+          <button onClick={onClose} className="">
+            <IoClose />
+          </button>
+        </div>
+        {/* body */}
+        <div className=" text-lg">{children}</div>
+
+        {/* fotter */}
+        <div className="flex justify-end space-x-4">
+          <div
+            className="px-4 py-2 rounded-md cursor-pointer"
+            onClick={buttonOneClick}
           >
-            <span>Cancel</span>
-          </Button>
-          <Button variant="gradient" color="green" onClick={handleOpen}>
-            <span>Confirm</span>
-          </Button>
-        </DialogFooter>
-      </Dialog>
-    </>
+            {buttonOne}
+          </div>
+          <div
+            onClick={buttonTwoClick}
+            className="px-4 py-2 rounded-md cursor-pointer"
+          >
+            {buttonTwo}
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }
