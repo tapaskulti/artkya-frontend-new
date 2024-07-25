@@ -3,11 +3,29 @@ const VITE_BASE_URL = import.meta.env.VITE_BASE_URL;
 
 export const createArtAction = async (payload) => {
   try {
-    const response = await axios.post(`${VITE_BASE_URL}/art`, payload.body, {
-      headers: {
-        Authorization: payload.token,
-      },
-    });
+    const response = await axios.post(
+      `${VITE_BASE_URL}/art/createArt`,
+      payload.body     
+    );
+    console.log(response)
+    return response;
+    
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const createDraftAction = async (payload) => {
+  try {
+    const response = await axios.post(
+      `${VITE_BASE_URL}/createDraft`,
+      payload.body,
+      {
+        // headers: {
+        //   Authorization: payload.token,
+        // },
+      }
+    );
 
     return response;
   } catch (error) {
@@ -50,79 +68,10 @@ export const getArtByIdAction = async (payload) => {
   return response;
 };
 
-
-
-
-
-
-export const createNonSelectArtAction = async (payload) => {
-  try {
-    const response = await axios.post(
-      `${VITE_BASE_URL}/art/createNonSelectArt`,
-      payload.body,
-      {
-        headers: {
-          Authorization: payload.token,
-        },
-      }
-    );
-
-    return response;
-  } catch (error) {}
-};
-
-export const getAllNonSelectArtAction = async (payload) => {
-  let response;
-  if (payload) {
-    response = await axios.get(
-      `${VITE_BASE_URL}/art/getallnonselectart?year=${payload}`
-    );
-  } else {
-    response = await axios.get(`${VITE_BASE_URL}/art/getallnonselectart`);
-  }
-
-  return response;
-};
-
-export const getNonSelectArtAction = async (payload) => {
-  const response = await axios.get(
-    `${VITE_BASE_URL}/art/getnonselectart?artId=${payload.artId}`
-  );
-
-  return response;
-};
-
 export const updateArtAction = async (payload) => {
   const response = await axios.patch(
     `${VITE_BASE_URL}/art/updateart?id=${payload.id}`,
     payload.body,
-    {
-      headers: {
-        Authorization: payload.token,
-      },
-    }
-  );
-
-  return response;
-};
-
-export const updateNonSelectArtAction = async (payload) => {
-  const response = await axios.patch(
-    `${VITE_BASE_URL}/art/updatenonselectart?id=${payload.id}`,
-    payload.body,
-    {
-      headers: {
-        Authorization: payload.token,
-      },
-    }
-  );
-
-  return response;
-};
-
-export const deleteNonSelectArtAction = async (payload) => {
-  const response = await axios.delete(
-    `${VITE_BASE_URL}/art/deletenonselectart?id=${payload.id}`,
     {
       headers: {
         Authorization: payload.token,

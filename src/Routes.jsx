@@ -13,6 +13,7 @@ import ArtDetailPage from "./pages/ArtDetailPage";
 import Studio from "./pages/studio/Studio";
 import Cart from "./pages/Cart";
 import ShippingBilling from "./pages/ShippingBilling";
+import ArtistMainPage from "./pages/artist_dashboard/ArtistMainPage";
 
 const Routes = () => {
   return (
@@ -34,6 +35,7 @@ const Routes = () => {
         <Route path="/Cart" element={<Cart />} />
         <Route path="/ShippingBilling" element={<ShippingBilling />} />
         {/* <Route path="/:id/checkout" element={<ChekoutPage />} /> */}
+        <Route path="/Artist" element={<ArtistMainPage />} />
       </RoutePath>
   );
 };

@@ -1,0 +1,149 @@
+/* Dropzone component */
+
+/* ImageCropper */
+.imageCropper {
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color:gray;
+}
+
+.imageCropperBody {
+  position: relative;
+  margin: 40px auto;
+  display: block;
+  background-color: #fff;
+  width: 90%;
+  height:100%;
+}
+.cropTitle {
+  font-family: "Crimson Text";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 30px;
+  line-height: 39px;
+  color: rgb(51, 51, 51);
+  margin-top: 0px;
+  padding: 1rem;
+}
+.dropzone {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  border-width: 2px;
+  border-radius: 2px;
+  border-color: #eeeeee;
+  border-style: dashed;
+  background-color: #fafafa;
+  color: #bdbdbd;
+  outline: none;
+  transition: border 0.24s ease-in-out;
+}
+.croppreview {
+  width: 20%;
+  /* Maintain previous size */
+  padding: 0;
+
+}
+.cropperZoneFooter {
+  display: block;
+  position: relative;
+  background-color: #fff;
+  width: 75%;
+  float: right;
+  margin: auto;
+}
+.resetOrClose {
+  display: flex;
+  justify-content:space-around;
+  font-weight: 800;
+}
+.btnset {
+  display: flex;
+  justify-content:space-around;
+}
+.copyright_ok{
+  display: inline-grid;
+}
+.cropperZone {
+  position: relative;
+  margin: auto;
+  display: flex;
+  background-color: #fff;
+  width: 90%;
+  height: 60%;
+}
+
+.crop-container {
+  position: relative;
+  margin: 0 auto;
+  width: 70%;
+  height: 100%;
+  max-height: 500px;
+  background-color: rgb(153, 153, 153);
+  background-image: linear-gradient(45deg, rgb(128, 128, 128) 25%, transparent 25%), linear-gradient(-45deg, rgb(128, 128, 128) 25%, transparent 25%), linear-gradient(45deg, transparent 75%, rgb(128, 128, 128) 75%), linear-gradient(-45deg, transparent 75%, rgb(128, 128, 128) 75%);
+  background-size: 20px 20px;
+  background-position: 0px 0px, 0px 10px, 10px -10px, -10px 0px;
+}
+
+
+/* ImageCropper End*/
+
+
+
+.formTitle {
+  font-family: "Crimson Text";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 30px;
+  line-height: 39px;
+  color: rgb(51, 51, 51);
+  margin-top: 0px;
+}
+
+.accordionHeader {
+  margin-left: 5px;
+}
+
+.dropzone:focus {
+  border-color: #2196f3;
+}
+
+.uploadIcon {
+  font-size: 5rem;
+}
+
+/* transform: translateX(-50%); */
+.previewImg {
+  z-index: 1000;
+  position: relative;
+  width: 400px;
+  height: 400px;
+  background: transparent;
+}
+
+.deleteIcon {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  background: none;
+  border-radius: 0% 0% 0% 50%;
+  color: black;
+  cursor: pointer;
+  font-size: 14px;
+  padding: 0px 5px;
+  background-color: white;
+  border: solid 1px black;
+}
+
+.ul-list li {
+  padding: 0;
+  margin: 0;
+  font-style: italic;
+  font-size: 12px;
+}

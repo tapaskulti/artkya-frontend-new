@@ -487,4 +487,13 @@ export const styleElement = [
         "The Other Art Fair",
       ],
     },
-  ];
+];
+  
+export const CategoryItem = [
+  {
+    title: "Category",
+    element: [
+      "Paintings"
+    ],
+  },
+]

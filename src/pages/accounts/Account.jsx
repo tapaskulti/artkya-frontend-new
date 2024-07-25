@@ -3,9 +3,26 @@ import Header from "../../components/Header";
 import AccountUserInformation from "./AccountUserInformation";
 import OfferDashboard from "./OfferDashboard";
 import Order from "./Order";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const Account = () => {
   const [ActiveTab, setActiveTab] = useState("Account_Info");
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+  const{authUser} = useSelector((state)=>state.auth)
+  const handleLogOut=()=>{
+    // console.log("logout")
+    dispatch({
+      type:"LOGOUT_SAGA",
+      payload:{
+        email:authUser?.email,
+        body:{
+          navigate:navigate
+        }
+      }
+    })
+  }
   return (
     <div className="static">
       <Header />
@@ -45,7 +62,7 @@ const Account = () => {
             <div>
               <AccountButtons
                 title={"Logout"}
-                onClick={() => {}}
+                onClick={() => {handleLogOut()}}
                 isCondition={ActiveTab === "Logout" ? true : false}
               />
             </div>
