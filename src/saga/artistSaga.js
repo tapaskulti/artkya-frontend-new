@@ -1,6 +1,6 @@
 import { call, put, takeEvery } from "redux-saga/effects";
 import { toast } from "react-toastify";
-import { createArtistAction } from "../api/artistAction";
+import { createArtistAction, updateArtistProfileAction } from "../api/artistAction";
 
 
 export function* createArtistSaga(action) {
@@ -17,11 +17,27 @@ export function* createArtistSaga(action) {
   }
 
 
+  export function* updateArtistProfileSaga(action) {
+    try {    
+      console.log(action.payload, "action payload");
+      const response = yield call(updateArtistProfileAction, action.payload);    
+      console.log("updateArtistProfileSaga====>",response.data)
+      if (response?.status === 200){
+        toast("Profile Updated successfully")
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+
+
 
 
 
 
 
   export function* watchAsyncArtistSaga() {
-    yield takeEvery("CREATE_ARTIST", createArtistSaga);   
+    yield takeEvery("CREATE_ARTIST", createArtistSaga);     
+    yield takeEvery("UPDATE_ARTIST_PROFILE",updateArtistProfileSaga);     
   }
