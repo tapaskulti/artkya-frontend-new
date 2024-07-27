@@ -1,7 +1,31 @@
-import React from "react";
+import React, { useState } from "react";
 import { Radio, Input, Button } from "@material-tailwind/react";
 
 const Account = () => {
+  const [isBusiness, setIsBusiness] = useState(false);
+  const [taxDetails, setTaxDetails] = useState({
+    type: "",
+    address1: "",
+    address2: "",
+    code: "",
+    country: "",
+    state: "",
+    city: "",
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setTaxDetails({
+      ...taxDetails,
+      [name]: value,
+    });
+  };
+
+  const handleSubmit = ()=>{
+
+  }
+  
+  console.log("taxDetails===>", taxDetails);
   return (
     <div className="px-64">
       <div className="text-xl py-10">ACCOUNT</div>
@@ -12,8 +36,23 @@ const Account = () => {
           needed for legal and tax compliance purposes.
         </div>
         <div className="flex gap-10 py-2">
-          <Radio name="type" label="Individual" defaultChecked />
-          <Radio name="type" label="Business/Sole Proprietor" />
+          <Radio
+            name="type"
+            label="Individual"
+            defaultChecked
+            onChange={() => {
+              setIsBusiness(false);
+              setTaxDetails({ ...taxDetails, type: "individual" });
+            }}
+          />
+          <Radio
+            name="type"
+            label="Business/Sole Proprietor"
+            onChange={() => {
+              setIsBusiness(true);
+              setTaxDetails({ ...taxDetails, type: "business" });
+            }}
+          />
         </div>
         <div>
           <div className="text-xs font-bold">RESIDENTIAL ADDRESS</div>
@@ -21,15 +60,47 @@ const Account = () => {
             This should match the address you use to file your taxes.
           </div>
           <div className="px-2 pt-2 pb-10 space-y-8 border-b-2">
-            <Input label="Address*" />
-            <Input label="Address 2" />
+            <Input
+              type="text"
+              label="Address*"
+              name="address1"
+              onChange={handleChange}
+              value={taxDetails.address1}
+            />
+            <Input
+              label="Address 2"
+              value={taxDetails.address2}
+              name="address2"
+              onChange={handleChange}
+            />
             <div className="flex gap-6">
-              <Input label="Country" />
-              <Input label="City" />
+              <Input
+                type="text"
+                label="Country"
+                name="country"
+                value={taxDetails.country}
+                onChange={handleChange}
+              />
+              <Input
+                label="City"
+                name="city"
+                onChange={handleChange}
+                value={taxDetails.city}
+              />
             </div>
             <div className="flex gap-6">
-              <Input label="State/Region" />
-              <Input label="Zip/PostalCode" />
+              <Input
+                label="State/Region"
+                name="state"
+                onChange={handleChange}
+                value={taxDetails.state}
+              />
+              <Input
+                label="Zip/PostalCode"
+                name="code"
+                onChange={handleChange}
+                value={taxDetails.code}
+              />
             </div>
             <Button color="black" className="w-2/3 py-3 text-base">
               Save
@@ -44,7 +115,11 @@ const Account = () => {
               timely manner.
             </div>
             <div className="pt-5">
-              <Button variant="gradient" className="flex items-center gap-3  w-2/3 justify-center py-3 text-base">
+              <Button
+                variant="gradient"
+                className="flex items-center gap-3  w-2/3 justify-center py-3 text-base"
+                onSubmit={handleSubmit}
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"

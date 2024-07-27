@@ -1,6 +1,12 @@
 import React, { useState } from "react";
 import { Textarea, Input, Button } from "@material-tailwind/react";
+import { useDispatch, useSelector } from "react-redux";
+
+
+
 const ProfileInformation = () => {
+  const {authUser} = useSelector((state)=>state.auth)
+  const dispatch = useDispatch()
   const [formData, setFormData] = useState({
     aboutMe: "",
     education: "",
@@ -19,17 +25,25 @@ const ProfileInformation = () => {
       [name]: value,
     });
   };
-
+  // console.log("formData",formData)
   const handleSubmit = (e) => {
     e.preventDefault();
     // Handle saving the form data here
     console.log(formData); // For demonstration, you can replace this with your save logic
+    
+    dispatch({
+      type:"UPDATE_ARTIST_PROFILE",
+      payload:{
+        userId:authUser?._id,
+        body:formData
+      }
+    })
   };
 
   return (
     <div className="px-64">
       <div className="text-2xl py-10">PROFILE INFORMATION</div>
-      <div className="border-2 border-gray-300 px-60">
+      <div className="border-2 border-gray-300 px-60 mb-20">
         <div className="grid grid-cols-1 gap-4 py-8">
           <div className="form-group">
             <Textarea

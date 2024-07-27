@@ -14,3 +14,19 @@ export const createArtistAction = async (payload) => {
     console.log(error);
   }
 };
+
+
+
+export const updateArtistProfileAction = async (payload) => {
+  try {
+    const response = await axios.patch(
+      `${VITE_BASE_URL}/artist/updateArtistProfile?ArtistId=${payload.userId}`,
+      payload.body     
+    );
+    console.log(response)
+    return response;
+    
+  } catch (error) {
+    console.log(error);
+  }
+};
