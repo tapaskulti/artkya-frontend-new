@@ -9,10 +9,10 @@ import Select from "react-select";
 import { TiTick } from "react-icons/ti";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Carousel from "react-multi-carousel";
+// import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 // import tn01 from "../assets/tn01.jpg";
-import Art from "../assets/img4.jpg";
+// import Art from "../assets/img4.jpg";
 import ProductCarousel from "../components/Carousel";
 import TextAccordion from "../components/TextAccordion";
 
