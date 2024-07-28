@@ -147,7 +147,7 @@ const Painting = () => {
     <>
       <div className="static">
         <Header />
-        <div className="flex justify-end px-10 py-2 border-b border-slate-200">
+        <div className="flex justify-end px-10 py-2 border-b border-slate-200 focus:outline-none focus:border-slate-600">
           <div className="flex items-center">
             <Select
               options={[
@@ -161,11 +161,11 @@ const Painting = () => {
                   setSearchCriteria("Artist");
                 }
               }}
-              className="rounded-none absolute -right-6 w-32 px-3 py-1.5 focus:outline-none focus:border-slate-300"
+              className="rounded-none absolute -right-6 w-32 px-3 py-1.5 focus:outline-none focus:border-none border-gray-400"
             />
             <input
               type="text"
-              className="relative border border-l-transparent border-slate-300 py-1.5"
+              className="relative border border-gray-400 border-l-transparent border-slate-600 py-1.5 focus:outline-none focus:border-slate-600"
               value={searchInput}
               onChange={(e) => {
                 setSearchInput(e.target.value);
@@ -179,7 +179,7 @@ const Painting = () => {
           </h2>
           <Select
             options={options}
-            className="w-52 bg-white py-1.5 focus:outline-none focus:border-slate-300"
+            className="w-52 bg-white py-1.5 focus:outline-none focus:border-none"
             onChange={(e) => {
               if (e.label === "New to Old") {
                 setSortCriteria("newToOld");
@@ -194,7 +194,7 @@ const Painting = () => {
           />
         </div>
         <div className="mt-10 lg:flex">
-          <div className="w-1/3 rounded-lg rounded-br-xl px-10">
+          <div className="w-1/4 rounded-lg rounded-br-xl px-10">
             <h2>Category</h2>
             <div className="w-full bg-gray-50 border border-gray-200 backdrop-blur-lg rounded-md mt-6 px-3 py-2 text-xl text-center">
               Paintings
