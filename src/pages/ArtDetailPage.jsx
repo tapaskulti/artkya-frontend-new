@@ -13,7 +13,7 @@ import { useDispatch, useSelector } from "react-redux";
 import "react-multi-carousel/lib/styles.css";
 // import tn01 from "../assets/tn01.jpg";
 // import Art from "../assets/img4.jpg";
-import ProductCarousel from "../components/Carousel";
+import ProductCarousel from "../components/ProductCarousel";
 import TextAccordion from "../components/TextAccordion";
 
 
@@ -22,11 +22,11 @@ const ArtDetailPage = () => {
   const dispatch = useDispatch();
   // console.log("artId======>",id)
 
-  const [isExpanded, setIsExpanded] = useState(false);
+  // const [isExpanded, setIsExpanded] = useState(false);
 
-  const toggleExpansion = () => {
-    setIsExpanded(!isExpanded);
-  };
+  // const toggleExpansion = () => {
+  //   setIsExpanded(!isExpanded);
+  // };
 
   useEffect(() => {
     dispatch({
@@ -34,27 +34,6 @@ const ArtDetailPage = () => {
       payload: id,
     });
   }, [id]);
-
-
-const responsive = {
-  superLargeDesktop: {
-    // the naming can be any, depends on you.
-    breakpoint: { max: 4000, min: 3000 },
-    items: 5
-  },
-  desktop: {
-    breakpoint: { max: 3000, min: 1024 },
-    items: 3
-  },
-  tablet: {
-    breakpoint: { max: 1024, min: 464 },
-    items: 2
-  },
-  mobile: {
-    breakpoint: { max: 464, min: 0 },
-    items: 1
-  }
-};
 
 
   const [selectedImage, setSelectedImage] = useState();

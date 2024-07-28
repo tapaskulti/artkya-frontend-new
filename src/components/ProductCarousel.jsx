@@ -6,8 +6,10 @@ import image2 from '../assets/image2.jpg';
 import image3 from '../assets/image3.jpg';
 import image4 from '../assets/image4.jpg';
 import image5 from '../assets/image5.jpg';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 
-const MyCarousel = () => {
+const ProductCarousel = () => {
   const items = [
     {
       headline: "Color My Dreams",
@@ -66,6 +68,24 @@ const MyCarousel = () => {
     }
   };
 
+  const CustomLeftArrow = ({ onClick }) => (
+    <button
+      onClick={onClick}
+      className="absolute left-0 top-[37%] transform -translate-y-1/2 px-3 py-1.5 bg-gray-800 text-white rounded-full z-10 focus:outline-none"
+    >
+      <FontAwesomeIcon icon={faChevronLeft} />
+    </button>
+  );
+
+  const CustomRightArrow = ({ onClick }) => (
+    <button
+      onClick={onClick}
+      className="absolute right-0 top-[37%] transform -translate-y-1/2 px-3 py-1.5 bg-gray-800 text-white rounded-full z-10 focus:outline-none"
+    >
+      <FontAwesomeIcon icon={faChevronRight} />
+    </button>
+  );
+
   return (
     <Carousel
       additionalTransfrom={0}
@@ -74,6 +94,8 @@ const MyCarousel = () => {
       centerMode={false}
       className=""
       containerClass="container-with-dots"
+      customLeftArrow={<CustomLeftArrow />}
+      customRightArrow={<CustomRightArrow />}
       dotListClass=""
       draggable
       focusOnSelect={false}
@@ -114,4 +136,4 @@ const MyCarousel = () => {
   );
 };
 
-export default MyCarousel;
+export default ProductCarousel;
