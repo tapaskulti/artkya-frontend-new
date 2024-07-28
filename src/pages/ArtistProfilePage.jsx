@@ -1,7 +1,7 @@
 import Header from "../components/Header";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useEffect, useState } from "react";
-
+import { useEffect, useRef, useState } from "react";
+import { FaPencilAlt } from "react-icons/fa";
 // import { Link } from "react-router-dom";
 // import Img1 from "../assets/img1.jpg";
 import Img3 from "../assets/img3.jpg";
@@ -11,90 +11,52 @@ import Img8 from "../assets/img8.jpg";
 import Img9 from "../assets/img9.jpg";
 import Img12 from "../assets/img12.jpg";
 import phouzdar_photo from "../assets/artist.jpg";
-
+import { Spinner } from "@material-tailwind/react";
 import { faPaintBrush } from "@fortawesome/free-solid-svg-icons";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 // import ArtItem from "../components/ArtItem";
 
-const Painting = () => {
+const ArtistProfilePage = () => {
   const dispatch = useDispatch();
-  const [itemsToShow, setItemsToShow] = useState();
-  const [filterData, setFilterData] = useState({
-    style: [],
-    subject: [],
-    orientation: [],
-    medium: [],
-    material: [],
-    artistcountry: [],
-    featuredartist: [],
-  });
+  const { setArtistImageUploadLoading, artistDetails } = useSelector(
+    (state) => state.artist
+  );
+  const formData = new FormData();
 
+  let { id } = useParams();
+  const fileInputRef = useRef(null);
   const [activeTab, setActiveTab] = useState("tab1");
 
-  console.log("activeTab------->",activeTab)
-  // const [toggleHide, setToggleHide] = useState(false);
+  console.log("id------->", id);
 
-  // const newstyleElement = styleElement.slice(0, 3);
-  // const [buttonText, setButtonText] = useState("read more");
-
-  // function handleClick() {
-  //   if (!toggleHide) {
-  //     setButtonText("hide");
-  //   } else {
-  //     setButtonText("read more");
-  //   }
-  //   setToggleHide(!toggleHide);
-  // }
-
-  const handleFilterData = (e) => {
-    const { value, checked, name } = e.target;
-    const newFilterData = { ...filterData };
-
-    if (newFilterData[name]?.includes(value) === false && checked === true) {
-      newFilterData[name].push(value);
-    } else if (
-      newFilterData[name]?.includes(value) === true &&
-      checked === false
-    ) {
-      newFilterData[name] = newFilterData[name].filter(
-        (item) => item !== value
-      );
-    } else {
-      return;
-    }
-    setFilterData(newFilterData);
-  };
-
-  console.log("filterData=============>", filterData);
-
-  useEffect(() => {
-    const filterDataPayload = {
-      style: filterData?.style,
-      subject: filterData?.subject,
-      orientation: filterData?.orientation,
-      medium: filterData?.medium,
-      material: filterData?.material,
-      artistcountry: filterData?.artistcountry,
-      featuredartist: filterData?.featuredartist,
-    };
+  const handleFileUploadChange = (event) => {
+    const file = event.target.files[0];
+    console.log(file);
+    formData.append("avatar", file);
 
     dispatch({
-      type: "FILTER_ART",
+      type: "UPDATE_ARTIST_IMAGE",
       payload: {
-        body: filterDataPayload,
+        artistId: id,
+        body: formData,
       },
     });
-  }, [filterData]);
+  };
+  const handleIconClick = () => {
+    fileInputRef.current.click();
+  };
 
-  // const options = [
-  //   { value: "recomended", label: "Recomended" },
-  //   { value: "newToOld", label: "New to Old" },
-  //   { value: "priceLowHigh", label: "Price: Low to High" },
-  //   { value: "priceHighLow", label: "Price: High to Low" },
-  // ];
+  useEffect(() => {
+    dispatch({
+      type: "GET_ARTIST_PROFILE_BY_ID",
+      payload: {
+        artistId: id,
+      },
+    });
+  }, []);
 
   return (
     <>
@@ -116,7 +78,7 @@ const Painting = () => {
           </div>
         </div> */}
         <div className="px-10 mt-5">
-          <h2 className="text-slate-900 text-3xl font-thin">
+          <h2 className="text-slate-900 text-3xl font-thin ">
             Original Paintings For Sale
           </h2>
           {/* <Select
@@ -128,10 +90,31 @@ const Painting = () => {
           <div className="relative mx-5 md:mx-0">
             {/* background and phauzdar image */}
             <div className="bg-gray-100 h-auto backdrop-blur-lg w-full md:max-lg:max-w-screen-sm md:max-lg:mx-auto lg:w-[23rem] md:px-10 px-5 md:mx-5  lg:mx-7 translate-y-20  rounded-lg rounded-br-xl">
-              <img
-                src={phouzdar_photo}
-                className="relative object-fill mx-auto transform -translate-y-20 border-8 border-white rounded-full w-52 h-52 "
-                alt="Phauzdar"
+              {setArtistImageUploadLoading ? (
+                <>
+                  <Spinner/>
+                </>
+              ) : (
+                <>
+                  <img
+                    src={artistDetails?.profileImage?.secure_url}
+                    className="relative object-fill mx-auto transform -translate-y-20 border-8 border-white rounded-full w-52 h-52 "
+                    alt="Phauzdar"
+                  />
+                </>
+              )}
+
+              <div
+                className="absolute right-24 top-[70px] bg-gray-300 p-4 rounded-full"
+                onClick={handleIconClick}
+              >
+                <FaPencilAlt />
+              </div>
+              <input
+                type="file"
+                ref={fileInputRef}
+                style={{ display: "none" }}
+                onChange={handleFileUploadChange}
               />
               <div className="relative z-10 flex-col justify-center -translate-y-16">
                 <div className="mb-5 border-b-2 rounded-full">
@@ -161,9 +144,13 @@ const Painting = () => {
                     </button>
                     <button
                       onClick={() => setActiveTab("tab2")}
-                      className={`${activeTab === "tab2" ?"bg-slate-300 rounded-tl rounded-tr px-5 py-1 text-slate-800": "bg-transparent"} text-sm font-semibold`}
+                      className={`${
+                        activeTab === "tab2"
+                          ? "bg-slate-300 rounded-tl rounded-tr px-5 py-1 text-slate-800"
+                          : "bg-transparent"
+                      } text-sm font-semibold`}
                     >
-                      Education
+                      Events
                     </button>
                     <button
                       onClick={() => setActiveTab("tab3")}
@@ -174,13 +161,15 @@ const Painting = () => {
                   </div>
                   {activeTab === "tab1" && (
                     <div className="text-slate-600 text-left mt-5 overflow-y-auto">
-                        Phauzdar studied Fine Arts in Kolkata and is an
-                        extremely modest artist who believes that his art should
-                        speak to the viewer and not his curriculum vitae. He
-                        lives and works at Kolkata, India.
+                      Phauzdar studied Fine Arts in Kolkata and is an extremely
+                      modest artist who believes that his art should speak to
+                      the viewer and not his curriculum vitae. He lives and
+                      works at Kolkata, India.
                     </div>
                   )}
-                  {activeTab === "tab2" && <div className="mt-5">Education</div>}
+                  {activeTab === "tab2" && (
+                    <div className="mt-5">Education</div>
+                  )}
                   {activeTab === "tab3" && (
                     <div className="w-auto h-60 mt-5 space-y-2 overflow-y-auto lg:w-72">
                       <ExhibitionItem
@@ -276,7 +265,7 @@ const Painting = () => {
   );
 };
 
-export default Painting;
+export default ArtistProfilePage;
 
 // eslint-disable-next-line react/prop-types
 export const ExhibitionItem = ({ exhibitionName, year }) => {
