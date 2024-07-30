@@ -2,6 +2,7 @@ import { call, put, takeEvery } from "redux-saga/effects";
 import { toast } from "react-toastify";
 import {
   createArtistAction,
+  getAllArtByArtistAction,
   getArtistProfileByIdAction,
   updateArtistImagesAction,
   updateArtistProfileAction,
@@ -9,6 +10,7 @@ import {
 import {
   setArtistDetails,
   setArtistImageUploadLoading,
+  setGetAllArtByArtistSaga,
 } from "../redux/app/artist/artist-slice";
 
 export function* createArtistSaga(action) {
@@ -72,9 +74,22 @@ export function* getArtistProfileByIdSaga(action) {
   }
 }
 
+export function* getAllArtByArtistSaga(action) {
+  try {
+    const response = yield call(getAllArtByArtistAction, action.payload);
+    console.log("getAllArtByArtistSaga====>", response?.data);
+    if (response?.status === 200) {
+      yield put(setGetAllArtByArtistSaga({ getAllArtByArtistSaga: response?.data?.data }));
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 export function* watchAsyncArtistSaga() {
   yield takeEvery("CREATE_ARTIST", createArtistSaga);
   yield takeEvery("UPDATE_ARTIST_PROFILE", updateArtistProfileSaga);
   yield takeEvery("UPDATE_ARTIST_IMAGE", updateArtistImageSaga);
   yield takeEvery("GET_ARTIST_PROFILE_BY_ID", getArtistProfileByIdSaga);
+  yield takeEvery("GET_ALL_ART_BY_ARTIST", getAllArtByArtistSaga);
 }

@@ -52,3 +52,16 @@ export const getArtistProfileByIdAction = async (payload) => {
     console.log(error);
   }
 };
+
+
+export const getAllArtByArtistAction = async (payload) => {
+  try {
+    const response = await axios.get(
+      `${VITE_BASE_URL}/artist/getAllArtByArtistId?ArtistId=${payload.artistId}`
+    );
+
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+};
