@@ -194,7 +194,7 @@ const Painting = () => {
           />
         </div>
         <div className="mt-10 lg:flex">
-          <div className="w-1/4 rounded-lg rounded-br-xl px-10">
+          <div className="w-1/5 rounded-lg rounded-br-xl px-10">
             <h2>Category</h2>
             <div className="w-full bg-gray-50 border border-gray-200 backdrop-blur-lg rounded-md mt-6 px-3 py-2 text-xl text-center">
               Paintings

@@ -13,7 +13,15 @@ const ExpandableSections = () => {
 
   const sections = [
     { id: 1, title: 'About The Artwork', content: 'Soft colors, texture and muted tones make this painting very soothing and meditative.', moreContent: ' Painted with acrylics on canvas also using collage and acrylic paint pen. The sides are painted white and it is wired and ready to hang. Protected with a clear/satin varnish that accentuates the beauty and depth of this piece.' },
-    { id: 2, title: 'Details and Dimentions', content: 'Content for section 2.', moreContent: ' More content for section 2.' },
+    { id: 2, title: 'Details and Dimentions', content: [
+      'Painting:Oil on Canvas',
+'Original:One-of-a-kind Artwork',
+'Size:24 W x 18 H x 0.6 D in',
+'Frame:Not Framed',
+'Ready to Hang:Yes',
+'Packaging:Ships in a Box'
+], 
+moreContent: ' More content for section 2.' },
     { id: 3, title: 'Shipping and Returns', content: 'Content for section 3.', moreContent: ' More content for section 3.' },
   ];
 
