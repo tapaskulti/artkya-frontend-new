@@ -32,7 +32,10 @@ const Header = () => {
                 <>
                   <InnerMenuComponent
                     name={"View Artist Profile"}
-                    onClick={() => {}}
+                    onClick={() => {
+                      navigate(`/ArtistProfilePage/${authUser?._id}`);
+                      dispatch(setHeaderMenuOpen({ headerMenuOpen: false }));
+                    }}
                   />
                 </>
               ) : (
