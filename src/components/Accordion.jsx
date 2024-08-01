@@ -64,7 +64,7 @@ const Accordion = ({ element, onCheckChange, name }) => {
                     value={singleElement}
                     onChange={onCheckChange}
                   ></input>
-                  <div className="my-0.5">{singleElement}</div>
+                  <div className="my-0.5 cursor-pointer">{singleElement}</div>
                 </div>
               </div>
             );

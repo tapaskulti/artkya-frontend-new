@@ -32,7 +32,10 @@ const Header = () => {
                 <>
                   <InnerMenuComponent
                     name={"View Artist Profile"}
-                    onClick={() => {}}
+                    onClick={() => {
+                      navigate(`/ArtistProfilePage/${authUser?._id}`);
+                      dispatch(setHeaderMenuOpen({ headerMenuOpen: false }));
+                    }}
                   />
                 </>
               ) : (
@@ -176,7 +179,7 @@ const Header = () => {
             }}
           ></div>
         </div>
-        <div className="bg-slate-50">
+        <div className="bg-slate-100 shadow-md">
           <div className="flex items-center justify-between py-6 mx-5 md:mx-10 md:flex md:justify-between hover:text-primary">
             <div className="md:hidden">
               <FontAwesomeIcon
