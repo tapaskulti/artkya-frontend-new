@@ -153,8 +153,39 @@ const ArtDetailPage = () => {
             <h2 className="pl-32 text-xl">More From Richard Kattman</h2>
             <div>
               <ProductCarousel />
-              <TextAccordion />
             </div>
+            <div className="max-w-md mx-auto p-4">
+      <TextAccordion
+        title="Section 1"
+        content={
+          <div>
+            <p>This is the first line of content for section 1.</p>
+            <p>This is the second line of content for section 1.</p>
+            <p>This is the third line of content for section 1.</p>
+          </div>
+        }
+      />
+      <TextAccordion
+        title="Section 2"
+        content={
+          <div>
+            <p>This is the first line of content for section 2.</p>
+            <p>This is the second line of content for section 2.</p>
+            <p>This is the third line of content for section 2.</p>
+          </div>
+        }
+      />
+      <TextAccordion
+        title="Section 3"
+        content={
+          <div>
+            <p>This is the first line of content for section 3.</p>
+            <p>This is the second line of content for section 3.</p>
+            <p>This is the third line of content for section 3.</p>
+          </div>
+        }
+      />
+    </div>
           </div>
         </div>
       </div>
