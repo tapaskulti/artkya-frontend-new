@@ -21,11 +21,11 @@ RUN npm run build
 # Production Stage
 FROM nginx:alpine
 
-# Copy the built files from the build stage
-COPY --from=artkyaimage /app/build /usr/share/nginx/html
-
 # Copy custom nginx configuration file
 COPY config/nginx.conf /etc/nginx/conf.d/default.conf
+
+# Copy the built files from the build stage
+COPY --from=artkyaimage /app/build /usr/share/nginx/html
 
 # Expose the port on which Nginx is running
 EXPOSE 80
