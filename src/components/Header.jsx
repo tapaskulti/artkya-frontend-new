@@ -7,15 +7,153 @@ import { faOpencart } from "@fortawesome/free-brands-svg-icons";
 import { AiOutlineUser } from "react-icons/ai";
 import { CiHeart } from "react-icons/ci";
 import { BsCart3 } from "react-icons/bs";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { InnerMenuComponent } from "./Menu";
+import {
+  setCreateArtistAcc,
+  setHeaderMenuOpen,
+} from "../redux/app/art/artSlice";
+import Modal from "./Modal";
 
 const Header = () => {
-  const { token } = useSelector((state) => state.auth);
+  const { token, authUser } = useSelector((state) => state.auth);
+  const { headerMenuOpen, createArtistAcc } = useSelector((state) => state.art);
   const [dropDownOpen, setdropDownOpen] = useState(false);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   return (
     <>
+      {headerMenuOpen && (
+        <>
+          <div className="absolute right-1 top-[70px] w-56 h-80 bg-white z-20">
+            <div className="border-b">
+              {authUser?.isArtist ? (
+                <>
+                  <InnerMenuComponent
+                    name={"View Artist Profile"}
+                    onClick={() => {
+                      navigate(`/ArtistProfilePage/${authUser?._id}`);
+                      dispatch(setHeaderMenuOpen({ headerMenuOpen: false }));
+                    }}
+                  />
+                </>
+              ) : (
+                <>
+                  <InnerMenuComponent
+                    name={"Create Artist Account"}
+                    onClick={() => {
+                      dispatch(setCreateArtistAcc({ createArtistAcc: true }));
+                      dispatch(setHeaderMenuOpen({ headerMenuOpen: false }));
+                    }}
+                  />
+                </>
+              )}
+            </div>
+            <div className="border-b">
+              <InnerMenuComponent
+                name={"View Profile"}
+                onClick={() => {
+                  // navigate("/Accounts");
+                }}
+              />
+              <InnerMenuComponent
+                name={"Favourites"}
+                onClick={() => {
+                  navigate("/favoutires");
+                  dispatch(setHeaderMenuOpen({ headerMenuOpen: false }));
+                }}
+              />
+              <InnerMenuComponent
+                name={"Collections"}
+                onClick={() => {
+                  // navigate("/Accounts");
+                }}
+              />
+              <InnerMenuComponent
+                name={"Orders"}
+                onClick={() => {
+                  // navigate("/Accounts");
+                }}
+              />
+              <InnerMenuComponent
+                name={"Offers"}
+                onClick={() => {
+                  // navigate("/Accounts");
+                }}
+              />
+              <InnerMenuComponent
+                name={"Account"}
+                onClick={() => {
+                  navigate("/Accounts");
+                  dispatch(setHeaderMenuOpen({ headerMenuOpen: false }));
+                }}
+              />
+            </div>
+
+            <div>
+              <InnerMenuComponent
+                name={"Logout"}
+                onClick={() => {
+                  dispatch({
+                    type: "LOGOUT_SAGA",
+                    payload: {
+                      email: authUser?.email,
+                      body: {
+                        navigate: navigate,
+                      },
+                    },
+                  });
+                  dispatch(setHeaderMenuOpen({ headerMenuOpen: false }));
+                }}
+              />
+            </div>
+          </div>
+        </>
+      )}
+
+      {createArtistAcc && (
+        <>
+          <Modal
+            open={createArtistAcc}
+            onClose={() => {
+              dispatch(setCreateArtistAcc({ createArtistAcc: false }));
+            }}
+            title={"Create an artist account ?"}
+            headerColour={"bg-blue-200"}
+            headertextColour={"text-white"}
+            buttonTwo={"Continue"}
+            buttonTwoClick={() => {
+              dispatch({
+                type: "CREATE_ARTIST",
+                payload: {
+                  body: {
+                    userId: authUser?._id,
+                    isArtist: true,
+                  },
+                },
+              });
+            }}
+            buttonOne={"Cancel"}
+            buttonOneClick={() => {
+              dispatch(setCreateArtistAcc({ createArtistAcc: false }));
+              dispatch(setHeaderMenuOpen({ headerMenuOpen: false }));
+            }}
+            modalWidth={"w-[400px]"}
+          >
+            <div className="flex flex-col items-center text-xl py-2 font-semibold">
+              <div>{`Are you Sure You Want to`}</div>
+              <div>{`create an artist account ?`}</div>
+            </div>
+            <div className="">
+              {`This action will create an "Artist" which will give you the
+              ability to upload and sell art once you complete your verification
+              process.This action cannot be reversed`}
+            </div>
+          </Modal>
+        </>
+      )}
+
       <div className="items-center w-full scroll ">
         <div className={`${dropDownOpen ? "visible" : "hidden"}`}>
           <div>
@@ -41,7 +179,7 @@ const Header = () => {
             }}
           ></div>
         </div>
-        <div className="bg-slate-50">
+        <div className="bg-slate-100 shadow-md">
           <div className="flex items-center justify-between py-6 mx-5 md:mx-10 md:flex md:justify-between hover:text-primary">
             <div className="md:hidden">
               <FontAwesomeIcon
@@ -127,9 +265,13 @@ const Header = () => {
                     <li
                       className="hover:text-amber-800 "
                       onClick={() => {
-                        navigate("/Accounts");
+                        // navigate("/Accounts");
+                        dispatch(
+                          setHeaderMenuOpen({ headerMenuOpen: !headerMenuOpen })
+                        );
                       }}
                     >
+                      {/* <MenuDefault buttonIcon={<AiOutlineUser  /> }/> */}
                       <AiOutlineUser className="w-5 h-6" />
                     </li>
                   </>

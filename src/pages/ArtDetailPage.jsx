@@ -9,12 +9,24 @@ import Select from "react-select";
 import { TiTick } from "react-icons/ti";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+// import Carousel from "react-multi-carousel";
+import "react-multi-carousel/lib/styles.css";
 // import tn01 from "../assets/tn01.jpg";
+// import Art from "../assets/img4.jpg";
+import ProductCarousel from "../components/ProductCarousel";
+import TextAccordion from "../components/TextAccordion";
+
 
 const ArtDetailPage = () => {
   let { id } = useParams();
   const dispatch = useDispatch();
   // console.log("artId======>",id)
+
+  // const [isExpanded, setIsExpanded] = useState(false);
+
+  // const toggleExpansion = () => {
+  //   setIsExpanded(!isExpanded);
+  // };
 
   useEffect(() => {
     dispatch({
@@ -133,6 +145,16 @@ const ArtDetailPage = () => {
             </div>
 
            
+          </div>
+          
+        </div>
+        <div className="mt-16">
+          <div>
+            <h2 className="pl-32 text-xl">More From Richard Kattman</h2>
+            <div>
+              <ProductCarousel />
+              <TextAccordion />
+            </div>
           </div>
         </div>
       </div>

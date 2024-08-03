@@ -4,6 +4,8 @@ const initialState = {
   isLoading: false,
   isUploading: false,
   isFilteredDataLoading: false,
+  headerMenuOpen: false,
+  createArtistAcc: false,
   allArt: [],
   filteredArt: [],
   artDetail: {},
@@ -22,6 +24,12 @@ const artSlice = createSlice({
     },
     setFilteredIsLoading(state, action) {
       state.isFilteredDataLoading = action.payload.isFilteredDataLoading;
+    },
+    setHeaderMenuOpen(state, action) {
+      state.headerMenuOpen = action.payload.headerMenuOpen;
+    },
+    setCreateArtistAcc(state, action) {
+      state.createArtistAcc = action.payload.createArtistAcc;
     },
     setAllArt(state, action) {
       state.allArt = action.payload.allArt;
@@ -42,5 +50,7 @@ export const {
   setIsLoading,
   setArtDetails,
   setIsUploading,
+  setHeaderMenuOpen,
+  setCreateArtistAcc
 } = artSlice.actions;
 export const artReducer = artSlice.reducer;
