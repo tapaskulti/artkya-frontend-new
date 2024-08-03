@@ -3,7 +3,7 @@ name: Deploy Artkya frontend on digital ocean
 on:
   push:
     branches:
-      - main
+      # - main
 
 jobs:
   build:
