@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   artistDetails: {},
   artistImageUploadLoading: false,
-  getAllArtByArtistSaga: [],
+  getAllArtByArtist: [],
 };
 
 const artistSlice = createSlice({
@@ -16,8 +16,8 @@ const artistSlice = createSlice({
     setArtistImageUploadLoading(state, action) {
       state.artistImageUploadLoading = action.payload.artistImageUploadLoading;
     },
-    setGetAllArtByArtistSaga(state, action) {
-      state.getAllArtByArtistSaga = action.payload.getAllArtByArtistSaga;
+    setGetAllArtByArtist(state, action) {
+      state.getAllArtByArtist = action.payload.getAllArtByArtist;
     },
   },
 });
@@ -25,6 +25,6 @@ const artistSlice = createSlice({
 export const {
   setArtistDetails,
   setArtistImageUploadLoading,
-  setGetAllArtByArtistSaga,
+  setGetAllArtByArtist,
 } = artistSlice.actions;
 export const artistReducer = artistSlice.reducer;
