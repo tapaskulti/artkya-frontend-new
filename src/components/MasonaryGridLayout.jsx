@@ -4,6 +4,7 @@ import { FaPlus, FaHeart, FaShoppingCart } from "react-icons/fa";
 import { useSelector } from "react-redux";
 
 const MasonaryGridLayout = ({ artDetails }) => {
+  const navigate = useNavigate()
   const { authUser } = useSelector((state) => state.auth);
   return (
     <div className="container mx-auto p-4 shadow-lg rounded-lg">
@@ -14,10 +15,10 @@ const MasonaryGridLayout = ({ artDetails }) => {
             className="mb-4 break-inside-avoid group shadow-lg rounded-lg overflow-hidden relative"
           >
             <div className="relative overflow-hidden rounded-t-lg">
-              <a href={`/artDetailPage/${singleArt._id}`}>
+              <a href={`/artDetailPage/${singleArt?._id}`}>
                 <img
-                  src={singleArt.thumbnail.secure_url}
-                  alt={singleArt.title || `Art ${index}`}
+                  src={singleArt?.thumbnail?.secure_url}
+                  alt={singleArt?.title || `Art ${index}`}
                   className="w-full object-cover transition-transform duration-[2000ms] ease-in-out transform group-hover:scale-125"
                 />
               </a>
@@ -48,7 +49,7 @@ const MasonaryGridLayout = ({ artDetails }) => {
                       payload: {
                         userId: authUser?._id,
                         artId: singleArt?._id,
-                        artPrice: singleArt?.price,
+                        artPrice: singleArt?.priceDetails?.price,
                         navigate,
                       },
                     });
@@ -64,7 +65,7 @@ const MasonaryGridLayout = ({ artDetails }) => {
                   {singleArt?.title}
                 </h2>
                 <p className="text-sm font-semibold text-gray-800">
-                  ${singleArt?.price}
+                  ${singleArt?.priceDetails?.price}
                 </p>
               </div>
               <p className="text-sm text-gray-600">
