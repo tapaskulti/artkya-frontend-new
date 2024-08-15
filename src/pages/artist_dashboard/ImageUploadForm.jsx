@@ -28,7 +28,8 @@ import {
   AccordionHeader,
   AccordionBody,
 } from "@material-tailwind/react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+
 const ImageUploadForm = ({
   currentStep,
   nextStep,
@@ -36,6 +37,8 @@ const ImageUploadForm = ({
   HandlecheckForNextBtnSubmit,
 }) => {
   const [step, setStep] = useState(1);
+  const { authUser } = useSelector((state) => state.auth)
+
 
   useEffect(() => {
     setStep(currentStep);
@@ -99,9 +102,10 @@ const ImageUploadForm = ({
   formData.append("price", sellingPrice);
   formData.append("offerPrice", offerPrice);
   formData.append("printOption", printOption);
+  formData.append("artist", authUser?._id);
 
-  console.log("images====>", images);
-  console.log("viewImages====>", viewImages);
+  // console.log("images====>", images);
+  // console.log("viewImages====>", viewImages);
 
   // console.log("title====>", title);
   // console.log("mediums====>", mediums);

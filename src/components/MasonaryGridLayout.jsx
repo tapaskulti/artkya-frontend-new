@@ -4,7 +4,7 @@ import { FaPlus, FaHeart, FaShoppingCart } from "react-icons/fa";
 import { useSelector } from "react-redux";
 
 const MasonaryGridLayout = ({ artDetails }) => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const { authUser } = useSelector((state) => state.auth);
   return (
     <div className="container mx-auto p-4 shadow-lg rounded-lg">
@@ -69,10 +69,16 @@ const MasonaryGridLayout = ({ artDetails }) => {
                 </p>
               </div>
               <p className="text-sm text-gray-600">
-                {singleArt?.artistName}, {singleArt?.artistCountry}
+                {`${
+                  singleArt?.artist?.firstName?singleArt?.artist?.firstName:""
+                } ${
+                  singleArt?.artist?.lastName?singleArt?.artist?.lastName:""
+                }`}
+                {/* , {singleArt?.artistCountry} */}
               </p>
               <p className="text-sm text-gray-600">
-                {singleArt.height} x {singleArt?.width} x {singleArt?.depth} cm
+                {singleArt.height} x {singleArt?.width} x {singleArt?.depth}{" "}
+                inch
               </p>
             </div>
           </div>
