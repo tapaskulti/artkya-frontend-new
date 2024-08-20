@@ -10,7 +10,8 @@ import {
 import {
   setArtistDetails,
   setArtistImageUploadLoading,
-  setGetAllArtByArtistSaga,
+  setGetAllArtByArtist,
+ 
 } from "../redux/app/artist/artist-slice";
 
 export function* createArtistSaga(action) {
@@ -79,7 +80,7 @@ export function* getAllArtByArtistSaga(action) {
     const response = yield call(getAllArtByArtistAction, action.payload);
     console.log("getAllArtByArtistSaga====>", response?.data);
     if (response?.status === 200) {
-      yield put(setGetAllArtByArtistSaga({ getAllArtByArtistSaga: response?.data?.data }));
+      yield put(setGetAllArtByArtist({ getAllArtByArtist: response?.data?.data }));
     }
   } catch (error) {
     console.log(error);

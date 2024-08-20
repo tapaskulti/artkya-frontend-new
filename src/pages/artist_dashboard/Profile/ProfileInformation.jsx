@@ -1,22 +1,22 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Textarea, Input, Button } from "@material-tailwind/react";
 import { useDispatch, useSelector } from "react-redux";
 
-
-
 const ProfileInformation = () => {
-  const {authUser} = useSelector((state)=>state.auth)
-  const dispatch = useDispatch()
+  const { authUser } = useSelector((state) => state.auth);
+  const { artistDetails } = useSelector((state) => state.artist);
+  const dispatch = useDispatch();
   const [formData, setFormData] = useState({
-    aboutMe: "",
-    education: "",
-    events: "",
-    exhibitions: "",
-    customUrl: "",
-    country: "",
-    state: "",
-    city: "",
+    aboutMe: artistDetails?.aboutMe,
+    education: artistDetails?.education,
+    events: artistDetails?.events,
+    exibition: artistDetails?.exibition,
+    customUrl: artistDetails?.customUrl,
+    country:artistDetails?.country,
+    state: artistDetails?.state,
+    city: artistDetails?.city,
   });
+
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -30,14 +30,14 @@ const ProfileInformation = () => {
     e.preventDefault();
     // Handle saving the form data here
     console.log(formData); // For demonstration, you can replace this with your save logic
-    
+
     dispatch({
-      type:"UPDATE_ARTIST_PROFILE",
-      payload:{
-        userId:authUser?._id,
-        body:formData
-      }
-    })
+      type: "UPDATE_ARTIST_PROFILE",
+      payload: {
+        artistId: authUser?._id,
+        body: formData,
+      },
+    });
   };
 
   return (
@@ -75,9 +75,9 @@ const ProfileInformation = () => {
           </div>
           <div className="form-group">
             <Textarea
-              label="Exhibitions"
-              name="exhibitions"
-              value={formData.exhibitions}
+              label="exibition"
+              name="exibition"
+              value={formData.exibition}
               onChange={handleChange}
               className="input  py-2 rounded-md border border-gray-300 focus:outline-none focus:border-blue-500"
             />
@@ -122,7 +122,9 @@ const ProfileInformation = () => {
               className="input  py-2 rounded-md border border-gray-300 focus:outline-none focus:border-blue-500"
             />
           </div>
-          <Button className=" py-3 text-base" onClick={handleSubmit}>Save</Button>
+          <Button className=" py-3 text-base" onClick={handleSubmit}>
+            Save
+          </Button>
           {/* <button type="submit" className="btn btn-primary" onClick={handleSubmit}>
             Save
           </button> */}
