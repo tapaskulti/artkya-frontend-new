@@ -7,15 +7,27 @@ import AddressManagement from "./Addresh/AddressManagement";
 import ProfileInformation from "./Profile/ProfileInformation"
 import Account from "./Account";
 import CuratorNote from "./CuratorNote";
+import { useDispatch, useSelector } from "react-redux";
 const ArtistMainPage = () => {
   const [activeTab, setActiveTab] = useState("Manage Artworks");
-
+  const { authUser } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
   const handleTabClick = (tabName) => {
     setActiveTab(tabName);
   };
   useEffect(() => {
     console.log("ArtistMainPage tabName------", activeTab);
   }, [activeTab]);
+  
+  useEffect(() => {
+    dispatch({
+      type: "GET_ARTIST_PROFILE_BY_ID",
+      payload: {
+        artistId: authUser?._id,
+      },
+    });
+  }, [authUser]);
+
   return (
     <>
       <div className="">
