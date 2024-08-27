@@ -9,7 +9,10 @@ const initialState = {
   allArt: [],
   filteredArt: [],
   artDetail: {},
-  artType:"originalArt"
+  artType:"originalArt",
+  searchInput:"",
+  sortCriteria:"",
+  searchCriteria:""
 };
 
 const artSlice = createSlice({

@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 
 
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 export const CustomSelect = ({
   options = [],

@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import Header from "../components/Header";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
@@ -21,6 +22,7 @@ import Select from "react-select";
 import { useNavigate } from "react-router-dom";
 import { setAllFilteredArt } from "../redux/app/art/artSlice";
 import MasonaryGridLayout from "../components/MasonaryGridLayout";
+import { CustomSelect, CustomSelectWithSearchSide } from "../components/Select";
 
 // import ArtItem from "../components/ArtItem";
 
@@ -321,20 +323,6 @@ const Painting = () => {
   const [sortCriteria, setSortCriteria] = useState("none");
   const [searchInput, setSearchInput] = useState("");
 
-  useEffect(() => {
-    if (
-      filterData?.style?.length === 0 ||
-      filterData?.subject?.length === 0 ||
-      filterData?.orientation?.length === 0 ||
-      filterData?.medium?.length === 0 ||
-      filterData?.material?.length === 0 ||
-      filterData?.artistcountry?.length === 0 ||
-      filterData?.featuredartist?.length === 0
-    ) {
-      dispatch(setAllFilteredArt({ filteredArt: [] }));
-    }
-  }, [filterData])
-
   const handleFilterData = (e) => {
     const { value, checked, name } = e.target;
     const newFilterData = { ...filterData };
@@ -376,63 +364,30 @@ const Painting = () => {
     });
   }, [filterData]);
 
-  useEffect(() => {
-    if (searchCriteria === "Art") {
-      dispatch({
-        type: "SEARCH_BY_ART_TITLE",
-        payload: searchInput,
-      });
-    } else {
-      dispatch({
-        type: "SEARCH_BY_ARTIST",
-        payload: searchInput,
-      });
-    }
-  }, [searchInput, searchCriteria]);
-
-  console.log("sortCriteria==>", sortCriteria);
-
-  useEffect(() => {
-    dispatch({
-      type: "ALL_ART",
-      payload: { sortCriteria, searchCriteria, searchInput },
-    });
-  }, [sortCriteria, searchCriteria, searchInput, dispatch]);
-
   const options = [
-    // { value: "recomended", label: "Recomended" },
     { value: "newToOld", label: "New to Old" },
     { value: "priceLowHigh", label: "Price: Low to High" },
     { value: "priceHighLow", label: "Price: High to Low" },
   ];
 
+  const categories = ["Art", "Artist"];
   return (
     <>
       <div className="static">
         <Header />
         <div className="flex justify-end px-10 py-2 border-b border-slate-200 focus:outline-none focus:border-slate-600">
           <div className="flex items-center">
-            <Select
-              options={[
-                { value: "art", label: "Art" },
-                { value: "artist", label: "Artist" },
-              ]}
-              onChange={(e) => {
-                if (e.label === "Art") {
-                  setSearchCriteria("Art");
-                } else {
-                  setSearchCriteria("Artist");
-                }
-              }}
-              className="rounded-none absolute -right-6 w-32 px-3 py-1.5 focus:outline-none focus:border-none border-gray-400"
-            />
-            <input
-              type="text"
-              className="relative border border-gray-400 border-l-transparent border-slate-600 py-1.5 focus:outline-none focus:border-slate-600"
-              value={searchInput}
-              onChange={(e) => {
-                setSearchInput(e.target.value);
-              }}
+            <CustomSelectWithSearchSide
+              categories={categories}
+              placeholder="Select"
+              searchPlaceholder="Search by Art/Artist"
+              className="w-full max-w-md"
+              labelClassName="text-gray-700 font-semibold"
+              selectClassName="text-gray-700 border-gray-300 w-28"
+              searchInputClassName="text-gray-700 border-gray-300"
+              itemClassName="text-gray-700"
+              selectedItemClassName="bg-blue-500 text-white"
+              // onOptionSelect={handleOptionSelect}
             />
           </div>
         </div>
@@ -440,20 +395,14 @@ const Painting = () => {
           <h2 className="text-slate-900 text-3xl font-thin">
             Original Paintings For Sale
           </h2>
-          <Select
+          <CustomSelect
             options={options}
-            className="w-52 bg-white py-1.5 focus:outline-none focus:border-none"
-            onChange={(e) => {
-              if (e.label === "New to Old") {
-                setSortCriteria("newToOld");
-              } else if (e.label === "Price: Low to High") {
-                setSortCriteria("incresingPrice");
-              } else if (e.label === "Price: High to Low") {
-                setSortCriteria("decreasingPrice");
-              } else {
-                setSortCriteria("none");
-              }
-            }}
+            placeholder="Select"
+            className="w-52 max-w-xs"
+            labelClassName="text-gray-700 font-semibold"
+            dropdownClassName="text-gray-700 border-gray-300"
+            itemClassName="text-gray-700"
+            selectedItemClassName="bg-blue-500 text-white"
           />
         </div>
         <div className="mt-10 lg:flex">
@@ -472,28 +421,6 @@ const Painting = () => {
                   handleFilterData(e);
                 }}
               />
-
-              {/* {styleElement.slice(0, itemsToShow).map((c, ...rest) => (
-                <Accordion key={c.title} name={c.title} rest={rest} />
-              ))}
-              {styleElement.length > 3 && itemsToShow < 6 ? (
-                <button onClick={showmore}>Show More</button>
-              ) : itemsToShow > 3 && styleElement.length > 5 ? (
-                <button onClick={showless}>Show Less</button>
-              ) : (
-                ""
-              )} */}
-
-              {/* {!toggleHide ? (
-                <>
-                  <div>{newstyleElement}</div>
-                </>
-              ) : (
-                <>
-                  <div>{styleElement}</div>
-                </>
-              )} */}
-              {/* <button onClick={() => handleClick()}>{buttonText}</button> */}
             </div>
             <div className="px-4 bg-white border-t border-b border-slate-200 rounded-lg mt-2.5">
               <Accordion
@@ -560,8 +487,10 @@ const Painting = () => {
             </div>
           </div>
           <div className="mt-10 lg:flex">
-          {/* filteredArt.length !== 0 ? filteredArt : allArt */}
-           <MasonaryGridLayout artDetails={filteredArt.length !== 0 ? filteredArt : allArt}/>
+            {/* filteredArt.length !== 0 ? filteredArt : allArt */}
+            <MasonaryGridLayout
+              artDetails={filteredArt.length !== 0 ? filteredArt : allArt}
+            />
           </div>
         </div>
       </div>
@@ -581,7 +510,6 @@ export const ExhibitionItem = ({ exhibitionName, year }) => {
     </div>
   );
 };
-
 
 export const ArtDetails = ({
   title,
@@ -615,7 +543,3 @@ export const ArtDetails = ({
     </div>
   );
 };
-
-
-
-
