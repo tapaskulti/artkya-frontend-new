@@ -138,26 +138,32 @@ export function* getArtDetailSaga(action) {
   }
 }
 
-// export function* updateArtSaga(action) {
-//   console.log(action.payload, "saga");
-//   const response = yield call(updateArtAction, action.payload);
-
-//   if (response.status === 200) {
-//     yield put({
-//       type: "ALL_ART",
-//     });
-//   }
-// }
-
+export function* newFilterArtSaga(action) {
+  yield put(
+    setFilteredIsLoading({
+      isFilteredDataLoading: true,
+    })
+  )
+  try {
+    const response = yield call(FiltersAction, action.payload);
+    if (response?.status === 200) {
+      yield put(
+        setFilteredIsLoading({
+          isuploading: false,
+        })
+      );
+      yield put(setAllFilteredArt({ filteredArt: response?.data?.data }));
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}
 
 export function* watchAsyncArtSaga() {
   yield takeEvery("CREATE_POST", createPostSaga);
   yield takeEvery("CREATE_DRAFT", createDraftSaga);
   yield takeEvery("FILTER_ART", filterArtSaga);
+  yield takeEvery("NEW_FILTER_ART", newFilterArtSaga);
   yield takeEvery("ALL_ART", getAllArtSaga);
   yield takeEvery("ART_DETAIL", getArtDetailSaga);
-  // yield takeEvery("UPDATE_ART", updateArtSaga);
-  // yield takeEvery("DELETE_ART", deleteArtSaga);
-  // yield takeEvery("PAYMENT", paymentSaga);
-  // yield takeEvery("ORIGINAL_ART_MAIL", originalArtMailSaga);
 }

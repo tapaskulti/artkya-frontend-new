@@ -1,13 +1,10 @@
 import Header from "../components/Header";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useRef, useState } from "react";
-import { FaHeart, FaPencilAlt } from "react-icons/fa";
 import { Spinner } from "@material-tailwind/react";
 import { faPaintBrush } from "@fortawesome/free-solid-svg-icons";
 import { useDispatch, useSelector } from "react-redux";
-import {  FaPlus } from "react-icons/fa";
 import { Link, useParams,useNavigate } from "react-router-dom";
-import { FaCartShopping } from "react-icons/fa6";
 import MasonaryGridLayout from "../components/MasonaryGridLayout";
 
 // import ArtItem from "../components/ArtItem";
