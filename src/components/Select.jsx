@@ -102,22 +102,16 @@ export const CustomSelectWithSearchSide = ({
   const [isOpen, setIsOpen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
-  const [filteredOptions, setFilteredOptions] = useState([]);
   const ref = useRef();
 
-  useEffect(() => {
-    if (selectedCategory) {
-      setFilteredOptions(
-        options
-          .filter(option => option.category === selectedCategory)
-          .filter(option =>
-            option.label.toLowerCase().includes(searchTerm.toLowerCase())
-          )
-      );
-    } else {
-      setFilteredOptions([]);
-    }
-  }, [selectedCategory, searchTerm, options]);
+  // Filter options based on selected category and search term
+  const filteredOptions = selectedCategory
+    ? options
+        .filter(option => option.category === selectedCategory)
+        .filter(option =>
+          option.label.toLowerCase().includes(searchTerm.toLowerCase())
+        )
+    : [];
 
   useEffect(() => {
     const handleClickOutside = (event) => {
