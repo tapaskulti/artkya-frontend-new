@@ -319,9 +319,9 @@ const Painting = () => {
     artistcountry: [],
     featuredartist: [],
   });
-  const [searchCriteria, setSearchCriteria] = useState("none");
+  // const [searchCriteria, setSearchCriteria] = useState("none");
   const [sortCriteria, setSortCriteria] = useState("none");
-  const [searchInput, setSearchInput] = useState("");
+  // const [searchInput, setSearchInput] = useState("");
 
   const handleFilterData = (e) => {
     const { value, checked, name } = e.target;
@@ -342,7 +342,7 @@ const Painting = () => {
     setFilterData(newFilterData);
   };
 
-  // console.log("filterData=============>", filterData);
+  console.log("filterData=============>", filterData);
 
   useEffect(() => {
     const filterDataPayload = {
@@ -356,7 +356,7 @@ const Painting = () => {
     };
 
     dispatch({
-      type: "FILTER_ART",
+      type: "NEW_FILTER_ART",
       payload: {
         sortingCriteria: sortCriteria,
         body: filterDataPayload,

@@ -1,6 +1,7 @@
 import { call, put, takeEvery } from "redux-saga/effects";
 import {
   FiltersAction,
+  NewFiltersAction,
   createArtAction,
   createDraftAction,
   getAllArtAction,
@@ -11,11 +12,11 @@ import {
   setAllArt,
   setAllFilteredArt,
   setArtDetails,
+  setArtNotFound,
   setFilteredIsLoading,
   setIsLoading,
   setIsUploading,
 } from "../redux/app/art/artSlice";
-
 
 export function* createPostSaga(action) {
   try {
@@ -110,7 +111,6 @@ export function* getAllArtSaga(action) {
   }
 }
 
-
 export function* getArtDetailSaga(action) {
   try {
     yield put(
@@ -143,9 +143,12 @@ export function* newFilterArtSaga(action) {
     setFilteredIsLoading({
       isFilteredDataLoading: true,
     })
-  )
+  );
   try {
-    const response = yield call(FiltersAction, action.payload);
+    const response = yield call(NewFiltersAction, action.payload);
+
+    console.log("newFilterArtSaga res", newFilterArtSaga);
+
     if (response?.status === 200) {
       yield put(
         setFilteredIsLoading({
@@ -156,6 +159,13 @@ export function* newFilterArtSaga(action) {
     }
   } catch (error) {
     console.log(error);
+    if (error.response?.data?.message === "No art found") {
+      yield put(
+        setArtNotFound({
+          artNotFound: true,
+        })
+      );
+    }
   }
 }
 

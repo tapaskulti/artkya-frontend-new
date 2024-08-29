@@ -5,11 +5,10 @@ export const createArtAction = async (payload) => {
   try {
     const response = await axios.post(
       `${VITE_BASE_URL}/art/createArt`,
-      payload.body     
+      payload.body
     );
-    console.log(response)
+    console.log(response);
     return response;
-    
   } catch (error) {
     console.log(error);
   }
@@ -104,18 +103,11 @@ export const paymentAction = async (payload) => {
   return response;
 };
 
-
-
 export const NewFiltersAction = async (payload) => {
-  try {
-    const response = await axios.post(
-      `${VITE_BASE_URL}/art/newFilterArt`,
-      payload.body
-    );
-    console.log("FiltersAction new resposnse", response);
-    return response;
-  } catch (error) {
-    console.log(error);
-  }
+  const response = await axios.post(
+    `${VITE_BASE_URL}/art/newFilterArt`,
+    payload.body
+  );
+  console.log("FiltersAction new resposnse", response);
+  return response;
 };
-

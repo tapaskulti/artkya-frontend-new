@@ -12,7 +12,8 @@ const initialState = {
   artType:"originalArt",
   searchInput:"",
   sortCriteria:"",
-  searchCriteria:""
+  searchCriteria:"",
+  artNotFound:true
 };
 
 const artSlice = createSlice({
@@ -43,6 +44,19 @@ const artSlice = createSlice({
     setArtDetails(state, action) {
       state.artDetail = action.payload.artDetail;
     },
+    setArtNotFound(state, action) {
+      state.artNotFound = action.payload.artNotFound;
+    },
+    setSearchInput(state, action) {
+      state.searchInput = action.payload.searchInput;
+    },
+    setSortCriteria(state, action) {
+      state.sortCriteria = action.payload.sortCriteria;
+    },
+    setSearchCriteria(state, action) {
+      state.searchCriteria = action.payload.searchCriteria;
+    },
+  
   },
 });
 
@@ -54,6 +68,10 @@ export const {
   setArtDetails,
   setIsUploading,
   setHeaderMenuOpen,
-  setCreateArtistAcc
+  setCreateArtistAcc,
+  setArtNotFound,
+  setSearchInput,
+  setSortCriteria,
+  setSearchCriteria,
 } = artSlice.actions;
 export const artReducer = artSlice.reducer;
