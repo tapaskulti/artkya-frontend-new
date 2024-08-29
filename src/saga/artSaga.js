@@ -156,6 +156,11 @@ export function* newFilterArtSaga(action) {
         })
       );
       yield put(setAllArt({ allArt: response?.data?.data }));
+      yield put(
+        setArtNotFound({
+          artNotFound: false,
+        })
+      );
     }
   } catch (error) {
     console.log(error);

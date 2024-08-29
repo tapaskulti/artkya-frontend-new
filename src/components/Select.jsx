@@ -1,7 +1,8 @@
 /* eslint-disable react/prop-types */
-
-
 import { useEffect, useRef, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { setSearchCriteria, setSearchInput } from '../redux/app/art/artSlice';
+
 
 export const CustomSelect = ({
   options = [],
@@ -80,15 +81,10 @@ export const CustomSelect = ({
 };
 
 
-
-
-
 export const CustomSelectWithSearchSide = ({
   categories = [],
-  options = [],
-  label,
   placeholder = 'Select a category',
-  searchPlaceholder = 'Search...',
+  label,
   className = '',
   labelClassName = '',
   selectClassName = '',
@@ -96,55 +92,45 @@ export const CustomSelectWithSearchSide = ({
   dropdownClassName = '',
   itemClassName = '',
   selectedItemClassName = '',
-  onOptionSelect = () => {},
   ...props
 }) => {
+  const dispatch = useDispatch();
   const [isOpen, setIsOpen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
-  const ref = useRef();
-
-  // Filter options based on selected category and search term
-  const filteredOptions = selectedCategory
-    ? options
-        .filter(option => option.category === selectedCategory)
-        .filter(option =>
-          option.label.toLowerCase().includes(searchTerm.toLowerCase())
-        )
-    : [];
+  const [searchPlaceholder, setSearchPlaceholder] = useState('Search by Art/Artist');
 
   useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (ref.current && !ref.current.contains(event.target)) {
-        setIsOpen(false);
-      }
-    };
-
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, []);
+    // Update the search placeholder based on selected category
+    if (selectedCategory === 'Art') {
+      setSearchPlaceholder('Search by Art');
+    } else if (selectedCategory === 'Artist') {
+      setSearchPlaceholder('Search by Artist');
+    } else {
+      setSearchPlaceholder('Search by Art/Artist');
+    }
+  }, [selectedCategory]);
 
   const handleCategorySelect = (category) => {
     setSelectedCategory(category);
-    setSearchTerm('');
+    dispatch(setSearchCriteria({ searchCriteria: category })); // Update searchCriteria in Redux
     setIsOpen(false);
   };
 
-  const handleOptionSelect = (option) => {
-    onOptionSelect(option);
+  const handleSearchInputChange = (e) => {
+    setSearchTerm(e.target.value);
+    dispatch(setSearchInput({ searchInput: e.target.value })); // Update searchInput in Redux
   };
 
   return (
-    <div className={`relative ${className}`} ref={ref}>
+    <div className={`relative ${className}`} {...props}>
       {label && <label className={`mb-2 block ${labelClassName}`}>{label}</label>}
-      <div className="flex flex-col md:flex-row items-center md:space-x-2 space-y-2 md:space-y-0">
+
+      <div className="flex items-center space-x-2">
         {/* Category Selection */}
         <div
-          className={`flex-grow md:flex-grow-0 border px-4 py-2 rounded-md shadow-sm cursor-pointer flex justify-between items-center ${selectClassName}`}
+          className={`border px-4 py-2 rounded-md shadow-sm cursor-pointer flex justify-between items-center ${selectClassName}`}
           onClick={() => setIsOpen(!isOpen)}
-          {...props}
         >
           <span>{selectedCategory || placeholder}</span>
           <svg
@@ -163,15 +149,14 @@ export const CustomSelectWithSearchSide = ({
           type="text"
           placeholder={searchPlaceholder}
           value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          className={`flex-grow border px-4 py-2 rounded-md shadow-sm focus:ring-2 focus:ring-blue-500 outline-none ${searchInputClassName}`}
-          disabled={!selectedCategory}
+          onChange={handleSearchInputChange}
+          className={`border px-4 py-2 rounded-md shadow-sm focus:ring-2 focus:ring-blue-500 outline-none ${searchInputClassName}`}
         />
       </div>
 
       {/* Category Dropdown */}
       {isOpen && (
-        <ul className={`absolute z-10 mt-2 bg-white border rounded-md shadow-lg max-h-60 overflow-y-auto w-full md:w-auto ${dropdownClassName}`}>
+        <ul className={`absolute z-10 mt-2 bg-white border rounded-md shadow-lg max-h-60 overflow-y-auto w-full ${dropdownClassName}`}>
           {categories.map((category, index) => (
             <li
               key={index}
@@ -181,25 +166,6 @@ export const CustomSelectWithSearchSide = ({
               {category}
             </li>
           ))}
-        </ul>
-      )}
-
-      {/* Filtered Options */}
-      {selectedCategory && searchTerm && (
-        <ul className={`mt-2 bg-white border rounded-md shadow-lg max-h-60 overflow-y-auto ${dropdownClassName}`}>
-          {filteredOptions.length > 0 ? (
-            filteredOptions.map((option) => (
-              <li
-                key={option.value}
-                onClick={() => handleOptionSelect(option)}
-                className={`px-4 py-2 cursor-pointer hover:bg-gray-200 ${itemClassName} ${option.label === searchTerm ? selectedItemClassName : ''}`}
-              >
-                {option.label}
-              </li>
-            ))
-          ) : (
-            <li className="px-4 py-2 text-gray-500">No results found</li>
-          )}
         </ul>
       )}
     </div>

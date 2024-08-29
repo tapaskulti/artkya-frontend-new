@@ -404,17 +404,13 @@ const Painting = () => {
         <Header />
         <div className="flex justify-end px-10 py-2 border-b border-slate-200 focus:outline-none focus:border-slate-600">
           <div className="flex items-center">
-            <CustomSelectWithSearchSide              
+            <CustomSelectWithSearchSide
               categories={categories}
               placeholder="Select"
-              searchPlaceholder="Search by Art/Artist"
               className="w-full max-w-md"
               labelClassName="text-gray-700 font-semibold"
               selectClassName="text-gray-700 border-gray-300 w-28"
               searchInputClassName="text-gray-700 border-gray-300"
-              itemClassName="text-gray-700"
-              selectedItemClassName="bg-blue-500 text-white"
-             
             />
           </div>
         </div>
@@ -424,9 +420,9 @@ const Painting = () => {
           </h2>
           <CustomSelect
             value={sortCriteria}
-            onChange={(e)=>{
-              console.log("on change painting===>",e)
-              handleSortCriteriaChange(e)
+            onChange={(e) => {
+              console.log("on change painting===>", e);
+              handleSortCriteriaChange(e);
             }}
             options={options}
             placeholder="Select"
@@ -519,11 +515,16 @@ const Painting = () => {
             </div>
           </div>
           <div className="mt-10 lg:flex">
-            {/* filteredArt.length !== 0 ? filteredArt : allArt */}
-            <MasonaryGridLayout
-              // artDetails={filteredArt.length !== 0 ? filteredArt : allArt}
-              artDetails={allArt}
-            />
+            {artNotFound ? (
+              <>Art not found</>
+            ) : (
+              <>
+                <MasonaryGridLayout
+                  // artDetails={filteredArt.length !== 0 ? filteredArt : allArt}
+                  artDetails={allArt}
+                />
+              </>
+            )}
           </div>
         </div>
       </div>
