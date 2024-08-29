@@ -20,7 +20,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import Select from "react-select";
 import { useNavigate } from "react-router-dom";
-import { setAllFilteredArt } from "../redux/app/art/artSlice";
+import { setAllFilteredArt, setSortCriteria } from "../redux/app/art/artSlice";
 import MasonaryGridLayout from "../components/MasonaryGridLayout";
 import { CustomSelect, CustomSelectWithSearchSide } from "../components/Select";
 
@@ -309,7 +309,15 @@ import { CustomSelect, CustomSelectWithSearchSide } from "../components/Select";
 
 const Painting = () => {
   const dispatch = useDispatch();
-  const { filteredArt, allArt } = useSelector((state) => state.art);
+  const {
+    filteredArt,
+    allArt,
+    artNotFound,
+    searchInput,
+    sortCriteria,
+    searchCriteria,
+    isFilteredDataLoading,
+  } = useSelector((state) => state.art);
   const [filterData, setFilterData] = useState({
     style: [],
     subject: [],
@@ -320,7 +328,7 @@ const Painting = () => {
     featuredartist: [],
   });
   // const [searchCriteria, setSearchCriteria] = useState("none");
-  const [sortCriteria, setSortCriteria] = useState("none");
+  // const [sortCriteria, setSortCriteria] = useState("none");
   // const [searchInput, setSearchInput] = useState("");
 
   const handleFilterData = (e) => {
@@ -344,6 +352,19 @@ const Painting = () => {
 
   console.log("filterData=============>", filterData);
 
+  // Initial fetch to get all arts
+  useEffect(() => {
+    dispatch({
+      type: "NEW_FILTER_ART",
+      payload: {
+        sortingCriteria: sortCriteria,
+        searchCriteria: searchCriteria,
+        searchInput: searchInput,
+        body: {}, // Empty body to fetch all arts
+      },
+    });
+  }, [dispatch]);
+
   useEffect(() => {
     const filterDataPayload = {
       style: filterData?.style,
@@ -359,16 +380,22 @@ const Painting = () => {
       type: "NEW_FILTER_ART",
       payload: {
         sortingCriteria: sortCriteria,
+        searchCriteria: searchCriteria,
+        searchInput: searchInput,
         body: filterDataPayload,
       },
     });
-  }, [filterData]);
+  }, [filterData, sortCriteria, searchCriteria, searchInput, dispatch]);
 
   const options = [
     { value: "newToOld", label: "New to Old" },
     { value: "priceLowHigh", label: "Price: Low to High" },
     { value: "priceHighLow", label: "Price: High to Low" },
   ];
+
+  const handleSortCriteriaChange = (value) => {
+    dispatch(setSortCriteria({ sortCriteria: value }));
+  };
 
   const categories = ["Art", "Artist"];
   return (
@@ -377,7 +404,7 @@ const Painting = () => {
         <Header />
         <div className="flex justify-end px-10 py-2 border-b border-slate-200 focus:outline-none focus:border-slate-600">
           <div className="flex items-center">
-            <CustomSelectWithSearchSide
+            <CustomSelectWithSearchSide              
               categories={categories}
               placeholder="Select"
               searchPlaceholder="Search by Art/Artist"
@@ -387,7 +414,7 @@ const Painting = () => {
               searchInputClassName="text-gray-700 border-gray-300"
               itemClassName="text-gray-700"
               selectedItemClassName="bg-blue-500 text-white"
-              // onOptionSelect={handleOptionSelect}
+             
             />
           </div>
         </div>
@@ -396,6 +423,11 @@ const Painting = () => {
             Original Paintings For Sale
           </h2>
           <CustomSelect
+            value={sortCriteria}
+            onChange={(e)=>{
+              console.log("on change painting===>",e)
+              handleSortCriteriaChange(e)
+            }}
             options={options}
             placeholder="Select"
             className="w-52 max-w-xs"
@@ -489,7 +521,8 @@ const Painting = () => {
           <div className="mt-10 lg:flex">
             {/* filteredArt.length !== 0 ? filteredArt : allArt */}
             <MasonaryGridLayout
-              artDetails={filteredArt.length !== 0 ? filteredArt : allArt}
+              // artDetails={filteredArt.length !== 0 ? filteredArt : allArt}
+              artDetails={allArt}
             />
           </div>
         </div>

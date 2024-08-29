@@ -140,8 +140,8 @@ export function* getArtDetailSaga(action) {
 
 export function* newFilterArtSaga(action) {
   yield put(
-    setFilteredIsLoading({
-      isFilteredDataLoading: true,
+    setIsLoading({
+      isLoading: true,
     })
   );
   try {
@@ -151,11 +151,11 @@ export function* newFilterArtSaga(action) {
 
     if (response?.status === 200) {
       yield put(
-        setFilteredIsLoading({
-          isuploading: false,
+        setIsLoading({
+          isLoading: false,
         })
       );
-      yield put(setAllFilteredArt({ filteredArt: response?.data?.data }));
+      yield put(setAllArt({ allArt: response?.data?.data }));
     }
   } catch (error) {
     console.log(error);

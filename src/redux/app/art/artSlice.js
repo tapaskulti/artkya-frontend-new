@@ -9,11 +9,11 @@ const initialState = {
   allArt: [],
   filteredArt: [],
   artDetail: {},
-  artType:"originalArt",
-  searchInput:"",
-  sortCriteria:"",
-  searchCriteria:"",
-  artNotFound:true
+  artType: "originalArt",
+  searchInput: "",
+  sortCriteria: "",
+  searchCriteria: "",
+  artNotFound: false,
 };
 
 const artSlice = createSlice({
@@ -21,10 +21,10 @@ const artSlice = createSlice({
   initialState,
   reducers: {
     setIsLoading(state, action) {
-      state.isUploading = action.payload.isUploading;
+      state.isLoading = action.payload.isLoading;
     },
     setIsUploading(state, action) {
-      state.isLoading = action.payload.isLoading;
+      state.isUploading = action.payload.isUploading;
     },
     setFilteredIsLoading(state, action) {
       state.isFilteredDataLoading = action.payload.isFilteredDataLoading;
@@ -56,7 +56,6 @@ const artSlice = createSlice({
     setSearchCriteria(state, action) {
       state.searchCriteria = action.payload.searchCriteria;
     },
-  
   },
 });
 
