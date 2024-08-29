@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom"; // assuming you're using react-router for navigation
-import { FaPlus, FaHeart, FaShoppingCart } from "react-icons/fa";
+import { FaPlus, FaHeart, FaShoppingCart, FaPaintBrush } from "react-icons/fa";
 import { useSelector } from "react-redux";
 
 const MasonaryGridLayout = ({ artDetails }) => {
@@ -70,9 +70,11 @@ const MasonaryGridLayout = ({ artDetails }) => {
               </div>
               <p className="text-sm text-gray-600">
                 {`${
-                  singleArt?.artist?.firstName?singleArt?.artist?.firstName:""
+                  singleArt?.artist?.firstName
+                    ? singleArt?.artist?.firstName
+                    : ""
                 } ${
-                  singleArt?.artist?.lastName?singleArt?.artist?.lastName:""
+                  singleArt?.artist?.lastName ? singleArt?.artist?.lastName : ""
                 }`}
                 {/* , {singleArt?.artistCountry} */}
               </p>
@@ -89,3 +91,12 @@ const MasonaryGridLayout = ({ artDetails }) => {
 };
 
 export default MasonaryGridLayout;
+
+export const NoArtFound = () => {
+  return (
+    <div className=" flex flex-col justify-center items-center px-20 text-5xl font-serif space-x-4 space-y-6 text-blue-gray-600">
+      <FaPaintBrush />
+      <div>No Art Found</div>
+    </div>
+  );
+};

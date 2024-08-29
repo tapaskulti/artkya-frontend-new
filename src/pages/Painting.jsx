@@ -21,7 +21,9 @@ import { useDispatch, useSelector } from "react-redux";
 import Select from "react-select";
 import { useNavigate } from "react-router-dom";
 import { setAllFilteredArt, setSortCriteria } from "../redux/app/art/artSlice";
-import MasonaryGridLayout from "../components/MasonaryGridLayout";
+import MasonaryGridLayout, {
+  NoArtFound,
+} from "../components/MasonaryGridLayout";
 import { CustomSelect, CustomSelectWithSearchSide } from "../components/Select";
 
 // import ArtItem from "../components/ArtItem";
@@ -421,7 +423,6 @@ const Painting = () => {
           <CustomSelect
             value={sortCriteria}
             onChange={(e) => {
-              console.log("on change painting===>", e);
               handleSortCriteriaChange(e);
             }}
             options={options}
@@ -504,7 +505,7 @@ const Painting = () => {
                 }}
               />
             </div>
-            <div className="px-4 bg-white border-t border-b border-slate-200 rounded-lg mt-2.5">
+            <div className="px-4 bg-white border-t border-b border-slate-200 rounded-lg mt-2.5 w-full">
               <Accordion
                 element={featuredArtistElement}
                 name={"featuredartist"}
@@ -516,11 +517,12 @@ const Painting = () => {
           </div>
           <div className="mt-10 lg:flex">
             {artNotFound ? (
-              <>Art not found</>
+              <>
+                <NoArtFound />
+              </>
             ) : (
               <>
-                <MasonaryGridLayout
-                  // artDetails={filteredArt.length !== 0 ? filteredArt : allArt}
+                <MasonaryGridLayout                  
                   artDetails={allArt}
                 />
               </>
