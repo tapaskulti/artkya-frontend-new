@@ -1,13 +1,15 @@
-import React from "react";
+/* eslint-disable react/prop-types */
+
 import { useNavigate } from "react-router-dom"; // assuming you're using react-router for navigation
 import { FaPlus, FaHeart, FaShoppingCart, FaPaintBrush } from "react-icons/fa";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const MasonaryGridLayout = ({ artDetails }) => {
   const navigate = useNavigate();
   const { authUser } = useSelector((state) => state.auth);
+  const dispatch = useDispatch()
   return (
-    <div className="container mx-auto p-4 shadow-lg rounded-lg">
+    <div className="container mx-auto p-4 rounded-lg">
       <div className="columns-1 sm:columns-2 md:columns-3 lg:columns-4 gap-4">
         {artDetails.map((singleArt, index) => (
           <div

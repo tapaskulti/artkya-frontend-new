@@ -6,6 +6,7 @@ import { faPaintBrush } from "@fortawesome/free-solid-svg-icons";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams,useNavigate } from "react-router-dom";
 import MasonaryGridLayout from "../components/MasonaryGridLayout";
+import { FaPencilAlt } from "react-icons/fa";
 
 // import ArtItem from "../components/ArtItem";
 

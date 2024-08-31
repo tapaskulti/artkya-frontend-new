@@ -309,16 +309,15 @@ import { CustomSelect, CustomSelectWithSearchSide } from "../components/Select";
 //   );
 // };
 
+
 const Painting = () => {
   const dispatch = useDispatch();
   const {
-    filteredArt,
     allArt,
     artNotFound,
     searchInput,
     sortCriteria,
     searchCriteria,
-    isFilteredDataLoading,
   } = useSelector((state) => state.art);
   const [filterData, setFilterData] = useState({
     style: [],
@@ -329,9 +328,6 @@ const Painting = () => {
     artistcountry: [],
     featuredartist: [],
   });
-  // const [searchCriteria, setSearchCriteria] = useState("none");
-  // const [sortCriteria, setSortCriteria] = useState("none");
-  // const [searchInput, setSearchInput] = useState("");
 
   const handleFilterData = (e) => {
     const { value, checked, name } = e.target;
@@ -351,8 +347,6 @@ const Painting = () => {
     }
     setFilterData(newFilterData);
   };
-
-  console.log("filterData=============>", filterData);
 
   // Initial fetch to get all arts
   useEffect(() => {
@@ -400,9 +394,10 @@ const Painting = () => {
   };
 
   const categories = ["Art", "Artist"];
+
   return (
     <>
-      <div className="static">
+      <div className="static h-full">
         <Header />
         <div className="flex justify-end px-10 py-2 border-b border-slate-200 focus:outline-none focus:border-slate-600">
           <div className="flex items-center">
@@ -434,24 +429,23 @@ const Painting = () => {
             selectedItemClassName="bg-blue-500 text-white"
           />
         </div>
-        <div className="mt-10 lg:flex">
-          <div className="w-1/5 rounded-lg rounded-br-xl px-10">
+        <div className="flex mt-10 h-[calc(100vh-160px)]">
+          {/* Accordion Container */}
+          <div className="w-1/5 h-[80vh] overflow-y-scroll bg-white border-r border-slate-200 p-4 scrollbar-hide">
             <h2>Category</h2>
             <div className="w-full bg-gray-50 border border-gray-200 backdrop-blur-lg rounded-md mt-6 px-3 py-2 text-xl text-center">
               Paintings
             </div>
-            <div className="px-4 bg-white border-t border-b border-slate-200 rounded-lg mt-2.5">
+            <div className="mt-2.5">
               <Accordion
                 element={styleElement}
                 name={"style"}
                 onCheckChange={(e) => {
-                  console.log(e.target.value);
-                  console.log(e.target.checked);
                   handleFilterData(e);
                 }}
               />
             </div>
-            <div className="px-4 bg-white border-t border-b border-slate-200 rounded-lg mt-2.5">
+            <div className="mt-2.5">
               <Accordion
                 element={subjectElement}
                 name={"subject"}
@@ -460,7 +454,7 @@ const Painting = () => {
                 }}
               />
             </div>
-            <div className="px-4 bg-white border-t border-b border-slate-200 rounded-lg mt-2.5">
+            <div className="mt-2.5">
               <Accordion
                 element={mediumElement}
                 name={"medium"}
@@ -469,7 +463,7 @@ const Painting = () => {
                 }}
               />
             </div>
-            <div className="px-4 bg-white border-t border-b border-slate-200 rounded-lg mt-2.5">
+            <div className="mt-2.5">
               <Accordion
                 element={materialElement}
                 name={"material"}
@@ -478,13 +472,25 @@ const Painting = () => {
                 }}
               />
             </div>
-            <div className="px-4 bg-white border-t border-b border-slate-200 rounded-lg mt-2.5">
-              <Accordion element={priceElement} />
+            <div className="mt-2.5">
+              <Accordion
+                element={priceElement}
+                // name={"orientation"}
+                // onCheckChange={(e) => {
+                //   handleFilterData(e);
+                // }}
+              />
             </div>
-            <div className="px-4 bg-white border-t border-b border-slate-200 rounded-lg mt-2.5">
-              <Accordion element={sizeElement} />
+            <div className="mt-2.5">
+              <Accordion
+                element={sizeElement}
+                // name={"orientation"}
+                // onCheckChange={(e) => {
+                //   handleFilterData(e);
+                // }}
+              />
             </div>
-            <div className="px-4 bg-white border-t border-b border-slate-200 rounded-lg mt-2.5">
+            <div className="mt-2.5">
               <Accordion
                 element={orientationElement}
                 name={"orientation"}
@@ -493,10 +499,16 @@ const Painting = () => {
                 }}
               />
             </div>
-            <div className="px-4 bg-white border-t border-b border-slate-200 rounded-lg mt-2.5">
-              <Accordion element={colorElement} />
+            <div className="mt-2.5">
+              <Accordion
+                element={colorElement}
+                // name={"artistcountry"}
+                // onCheckChange={(e) => {
+                //   handleFilterData(e);
+                // }}
+              />
             </div>
-            <div className="px-4 bg-white border-t border-b border-slate-200 rounded-lg mt-2.5">
+            <div className="mt-2.5">
               <Accordion
                 element={artistCountryElement}
                 name={"artistcountry"}
@@ -505,7 +517,7 @@ const Painting = () => {
                 }}
               />
             </div>
-            <div className="px-4 bg-white border-t border-b border-slate-200 rounded-lg mt-2.5 w-full">
+            <div className="mt-2.5 w-full">
               <Accordion
                 element={featuredArtistElement}
                 name={"featuredartist"}
@@ -515,17 +527,13 @@ const Painting = () => {
               />
             </div>
           </div>
-          <div className="mt-10 lg:flex">
+
+          {/* Masonry Grid Container */}
+          <div className="flex-1 h-[80vh] overflow-y-auto bg-white p-4 stylish-scrollbar">
             {artNotFound ? (
-              <>
-                <NoArtFound />
-              </>
+              <NoArtFound />
             ) : (
-              <>
-                <MasonaryGridLayout                  
-                  artDetails={allArt}
-                />
-              </>
+              <MasonaryGridLayout artDetails={allArt} />
             )}
           </div>
         </div>
