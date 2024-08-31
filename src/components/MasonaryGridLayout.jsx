@@ -1,13 +1,15 @@
-import React from "react";
+/* eslint-disable react/prop-types */
+
 import { useNavigate } from "react-router-dom"; // assuming you're using react-router for navigation
-import { FaPlus, FaHeart, FaShoppingCart } from "react-icons/fa";
-import { useSelector } from "react-redux";
+import { FaPlus, FaHeart, FaShoppingCart, FaPaintBrush } from "react-icons/fa";
+import { useDispatch, useSelector } from "react-redux";
 
 const MasonaryGridLayout = ({ artDetails }) => {
   const navigate = useNavigate();
   const { authUser } = useSelector((state) => state.auth);
+  const dispatch = useDispatch()
   return (
-    <div className="container mx-auto p-4 shadow-lg rounded-lg">
+    <div className="container mx-auto p-4 rounded-lg">
       <div className="columns-1 sm:columns-2 md:columns-3 lg:columns-4 gap-4">
         {artDetails.map((singleArt, index) => (
           <div
@@ -70,9 +72,11 @@ const MasonaryGridLayout = ({ artDetails }) => {
               </div>
               <p className="text-sm text-gray-600">
                 {`${
-                  singleArt?.artist?.firstName?singleArt?.artist?.firstName:""
+                  singleArt?.artist?.firstName
+                    ? singleArt?.artist?.firstName
+                    : ""
                 } ${
-                  singleArt?.artist?.lastName?singleArt?.artist?.lastName:""
+                  singleArt?.artist?.lastName ? singleArt?.artist?.lastName : ""
                 }`}
                 {/* , {singleArt?.artistCountry} */}
               </p>
@@ -89,3 +93,12 @@ const MasonaryGridLayout = ({ artDetails }) => {
 };
 
 export default MasonaryGridLayout;
+
+export const NoArtFound = () => {
+  return (
+    <div className=" flex flex-col justify-center items-center px-20 text-5xl font-serif space-x-4 space-y-6 text-blue-gray-600">
+      <FaPaintBrush />
+      <div>No Art Found</div>
+    </div>
+  );
+};
