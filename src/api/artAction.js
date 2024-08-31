@@ -5,11 +5,10 @@ export const createArtAction = async (payload) => {
   try {
     const response = await axios.post(
       `${VITE_BASE_URL}/art/createArt`,
-      payload.body     
+      payload.body
     );
-    console.log(response)
+    console.log(response);
     return response;
-    
   } catch (error) {
     console.log(error);
   }
@@ -104,11 +103,52 @@ export const paymentAction = async (payload) => {
   return response;
 };
 
-export const originalArtMailAction = async (payload) => {
-  const response = await axios.post(
-    `${VITE_BASE_URL}/art/buyOriginalArt`,
-    payload
-  );
+export const NewFiltersAction = async (payload) => {
+  const params = {};
 
+  // Conditionally add parameters only if they have values
+  if (payload.sortingCriteria) {
+    params.sortingCriteria = payload.sortingCriteria;
+  }
+  if (payload.searchCriteria) {
+    params.searchCriteria = payload.searchCriteria;
+  }
+  if (payload.searchInput) {
+    params.searchInput = payload.searchInput;
+  }
+
+  // Build the body payload by only including non-empty filters
+  const body = {};
+
+  if (payload.body?.style?.length > 0) {
+    body.style = payload.body.style;
+  }
+  if (payload.body?.subject?.length > 0) {
+    body.subject = payload.body.subject;
+  }
+  if (payload.body?.orientation?.length > 0) {
+    body.orientation = payload.body.orientation;
+  }
+  if (payload.body?.medium?.length > 0) {
+    body.medium = payload.body.medium;
+  }
+  if (payload.body?.material?.length > 0) {
+    body.material = payload.body.material;
+  }
+  if (payload.body?.artistCountry?.length > 0) {
+    body.artistCountry = payload.body.artistCountry;
+  }
+  if (payload.body?.featuredartist?.length > 0) {
+    body.featuredartist = payload.body.featuredartist;
+  }
+
+  const response = await axios.post(
+    `${VITE_BASE_URL}/art/newFilterArt`,
+    Object.keys(body).length > 0 ? body : {}, // Only send body if it's not empty, // This contains the filter data (style, subject, etc.)
+    {
+      params, // Only include non-empty parameters
+    }
+  );
+  console.log("FiltersAction new response", response);
   return response;
 };

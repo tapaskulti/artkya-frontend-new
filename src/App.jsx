@@ -6,14 +6,21 @@ const App = () => {
   const dispatch = useDispatch();
   const { token, authUser } = useSelector((state) => state.auth);
 
+  // useEffect(() => {
+  //   dispatch({
+  //     type: "ALL_ART",
+  //     payload: {
+  //       sortCriteria: "none",
+  //       searchCriteria: "none",
+  //       searchInput: undefined,
+  //     },
+  //   });
+  // }, [dispatch]);
+
+
   useEffect(() => {
     dispatch({
-      type: "ALL_ART",
-      payload: {
-        sortCriteria: "none",
-        searchCriteria: "none",
-        searchInput: undefined,
-      },
+      type: "NEW_FILTER_ART",
     });
   }, [dispatch]);
 
@@ -40,29 +47,29 @@ const App = () => {
     }
   }, []);
 
-  useEffect(() => {
-    if (authUser) {
-      dispatch({
-        type: "CREATE_CART_BY_ID",
-        payload: authUser?._id,
-      });
+  // useEffect(() => {
+  //   if (authUser) {
+  //     dispatch({
+  //       type: "CREATE_CART_BY_ID",
+  //       payload: authUser?._id,
+  //     });
 
-      dispatch({
-        type: "CREATE_WISHLIST_BY_ID",
-        payload: authUser?._id,
-      });
+  //     dispatch({
+  //       type: "CREATE_WISHLIST_BY_ID",
+  //       payload: authUser?._id,
+  //     });
 
-      dispatch({
-        type: "GET_CART_BY_ID",
-        payload: authUser?._id,
-      });
+  //     dispatch({
+  //       type: "GET_CART_BY_ID",
+  //       payload: authUser?._id,
+  //     });
 
-      dispatch({
-        type: "GET_WISHLIST_BY_ID",
-        payload: authUser?._id,
-      });
-    }
-  }, [authUser]);
+  //     dispatch({
+  //       type: "GET_WISHLIST_BY_ID",
+  //       payload: authUser?._id,
+  //     });
+  //   }
+  // }, [authUser]);
 
   return (
     <>
