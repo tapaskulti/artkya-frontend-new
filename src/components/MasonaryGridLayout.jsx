@@ -7,21 +7,23 @@ import { useDispatch, useSelector } from "react-redux";
 const MasonaryGridLayout = ({ artDetails }) => {
   const navigate = useNavigate();
   const { authUser } = useSelector((state) => state.auth);
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
+  
   return (
     <div className="container mx-auto p-4 rounded-lg">
-      <div className="columns-1 sm:columns-2 md:columns-3 lg:columns-4 gap-4">
+      {/* Grid layout with responsive columns */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {artDetails.map((singleArt, index) => (
           <div
             key={index}
-            className="mb-4 break-inside-avoid group shadow-lg rounded-lg overflow-hidden relative"
+            className="mb-4 group shadow-lg rounded-lg overflow-hidden relative"
           >
             <div className="relative overflow-hidden rounded-t-lg">
               <a href={`/artDetailPage/${singleArt?._id}`}>
                 <img
                   src={singleArt?.thumbnail?.secure_url}
                   alt={singleArt?.title || `Art ${index}`}
-                  className="w-full object-cover transition-transform duration-[2000ms] ease-in-out transform group-hover:scale-125"
+                  className="w-full h-auto object-cover transition-transform duration-[2000ms] ease-in-out transform group-hover:scale-125"
                 />
               </a>
               {/* Action Buttons */}
@@ -78,11 +80,9 @@ const MasonaryGridLayout = ({ artDetails }) => {
                 } ${
                   singleArt?.artist?.lastName ? singleArt?.artist?.lastName : ""
                 }`}
-                {/* , {singleArt?.artistCountry} */}
               </p>
               <p className="text-sm text-gray-600">
-                {singleArt.height} x {singleArt?.width} x {singleArt?.depth}{" "}
-                inch
+                {singleArt.height} x {singleArt?.width} x {singleArt?.depth} inch
               </p>
             </div>
           </div>
