@@ -1,6 +1,7 @@
 import { call, put, takeEvery } from "redux-saga/effects";
 import {
   FiltersAction,
+  NewFiltersAction,
   createArtAction,
   createDraftAction,
   getAllArtAction,
@@ -11,11 +12,11 @@ import {
   setAllArt,
   setAllFilteredArt,
   setArtDetails,
+  setArtNotFound,
   setFilteredIsLoading,
   setIsLoading,
   setIsUploading,
 } from "../redux/app/art/artSlice";
-
 
 export function* createPostSaga(action) {
   try {
@@ -110,7 +111,6 @@ export function* getAllArtSaga(action) {
   }
 }
 
-
 export function* getArtDetailSaga(action) {
   try {
     yield put(
@@ -138,26 +138,47 @@ export function* getArtDetailSaga(action) {
   }
 }
 
-// export function* updateArtSaga(action) {
-//   console.log(action.payload, "saga");
-//   const response = yield call(updateArtAction, action.payload);
+export function* newFilterArtSaga(action) {
+  yield put(
+    setIsLoading({
+      isLoading: true,
+    })
+  );
+  try {
+    const response = yield call(NewFiltersAction, action.payload);
 
-//   if (response.status === 200) {
-//     yield put({
-//       type: "ALL_ART",
-//     });
-//   }
-// }
+    console.log("newFilterArtSaga res", newFilterArtSaga);
 
+    if (response?.status === 200) {
+      yield put(
+        setIsLoading({
+          isLoading: false,
+        })
+      );
+      yield put(setAllArt({ allArt: response?.data?.data }));
+      yield put(
+        setArtNotFound({
+          artNotFound: false,
+        })
+      );
+    }
+  } catch (error) {
+    console.log(error);
+    if (error.response?.data?.message === "No art found") {
+      yield put(
+        setArtNotFound({
+          artNotFound: true,
+        })
+      );
+    }
+  }
+}
 
 export function* watchAsyncArtSaga() {
   yield takeEvery("CREATE_POST", createPostSaga);
   yield takeEvery("CREATE_DRAFT", createDraftSaga);
   yield takeEvery("FILTER_ART", filterArtSaga);
+  yield takeEvery("NEW_FILTER_ART", newFilterArtSaga);
   yield takeEvery("ALL_ART", getAllArtSaga);
   yield takeEvery("ART_DETAIL", getArtDetailSaga);
-  // yield takeEvery("UPDATE_ART", updateArtSaga);
-  // yield takeEvery("DELETE_ART", deleteArtSaga);
-  // yield takeEvery("PAYMENT", paymentSaga);
-  // yield takeEvery("ORIGINAL_ART_MAIL", originalArtMailSaga);
 }
