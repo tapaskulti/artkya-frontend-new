@@ -13,7 +13,7 @@ const MasonaryGridLayout = ({ artDetails }) => {
     <div className="container mx-auto p-4 rounded-lg">
       {/* Grid layout with responsive columns */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-        {artDetails.map((singleArt, index) => (
+        {artDetails?.map((singleArt, index) => (
           <div
             key={index}
             className="mb-4 group shadow-lg rounded-lg overflow-hidden relative"
