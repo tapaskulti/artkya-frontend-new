@@ -5,8 +5,6 @@ import User from "../assets/user.png";
 import { ArtDetails } from "./Painting";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { FaCartShopping } from "react-icons/fa6";
-import { FaHeart, FaPlus } from "react-icons/fa";
 import MasonaryGridLayout from "../components/MasonaryGridLayout";
 import { CircularLoader } from "../components/Loading";
 
