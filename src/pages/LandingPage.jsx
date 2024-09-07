@@ -45,7 +45,14 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
 
 import { faPaintBrush } from "@fortawesome/free-solid-svg-icons";
+import { Carousel } from "@material-tailwind/react";
 // import ArtItem from "../components/ArtItem";
+
+const carouselItems = [
+  require("./assets/carousel/carousel01.jpg"),
+  require("./assets/carousel/carousel02.jpg"),
+  require("./assets/carousel/carousel03.jpg"),
+];
 
 const LandingPage = () => {
   return (
@@ -54,7 +61,9 @@ const LandingPage = () => {
         <Header />
         <div className="lg:flex">
           <div className="mt-10">
-            <h2 className="px-10">Painting</h2>
+            <div>
+              <Carousel items={carouselItems} />
+            </div>
             {/* <div className="w-full h-auto px-3 py-2 mt-6 bg-gray-100 rounded-md backdrop-blur-lg md:max-lg:max-w-screen-sm md:max-lg:mx-auto">Left</div> */}
             <div className="px-5 mt-20 md:px-10">
               <div className="h-auto mt-32 gap-10 lg:gap-16 columns-1 md:columns-2 lg:columns-3 2xl:columns-4 gap-y-16 [&>img:not(:first-child)]:mt-5 lg:[&>img:not(:first-child)]:mt-16">
