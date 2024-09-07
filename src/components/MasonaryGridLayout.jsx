@@ -72,7 +72,11 @@ const MasonaryGridLayout = ({ artDetails }) => {
                   ${singleArt?.priceDetails?.price}
                 </p>
               </div>
-              <p className="text-sm text-gray-600">
+              <p className="text-sm text-gray-600 cursor-pointer"
+              onClick={()=>{               
+                navigate(`/ArtistProfilePage/${singleArt?.artist?._id}`)
+              }}
+              >
                 {`${
                   singleArt?.artist?.firstName
                     ? singleArt?.artist?.firstName
