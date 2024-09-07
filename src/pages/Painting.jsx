@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
 
 import { faPaintBrush } from "@fortawesome/free-solid-svg-icons";
-import Accordion from "../components/Accordion";
+import Accordion, { SecondAccordion } from "../components/Accordion";
 import {
   artistCountryElement,
   colorElement,
@@ -18,296 +18,12 @@ import {
   subjectElement,
 } from "../utlis/filterData";
 import { useDispatch, useSelector } from "react-redux";
-import Select from "react-select";
 import { useNavigate } from "react-router-dom";
-import { setAllFilteredArt, setSortCriteria } from "../redux/app/art/artSlice";
+import { setSortCriteria } from "../redux/app/art/artSlice";
 import MasonaryGridLayout, {
   NoArtFound,
 } from "../components/MasonaryGridLayout";
 import { CustomSelect, CustomSelectWithSearchSide } from "../components/Select";
-
-// import ArtItem from "../components/ArtItem";
-
-// const Painting = () => {
-//   const dispatch = useDispatch();
-//   const { filteredArt, allArt } = useSelector((state) => state.art);
-//   const { authUser } = useSelector((state) => state.auth);
-//   const navigate = useNavigate();
-//   const [itemsToShow, setItemsToShow] = useState();
-//   const [filterData, setFilterData] = useState({
-//     style: [],
-//     subject: [],
-//     orientation: [],
-//     medium: [],
-//     material: [],
-//     artistcountry: [],
-//     featuredartist: [],
-//   });
-//   const [searchCriteria, setSearchCriteria] = useState("none");
-//   const [sortCriteria, setSortCriteria] = useState("none");
-//   const [searchInput, setSearchInput] = useState("");
-
-//   useEffect(() => {
-//     if (
-//       filterData?.style?.length === 0 ||
-//       filterData?.subject?.length === 0 ||
-//       filterData?.orientation?.length === 0 ||
-//       filterData?.medium?.length === 0 ||
-//       filterData?.material?.length === 0 ||
-//       filterData?.artistcountry?.length === 0 ||
-//       filterData?.featuredartist?.length === 0
-//     ) {
-//       dispatch(setAllFilteredArt({ filteredArt: [] }));
-//     }
-//   }, [filterData]);
-
-//   // const [toggleHide, setToggleHide] = useState(false);
-
-//   // const newstyleElement = styleElement.slice(0, 3);
-//   // const [buttonText, setButtonText] = useState("read more");
-
-//   // function handleClick() {
-//   //   if (!toggleHide) {
-//   //     setButtonText("hide");
-//   //   } else {
-//   //     setButtonText("read more");
-//   //   }
-//   //   setToggleHide(!toggleHide);
-//   // }
-
-//   const handleFilterData = (e) => {
-//     const { value, checked, name } = e.target;
-//     const newFilterData = { ...filterData };
-
-//     if (newFilterData[name]?.includes(value) === false && checked === true) {
-//       newFilterData[name].push(value);
-//     } else if (
-//       newFilterData[name]?.includes(value) === true &&
-//       checked === false
-//     ) {
-//       newFilterData[name] = newFilterData[name].filter(
-//         (item) => item !== value
-//       );
-//     } else {
-//       return;
-//     }
-//     setFilterData(newFilterData);
-//   };
-
-//   // console.log("filterData=============>", filterData);
-
-//   useEffect(() => {
-//     const filterDataPayload = {
-//       style: filterData?.style,
-//       subject: filterData?.subject,
-//       orientation: filterData?.orientation,
-//       medium: filterData?.medium,
-//       material: filterData?.material,
-//       artistcountry: filterData?.artistcountry,
-//       featuredartist: filterData?.featuredartist,
-//     };
-
-//     dispatch({
-//       type: "FILTER_ART",
-//       payload: {
-//         sortingCriteria: sortCriteria,
-//         body: filterDataPayload,
-//       },
-//     });
-//   }, [filterData]);
-
-//   useEffect(() => {
-//     if (searchCriteria === "Art") {
-//       dispatch({
-//         type: "SEARCH_BY_ART_TITLE",
-//         payload: searchInput,
-//       });
-//     } else {
-//       dispatch({
-//         type: "SEARCH_BY_ARTIST",
-//         payload: searchInput,
-//       });
-//     }
-//   }, [searchInput, searchCriteria]);
-
-//   console.log("sortCriteria==>", sortCriteria);
-
-//   useEffect(() => {
-//     dispatch({
-//       type: "ALL_ART",
-//       payload: { sortCriteria, searchCriteria, searchInput },
-//     });
-//   }, [sortCriteria, searchCriteria, searchInput, dispatch]);
-
-//   const options = [
-//     // { value: "recomended", label: "Recomended" },
-//     { value: "newToOld", label: "New to Old" },
-//     { value: "priceLowHigh", label: "Price: Low to High" },
-//     { value: "priceHighLow", label: "Price: High to Low" },
-//   ];
-
-//   return (
-//     <>
-//       <div className="static">
-//         <Header />
-//         <div className="flex justify-end px-10 py-2 border-b border-slate-200 focus:outline-none focus:border-slate-600">
-//           <div className="flex items-center">
-//             <Select
-//               options={[
-//                 { value: "art", label: "Art" },
-//                 { value: "artist", label: "Artist" },
-//               ]}
-//               onChange={(e) => {
-//                 if (e.label === "Art") {
-//                   setSearchCriteria("Art");
-//                 } else {
-//                   setSearchCriteria("Artist");
-//                 }
-//               }}
-//               className="rounded-none absolute -right-6 w-32 px-3 py-1.5 focus:outline-none focus:border-none border-gray-400"
-//             />
-//             <input
-//               type="text"
-//               className="relative border border-gray-400 border-l-transparent border-slate-600 py-1.5 focus:outline-none focus:border-slate-600"
-//               value={searchInput}
-//               onChange={(e) => {
-//                 setSearchInput(e.target.value);
-//               }}
-//             />
-//           </div>
-//         </div>
-//         <div className="flex items-center justify-between px-10 mt-5">
-//           <h2 className="text-slate-900 text-3xl font-thin">
-//             Original Paintings For Sale
-//           </h2>
-//           <Select
-//             options={options}
-//             className="w-52 bg-white py-1.5 focus:outline-none focus:border-none"
-//             onChange={(e) => {
-//               if (e.label === "New to Old") {
-//                 setSortCriteria("newToOld");
-//               } else if (e.label === "Price: Low to High") {
-//                 setSortCriteria("incresingPrice");
-//               } else if (e.label === "Price: High to Low") {
-//                 setSortCriteria("decreasingPrice");
-//               } else {
-//                 setSortCriteria("none");
-//               }
-//             }}
-//           />
-//         </div>
-//         <div className="mt-10 lg:flex">
-//           <div className="w-1/5 rounded-lg rounded-br-xl px-10">
-//             <h2>Category</h2>
-//             <div className="w-full bg-gray-50 border border-gray-200 backdrop-blur-lg rounded-md mt-6 px-3 py-2 text-xl text-center">
-//               Paintings
-//             </div>
-//             <div className="px-4 bg-white border-t border-b border-slate-200 rounded-lg mt-2.5">
-//               <Accordion
-//                 element={styleElement}
-//                 name={"style"}
-//                 onCheckChange={(e) => {
-//                   console.log(e.target.value);
-//                   console.log(e.target.checked);
-//                   handleFilterData(e);
-//                 }}
-//               />
-
-//               {/* {styleElement.slice(0, itemsToShow).map((c, ...rest) => (
-//                 <Accordion key={c.title} name={c.title} rest={rest} />
-//               ))}
-//               {styleElement.length > 3 && itemsToShow < 6 ? (
-//                 <button onClick={showmore}>Show More</button>
-//               ) : itemsToShow > 3 && styleElement.length > 5 ? (
-//                 <button onClick={showless}>Show Less</button>
-//               ) : (
-//                 ""
-//               )} */}
-
-//               {/* {!toggleHide ? (
-//                 <>
-//                   <div>{newstyleElement}</div>
-//                 </>
-//               ) : (
-//                 <>
-//                   <div>{styleElement}</div>
-//                 </>
-//               )} */}
-//               {/* <button onClick={() => handleClick()}>{buttonText}</button> */}
-//             </div>
-//             <div className="px-4 bg-white border-t border-b border-slate-200 rounded-lg mt-2.5">
-//               <Accordion
-//                 element={subjectElement}
-//                 name={"subject"}
-//                 onCheckChange={(e) => {
-//                   handleFilterData(e);
-//                 }}
-//               />
-//             </div>
-//             <div className="px-4 bg-white border-t border-b border-slate-200 rounded-lg mt-2.5">
-//               <Accordion
-//                 element={mediumElement}
-//                 name={"medium"}
-//                 onCheckChange={(e) => {
-//                   handleFilterData(e);
-//                 }}
-//               />
-//             </div>
-//             <div className="px-4 bg-white border-t border-b border-slate-200 rounded-lg mt-2.5">
-//               <Accordion
-//                 element={materialElement}
-//                 name={"material"}
-//                 onCheckChange={(e) => {
-//                   handleFilterData(e);
-//                 }}
-//               />
-//             </div>
-//             <div className="px-4 bg-white border-t border-b border-slate-200 rounded-lg mt-2.5">
-//               <Accordion element={priceElement} />
-//             </div>
-//             <div className="px-4 bg-white border-t border-b border-slate-200 rounded-lg mt-2.5">
-//               <Accordion element={sizeElement} />
-//             </div>
-//             <div className="px-4 bg-white border-t border-b border-slate-200 rounded-lg mt-2.5">
-//               <Accordion
-//                 element={orientationElement}
-//                 name={"orientation"}
-//                 onCheckChange={(e) => {
-//                   handleFilterData(e);
-//                 }}
-//               />
-//             </div>
-//             <div className="px-4 bg-white border-t border-b border-slate-200 rounded-lg mt-2.5">
-//               <Accordion element={colorElement} />
-//             </div>
-//             <div className="px-4 bg-white border-t border-b border-slate-200 rounded-lg mt-2.5">
-//               <Accordion
-//                 element={artistCountryElement}
-//                 name={"artistcountry"}
-//                 onCheckChange={(e) => {
-//                   handleFilterData(e);
-//                 }}
-//               />
-//             </div>
-//             <div className="px-4 bg-white border-t border-b border-slate-200 rounded-lg mt-2.5">
-//               <Accordion
-//                 element={featuredArtistElement}
-//                 name={"featuredartist"}
-//                 onCheckChange={(e) => {
-//                   handleFilterData(e);
-//                 }}
-//               />
-//             </div>
-//           </div>
-//           <div className="mt-10 lg:flex">
-//           {/* filteredArt.length !== 0 ? filteredArt : allArt */}
-//            <MasonaryGridLayout artDetails={filteredArt.length !== 0 ? filteredArt : allArt}/>
-//           </div>
-//         </div>
-//       </div>
-//     </>
-//   );
-// };
 
 const Painting = () => {
   const dispatch = useDispatch();
@@ -322,6 +38,8 @@ const Painting = () => {
     artistcountry: [],
     featuredartist: [],
   });
+
+  console.log("filterData==>", filterData);
 
   const handleFilterData = (e) => {
     const { value, checked, name } = e.target;
@@ -362,7 +80,7 @@ const Painting = () => {
       orientation: filterData?.orientation,
       medium: filterData?.medium,
       material: filterData?.material,
-      artistcountry: filterData?.artistcountry,
+      artistCountry: filterData?.artistcountry,
       featuredartist: filterData?.featuredartist,
     };
 
@@ -431,7 +149,7 @@ const Painting = () => {
               Paintings
             </div>
             <div className="mt-2.5">
-              <Accordion
+              <SecondAccordion
                 element={styleElement}
                 name={"style"}
                 onCheckChange={(e) => {
@@ -440,7 +158,7 @@ const Painting = () => {
               />
             </div>
             <div className="mt-2.5">
-              <Accordion
+              <SecondAccordion
                 element={subjectElement}
                 name={"subject"}
                 onCheckChange={(e) => {
@@ -449,7 +167,7 @@ const Painting = () => {
               />
             </div>
             <div className="mt-2.5">
-              <Accordion
+              <SecondAccordion
                 element={mediumElement}
                 name={"medium"}
                 onCheckChange={(e) => {
