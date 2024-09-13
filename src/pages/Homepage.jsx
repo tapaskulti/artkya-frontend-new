@@ -11,6 +11,35 @@ import Home2 from "../assets/home2.jpg";
 import Home3 from "../assets/home3.webp";
 import Home4 from "../assets/home4.webp";
 
+import Feature1 from "../assets/feature1.webp";
+import Feature2 from "../assets/feature2.webp";
+import Feature3 from "../assets/feature3.webp";
+import Feature4 from "../assets/feature4.webp";
+
+const featuredArts = [
+  {
+    id: 1,
+    title: "Sunset Dreams",
+    artist: "Jane Doe",
+    price: "$1,200",
+    image: Feature1,
+  },
+  {
+    id: 2,
+    title: "Urban Rhythm",
+    artist: "John Smith",
+    price: "$950",
+    image: Feature2,
+  },
+  {
+    id: 3,
+    title: "Serenity",
+    artist: "Emma Johnson",
+    price: "$1,500",
+    image: Feature3,
+  },
+];
+
 const artworks = [
   {
     id: 1,
@@ -79,7 +108,7 @@ const Homepage = () => {
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentImage((prevImage) => (prevImage + 1) % carouselImages.length);
-    }, 5000);
+    }, 4000);
     return () => clearInterval(timer);
   }, []);
 
@@ -150,33 +179,23 @@ const Homepage = () => {
       {/* Featured Artworks */}
       <section className="py-16 bg-white">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-gray-800 mb-8 text-center">
-            Featured Artworks
-          </h2>
+          <h2 className="text-3xl font-bold text-gray-800 mb-8 text-center">Featured Artworks</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {artworks.slice(0, 3).map((artwork) => (
-              <div
-                key={artwork.id}
-                className="bg-white rounded-lg shadow-md overflow-hidden"
-              >
-                <img
-                  src={artwork.image}
-                  alt={artwork.title}
-                  className="w-full h-64 object-cover"
-                />
+            {featuredArts.map((artwork) => (
+              <div key={artwork.id} className="bg-white rounded-lg shadow-md overflow-hidden group">
+                <div className="aspect-square bg-white relative overflow-hidden">
+                  <img 
+                    src={artwork.image} 
+                    alt={artwork.title} 
+                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-[2000ms] ease-in-out transform group-hover:scale-125"
+                  />
+                </div>
                 <div className="p-6">
-                  <h3 className="text-xl font-semibold text-gray-800 mb-2">
-                    {artwork.title}
-                  </h3>
+                  <h3 className="text-xl font-semibold text-gray-800 mb-2">{artwork.title}</h3>
                   <p className="text-gray-600 mb-4">by {artwork.artist}</p>
                   <div className="flex justify-between items-center">
-                    <span className="text-2xl font-bold text-gray-800">
-                      {artwork.price}
-                    </span>
-                    <a
-                      href="#"
-                      className="bg-blue-500 text-white px-4 py-2 rounded-full font-semibold hover:bg-blue-600 transition duration-300"
-                    >
+                    <span className="text-2xl font-bold text-gray-800">{artwork.price}</span>
+                    <a href="#" className="bg-blue-500 text-white px-4 py-2 rounded-full font-semibold hover:bg-blue-600 transition duration-300">
                       View Details
                     </a>
                   </div>
