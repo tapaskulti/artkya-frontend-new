@@ -275,35 +275,3 @@ export const ExhibitionItem = ({ exhibitionName, year }) => {
   );
 };
 
-export const ArtDetails = ({
-  title,
-  width,
-  height,
-  depth,
-  price,
-  artist,
-  artistCountry,
-}) => {
-  return (
-    <div className="w-full text-black pb-6">
-      <div className="text-sm font-normal lg:text-base xl:text-lg lg:items-start lg:justify-normal lg:flex-col">
-        <div className="text-gray-500 lg:text-base xl:text-base">{title}</div>
-        <div className="-mt-1 text-sm font-semibold text-gray-500 lg:text-base xl:text-base md:text-sm">
-          <div className="lg:text-xs xl:text-xs">
-            {" "}
-            {width} W x {height} H x {depth} D inches
-          </div>
-        </div>
-      </div>
-      <div className="flex justify-between text-sm font-semibold text-gray-500 xl:text-base md:text-sm my-3">
-        <div>
-          <div className="text-sm">{artist}</div>
-          <div className="text-xs -pt-2">{artistCountry}</div>
-        </div>
-        <div>
-          <span className="text-sm">Price:</span> Print Copy {price}
-        </div>
-      </div>
-    </div>
-  );
-};

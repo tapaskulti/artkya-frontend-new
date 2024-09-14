@@ -6,21 +6,12 @@ const App = () => {
   const dispatch = useDispatch();
   const { token, authUser } = useSelector((state) => state.auth);
 
-  // useEffect(() => {
-  //   dispatch({
-  //     type: "ALL_ART",
-  //     payload: {
-  //       sortCriteria: "none",
-  //       searchCriteria: "none",
-  //       searchInput: undefined,
-  //     },
-  //   });
-  // }, [dispatch]);
-
-
   useEffect(() => {
     dispatch({
       type: "NEW_FILTER_ART",
+    });
+    dispatch({
+      type: "GET_RAND_ART_AND_ARTIST",     
     });
   }, [dispatch]);
 

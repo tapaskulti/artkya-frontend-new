@@ -305,7 +305,7 @@ function ArtistProfilePage() {
     const text = content[activeTab];
     const displayedText = showFullContent
       ? text
-      : text.substring(0, 500) + "...";
+      : text?.substring(0, 500) + "...";
 
     return (
       <div className="h-full overflow-auto">
@@ -329,7 +329,7 @@ function ArtistProfilePage() {
       <div className="w-full h-64 bg-gray-300 relative">       
         {setArtistImageUploadLoading ? (
                 <>
-                  <Spinner />
+                  {/* <Spinner /> */}
                 </>
               ) : (
                 <>

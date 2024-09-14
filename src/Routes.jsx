@@ -14,12 +14,14 @@ import Studio from "./pages/studio/Studio";
 import Cart from "./pages/Cart";
 import ShippingBilling from "./pages/ShippingBilling";
 import ArtistMainPage from "./pages/artist_dashboard/ArtistMainPage";
+import Homepage from "./pages/Homepage";
 
 const Routes = () => {
   return (
     
       <RoutePath>
-        <Route path="/" element={<LandingPage />} />
+        {/* <Route path="/" element={<LandingPage />} /> */}
+        <Route path="/" element={<Homepage />} />
         <Route path="/Login" element={<Login />} />
         <Route path="/Register" element={<Register />} />
         <Route path="/forgotPassword" element={<ForgotPassword />} />

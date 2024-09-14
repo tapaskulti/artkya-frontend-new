@@ -6,12 +6,13 @@ import {
   getArtistProfileByIdAction,
   updateArtistImagesAction,
   updateArtistProfileAction,
+  getRandArtAndArtistAction,
 } from "../api/artistAction";
 import {
   setArtistDetails,
   setArtistImageUploadLoading,
   setGetAllArtByArtist,
- 
+  setRandArtAndArtist, 
 } from "../redux/app/artist/artist-slice";
 
 export function* createArtistSaga(action) {
@@ -87,10 +88,24 @@ export function* getAllArtByArtistSaga(action) {
   }
 }
 
+export function* getRandArtAndArtistSaga(action) {
+  try {
+    const response = yield call(getRandArtAndArtistAction, action.payload);
+    console.log("getrandArtAndArtistSaga====>", response?.data);
+    if (response?.status === 200) {
+      yield put(setRandArtAndArtist({ randArtAndArtist: response?.data }));
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+
 export function* watchAsyncArtistSaga() {
   yield takeEvery("CREATE_ARTIST", createArtistSaga);
   yield takeEvery("UPDATE_ARTIST_PROFILE", updateArtistProfileSaga);
   yield takeEvery("UPDATE_ARTIST_IMAGE", updateArtistImageSaga);
   yield takeEvery("GET_ARTIST_PROFILE_BY_ID", getArtistProfileByIdSaga);
   yield takeEvery("GET_ALL_ART_BY_ARTIST", getAllArtByArtistSaga);
+  yield takeEvery("GET_RAND_ART_AND_ARTIST", getRandArtAndArtistSaga);
 }

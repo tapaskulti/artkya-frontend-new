@@ -2,7 +2,6 @@ import Header from "../components/Header";
 import { IoChevronBackCircleSharp } from "react-icons/io5";
 import { Link, useNavigate } from "react-router-dom";
 import User from "../assets/user.png";
-import { ArtDetails } from "./Painting";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import MasonaryGridLayout from "../components/MasonaryGridLayout";
