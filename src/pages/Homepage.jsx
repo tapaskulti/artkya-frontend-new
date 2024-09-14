@@ -1,8 +1,5 @@
 import { useState, useEffect } from "react";
-import {
-  FaChevronLeft,
-  FaChevronRight,
-} from "react-icons/fa";
+import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import Header from "../components/Header";
 import Home1 from "../assets/home1.webp";
 import Home2 from "../assets/home2.jpg";
@@ -127,7 +124,9 @@ const Homepage = () => {
   };
 
   const nextArtworks = () => {
-    setStartIndex((prevIndex) => Math.min(prevIndex + 1, randArtAndArtist?.artworks.length - 4));
+    setStartIndex((prevIndex) =>
+      Math.min(prevIndex + 1, randArtAndArtist?.artworks.length - 4)
+    );
   };
 
   const prevArtworks = () => {
@@ -233,10 +232,15 @@ const Homepage = () => {
               />
             </div>
             <div className="md:w-1/2">
-              <h2 className="text-3xl font-bold text-gray-800 mb-4">
-                About {randArtAndArtist?.artist?.name}
-              </h2>
-              <div className="h-48 mb-4 overflow-auto">
+              <div>
+                <h2 className="text-3xl font-bold text-gray-800 mb-4">
+                  About the Artist
+                </h2>
+                <h2 className="text-xl font-bold text-gray-800 mb-4">
+                  {randArtAndArtist?.artist?.name}
+                </h2>
+              </div>
+              <div className="h-48 mb-4 overflow-auto stylish-scrollbar">
                 <p className="text-gray-600">
                   {isExpanded
                     ? randArtAndArtist?.artist?.aboutMe
