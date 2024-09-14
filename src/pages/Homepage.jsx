@@ -1,7 +1,5 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import {
-  FaChevronCircleLeft,
-  FaChevronCircleRight,
   FaChevronLeft,
   FaChevronRight,
 } from "react-icons/fa";
@@ -15,6 +13,8 @@ import Feature1 from "../assets/feature1.webp";
 import Feature2 from "../assets/feature2.webp";
 import Feature3 from "../assets/feature3.webp";
 import Feature4 from "../assets/feature4.webp";
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 const featuredArts = [
   {
@@ -40,70 +40,73 @@ const featuredArts = [
   },
 ];
 
-const artworks = [
-  {
-    id: 1,
-    title: "Sunset Dreams",
-    artist: "Jane Doe",
-    price: "$1,200",
-    image: "/placeholder.svg?height=400&width=300&text=Artwork+1",
-  },
-  {
-    id: 2,
-    title: "Urban Rhythm",
-    artist: "John Smith",
-    price: "$950",
-    image: "/placeholder.svg?height=400&width=300&text=Artwork+2",
-  },
-  {
-    id: 3,
-    title: "Serenity",
-    artist: "Emma Johnson",
-    price: "$1,500",
-    image: "/placeholder.svg?height=400&width=300&text=Artwork+3",
-  },
-  {
-    id: 4,
-    title: "Abstract Thoughts",
-    artist: "Michael Brown",
-    price: "$800",
-    image: "/placeholder.svg?height=400&width=300&text=Artwork+4",
-  },
-  {
-    id: 5,
-    title: "Nature's Embrace",
-    artist: "Sarah Lee",
-    price: "$1,100",
-    image: "/placeholder.svg?height=400&width=300&text=Artwork+5",
-  },
-  {
-    id: 6,
-    title: "City Lights",
-    artist: "David Wilson",
-    price: "$1,300",
-    image: "/placeholder.svg?height=400&width=300&text=Artwork+6",
-  },
-  {
-    id: 7,
-    title: "Ocean Whispers",
-    artist: "Emily Chen",
-    price: "$950",
-    image: "/placeholder.svg?height=400&width=300&text=Artwork+7",
-  },
-  {
-    id: 8,
-    title: "Mountain Majesty",
-    artist: "Robert Taylor",
-    price: "$1,400",
-    image: "/placeholder.svg?height=400&width=300&text=Artwork+8",
-  },
-];
+// const artworks = [
+//   {
+//     id: 1,
+//     title: "Sunset Dreams",
+//     artist: "Jane Doe",
+//     price: "$1,200",
+//     image: "/placeholder.svg?height=400&width=300&text=Artwork+1",
+//   },
+//   {
+//     id: 2,
+//     title: "Urban Rhythm",
+//     artist: "John Smith",
+//     price: "$950",
+//     image: "/placeholder.svg?height=400&width=300&text=Artwork+2",
+//   },
+//   {
+//     id: 3,
+//     title: "Serenity",
+//     artist: "Emma Johnson",
+//     price: "$1,500",
+//     image: "/placeholder.svg?height=400&width=300&text=Artwork+3",
+//   },
+//   {
+//     id: 4,
+//     title: "Abstract Thoughts",
+//     artist: "Michael Brown",
+//     price: "$800",
+//     image: "/placeholder.svg?height=400&width=300&text=Artwork+4",
+//   },
+//   {
+//     id: 5,
+//     title: "Nature's Embrace",
+//     artist: "Sarah Lee",
+//     price: "$1,100",
+//     image: "/placeholder.svg?height=400&width=300&text=Artwork+5",
+//   },
+//   {
+//     id: 6,
+//     title: "City Lights",
+//     artist: "David Wilson",
+//     price: "$1,300",
+//     image: "/placeholder.svg?height=400&width=300&text=Artwork+6",
+//   },
+//   {
+//     id: 7,
+//     title: "Ocean Whispers",
+//     artist: "Emily Chen",
+//     price: "$950",
+//     image: "/placeholder.svg?height=400&width=300&text=Artwork+7",
+//   },
+//   {
+//     id: 8,
+//     title: "Mountain Majesty",
+//     artist: "Robert Taylor",
+//     price: "$1,400",
+//     image: "/placeholder.svg?height=400&width=300&text=Artwork+8",
+//   },
+// ];
 
 const carouselImages = [Home1, Home2, Home3, Home4];
 
 const Homepage = () => {
   const [currentImage, setCurrentImage] = useState(0);
   const [startIndex, setStartIndex] = useState(0);
+  const [isExpanded, setIsExpanded] = useState(false);
+
+  const { randArtAndArtist } = useSelector((state) => state.artist);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -124,7 +127,7 @@ const Homepage = () => {
   };
 
   const nextArtworks = () => {
-    setStartIndex((prevIndex) => Math.min(prevIndex + 1, artworks.length - 4));
+    setStartIndex((prevIndex) => Math.min(prevIndex + 1, randArtAndArtist?.artworks.length - 4));
   };
 
   const prevArtworks = () => {
@@ -179,23 +182,35 @@ const Homepage = () => {
       {/* Featured Artworks */}
       <section className="py-16 bg-white">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-gray-800 mb-8 text-center">Featured Artworks</h2>
+          <h2 className="text-3xl font-bold text-gray-800 mb-8 text-center">
+            Featured Artworks
+          </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {featuredArts.map((artwork) => (
-              <div key={artwork.id} className="bg-white rounded-lg shadow-md overflow-hidden group">
+            {featuredArts?.map((artwork) => (
+              <div
+                key={artwork.id}
+                className="bg-white rounded-lg shadow-md overflow-hidden group"
+              >
                 <div className="aspect-square bg-white relative overflow-hidden">
-                  <img 
-                    src={artwork.image} 
-                    alt={artwork.title} 
+                  <img
+                    src={artwork.image}
+                    alt={artwork.title}
                     className="absolute inset-0 w-full h-full object-cover transition-transform duration-[2000ms] ease-in-out transform group-hover:scale-125"
                   />
                 </div>
                 <div className="p-6">
-                  <h3 className="text-xl font-semibold text-gray-800 mb-2">{artwork.title}</h3>
+                  <h3 className="text-xl font-semibold text-gray-800 mb-2">
+                    {artwork.title}
+                  </h3>
                   <p className="text-gray-600 mb-4">by {artwork.artist}</p>
                   <div className="flex justify-between items-center">
-                    <span className="text-2xl font-bold text-gray-800">{artwork.price}</span>
-                    <a href="#" className="bg-blue-500 text-white px-4 py-2 rounded-full font-semibold hover:bg-blue-600 transition duration-300">
+                    <span className="text-2xl font-bold text-gray-800">
+                      {artwork.price}
+                    </span>
+                    <a
+                      href="#"
+                      className="bg-blue-500 text-white px-4 py-2 rounded-full font-semibold hover:bg-blue-600 transition duration-300"
+                    >
                       View Details
                     </a>
                   </div>
@@ -212,27 +227,36 @@ const Homepage = () => {
           <div className="flex flex-col md:flex-row items-center">
             <div className="md:w-1/2 mb-8 md:mb-0">
               <img
-                src="/placeholder.svg?height=400&width=400&text=Artist+Portrait"
-                alt="Artist"
+                src={randArtAndArtist?.artist?.profileImage?.secure_url}
+                alt={randArtAndArtist?.artist?.name}
                 className="rounded-full w-64 h-64 object-cover mx-auto"
               />
             </div>
             <div className="md:w-1/2">
               <h2 className="text-3xl font-bold text-gray-800 mb-4">
-                About the Artist
+                About {randArtAndArtist?.artist?.name}
               </h2>
-              <p className="text-gray-600 mb-6">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                nisi ut aliquip ex ea commodo consequat.
-              </p>
-              <a
-                href="#"
-                className="text-blue-500 font-semibold hover:text-blue-600 transition duration-300"
-              >
-                Read Full Bio →
-              </a>
+              <div className="h-48 mb-4 overflow-auto">
+                <p className="text-gray-600">
+                  {isExpanded
+                    ? randArtAndArtist?.artist?.aboutMe
+                    : `${randArtAndArtist?.artist?.aboutMe.slice(0, 200)}...`}
+                </p>
+              </div>
+              <div className="flex justify-between items-center">
+                <button
+                  onClick={() => setIsExpanded(!isExpanded)}
+                  className="text-blue-500 font-semibold hover:text-blue-600 transition duration-300"
+                >
+                  {isExpanded ? "Read Less" : "Read More"}
+                </button>
+                <Link
+                  to={`/ArtistProfilePage/${randArtAndArtist?.artist?.id}`}
+                  className="bg-blue-500 text-white px-4 py-2 rounded-full font-semibold hover:bg-blue-600 transition duration-300"
+                >
+                  See Artist Profile
+                </Link>
+              </div>
             </div>
           </div>
         </div>
@@ -250,15 +274,15 @@ const Homepage = () => {
                 className="flex transition-transform duration-300 ease-in-out"
                 style={{ transform: `translateX(-${startIndex * (100 / 4)}%)` }}
               >
-                {artworks.map((artwork) => (
+                {randArtAndArtist?.artworks?.map((artwork) => (
                   <div
-                    key={artwork.id}
+                    key={artwork._id}
                     className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 flex-shrink-0 px-2"
                   >
                     <div className="bg-white rounded-lg shadow-md overflow-hidden">
                       <img
-                        src={artwork.image}
-                        alt={artwork.title}
+                        src={artwork?.thumbnail?.secure_url}
+                        alt={artwork?.title}
                         className="w-full h-64 object-cover"
                       />
                       <div className="p-4">
@@ -266,7 +290,7 @@ const Homepage = () => {
                           {artwork.title}
                         </h3>
                         <p className="text-sm text-gray-600 mb-2">
-                          by {artwork.artist}
+                          by {randArtAndArtist?.artist?.name}
                         </p>
                         <p className="text-lg font-bold text-gray-800">
                           {artwork.price}
@@ -287,7 +311,7 @@ const Homepage = () => {
             <button
               onClick={nextArtworks}
               className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-50 rounded-full p-2 hover:bg-opacity-75 transition duration-300"
-              disabled={startIndex >= artworks.length - 4}
+              disabled={startIndex >= randArtAndArtist?.artworks?.length - 4}
             >
               <FaChevronRight className="h-10 w-10 text-gray-800" />
             </button>

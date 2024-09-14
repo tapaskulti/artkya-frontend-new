@@ -65,3 +65,17 @@ export const getAllArtByArtistAction = async (payload) => {
     console.log(error);
   }
 };
+
+
+export const getRandArtAndArtistAction = async (payload) => {
+  console.log("getRandArtAndArtistAction called")
+  try {
+    const response = await axios.get(
+      `${VITE_BASE_URL}/artist/artAndArtistHomePage`
+    );
+
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+};
