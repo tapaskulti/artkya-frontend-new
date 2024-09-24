@@ -2,7 +2,12 @@
 import Header from "../../components/Header";
 // import Footer from "../../components/Footer";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faLock, faEnvelope, faEyeSlash, faEye } from "@fortawesome/free-solid-svg-icons";
+import {
+  faLock,
+  faEnvelope,
+  faEyeSlash,
+  faEye,
+} from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
@@ -135,7 +140,7 @@ const Login = () => {
                   <div className="mt-5">
                     <button
                       type="submit"
-                      className="w-full bg-slate-900 rounded-md px-4 py-2.5 text-lg font-semibold text-white"
+                      className="w-full bg-black rounded-md px-4 py-2.5 text-lg font-semibold text-white"
                       onClick={handleLogin}
                     >
                       LOGIN

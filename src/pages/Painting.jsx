@@ -25,16 +25,10 @@ import MasonaryGridLayout, {
 } from "../components/MasonaryGridLayout";
 import { CustomSelect, CustomSelectWithSearchSide } from "../components/Select";
 
-
 const Painting = () => {
   const dispatch = useDispatch();
-  const {
-    allArt,
-    artNotFound,
-    searchInput,
-    sortCriteria,
-    searchCriteria,
-  } = useSelector((state) => state.art);
+  const { allArt, artNotFound, searchInput, sortCriteria, searchCriteria } =
+    useSelector((state) => state.art);
   const [filterData, setFilterData] = useState({
     style: [],
     subject: [],
@@ -45,9 +39,7 @@ const Painting = () => {
     featuredartist: [],
   });
 
-
-  console.log("filterData==>",filterData)
-
+  console.log("filterData==>", filterData);
 
   const handleFilterData = (e) => {
     const { value, checked, name } = e.target;
@@ -108,7 +100,6 @@ const Painting = () => {
     { value: "priceLowHigh", label: "Price: Low to High" },
     { value: "priceHighLow", label: "Price: High to Low" },
   ];
-  
 
   const handleSortCriteriaChange = (value) => {
     dispatch(setSortCriteria({ sortCriteria: value }));

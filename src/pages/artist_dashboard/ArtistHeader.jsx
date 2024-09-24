@@ -1,11 +1,10 @@
-
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { 
-  faImage, 
-  faChartLine, 
-  faTags, 
-  faMapMarkerAlt, 
-  faStickyNote, 
+import {
+  faImage,
+  faChartLine,
+  faTags,
+  faMapMarkerAlt,
+  faStickyNote,
   faUserCircle,
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
@@ -18,12 +17,10 @@ const ArtistHeader = ({ activeTab, handleTabClick }) => {
         <li className="w-full border-2 border-white hover:bg-slate-400">
           <a
             href="#"
-             onClick={() => handleTabClick("Manage Artworks")}
-             className={`inline-block w-full text-center p-4 ${
-              activeTab === "Manage Artworks" 
-              ? "bg-teal-50 text-black" 
-              : ""
-          }  `}
+            onClick={() => handleTabClick("Manage Artworks")}
+            className={`inline-block w-full text-center p-4 ${
+              activeTab === "Manage Artworks" ? "bg-blue-50 text-black" : ""
+            }  `}
             aria-current={activeTab === "Manage Artworks" ? "page" : null}
           >
             <div className="flex flex-col items-center justify-center">
@@ -35,17 +32,17 @@ const ArtistHeader = ({ activeTab, handleTabClick }) => {
         <li className="w-full border-2 border-white hover:bg-slate-400">
           <a
             href="#"
-             onClick={() => handleTabClick("Sales Dashboard")}
-             className={`inline-block w-full text-center p-4 ${
-              activeTab === "Sales Dashboard" 
-              ? "bg-teal-50 text-black" 
-              : ""
-          }  `}
+            onClick={() => handleTabClick("Sales Dashboard")}
+            className={`inline-block w-full text-center p-4 ${
+              activeTab === "Sales Dashboard" ? "bg-blue-50 text-black" : ""
+            }  `}
             aria-current={activeTab === "Sales Dashboard" ? "page" : null}
-          
           >
             <div className="flex flex-col items-center justify-center">
-              <FontAwesomeIcon icon={faChartLine} className="ArtistHedderIcon" />
+              <FontAwesomeIcon
+                icon={faChartLine}
+                className="ArtistHedderIcon"
+              />
               <span className="mt-2">Sales Dashboard</span>
             </div>
           </a>
@@ -53,14 +50,11 @@ const ArtistHeader = ({ activeTab, handleTabClick }) => {
         <li className="w-full border-2 border-white hover:bg-slate-400">
           <a
             href="#"
-             onClick={() => handleTabClick("Offers Dashboard")}
-             className={`inline-block w-full text-center p-4 ${
-              activeTab === "Offers Dashboard" 
-              ? "bg-teal-50 text-black" 
-              : ""
-          }  `}
+            onClick={() => handleTabClick("Offers Dashboard")}
+            className={`inline-block w-full text-center p-4 ${
+              activeTab === "Offers Dashboard" ? "bg-blue-50 text-black" : ""
+            }  `}
             aria-current={activeTab === "Offers Dashboard" ? "page" : null}
-          
           >
             <div className="flex flex-col items-center justify-center">
               <FontAwesomeIcon icon={faTags} className="ArtistHedderIcon" />
@@ -71,17 +65,17 @@ const ArtistHeader = ({ activeTab, handleTabClick }) => {
         <li className="w-full border-2 border-white hover:bg-slate-400">
           <a
             href="#"
-             onClick={() => handleTabClick("Addresses")}
-             className={`inline-block w-full text-center p-4 ${
-              activeTab === "Addresses" 
-              ? "bg-teal-50 text-black" 
-              : ""
-          }  `}
+            onClick={() => handleTabClick("Addresses")}
+            className={`inline-block w-full text-center p-4 ${
+              activeTab === "Addresses" ? "bg-blue-50 text-black" : ""
+            }  `}
             aria-current={activeTab === "Addresses" ? "page" : null}
-          
           >
             <div className="flex flex-col items-center justify-center">
-              <FontAwesomeIcon icon={faMapMarkerAlt} className="ArtistHedderIcon" />
+              <FontAwesomeIcon
+                icon={faMapMarkerAlt}
+                className="ArtistHedderIcon"
+              />
               <span className="mt-2">Addresses</span>
             </div>
           </a>
@@ -89,17 +83,17 @@ const ArtistHeader = ({ activeTab, handleTabClick }) => {
         <li className="w-full border-2 border-white hover:bg-slate-400">
           <a
             href="#"
-             onClick={() => handleTabClick("Curator Notes")}
-             className={`inline-block w-full text-center p-4 ${
-              activeTab === "Curator Notes" 
-              ? "bg-teal-50 text-black" 
-              : ""
-          }  `}
+            onClick={() => handleTabClick("Curator Notes")}
+            className={`inline-block w-full text-center p-4 ${
+              activeTab === "Curator Notes" ? "bg-blue-50 text-black" : ""
+            }  `}
             aria-current={activeTab === "Curator Notes" ? "page" : null}
-          
           >
             <div className="flex flex-col items-center justify-center">
-              <FontAwesomeIcon icon={faStickyNote} className="ArtistHedderIcon" />
+              <FontAwesomeIcon
+                icon={faStickyNote}
+                className="ArtistHedderIcon"
+              />
               <span className="mt-2">Curator Notes</span>
             </div>
           </a>
@@ -107,17 +101,17 @@ const ArtistHeader = ({ activeTab, handleTabClick }) => {
         <li className="w-full border-2 border-white hover:bg-slate-400">
           <a
             href="#"
-             onClick={() => handleTabClick("Account")}
-             className={`inline-block w-full text-center p-4 ${
-              activeTab === "Account" 
-              ? "bg-teal-50 text-black" 
-              : ""
-          }  `}
+            onClick={() => handleTabClick("Account")}
+            className={`inline-block w-full text-center p-4 ${
+              activeTab === "Account" ? "bg-blue-50 text-black" : ""
+            }  `}
             aria-current={activeTab === "Account" ? "page" : null}
-          
           >
             <div className="flex flex-col items-center justify-center">
-              <FontAwesomeIcon icon={faUserCircle} className="ArtistHedderIcon" />
+              <FontAwesomeIcon
+                icon={faUserCircle}
+                className="ArtistHedderIcon"
+              />
               <span className="mt-2">Account</span>
             </div>
           </a>
@@ -125,14 +119,11 @@ const ArtistHeader = ({ activeTab, handleTabClick }) => {
         <li className="w-full border-2 border-white hover:bg-slate-400">
           <a
             href="#"
-             onClick={() => handleTabClick("Profile Information")}
+            onClick={() => handleTabClick("Profile Information")}
             className={`inline-block w-full text-center p-4 ${
-              activeTab === "Profile Information" 
-              ? "bg-teal-50 text-black" 
-              : ""
+              activeTab === "Profile Information" ? "bg-blue-50 text-black" : ""
             }  `}
             aria-current={activeTab === "Profile Information" ? "page" : null}
-          
           >
             <div className="flex flex-col items-center justify-center">
               <FontAwesomeIcon icon={faUser} className="ArtistHedderIcon" />

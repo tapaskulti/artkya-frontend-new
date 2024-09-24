@@ -4,7 +4,7 @@ import ArtistHeader from "./ArtistHeader";
 import ArtWorkManager from "./ArtWorkManager";
 import SalesDashboard from "./SalesDashboard";
 import AddressManagement from "./Addresh/AddressManagement";
-import ProfileInformation from "./Profile/ProfileInformation"
+import ProfileInformation from "./Profile/ProfileInformation";
 import Account from "./Account";
 import CuratorNote from "./CuratorNote";
 import { useDispatch, useSelector } from "react-redux";
@@ -18,7 +18,7 @@ const ArtistMainPage = () => {
   useEffect(() => {
     console.log("ArtistMainPage tabName------", activeTab);
   }, [activeTab]);
-  
+
   useEffect(() => {
     dispatch({
       type: "GET_ARTIST_PROFILE_BY_ID",
@@ -30,22 +30,19 @@ const ArtistMainPage = () => {
 
   return (
     <>
-      <div className="">
-        <Header />
-        <div className="mt lg:flex ">
-          <div className="w-full">
-            <div className="">
-              <ArtistHeader
-                activeTab={activeTab}
-                handleTabClick={handleTabClick}
-              />
-              {activeTab === "Manage Artworks" && <ArtWorkManager />}
-              {activeTab === "Sales Dashboard" && <SalesDashboard />}
-              {activeTab === "Account" && <Account/>}
-              {activeTab === "Curator Notes" && <CuratorNote />}
-              {activeTab === "Addresses" && <AddressManagement />}
-              {activeTab === "Profile Information" && <ProfileInformation />}
-            </div>
+      <div className="overflow-hidden">
+        <div className="">
+          <Header />
+          <ArtistHeader activeTab={activeTab} handleTabClick={handleTabClick} />
+        </div>
+        <div className="lg:flex">
+          <div className="w-full h-screen overflow-y-auto stylish-scrollbar">
+            {activeTab === "Manage Artworks" && <ArtWorkManager />}
+            {activeTab === "Sales Dashboard" && <SalesDashboard />}
+            {activeTab === "Account" && <Account />}
+            {activeTab === "Curator Notes" && <CuratorNote />}
+            {activeTab === "Addresses" && <AddressManagement />}
+            {activeTab === "Profile Information" && <ProfileInformation />}
           </div>
         </div>
         {/* <Footer /> */}
