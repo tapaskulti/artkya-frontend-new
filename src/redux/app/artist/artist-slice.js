@@ -4,6 +4,7 @@ const initialState = {
   artistDetails: {},
   artistImageUploadLoading: false,
   getAllArtByArtist: [],
+  randArtAndArtist:{}
 };
 
 const artistSlice = createSlice({
@@ -19,6 +20,9 @@ const artistSlice = createSlice({
     setGetAllArtByArtist(state, action) {
       state.getAllArtByArtist = action.payload.getAllArtByArtist;
     },
+    setRandArtAndArtist(state, action) {
+      state.randArtAndArtist = action.payload.randArtAndArtist;
+    },
   },
 });
 
@@ -26,5 +30,7 @@ export const {
   setArtistDetails,
   setArtistImageUploadLoading,
   setGetAllArtByArtist,
+  setRandArtAndArtist
 } = artistSlice.actions;
+
 export const artistReducer = artistSlice.reducer;

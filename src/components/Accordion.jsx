@@ -77,6 +77,103 @@ const Accordion = ({ element, onCheckChange, name }) => {
 
 export default Accordion;
 
+
+export const SecondAccordion = ({ element, onCheckChange, name }) => {
+  const [accordionOpen, setAccordionOpen] = useState(true); // Accordion starts open
+  const [showAll, setShowAll] = useState(false); // Controls 'Show More' functionality
+
+  // Split the elements into two parts: first 5 elements and the rest
+  const firstFiveElements = element[0]?.element?.slice(0, 6);
+  const remainingElements = element[0]?.element?.slice(5);
+
+  return (
+    <div className="py-2">
+      <button
+        onClick={() => setAccordionOpen(!accordionOpen)}
+        className="flex justify-between w-full"
+      >
+        <span>{element[0]?.title}</span>
+        <svg
+          className="fill-slate-500 shrink-0 ml-8 mt-1.5"
+          width="12"
+          height="16"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <rect
+            y="7"
+            width="12"
+            height="2"
+            rx="1"
+            className={`transform origin-center transition duration-200 ease-out ${
+              accordionOpen && "!rotate-180"
+            }`}
+          />
+          <rect
+            y="7"
+            width="12"
+            height="2"
+            rx="1"
+            className={`transform origin-center rotate-90 transition duration-200 ease-out ${
+              accordionOpen && "!rotate-180"
+            }`}
+          />
+        </svg>
+      </button>
+      <div
+        className={`grid overflow-hidden transition-all duration-300 ease-in-out text-slate-600 text-sm ${
+          accordionOpen
+            ? "grid-rows-[1fr] opacity-100"
+            : "grid-rows-[0fr] opacity-0"
+        }`}
+      >
+        <div className="overflow-hidden">
+          {firstFiveElements?.map((singleElement, index) => (
+            <div key={index}>
+              <div className="flex items-center space-x-2">
+                <input
+                  type="checkbox"
+                  className="border border-slate-50"
+                  name={name}
+                  value={singleElement}
+                  onChange={onCheckChange}
+                />
+                <div className="my-0.5 cursor-pointer">{singleElement}</div>
+              </div>
+            </div>
+          ))}
+
+          {/* Display remaining elements if 'showAll' is true */}
+          {showAll &&
+            remainingElements?.map((singleElement, index) => (
+              <div key={index + 5}>
+                <div className="flex items-center space-x-2">
+                  <input
+                    type="checkbox"
+                    className="border border-slate-50"
+                    name={name}
+                    value={singleElement}
+                    onChange={onCheckChange}
+                  />
+                  <div className="my-0.5 cursor-pointer">{singleElement}</div>
+                </div>
+              </div>
+            ))}
+
+          {/* Show 'Show More' button only if there are more than 5 elements */}
+          {remainingElements?.length > 0 && (
+            <button
+              onClick={() => setShowAll(!showAll)}
+              className="text-blue-700 mt-2 focus:outline-none"
+            >
+              {showAll ? "Show Less" : "Show More"}
+            </button>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+};
+
 export const AccordionContinue = () => {
   const dispatch = useDispatch();
   const { cartDetails } = useSelector((state) => state.cart);

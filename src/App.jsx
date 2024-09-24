@@ -8,12 +8,10 @@ const App = () => {
 
   useEffect(() => {
     dispatch({
-      type: "ALL_ART",
-      payload: {
-        sortCriteria: "none",
-        searchCriteria: "none",
-        searchInput: undefined,
-      },
+      type: "NEW_FILTER_ART",
+    });
+    dispatch({
+      type: "GET_RAND_ART_AND_ARTIST",     
     });
   }, [dispatch]);
 
@@ -40,29 +38,29 @@ const App = () => {
     }
   }, []);
 
-  useEffect(() => {
-    if (authUser) {
-      dispatch({
-        type: "CREATE_CART_BY_ID",
-        payload: authUser?._id,
-      });
+  // useEffect(() => {
+  //   if (authUser) {
+  //     dispatch({
+  //       type: "CREATE_CART_BY_ID",
+  //       payload: authUser?._id,
+  //     });
 
-      dispatch({
-        type: "CREATE_WISHLIST_BY_ID",
-        payload: authUser?._id,
-      });
+  //     dispatch({
+  //       type: "CREATE_WISHLIST_BY_ID",
+  //       payload: authUser?._id,
+  //     });
 
-      dispatch({
-        type: "GET_CART_BY_ID",
-        payload: authUser?._id,
-      });
+  //     dispatch({
+  //       type: "GET_CART_BY_ID",
+  //       payload: authUser?._id,
+  //     });
 
-      dispatch({
-        type: "GET_WISHLIST_BY_ID",
-        payload: authUser?._id,
-      });
-    }
-  }, [authUser]);
+  //     dispatch({
+  //       type: "GET_WISHLIST_BY_ID",
+  //       payload: authUser?._id,
+  //     });
+  //   }
+  // }, [authUser]);
 
   return (
     <>
