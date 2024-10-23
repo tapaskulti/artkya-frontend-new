@@ -197,6 +197,15 @@ const Header = () => {
             </div>
             <div className="flex items-center space-x-24">
               <ul className="hidden md:flex space-x-10 font-sans text-base cursor-pointer  text-[#000000] ">
+                {token && authUser?.role === "ADMIN" && (
+                  <>
+                    <li className="hover:text-amber-800 ">
+                      <NavLink className="border-black" to="/Admin">
+                        Admin
+                      </NavLink>
+                    </li>
+                  </>
+                )}
                 {token && (
                   <>
                     <li className="hover:text-amber-800 ">

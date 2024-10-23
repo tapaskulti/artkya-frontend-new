@@ -135,7 +135,7 @@ const Login = () => {
                   <div className="mt-5">
                     <button
                       type="submit"
-                      className="w-full bg-slate-900 rounded-md px-4 py-2.5 text-lg font-semibold text-white"
+                      className="w-full bg-black rounded-md px-4 py-2.5 text-lg font-semibold text-white"
                       onClick={handleLogin}
                     >
                       LOGIN
