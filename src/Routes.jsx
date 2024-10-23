@@ -15,6 +15,8 @@ import Cart from "./pages/Cart";
 import ShippingBilling from "./pages/ShippingBilling";
 import ArtistMainPage from "./pages/artist_dashboard/ArtistMainPage";
 import Homepage from "./pages/Homepage";
+import ADashboard from "./pages/AdminDashboard";
+
 
 const Routes = () => {
   return (
@@ -38,6 +40,7 @@ const Routes = () => {
         <Route path="/ShippingBilling" element={<ShippingBilling />} />
         {/* <Route path="/:id/checkout" element={<ChekoutPage />} /> */}
         <Route path="/Artist" element={<ArtistMainPage />} />
+        <Route path="/Admin" element={<ADashboard />} />
       </RoutePath>
   );
 };
