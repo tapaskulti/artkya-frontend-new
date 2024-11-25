@@ -54,7 +54,8 @@ const Header = () => {
               <InnerMenuComponent
                 name={"View Profile"}
                 onClick={() => {
-                  // navigate("/Accounts");
+                  navigate("/Profile");
+                  dispatch(setHeaderMenuOpen({ headerMenuOpen: false }));
                 }}
               />
               <InnerMenuComponent
