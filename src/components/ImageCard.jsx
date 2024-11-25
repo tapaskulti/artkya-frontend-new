@@ -1,4 +1,6 @@
-export const ImageCardFour = ({
+import { FaHeart, FaPlus, FaShoppingCart } from "react-icons/fa";
+
+export const ImageCard = ({
     image,
     artist,
     country,
@@ -23,7 +25,7 @@ export const ImageCardFour = ({
             src={image}
             alt={`${artist} - Painting`}
             className="w-full h-full object-cover transform transition-transform duration-[2000ms] ease-in-out group-hover:scale-125 cursor-pointer"
-            onClick={handleImageClick}
+            // onClick={handleImageClick}
           />
           <div className="absolute top-2 right-2 flex space-x-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
             <button

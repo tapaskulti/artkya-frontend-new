@@ -2,11 +2,13 @@ import React, { useEffect, useState } from "react";
 import Header from "../components/Header";
 import { FaPencilAlt } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
+import { ImageCard } from "../components/ImageCard";
 
 const UserProfilePage = () => {
   const dispatch = useDispatch();
   const [isHovering, setIsHovering] = useState(false);
   const { authUser } = useSelector((state) => state.auth);
+  const { wishlistDetails } = useSelector((state) => state.wishlist);
 
   useEffect(() => {
     dispatch({
@@ -20,21 +22,10 @@ const UserProfilePage = () => {
     console.log("Edit profile picture");
   };
 
-  const ImageCard = ({ index }) => (
-    <div className="relative w-full aspect-square rounded-lg overflow-hidden shadow-md">
-      <Image
-        src={`/placeholder.svg?height=200&width=200&text=Image ${index}`}
-        alt={`Image ${index}`}
-        layout="fill"
-        objectFit="cover"
-      />
-    </div>
-  );
-
   const handleFileUploadChange = (event) => {
-    const file = event.target.files[0];
-    console.log(file);
-    formData.append("avatar", file);
+    // const file = event.target.files[0];
+    // console.log(file);
+    // formData.append("avatar", file);
   };
 
   return (
@@ -70,7 +61,23 @@ const UserProfilePage = () => {
             <div className="text-3xl text-black font-light uppercase">
               Favorites
             </div>
-            <div>image</div>
+            <div>
+              {wishlistDetails?.arts?.map((singleWishlist) => {
+                console.log("singleWishlist=>", singleWishlist);
+                return (
+                  <div>
+                    <ImageCard
+                      image={singleWishlist?.thumbnail?.secure_url}
+                      price={singleWishlist?.priceDetails?.price}
+                      name={singleWishlist?.name}
+                      depth={singleWishlist?.depth}
+                      width={singleWishlist?.width}
+                      height={singleWishlist?.height}
+                    />                    
+                  </div>
+                )
+              })}
+            </div>
             <div className="bg-red-800 text-white px-8 py-4 text-xl font-semibold">
               View All Favourites
             </div>
