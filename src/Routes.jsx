@@ -16,6 +16,7 @@ import ShippingBilling from "./pages/ShippingBilling";
 import ArtistMainPage from "./pages/artist_dashboard/ArtistMainPage";
 import Homepage from "./pages/Homepage";
 import ADashboard from "./pages/AdminDashboard";
+import UserProfilePage from "./pages/UserProfilePage";
 
 
 const Routes = () => {
@@ -27,7 +28,7 @@ const Routes = () => {
         <Route path="/Login" element={<Login />} />
         <Route path="/Register" element={<Register />} />
         <Route path="/forgotPassword" element={<ForgotPassword />} />
-        {/* <Route path="/:id" element={<ArtDetailPage />} /> */}
+        <Route path="/Profile" element={<UserProfilePage />} />
         <Route path="/artistProfilePage/:id" element={<ArtistProfilePage />} />
         <Route path="/artDetailPage/:id" element={ <ArtDetailPage /> } />
         <Route path="/Painting" element={<Painting />} />
