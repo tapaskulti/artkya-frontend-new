@@ -61,7 +61,32 @@ const UserProfilePage = () => {
             <div className="text-3xl text-black font-light uppercase">
               Favorites
             </div>
-            <div>
+            <div className="flex gap-2">
+              {wishlistDetails?.arts.slice(0, 4)?.map((singleWishlist) => {
+                console.log("singleWishlist=>", singleWishlist);
+                return (
+                  <div>
+                    <ImageCard
+                      image={singleWishlist?.thumbnail?.secure_url}
+                      price={singleWishlist?.priceDetails?.price}
+                      name={singleWishlist?.name}
+                      depth={singleWishlist?.depth}
+                      width={singleWishlist?.width}
+                      height={singleWishlist?.height}
+                    />
+                  </div>
+                );
+              })}
+            </div>
+            <button className="bg-red-800 text-white px-8 py-4 text-xl font-semibold">
+              View All Favourites
+            </button>
+          </div>
+          <div className="space-y-6">
+            <div className="text-3xl text-black font-light uppercase">
+              Collections
+            </div>
+            <div className="flex space-x-3">
               {wishlistDetails?.arts?.map((singleWishlist) => {
                 console.log("singleWishlist=>", singleWishlist);
                 return (
@@ -73,23 +98,14 @@ const UserProfilePage = () => {
                       depth={singleWishlist?.depth}
                       width={singleWishlist?.width}
                       height={singleWishlist?.height}
-                    />                    
+                    />
                   </div>
-                )
+                );
               })}
             </div>
-            <div className="bg-red-800 text-white px-8 py-4 text-xl font-semibold">
+            <button className="bg-red-800 text-white px-8 py-4 text-xl font-semibold">
               View All Favourites
-            </div>
-          </div>
-          <div className="space-y-6">
-            <div className="text-3xl text-black font-light uppercase">
-              Collections
-            </div>
-            <div>image</div>
-            <div className="bg-red-800 text-white px-8 py-4 text-xl font-semibold">
-              View All Favourites
-            </div>
+            </button>
           </div>
         </div>
       </div>
