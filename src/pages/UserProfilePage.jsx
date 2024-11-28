@@ -104,7 +104,7 @@ const UserProfilePage = () => {
               })}
             </div>
             <button className="bg-red-800 text-white px-8 py-4 text-xl font-semibold">
-              View All Favourites
+              View All Collections
             </button>
           </div>
         </div>
