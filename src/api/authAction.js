@@ -59,3 +59,17 @@ export const updateUserAddressAction = async (payload) => {
 
   return response;
 };
+
+
+export const updateUserProfileAction = async (payload) => {
+  try {
+    const response = await axios.patch(
+      `${VITE_BASE_URL}/user/uploadUserAvatar?userId=${payload.userId}`,
+      payload.body
+    );
+
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+};

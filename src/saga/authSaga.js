@@ -7,6 +7,7 @@ import {
   logoutSagaAction,
   registerUserAction,
   updateUserAddressAction,
+  updateUserProfileAction,
 } from "../api/authAction";
 import {
   setAuthUser,
@@ -116,6 +117,20 @@ function* addShippingAddressSaga(action) {
   }
 }
 
+
+export function* updateUserProfileSaga(action) {
+  try {
+    console.log(action.payload, "action payload");
+    const response = yield call(updateUserProfileAction, action?.payload);
+    console.log("updateUserProfileSaga====>", response?.data);
+    if (response?.status === 200) {
+      toast("Profile Updated successfully");
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 export function* watchAsyncAuthSaga() {
   yield takeEvery("REGISTER", registerSaga);
   yield takeEvery("LOGIN", loginSaga);
@@ -123,4 +138,5 @@ export function* watchAsyncAuthSaga() {
   yield takeEvery("LOGGED_IN_USER", userLoggedInSaga);
   yield takeEvery("LOGOUT_SAGA", logoutSaga);
   yield takeEvery("ADD_SHIPPING_ADDRESS", addShippingAddressSaga);
+  yield takeEvery("UPLOAD_USER_AVATAR", updateUserProfileSaga);
 }
