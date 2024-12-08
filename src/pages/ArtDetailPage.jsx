@@ -86,10 +86,10 @@ const ArtDetailPage = () => {
           {/* image detail */}
           <div className="w-1/3 text-center bg-slate-50">
             <div className="flex justify-between text-xl font-semibold text-left">
-              <button className="bg-slate-300 text-base w-1/2 py-2.5 text-red-600">
+              <button className="bg-black text-base w-1/2 py-2.5 text-white">
                 Original Art
               </button>
-              <button className="w-1/2 py-2.5 text-base">Print Copy</button>
+              <button className="w-1/2 py-2.5 text-base bg-gray-100">Print Copy</button>
             </div>
 
             <div className="px-3 mt-5 text-xl font-semibold">
