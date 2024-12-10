@@ -3,12 +3,15 @@ import Header from "../components/Header";
 import { FaPencilAlt } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { ImageCard } from "../components/ImageCard";
+import { useNavigate } from "react-router-dom";
 
 const UserProfilePage = () => {
   const dispatch = useDispatch();
   const [isHovering, setIsHovering] = useState(false);
   const { authUser } = useSelector((state) => state.auth);
   const { wishlistDetails } = useSelector((state) => state.wishlist);
+  const formData = new FormData();
+  const navigate = useNavigate();
 
   useEffect(() => {
     dispatch({
@@ -17,15 +20,18 @@ const UserProfilePage = () => {
     });
   }, [authUser]);
 
-  const handleEditClick = () => {
-    // Placeholder function for editing the profile picture
-    console.log("Edit profile picture");
-  };
-
   const handleFileUploadChange = (event) => {
-    // const file = event.target.files[0];
-    // console.log(file);
-    // formData.append("avatar", file);
+    const file = event.target.files[0];
+    console.log(file);
+    formData.append("avatar", file);
+
+    dispatch({
+      type: "UPLOAD_USER_AVATAR",
+      payload: {
+        userId: authUser?._id,
+        body: formData,
+      },
+    });
   };
 
   return (
@@ -38,23 +44,30 @@ const UserProfilePage = () => {
             onMouseEnter={() => setIsHovering(true)}
             onMouseLeave={() => setIsHovering(false)}
           >
-            <img
-              src="/placeholder.svg?height=128&width=128"
-              alt="Profile Picture"
-            />
+            <img src={authUser?.avatar?.secure_url} alt="Profile Picture" />
             {isHovering && (
-              <div
-                className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center cursor-pointer"
-                onClick={handleFileUploadChange}
-              >
-                <div className="bg-white rounded-full p-4">
-                  <FaPencilAlt className="text-black text-4xl" />
-                </div>
+              <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center cursor-pointer">
+                <label
+                  htmlFor="profileUpload"
+                  className="text-white cursor-pointer bg-white rounded-full p-4"
+                >
+                  <FaPencilAlt className="w-6 h-6 text-black" />
+                </label>
+                <input
+                  id="profileUpload"
+                  type="file"
+                  accept="image/*"
+                  onChange={handleFileUploadChange}
+                  className="hidden"
+                />
               </div>
             )}
           </div>
-          <h2 className="text-xl font-semibold mt-2">John Doe</h2>
-          <p className="text-gray-600">@johndoe</p>
+          <h2 className="text-xl font-semibold mt-2">
+            {`${authUser?.firstName} 
+            ${authUser?.lastName}`}
+          </h2>
+          {/* <p className="text-gray-600">@johndoe</p> */}
         </div>
         <div className="py-12 px-10 space-y-10">
           <div className="space-y-6">
@@ -62,8 +75,7 @@ const UserProfilePage = () => {
               Favorites
             </div>
             <div className="flex gap-2">
-              {wishlistDetails?.arts.slice(0, 4)?.map((singleWishlist) => {
-                console.log("singleWishlist=>", singleWishlist);
+              {wishlistDetails?.arts?.slice(0, 4)?.map((singleWishlist) => {
                 return (
                   <div>
                     <ImageCard
@@ -78,7 +90,12 @@ const UserProfilePage = () => {
                 );
               })}
             </div>
-            <button className="bg-red-800 text-white px-8 py-4 text-xl font-semibold">
+            <button
+              className="bg-red-800 text-white px-8 py-4 text-xl font-semibold"
+              onClick={() => {
+                navigate(`/favoutires`);
+              }}
+            >
               View All Favourites
             </button>
           </div>
@@ -87,7 +104,7 @@ const UserProfilePage = () => {
               Collections
             </div>
             <div className="flex space-x-3">
-              {wishlistDetails?.arts?.map((singleWishlist) => {
+              {wishlistDetails?.arts?.slice(0, 4)?.map((singleWishlist) => {
                 console.log("singleWishlist=>", singleWishlist);
                 return (
                   <div>
@@ -103,7 +120,12 @@ const UserProfilePage = () => {
                 );
               })}
             </div>
-            <button className="bg-red-800 text-white px-8 py-4 text-xl font-semibold">
+            <button
+              className="bg-red-800 text-white px-8 py-4 text-xl font-semibold"
+              onClick={() => {
+                navigate(`/favoutires`);
+              }}
+            >
               View All Collections
             </button>
           </div>
