@@ -1,11 +1,8 @@
 import Header from "../components/Header";
-// import phouzdar_photo from "../assets/artist1.jpg";
-// import Img1 from "../assets/Img1.jpg";
-// import Img2 from "../assets/img2.jpg";
+
 import Img3 from "../assets/img3.jpg";
 import Img4 from "../assets/img4.jpg";
 import Img6 from "../assets/img6.jpg";
-// // import Img7 from "../assets/img7.jpg";
 import Img8 from "../assets/img8.jpg";
 import Img9 from "../assets/img9.jpg";
 import Img10 from "../assets/img10.jpg";
@@ -29,18 +26,6 @@ import Img27 from "../assets/img27.jpg";
 import Img28 from "../assets/img28.jpg";
 import Img29 from "../assets/img29.jpg";
 import Img30 from "../assets/img30.jpg";
-// import Img31 from "../assets/img31.jpg";
-// import Img32 from "../assets/img32.jpg";
-// import Img33 from "../assets/img33.jpg";
-// import Img34 from "../assets/img34.jpg";
-// import Img35 from "../assets/img35.jpg";
-// import Img36 from "../assets/img36.jpg";
-// import Img37 from "../assets/img37.jpg";
-// import Img38 from "../assets/img38.jpg";
-// import Img39 from "../assets/img39.jpg";
-// import Img40 from "../assets/img40.jpg";
-// import Img41 from "../assets/img41.jpg";
-// import Img42 from "../assets/img42.jpg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
 
