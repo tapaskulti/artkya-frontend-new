@@ -1,5 +1,5 @@
 import { useState } from "react";
-import logo from "../assets/logo.png";
+import logo from "../assets/logo.jpeg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 import { Link, NavLink, useNavigate } from "react-router-dom";
@@ -193,7 +193,7 @@ const Header = () => {
             </div>
             <div className="flex items-center justify-center md:justify-start">
               <Link to="/">
-                <img src={logo} className="h-6 " alt="Artkya Logo" />
+                <img src={logo} className="h-12 " alt="Artkya Logo" />
               </Link>
             </div>
             <div className="flex items-center space-x-24">
