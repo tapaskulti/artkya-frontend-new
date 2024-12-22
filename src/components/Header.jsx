@@ -207,7 +207,7 @@ const Header = () => {
                     </li>
                   </>
                 )}
-                {token && (
+                {token && authUser?.isArtist && (
                   <>
                     <li className="hover:text-amber-800 ">
                       <NavLink className="border-black" to="/Artist">

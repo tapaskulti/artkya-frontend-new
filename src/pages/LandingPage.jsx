@@ -31,6 +31,7 @@ import { Link } from "react-router-dom";
 
 import { faPaintBrush } from "@fortawesome/free-solid-svg-icons";
 import { Carousel } from "@material-tailwind/react";
+import Footer from "../components/Footer";
 // import ArtItem from "../components/ArtItem";
 
 // const carouselItems = [

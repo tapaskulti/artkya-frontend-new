@@ -1,5 +1,5 @@
 import React from "react";
-import phouzdar_footer_logo from "../assets/phouzdar_footer_logo.png";
+import logo from "../assets/logo.jpeg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import { faFacebookF, faLinkedinIn, faTwitter } from "@fortawesome/free-brands-svg-icons"
@@ -13,7 +13,7 @@ const Footer = () => {
           <div className="">
             <Link to="/">
               <img
-                src={phouzdar_footer_logo}
+                src={logo}
                 className="h-6 "
                 alt="Phouzdar Logo"
               />
