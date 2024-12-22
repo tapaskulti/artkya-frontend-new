@@ -30,20 +30,29 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
 
 import { faPaintBrush } from "@fortawesome/free-solid-svg-icons";
+import { Carousel } from "@material-tailwind/react";
 // import ArtItem from "../components/ArtItem";
+
+// const carouselItems = [
+//   require("./assets/carousel/carousel01.jpg"),
+//   require("./assets/carousel/carousel02.jpg"),
+//   require("./assets/carousel/carousel03.jpg"),
+// ];
 
 const LandingPage = () => {
   return (
     <>
       <div className="static">
         <Header />
-        <div className="mt-10 lg:flex">
-          <div>
-            <h2 className="px-10">Painting</h2>
-            {/* <div className="bg-gray-100 h-auto backdrop-blur-lg rounded-md w-full md:max-lg:max-w-screen-sm md:max-lg:mx-auto mt-6 px-3 py-2">Left</div> */}
-            <div className="mt-20 px-5 md:px-10">
+        <div className="lg:flex">
+          <div className="mt-10">
+            {/* <div>
+              <Carousel items={carouselItems} />
+            </div> */}
+            {/* <div className="w-full h-auto px-3 py-2 mt-6 bg-gray-100 rounded-md backdrop-blur-lg md:max-lg:max-w-screen-sm md:max-lg:mx-auto">Left</div> */}
+            <div className="px-5 mt-20 md:px-10">
               <div className="h-auto mt-32 gap-10 lg:gap-16 columns-1 md:columns-2 lg:columns-3 2xl:columns-4 gap-y-16 [&>img:not(:first-child)]:mt-5 lg:[&>img:not(:first-child)]:mt-16">
-                <Link to="/artistProfilePage">
+                <Link to="/Painting">
                   <div>
                     {/* <img src={Img1} alt="" /> */}
                     <br />
@@ -59,7 +68,7 @@ const LandingPage = () => {
                     <ArtDetails />
                   </div>
                 </div> */}
-                <Link to="/artistProfilePage">
+                <Link to="/Painting">
                   <div>
                     <img src={Img3} alt="" />
                     <br />
@@ -68,7 +77,7 @@ const LandingPage = () => {
                     </div>
                   </div>
                 </Link>
-                <Link to="/artistProfilePage">
+                <Link to="/Painting">
                   <div>
                     <img src={Img4} alt="" />
                     <br />
@@ -77,7 +86,7 @@ const LandingPage = () => {
                     </div>
                   </div>
                 </Link>
-                <Link to="/artistProfilePage">
+                <Link to="/Painting">
                   <div>
                     <img src={Img6} alt="" />
                     <br />
@@ -93,7 +102,7 @@ const LandingPage = () => {
                     <ArtDetails />
                   </div>
                 </div> */}
-                <Link to="/artistProfilePage">
+                <Link to="/Painting">
                   <div>
                     <img src={Img8} alt="" />
                     <br />
@@ -102,7 +111,7 @@ const LandingPage = () => {
                     </div>
                   </div>
                 </Link>
-                <Link to="/artistProfilePage">
+                <Link to="/Painting">
                   <div>
                     <img src={Img9} alt="" />
                     <br />
@@ -111,7 +120,7 @@ const LandingPage = () => {
                     </div>
                   </div>
                 </Link>
-                <Link to="/artistProfilePage">
+                <Link to="/Painting">
                   <div>
                     <img src={Img10} alt="" />
                     <br />
@@ -120,7 +129,7 @@ const LandingPage = () => {
                     </div>
                   </div>
                 </Link>
-                <Link to="/artistProfilePage">
+                <Link to="/Painting">
                   <div>
                     <img src={Img11} alt="" />
                     <br />
@@ -129,7 +138,7 @@ const LandingPage = () => {
                     </div>
                   </div>
                 </Link>
-                <Link to="/artistProfilePage">
+                <Link to="/Painting">
                   <div>
                     <img src={Img12} alt="" />
                     <br />
@@ -138,7 +147,7 @@ const LandingPage = () => {
                     </div>
                   </div>
                 </Link>
-                <Link to="/artistProfilePage">
+                <Link to="/Painting">
                   <div>
                     <img src={Img13} alt="" />
                     <br />
@@ -147,7 +156,7 @@ const LandingPage = () => {
                     </div>
                   </div>
                 </Link>
-                <Link to="/artistProfilePage">
+                <Link to="/Painting">
                   <div>
                     <img src={Img14} alt="" />
                     <br />
@@ -156,7 +165,7 @@ const LandingPage = () => {
                     </div>
                   </div>
                 </Link>
-                <Link to="/artistProfilePage">
+                <Link to="/Painting">
                   <div>
                     <img src={Img15} alt="" />
                     <br />
@@ -165,7 +174,7 @@ const LandingPage = () => {
                     </div>
                   </div>
                 </Link>
-                <Link to="/artistProfilePage">
+                <Link to="/Painting">
                   <div>
                     <img src={Img16} alt="" />
                     <br />
@@ -174,7 +183,7 @@ const LandingPage = () => {
                     </div>
                   </div>
                 </Link>
-                <Link to="/artistProfilePage">
+                <Link to="/Painting">
                   <div>
                     <img src={Img17} alt="" />
                     <br />
@@ -183,7 +192,7 @@ const LandingPage = () => {
                     </div>
                   </div>
                 </Link>
-                <Link to="/artistProfilePage">
+                <Link to="/Painting">
                   <div>
                     <img src={Img18} alt="" />
                     <br />
@@ -192,7 +201,7 @@ const LandingPage = () => {
                     </div>
                   </div>
                 </Link>
-                <Link to="/artistProfilePage">
+                <Link to="/Painting">
                   <div>
                     <img src={Img19} alt="" />
                     <br />
@@ -201,7 +210,7 @@ const LandingPage = () => {
                     </div>
                   </div>
                 </Link>
-                <Link to="/artistProfilePage">
+                <Link to="/Painting">
                   <div>
                     <img src={Img20} alt="" />
                     <br />
@@ -210,7 +219,7 @@ const LandingPage = () => {
                     </div>
                   </div>
                 </Link>
-                <Link to="/artistProfilePage">
+                <Link to="/Painting">
                   <div>
                     <img src={Img21} alt="" />
                     <br />
@@ -219,7 +228,7 @@ const LandingPage = () => {
                     </div>
                   </div>
                 </Link>
-                <Link to="/artistProfilePage">
+                <Link to="/Painting">
                   <div>
                     <img src={Img22} alt="" />
                     <br />
@@ -228,7 +237,7 @@ const LandingPage = () => {
                     </div>
                   </div>
                 </Link>
-                <Link to="/artistProfilePage">
+                <Link to="/Painting">
                   <div>
                     <img src={Img23} alt="" />
                     <br />
@@ -237,7 +246,7 @@ const LandingPage = () => {
                     </div>
                   </div>
                 </Link>
-                <Link to="/artistProfilePage">
+                <Link to="/Painting">
                   <div>
                     <img src={Img24} alt="" />
                     <br />
@@ -365,7 +374,7 @@ export const ArtDetails = () => {
           <div className="lg:text-xs xl:text-xs">W 120 * H 300 inches</div>
         </div>
       </div>
-      <div className="flex justify-between text-sm font-semibold text-gray-500 xl:text-base md:text-sm my-5">
+      <div className="flex justify-between my-5 text-sm font-semibold text-gray-500 xl:text-base md:text-sm">
         <div>
           <div className="text-sm">Elizabeth Becker</div>
           <div className="text-xs -pt-2">United States</div>

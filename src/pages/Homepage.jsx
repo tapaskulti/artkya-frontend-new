@@ -1,15 +1,21 @@
 import { useState, useEffect } from "react";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import Header from "../components/Header";
+
 import Home1 from "../assets/home1.webp";
 import Home2 from "../assets/home2.jpg";
 import Home3 from "../assets/home3.webp";
 import Home4 from "../assets/home4.webp";
 
-import Feature1 from "../assets/feature1.webp";
-import Feature2 from "../assets/feature2.webp";
-import Feature3 from "../assets/feature3.webp";
-import Feature4 from "../assets/feature4.webp";
+import Feature1 from "../assets/feature1.jpg";
+import Feature2 from "../assets/feature2.jpg";
+import Feature3 from "../assets/feature3.jpg";
+// import Feature4 from "../assets/feature4.jpg";
+
+import Collection1 from "../assets/collection1.jpg"
+import Collection2 from "../assets/collection2.jpg"
+import Collection3 from "../assets/collection3.jpg"
+
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
@@ -36,6 +42,30 @@ const featuredArts = [
     image: Feature3,
   },
 ];
+
+// const featuredCollections = [
+//   {
+//     id: 1,
+//     title: "Acrylic Oil Paintings",
+//     artist: "Jane Doe",
+//     price: "$1,200",
+//     image: Collection1,
+//   },
+//   {
+//     id: 2,
+//     title: "Urban Rhythm",
+//     artist: "John Smith",
+//     price: "$950",
+//     image: Collection2,
+//   },
+//   {
+//     id: 3,
+//     title: "Serenity",
+//     artist: "Emma Johnson",
+//     price: "$1,500",
+//     image: Collection3,
+//   },
+// ];
 
 // const artworks = [
 //   {
@@ -216,6 +246,40 @@ const Homepage = () => {
                 </div>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="py-16 bg-white">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl font-bold text-gray-800 mb-8 text-center">
+            Featured Collections
+          </h2>
+          <div className="grid grid-cols-2 gap-9">
+              <div className="">
+                <div className="bg-white overflow-hidden group">
+                  <img
+                    src={Collection1}
+                    alt=""
+                    className="inset-0 w-full h-full object-cover transition-transform duration-[2000ms] ease-in-out transform group-hover:scale-125"
+                  />
+                </div>
+                <div className="bg-white overflow-hidden mt-9 group">
+                  <img
+                    src={Collection3}
+                    alt=""
+                    className="inset-0 w-full h-full object-cover transition-transform duration-[2000ms] ease-in-out transform group-hover:scale-125"
+                  />
+                </div>
+              </div>
+              
+              <div className="bg-white overflow-hidden group">
+                  <img
+                    src={Collection2}
+                    alt=""
+                    className="inset-0 w-full h-full object-cover transition-transform duration-[2000ms] ease-in-out transform group-hover:scale-125"
+                  />
+              </div>
           </div>
         </div>
       </section>
