@@ -18,6 +18,7 @@ import Collection3 from "../assets/collection3.jpg"
 
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import Footer from "../components/Footer";
 
 const featuredArts = [
   {
@@ -386,6 +387,8 @@ const Homepage = () => {
           </div>
         </div>
       </section>
+      
+      {/* <Footer /> */}
     </div>
   );
 };
