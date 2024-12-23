@@ -1,5 +1,4 @@
 import {Route, Routes as RoutePath } from "react-router-dom";
-import LandingPage from "./pages/LandingPage";
 import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
 import ForgotPassword from "./pages/auth/ForgotPassword";
@@ -17,13 +16,13 @@ import ArtistMainPage from "./pages/artist_dashboard/ArtistMainPage";
 import Homepage from "./pages/Homepage";
 import ADashboard from "./pages/AdminDashboard";
 import UserProfilePage from "./pages/UserProfilePage";
+import OriginalArtCheckout from "./pages/OriginalArtCheckout";
 
 
 const Routes = () => {
   return (
     
-      <RoutePath>
-        {/* <Route path="/" element={<LandingPage />} /> */}
+      <RoutePath>     
         <Route path="/" element={<Homepage />} />
         <Route path="/Login" element={<Login />} />
         <Route path="/Register" element={<Register />} />
@@ -42,6 +41,7 @@ const Routes = () => {
         {/* <Route path="/:id/checkout" element={<ChekoutPage />} /> */}
         <Route path="/Artist" element={<ArtistMainPage />} />
         <Route path="/Admin" element={<ADashboard />} />
+        <Route path="/artDetailPage/:id/original" element={<OriginalArtCheckout />} />
       </RoutePath>
   );
 };

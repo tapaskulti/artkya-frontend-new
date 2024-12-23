@@ -25,16 +25,10 @@ import MasonaryGridLayout, {
 } from "../components/MasonaryGridLayout";
 import { CustomSelect, CustomSelectWithSearchSide } from "../components/Select";
 
-
 const Painting = () => {
   const dispatch = useDispatch();
-  const {
-    allArt,
-    artNotFound,
-    searchInput,
-    sortCriteria,
-    searchCriteria,
-  } = useSelector((state) => state.art);
+  const { allArt, artNotFound, searchInput, sortCriteria, searchCriteria } =
+    useSelector((state) => state.art);
   const [filterData, setFilterData] = useState({
     style: [],
     subject: [],
@@ -45,9 +39,7 @@ const Painting = () => {
     featuredartist: [],
   });
 
-
-  console.log("filterData==>",filterData)
-
+  console.log("filterData==>", filterData);
 
   const handleFilterData = (e) => {
     const { value, checked, name } = e.target;
@@ -132,7 +124,7 @@ const Painting = () => {
           </div>
         </div>
         <div className="flex items-center justify-between px-10 mt-5">
-          <h2 className="text-slate-900 text-3xl font-thin">
+          <h2 className="text-3xl font-thin text-slate-900">
             Original Paintings For Sale
           </h2>
           <CustomSelect
@@ -153,7 +145,7 @@ const Painting = () => {
           {/* Accordion Container */}
           <div className="w-1/5 h-[80vh] overflow-y-scroll bg-white border-r border-slate-200 p-4 scrollbar-hide">
             <h2>Category</h2>
-            <div className="w-full bg-gray-50 border border-gray-200 backdrop-blur-lg rounded-md mt-6 px-3 py-2 text-xl text-center">
+            <div className="w-full px-3 py-2 mt-6 text-xl text-center border border-gray-200 rounded-md bg-gray-50 backdrop-blur-lg">
               Paintings
             </div>
             <div className="mt-2.5">

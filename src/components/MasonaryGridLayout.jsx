@@ -12,7 +12,7 @@ const MasonaryGridLayout = ({ artDetails }) => {
   return (
     <div className="container mx-auto p-4 rounded-lg">
       {/* Grid layout with responsive columns */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-16">
         {artDetails?.map((singleArt, index) => (
           <div
             key={index}
@@ -23,7 +23,7 @@ const MasonaryGridLayout = ({ artDetails }) => {
                 <img
                   src={singleArt?.thumbnail?.secure_url}
                   alt={singleArt?.title || `Art ${index}`}
-                  className="w-full h-auto object-cover transition-transform duration-[2000ms] ease-in-out transform group-hover:scale-125"
+                  className="w-auto h-full object-cover transition-transform duration-[2000ms] ease-in-out transform group-hover:scale-125"
                 />
               </a>
               {/* Action Buttons */}
