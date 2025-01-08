@@ -14,7 +14,7 @@ import TextAccordion from "../components/TextAccordion";
 const ArtDetailPage = () => {
   let { id } = useParams();
   const dispatch = useDispatch();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   useEffect(() => {
     dispatch({
       type: "ART_DETAIL",
@@ -136,13 +136,26 @@ const ArtDetailPage = () => {
                 <div className="py-4">
                   {activeTab === "original" ? (
                     <>
-                      <button className="w-full bg-black hover:bg-blue-900 text-white py-4"
-                      onClick={()=>{
-                        navigate(`/artDetailPage/${id}/original`)
-                      }}
-                      >
-                        MAKE AN OFFER
-                      </button>
+                      <div className="space-y-2">
+                        <div className="text-2xl text-slate-900 font-thin">
+                          Price: {artDetail?.priceDetails?.price} USD
+                        </div>
+                        <button
+                          className="w-full bg-black hover:bg-blue-900 text-white py-4"
+                          onClick={() => {}}
+                        >
+                          ADD TO CART
+                        </button>
+
+                        <button
+                          className="w-full bg-black hover:bg-blue-900 text-white py-4"
+                          onClick={() => {
+                            navigate(`/artDetailPage/${id}/original`);
+                          }}
+                        >
+                          MAKE AN OFFER
+                        </button>
+                      </div>
                     </>
                   ) : (
                     <>
@@ -176,37 +189,37 @@ const ArtDetailPage = () => {
               <ProductCarousel />
             </div>
             <div className="max-w-md mx-auto p-4">
-      <TextAccordion
-        title="Section 1"
-        content={
-          <div>
-            <p>This is the first line of content for section 1.</p>
-            <p>This is the second line of content for section 1.</p>
-            <p>This is the third line of content for section 1.</p>
-          </div>
-        }
-      />
-      <TextAccordion
-        title="Section 2"
-        content={
-          <div>
-            <p>This is the first line of content for section 2.</p>
-            <p>This is the second line of content for section 2.</p>
-            <p>This is the third line of content for section 2.</p>
-          </div>
-        }
-      />
-      <TextAccordion
-        title="Section 3"
-        content={
-          <div>
-            <p>This is the first line of content for section 3.</p>
-            <p>This is the second line of content for section 3.</p>
-            <p>This is the third line of content for section 3.</p>
-          </div>
-        }
-      />
-    </div>
+              <TextAccordion
+                title="Section 1"
+                content={
+                  <div>
+                    <p>This is the first line of content for section 1.</p>
+                    <p>This is the second line of content for section 1.</p>
+                    <p>This is the third line of content for section 1.</p>
+                  </div>
+                }
+              />
+              <TextAccordion
+                title="Section 2"
+                content={
+                  <div>
+                    <p>This is the first line of content for section 2.</p>
+                    <p>This is the second line of content for section 2.</p>
+                    <p>This is the third line of content for section 2.</p>
+                  </div>
+                }
+              />
+              <TextAccordion
+                title="Section 3"
+                content={
+                  <div>
+                    <p>This is the first line of content for section 3.</p>
+                    <p>This is the second line of content for section 3.</p>
+                    <p>This is the third line of content for section 3.</p>
+                  </div>
+                }
+              />
+            </div>
           </div>
         </div>
       </div>
