@@ -26,12 +26,16 @@ const ArtDetailPage = () => {
   const [activeTab, setActiveTab] = useState("original");
 
   const { artDetail } = useSelector((state) => state.art);
+  const { authUser } = useSelector((state) => state.auth);
 
   useEffect(() => {
     if (artDetail) {
       setSelectedImage(artDetail?.thumbnail?.secure_url);
     }
   }, [artDetail]);
+
+
+  
 
   return (
     <div className="w-screen">
@@ -142,7 +146,17 @@ const ArtDetailPage = () => {
                         </div>
                         <button
                           className="w-full bg-black hover:bg-blue-900 text-white py-4"
-                          onClick={() => {}}
+                          onClick={() => {
+                            dispatch({
+                              type: "ADD_ART_TO_CART",
+                              payload: {
+                                userId: authUser?._id,
+                                artId: artDetail?._id,
+                                artPrice: artDetail?.priceDetails?.price,
+                                navigate,
+                              },
+                            })
+                          }}
                         >
                           ADD TO CART
                         </button>
