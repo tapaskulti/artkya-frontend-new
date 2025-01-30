@@ -57,7 +57,7 @@ const ArtDetailPage = () => {
                   <img
                     src={singleArt?.secure_url}
                     alt=""
-                    className="w-16 h-16 cursor-pointer"
+                    className="w-16 h-16 cursor-pointer "
                   />
                 </div>
               );
@@ -67,7 +67,7 @@ const ArtDetailPage = () => {
             <img
               src={selectedImage}
               alt={"here is the text"}
-              className="rounded-md shadow-xl md:w-full "
+              className="rounded-md shadow-xl md:w-full h-96 object-contain"
             />
           </div>
 
@@ -76,7 +76,7 @@ const ArtDetailPage = () => {
             <div className="flex justify-between text-xl font-semibold text-left">
               <button
                 onClick={() => {
-                  setActiveTab("original")
+                  setActiveTab("original");
                   dispatch(setprintPrice({ printPrice: "" }));
                 }}
                 className={`${
@@ -106,10 +106,15 @@ const ArtDetailPage = () => {
 
               <div className="py-3 space-y-1 text-sm text-left text-gray-700">
                 {/* <h2>Painting, Acrylic on Canvas</h2> */}
-                <h2>
-                  Size:{" "}
-                  {`${artDetail?.width} W x ${artDetail?.height} H x ${artDetail?.depth} D cm`}
-                </h2>
+                {activeTab === "original" && (
+                  <>
+                    <h2>
+                      Size:{" "}
+                      {`${artDetail?.width} W x ${artDetail?.height} H x ${artDetail?.depth} D cm`}
+                    </h2>
+                  </>
+                )}
+
                 <div className="flex items-center space-x-6">
                   {/* <h2 className="text-sm font-semibold text-gray-700">
                     Picture ID: AKP-2024
@@ -186,10 +191,11 @@ const ArtDetailPage = () => {
                     </>
                   ) : (
                     <>
-                      <button className="w-full bg-black hover:bg-blue-900 text-white py-4"
-                      onClick={() => {
-                        navigate(`/artDetailPage/${id}/print`);
-                      }}
+                      <button
+                        className="w-full bg-black hover:bg-blue-900 text-white py-4"
+                        onClick={() => {
+                          navigate(`/artDetailPage/${id}/print`);
+                        }}
                       >
                         BUY PRINT COPY
                       </button>
