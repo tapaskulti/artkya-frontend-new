@@ -16,7 +16,7 @@ const PrintArtCheckout = () => {
               <img
                 src={artDetail?.thumbnail?.secure_url}
                 alt="Product Image"
-                className="w-full h-full object-contain"
+                className="w-[500px] h-[500px] object-contain"
               />
             </div>
             <div className="space-y-4">
