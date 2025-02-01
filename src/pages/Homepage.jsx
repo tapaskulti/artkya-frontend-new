@@ -388,7 +388,7 @@ const Homepage = () => {
         </div>
       </section>
       
-      {/* <Footer /> */}
+      <Footer />
     </div>
   );
 };
