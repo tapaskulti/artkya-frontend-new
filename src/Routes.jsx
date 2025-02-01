@@ -17,6 +17,7 @@ import Homepage from "./pages/Homepage";
 import ADashboard from "./pages/AdminDashboard";
 import UserProfilePage from "./pages/UserProfilePage";
 import OriginalArtCheckout from "./pages/OriginalArtCheckout";
+import PrintArtCheckout from "./pages/PrintArtCheckout";
 
 
 const Routes = () => {
@@ -42,6 +43,7 @@ const Routes = () => {
         <Route path="/Artist" element={<ArtistMainPage />} />
         <Route path="/Admin" element={<ADashboard />} />
         <Route path="/artDetailPage/:id/original" element={<OriginalArtCheckout />} />
+        <Route path="/artDetailPage/:id/print" element={<PrintArtCheckout/>} />
       </RoutePath>
   );
 };

@@ -12,9 +12,11 @@ import Feature2 from "../assets/feature2.jpg";
 import Feature3 from "../assets/feature3.jpg";
 // import Feature4 from "../assets/feature4.jpg";
 
-import Collection1 from "../assets/collection1.jpg"
-import Collection2 from "../assets/collection2.jpg"
-import Collection3 from "../assets/collection3.jpg"
+import Collection1 from "../assets/collection1.jpg";
+import Collection2 from "../assets/collection2.jpg";
+import Collection3 from "../assets/collection3.jpg";
+
+import Blank_Avatar from "../assets/Blank_Avatar.png";
 
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
@@ -257,42 +259,45 @@ const Homepage = () => {
             Featured Collections
           </h2>
           <div className="grid grid-cols-2 gap-9">
-              <div className="">
-                <div className="bg-white overflow-hidden group">
-                  <img
-                    src={Collection1}
-                    alt=""
-                    className="inset-0 w-full h-full object-cover transition-transform duration-[2000ms] ease-in-out transform group-hover:scale-125"
-                  />
-                </div>
-                <div className="bg-white overflow-hidden mt-9 group">
-                  <img
-                    src={Collection3}
-                    alt=""
-                    className="inset-0 w-full h-full object-cover transition-transform duration-[2000ms] ease-in-out transform group-hover:scale-125"
-                  />
-                </div>
-              </div>
-              
+            <div className="">
               <div className="bg-white overflow-hidden group">
-                  <img
-                    src={Collection2}
-                    alt=""
-                    className="inset-0 w-full h-full object-cover transition-transform duration-[2000ms] ease-in-out transform group-hover:scale-125"
-                  />
+                <img
+                  src={Collection1}
+                  alt=""
+                  className="inset-0 w-full h-full object-cover transition-transform duration-[2000ms] ease-in-out transform group-hover:scale-125"
+                />
               </div>
+              <div className="bg-white overflow-hidden mt-9 group">
+                <img
+                  src={Collection3}
+                  alt=""
+                  className="inset-0 w-full h-full object-cover transition-transform duration-[2000ms] ease-in-out transform group-hover:scale-125"
+                />
+              </div>
+            </div>
+
+            <div className="bg-white overflow-hidden group">
+              <img
+                src={Collection2}
+                alt=""
+                className="inset-0 w-full h-full object-cover transition-transform duration-[2000ms] ease-in-out transform group-hover:scale-125"
+              />
+            </div>
           </div>
         </div>
       </section>
 
-      {/* About the Artist */}
       <section className="py-16 bg-gray-100">
         <div className="container mx-auto px-4">
           <div className="flex flex-col md:flex-row items-center">
             <div className="md:w-1/2 mb-8 md:mb-0">
               <img
-                src={randArtAndArtist?.artist?.profileImage?.secure_url}
-                alt={randArtAndArtist?.artist?.name}
+                src={
+                  randArtAndArtist?.artist?.profileImage?.secure_url
+                    ? randArtAndArtist?.artist?.profileImage?.secure_url
+                    : Blank_Avatar
+                }
+                alt={Blank_Avatar}
                 className="rounded-full w-64 h-64 object-cover mx-auto"
               />
             </div>
@@ -302,14 +307,18 @@ const Homepage = () => {
                   About the Artist
                 </h2>
                 <h2 className="text-xl font-bold text-gray-800 mb-4">
-                  {randArtAndArtist?.artist?.name}
+                  {randArtAndArtist?.artist?.name || "Unknown Artist"}
                 </h2>
               </div>
               <div className="h-48 mb-4 overflow-auto stylish-scrollbar">
                 <p className="text-gray-600">
                   {isExpanded
-                    ? randArtAndArtist?.artist?.aboutMe
-                    : `${randArtAndArtist?.artist?.aboutMe.slice(0, 200)}...`}
+                    ? randArtAndArtist?.artist?.aboutMe ||
+                      "This artist has not provided a description."
+                    : `${
+                        randArtAndArtist?.artist?.aboutMe?.slice(0, 200) ||
+                        "No description available."
+                      }...`}
                 </p>
               </div>
               <div className="flex justify-between items-center">
@@ -332,63 +341,75 @@ const Homepage = () => {
       </section>
 
       {/* Artist's Works Carousel */}
-      <section className="py-16 bg-white">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-gray-800 mb-8 text-center">
-            Artist's Works
-          </h2>
-          <div className="relative">
-            <div className="overflow-hidden">
-              <div
-                className="flex transition-transform duration-300 ease-in-out"
-                style={{ transform: `translateX(-${startIndex * (100 / 4)}%)` }}
-              >
-                {randArtAndArtist?.artworks?.map((artwork) => (
-                  <div
-                    key={artwork._id}
-                    className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 flex-shrink-0 px-2"
-                  >
-                    <div className="bg-white rounded-lg shadow-md overflow-hidden">
-                      <img
-                        src={artwork?.thumbnail?.secure_url}
-                        alt={artwork?.title}
-                        className="w-full h-64 object-cover"
-                      />
-                      <div className="p-4">
-                        <h3 className="text-lg font-semibold text-gray-800 mb-2">
-                          {artwork.title}
-                        </h3>
-                        <p className="text-sm text-gray-600 mb-2">
-                          by {randArtAndArtist?.artist?.name}
-                        </p>
-                        <p className="text-lg font-bold text-gray-800">
-                          {artwork.price}
-                        </p>
+      {randArtAndArtist?.artworks?.length > 0 && (
+        <section className="py-16 bg-white">
+          <div className="container mx-auto px-4">
+            <h2 className="text-3xl font-bold text-gray-800 mb-8 text-center">
+              Artist's Works
+            </h2>
+            <div className="relative">
+              <div className="overflow-hidden">
+                <div
+                  className="flex transition-transform duration-300 ease-in-out"
+                  style={{
+                    transform: `translateX(-${startIndex * (100 / 4)}%)`,
+                  }}
+                >
+                  {randArtAndArtist?.artworks?.map((artwork) => (
+                    <div
+                      key={artwork._id}
+                      className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 flex-shrink-0 px-2"
+                    >
+                      <div className="bg-white rounded-lg shadow-md overflow-hidden">
+                        <img
+                          src={artwork?.thumbnail?.secure_url}
+                          alt={artwork?.title || "Untitled Artwork"}
+                          className="w-full h-64 object-cover"
+                        />
+                        <div className="p-4">
+                          <h3 className="text-lg font-semibold text-gray-800 mb-2">
+                            {artwork.title || "Untitled"}
+                          </h3>
+                          <p className="text-sm text-gray-600 mb-2">
+                            by{" "}
+                            {randArtAndArtist?.artist?.name || "Unknown Artist"}
+                          </p>
+                          <p className="text-lg font-bold text-gray-800">
+                            {artwork.price || "Price Not Available"}
+                          </p>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
+              <button
+                onClick={prevArtworks}
+                className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-50 rounded-full p-2 hover:bg-opacity-75 transition duration-300"
+                disabled={startIndex === 0}
+              >
+                <FaChevronLeft className="h-10 w-10 text-gray-800" />
+              </button>
+              <button
+                onClick={nextArtworks}
+                className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-50 rounded-full p-2 hover:bg-opacity-75 transition duration-300"
+                disabled={startIndex >= randArtAndArtist?.artworks?.length - 4}
+              >
+                <FaChevronRight className="h-10 w-10 text-gray-800" />
+              </button>
             </div>
-            <button
-              onClick={prevArtworks}
-              className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-50 rounded-full p-2 hover:bg-opacity-75 transition duration-300"
-              disabled={startIndex === 0}
-            >
-              <FaChevronLeft className="h-10 w-10 text-gray-800" />
-            </button>
-            <button
-              onClick={nextArtworks}
-              className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-50 rounded-full p-2 hover:bg-opacity-75 transition duration-300"
-              disabled={startIndex >= randArtAndArtist?.artworks?.length - 4}
-            >
-              <FaChevronRight className="h-10 w-10 text-gray-800" />
-            </button>
           </div>
+<<<<<<< HEAD
         </div>
       </section>
       
       <Footer />
+=======
+        </section>
+      )}
+
+      {/* <Footer /> */}
+>>>>>>> f68484647a354087cde0da46e1dcf86513ded497
     </div>
   );
 };

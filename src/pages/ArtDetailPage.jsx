@@ -10,11 +10,12 @@ import { useDispatch, useSelector } from "react-redux";
 import "react-multi-carousel/lib/styles.css";
 import ProductCarousel from "../components/ProductCarousel";
 import TextAccordion from "../components/TextAccordion";
+import { setprintPrice } from "../redux/app/art/artSlice";
 
 const ArtDetailPage = () => {
   let { id } = useParams();
   const dispatch = useDispatch();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   useEffect(() => {
     dispatch({
       type: "ART_DETAIL",
@@ -25,7 +26,8 @@ const ArtDetailPage = () => {
   const [selectedImage, setSelectedImage] = useState();
   const [activeTab, setActiveTab] = useState("original");
 
-  const { artDetail } = useSelector((state) => state.art);
+  const { artDetail, printPrice } = useSelector((state) => state.art);
+  const { authUser } = useSelector((state) => state.auth);
 
   useEffect(() => {
     if (artDetail) {
@@ -55,7 +57,7 @@ const ArtDetailPage = () => {
                   <img
                     src={singleArt?.secure_url}
                     alt=""
-                    className="w-16 h-16 cursor-pointer"
+                    className="w-16 h-16 cursor-pointer "
                   />
                 </div>
               );
@@ -65,7 +67,7 @@ const ArtDetailPage = () => {
             <img
               src={selectedImage}
               alt={"here is the text"}
-              className="rounded-md shadow-xl md:w-full "
+              className="rounded-md shadow-xl md:w-full h-96 object-contain"
             />
           </div>
 
@@ -73,7 +75,10 @@ const ArtDetailPage = () => {
           <div className="w-1/3 text-center bg-slate-50">
             <div className="flex justify-between text-xl font-semibold text-left">
               <button
-                onClick={() => setActiveTab("original")}
+                onClick={() => {
+                  setActiveTab("original");
+                  dispatch(setprintPrice({ printPrice: "" }));
+                }}
                 className={`${
                   activeTab === "original" ? "bg-gray-400" : ""
                 } text-base w-1/2 py-2.5`}
@@ -101,10 +106,15 @@ const ArtDetailPage = () => {
 
               <div className="py-3 space-y-1 text-sm text-left text-gray-700">
                 {/* <h2>Painting, Acrylic on Canvas</h2> */}
-                <h2>
-                  Size:{" "}
-                  {`${artDetail?.width} W x ${artDetail?.height} H x ${artDetail?.depth} D cm`}
-                </h2>
+                {activeTab === "original" && (
+                  <>
+                    <h2>
+                      Size:{" "}
+                      {`${artDetail?.width} W x ${artDetail?.height} H x ${artDetail?.depth} D cm`}
+                    </h2>
+                  </>
+                )}
+
                 <div className="flex items-center space-x-6">
                   {/* <h2 className="text-sm font-semibold text-gray-700">
                     Picture ID: AKP-2024
@@ -125,10 +135,22 @@ const ArtDetailPage = () => {
                             { label: "16 * 20 inches", value: "16*20 inches" },
                             { label: "20 * 30 inches", value: "20*30 inches" },
                           ]}
+                          onChange={(e) => {
+                            console.log("select value", e.value);
+                            if (e.value === "8*10 inches") {
+                              dispatch(setprintPrice({ printPrice: "75" }));
+                            }
+                            if (e.value === "16*20 inches") {
+                              dispatch(setprintPrice({ printPrice: "175" }));
+                            }
+                            if (e.value === "20*30 inches") {
+                              dispatch(setprintPrice({ printPrice: "195" }));
+                            }
+                          }}
                         />
                       </div>
                       <div className="text-2xl text-slate-900 font-thin">
-                        Price: USD 280
+                        Price: USD {printPrice}
                       </div>
                     </div>
                   </>
@@ -136,17 +158,45 @@ const ArtDetailPage = () => {
                 <div className="py-4">
                   {activeTab === "original" ? (
                     <>
-                      <button className="w-full bg-black hover:bg-blue-900 text-white py-4"
-                      onClick={()=>{
-                        navigate(`/artDetailPage/${id}/original`)
-                      }}
-                      >
-                        MAKE AN OFFER
-                      </button>
+                      <div className="space-y-2">
+                        <div className="text-2xl text-slate-900 font-thin">
+                          Price: {artDetail?.priceDetails?.price} USD
+                        </div>
+                        <button
+                          className="w-full bg-black hover:bg-blue-900 text-white py-4"
+                          onClick={() => {
+                            dispatch({
+                              type: "ADD_ART_TO_CART",
+                              payload: {
+                                userId: authUser?._id,
+                                artId: artDetail?._id,
+                                artPrice: artDetail?.priceDetails?.price,
+                                navigate,
+                              },
+                            });
+                          }}
+                        >
+                          ADD TO CART
+                        </button>
+
+                        <button
+                          className="w-full bg-black hover:bg-blue-900 text-white py-4"
+                          onClick={() => {
+                            navigate(`/artDetailPage/${id}/original`);
+                          }}
+                        >
+                          MAKE AN OFFER
+                        </button>
+                      </div>
                     </>
                   ) : (
                     <>
-                      <button className="w-full bg-black hover:bg-blue-900 text-white py-4">
+                      <button
+                        className="w-full bg-black hover:bg-blue-900 text-white py-4"
+                        onClick={() => {
+                          navigate(`/artDetailPage/${id}/print`);
+                        }}
+                      >
                         BUY PRINT COPY
                       </button>
                     </>
@@ -176,37 +226,37 @@ const ArtDetailPage = () => {
               <ProductCarousel />
             </div>
             <div className="max-w-md mx-auto p-4">
-      <TextAccordion
-        title="Section 1"
-        content={
-          <div>
-            <p>This is the first line of content for section 1.</p>
-            <p>This is the second line of content for section 1.</p>
-            <p>This is the third line of content for section 1.</p>
-          </div>
-        }
-      />
-      <TextAccordion
-        title="Section 2"
-        content={
-          <div>
-            <p>This is the first line of content for section 2.</p>
-            <p>This is the second line of content for section 2.</p>
-            <p>This is the third line of content for section 2.</p>
-          </div>
-        }
-      />
-      <TextAccordion
-        title="Section 3"
-        content={
-          <div>
-            <p>This is the first line of content for section 3.</p>
-            <p>This is the second line of content for section 3.</p>
-            <p>This is the third line of content for section 3.</p>
-          </div>
-        }
-      />
-    </div>
+              <TextAccordion
+                title="Section 1"
+                content={
+                  <div>
+                    <p>This is the first line of content for section 1.</p>
+                    <p>This is the second line of content for section 1.</p>
+                    <p>This is the third line of content for section 1.</p>
+                  </div>
+                }
+              />
+              <TextAccordion
+                title="Section 2"
+                content={
+                  <div>
+                    <p>This is the first line of content for section 2.</p>
+                    <p>This is the second line of content for section 2.</p>
+                    <p>This is the third line of content for section 2.</p>
+                  </div>
+                }
+              />
+              <TextAccordion
+                title="Section 3"
+                content={
+                  <div>
+                    <p>This is the first line of content for section 3.</p>
+                    <p>This is the second line of content for section 3.</p>
+                    <p>This is the third line of content for section 3.</p>
+                  </div>
+                }
+              />
+            </div>
           </div>
         </div>
       </div>
