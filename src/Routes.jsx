@@ -1,4 +1,4 @@
-import {Route, Routes as RoutePath } from "react-router-dom";
+import { Route, Routes as RoutePath } from "react-router-dom";
 import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
 import ForgotPassword from "./pages/auth/ForgotPassword";
@@ -14,37 +14,53 @@ import Cart from "./pages/Cart";
 import ShippingBilling from "./pages/ShippingBilling";
 import ArtistMainPage from "./pages/artist_dashboard/ArtistMainPage";
 import Homepage from "./pages/Homepage";
-import ADashboard from "./pages/AdminDashboard";
 import UserProfilePage from "./pages/UserProfilePage";
 import OriginalArtCheckout from "./pages/OriginalArtCheckout";
 import PrintArtCheckout from "./pages/PrintArtCheckout";
-
+import Admin from "./pages/AdminDashboard";
+import PaintingsManagement from "./components/Admin/PaintingsManagement";
+import OrdersManagement from "./components/Admin/OrdersManagement";
+import UsersManagement from "./components/Admin/UsersManagement";
 
 const Routes = () => {
   return (
-    
-      <RoutePath>     
-        <Route path="/" element={<Homepage />} />
-        <Route path="/Login" element={<Login />} />
-        <Route path="/Register" element={<Register />} />
-        <Route path="/forgotPassword" element={<ForgotPassword />} />
-        <Route path="/Profile" element={<UserProfilePage />} />
-        <Route path="/artistProfilePage/:id" element={<ArtistProfilePage />} />
-        <Route path="/artDetailPage/:id" element={ <ArtDetailPage /> } />
-        <Route path="/Painting" element={<Painting />} />
-        <Route path="/favoutires" element={<Favourites />} />
-        <Route path="/AboutUs" element={<AboutUs />} />
-        <Route path="/Studio" element={<Studio/>} />
-        <Route path="/Contacts" element={<Contacts />} />
-        <Route path="/Accounts" element={<Account />} />
-        <Route path="/Cart" element={<Cart />} />
-        <Route path="/ShippingBilling" element={<ShippingBilling />} />
-        {/* <Route path="/:id/checkout" element={<ChekoutPage />} /> */}
-        <Route path="/Artist" element={<ArtistMainPage />} />
-        <Route path="/Admin" element={<ADashboard />} />
-        <Route path="/artDetailPage/:id/original" element={<OriginalArtCheckout />} />
-        <Route path="/artDetailPage/:id/print" element={<PrintArtCheckout/>} />
-      </RoutePath>
+    <RoutePath>
+      <Route path="/" element={<Homepage />} />
+      <Route path="/Login" element={<Login />} />
+      <Route path="/Register" element={<Register />} />
+      <Route path="/forgotPassword" element={<ForgotPassword />} />
+      <Route path="/Profile" element={<UserProfilePage />} />
+      <Route path="/artistProfilePage/:id" element={<ArtistProfilePage />} />
+      <Route path="/artDetailPage/:id" element={<ArtDetailPage />} />
+      <Route path="/Painting" element={<Painting />} />
+      <Route path="/favoutires" element={<Favourites />} />
+      <Route path="/AboutUs" element={<AboutUs />} />
+      <Route path="/Studio" element={<Studio />} />
+      <Route path="/Contacts" element={<Contacts />} />
+      <Route path="/Accounts" element={<Account />} />
+      <Route path="/Cart" element={<Cart />} />
+      <Route path="/ShippingBilling" element={<ShippingBilling />} />
+      {/* <Route path="/:id/checkout" element={<ChekoutPage />} /> */}
+      <Route path="/Artist" element={<ArtistMainPage />} />
+      {/* <Route path="/Admin" element={<Admin />} /> */}
+      <Route
+        path="/artDetailPage/:id/original"
+        element={<OriginalArtCheckout />}
+      />
+      {/* <Route path="/artDetailPage/:id/print" element={<PrintArtCheckout />} />
+      <Route path="Admin/users" element={<UsersManagement />} />
+      <Route path="Admin/paintings" element={<PaintingsManagement />} />
+      <Route path="Admin/orders" element={<OrdersManagement />} /> */}
+
+      {/* Admin Routes */}
+      <Route path="/Admin" element={<Admin />}>
+        <Route index element={<UsersManagement />} />
+        <Route path="users" element={<UsersManagement />} />
+        <Route path="paintings" element={<PaintingsManagement />} />
+        <Route path="orders" element={<OrdersManagement />} />
+      </Route>
+
+    </RoutePath>
   );
 };
 

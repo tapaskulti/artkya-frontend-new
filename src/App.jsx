@@ -26,6 +26,14 @@ const App = () => {
     }
   }, [token]);
 
+    
+  useEffect(() => {
+    dispatch({
+      type: "GET_CART_BY_ID",
+      payload: authUser?._id,
+    });
+  }, [authUser]);
+
   useEffect(() => {
     const userEmail = localStorage.getItem("User_email");
     if (userEmail) {

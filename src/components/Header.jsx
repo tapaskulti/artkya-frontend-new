@@ -21,6 +21,8 @@ const Header = () => {
   const [dropDownOpen, setdropDownOpen] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { cartDetails } = useSelector((state) => state.cart);
+
 
   return (
     <>
@@ -265,12 +267,21 @@ const Header = () => {
                       <CiHeart className="w-5 h-6" />
                     </li>
                     <li
-                      className="hover:text-amber-800 "
+                      className="hover:text-amber-800 relative"
                       onClick={() => {
                         navigate("/Cart");
                       }}
                     >
                       <BsCart3 className="w-5 h-6" />
+                      {cartDetails?.arts?.length > 0 ? (
+                        <span className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs">
+                          {cartDetails?.arts?.length}
+                        </span>
+                      ) : (
+                        <span className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs">
+                          0
+                        </span>
+                      )}
                     </li>
                     <li
                       className="hover:text-amber-800 "
