@@ -2,7 +2,6 @@
 import Header from "../components/Header";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
-
 import { faPaintBrush } from "@fortawesome/free-solid-svg-icons";
 import Accordion, { SecondAccordion } from "../components/Accordion";
 import {
@@ -39,7 +38,7 @@ const Painting = () => {
     featuredartist: [],
   });
 
-  console.log("filterData==>", filterData);
+  // console.log("filterData==>", filterData);
 
   const handleFilterData = (e) => {
     const { value, checked, name } = e.target;
