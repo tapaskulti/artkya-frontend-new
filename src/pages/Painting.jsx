@@ -108,7 +108,7 @@ const Painting = () => {
 
   return (
     <>
-      <div className="static h-full">
+      <div className="static h-full bg-white">
         <Header />
         <div className="flex justify-end px-10 py-2 border-b border-slate-200 focus:outline-none focus:border-slate-600">
           <div className="flex items-center">
@@ -265,4 +265,3 @@ export const ExhibitionItem = ({ exhibitionName, year }) => {
     </div>
   );
 };
-
