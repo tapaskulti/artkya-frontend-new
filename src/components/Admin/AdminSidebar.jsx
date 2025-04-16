@@ -1,4 +1,3 @@
-import React from "react";
 import { FaPalette, FaShoppingBag, FaUsers } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
@@ -17,7 +16,7 @@ const AdminSidebar = () => {
           Users
         </Link>
         <Link
-          to="/Admin/paintings"
+          to="/Admin/paintings"np
           className="flex items-center px-4 py-3 text-gray-700 hover:bg-gray-100"
         >
           <FaPalette className="w-5 h-5 mr-3" />

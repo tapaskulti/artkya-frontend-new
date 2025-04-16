@@ -1,62 +1,27 @@
-import React, { useState } from "react";
+import { useState, useEffect } from "react";
 import { BsSearch, BsTrash2, BsX } from "react-icons/bs";
+import { useDispatch, useSelector } from "react-redux";
 
 function PaintingsManagement() {
-  const [paintings, setPaintings] = useState([
-    {
-      id: 1,
-      title: "Sunset by the Lake",
-      artist: "Sarah Johnson",
-      price: 1000,
-      commission: 200,
-      status: "Available",
-      category: "Landscape",
-      uploadDate: "2024-03-01",
-      views: 1543,
-      likes: 89,
-      approved: false,
-      thumbnail:
-        "https://images.unsplash.com/photo-1507166763745-bfe008fbb831?w=400&q=80",
-    },
-    {
-      id: 2,
-      title: "Abstract Thoughts",
-      artist: "Michael Chen",
-      price: 2000,
-      commission: 500,
-      status: "Sold",
-      category: "Abstract",
-      uploadDate: "2024-02-28",
-      views: 2102,
-      likes: 167,
-      approved: true,
-      thumbnail:
-        "https://images.unsplash.com/photo-1536924940846-227afb31e2a5?w=400&q=80",
-    },
-    {
-      id: 3,
-      title: "City Lights",
-      artist: "Emma Davis",
-      price: 1500,
-      commission: 300,
-      status: "Hidden",
-      category: "Urban",
-      uploadDate: "2024-03-05",
-      views: 876,
-      likes: 45,
-      approved: false,
-      thumbnail:
-        "https://images.unsplash.com/photo-1514866747592-c2d279258a78?w=400&q=80",
-    },
-  ]);
+  const dispatch = useDispatch();
+  const { allPaintings } = useSelector((state) => state.admin);
 
+  const [searchTerm, setSearchTerm] = useState("");
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [selectedPainting, setSelectedPainting] = useState(null);
-  const [searchTerm, setSearchTerm] = useState("");
+  const [paintings, setPaintings] = useState([]);
+
+  useEffect(() => {
+    dispatch({ type: "FETCH_ALL_PAINTINGS" });
+  }, [dispatch]);
+
+  useEffect(() => {
+    setPaintings(allPaintings);
+  }, [allPaintings]);
 
   const handleStatusChange = (paintingId, newStatus) => {
     setPaintings(
-      paintings.map((p) =>
+      paintings?.map((p) =>
         p.id === paintingId ? { ...p, status: newStatus } : p
       )
     );
@@ -64,7 +29,7 @@ function PaintingsManagement() {
 
   const toggleApproval = (paintingId) => {
     setPaintings(
-      paintings.map((p) =>
+      paintings?.map((p) =>
         p.id === paintingId ? { ...p, approved: !p.approved } : p
       )
     );
@@ -77,24 +42,24 @@ function PaintingsManagement() {
 
   const confirmDelete = () => {
     if (selectedPainting) {
-      setPaintings(paintings.filter((p) => p.id !== selectedPainting.id));
+      setPaintings(paintings?.filter((p) => p.id !== selectedPainting.id));
       setShowDeleteModal(false);
       setSelectedPainting(null);
     }
   };
 
-  const filteredPaintings = paintings.filter(
+  const filteredPaintings = paintings?.filter(
     (painting) =>
       painting.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
       painting.artist.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   const totalRevenue = paintings
-    .filter((p) => p.status === "Sold")
+    ?.filter((p) => p.status === "Sold")
     .reduce((sum, p) => sum + p.price + p.commission, 0);
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 bg-white min-h-screen">
       <div className="flex justify-between items-center">
         <h1 className="text-3xl font-bold text-gray-900">
           Paintings Management
@@ -105,7 +70,7 @@ function PaintingsManagement() {
             placeholder="Search paintings..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="pl-10 pr-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="pl-10 pr-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white"
           />
           <BsSearch className="w-5 h-5 absolute left-3 top-2.5 text-gray-400" />
         </div>
@@ -156,7 +121,7 @@ function PaintingsManagement() {
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
-              {filteredPaintings.map((painting) => (
+              {filteredPaintings?.map((painting) => (
                 <tr key={painting.id} className="hover:bg-gray-50">
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="flex items-center">
@@ -185,11 +150,7 @@ function PaintingsManagement() {
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="text-sm font-medium text-gray-900">
-                      $
-                      {`${(
-                        painting.price + painting.commission
-                      ).toLocaleString()} 
-                      (${painting.price}+${painting.commission})`}
+                      ${(painting.price + painting.commission).toLocaleString()}
                     </div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
@@ -206,7 +167,7 @@ function PaintingsManagement() {
                       onChange={(e) =>
                         handleStatusChange(painting.id, e.target.value)
                       }
-                      className="text-sm rounded-md bg-white text-black border-black shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+                      className="text-sm rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
                     >
                       <option value="Available">Available</option>
                       <option value="Sold">Sold</option>
