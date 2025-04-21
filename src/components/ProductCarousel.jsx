@@ -10,11 +10,12 @@ import {
   faChevronLeft,
   faChevronRight,
 } from "@fortawesome/free-solid-svg-icons";
+import { useSelector } from "react-redux";
 
 
 
 const ProductCarousel = () => {
-  // const { } = useSelector((state) => state.art);
+  const {getAllArtByArtist} = useSelector((state) => state.artist);
   const items = [
     {
       headline: "Color My Dreams",
