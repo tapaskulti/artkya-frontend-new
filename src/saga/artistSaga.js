@@ -12,7 +12,7 @@ import {
   setArtistDetails,
   setArtistImageUploadLoading,
   setGetAllArtByArtist,
-  setRandArtAndArtist, 
+  setRandArtAndArtist,
 } from "../redux/app/artist/artist-slice";
 
 export function* createArtistSaga(action) {
@@ -67,6 +67,7 @@ export function* updateArtistImageSaga(action) {
 export function* getArtistProfileByIdSaga(action) {
   try {
     const response = yield call(getArtistProfileByIdAction, action.payload);
+
     console.log("getArtistProfileByIdSaga====>", response?.data);
     if (response?.status === 200) {
       yield put(setArtistDetails({ artistDetails: response?.data?.data }));
@@ -81,7 +82,9 @@ export function* getAllArtByArtistSaga(action) {
     const response = yield call(getAllArtByArtistAction, action.payload);
     console.log("getAllArtByArtistSaga====>", response?.data);
     if (response?.status === 200) {
-      yield put(setGetAllArtByArtist({ getAllArtByArtist: response?.data?.data }));
+      yield put(
+        setGetAllArtByArtist({ getAllArtByArtist: response?.data?.data })
+      );
     }
   } catch (error) {
     console.log(error);
@@ -99,7 +102,6 @@ export function* getRandArtAndArtistSaga(action) {
     console.log(error);
   }
 }
-
 
 export function* watchAsyncArtistSaga() {
   yield takeEvery("CREATE_ARTIST", createArtistSaga);

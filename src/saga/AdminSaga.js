@@ -68,19 +68,19 @@ function* fetchAllPaintingsSaga() {
   }
 }
 
-// // Toggle user status
-// function* toggleUserStatusSaga(action) {
-//   try {
-//     yield put(setUserLoading({ userLoading: true }));
+// Toggle user status
+function* toggleUserStatusSaga(action) {
+  try {
+    yield put(setUserLoading({ userLoading: true }));
 
-//     const response = yield call(toggleUserStatusAction, action.payload);
-//     yield put(setUsers({ users: response.users })); // Update the users list in the store
-//   } catch (error) {
-//     console.error("Error toggling user status:", error.message);
-//   } finally {
-//     yield put(setUserLoading({ userLoading: false }));
-//   }
-// }
+    const response = yield call(toggleUserStatusAction, action.payload);
+    yield put(setUsers({ users: response.users })); // Update the users list in the store
+  } catch (error) {
+    console.error("Error toggling user status:", error.message);
+  } finally {
+    yield put(setUserLoading({ userLoading: false }));
+  }
+}
 
 // // Update artist commission
 // function* updateArtistCommissionSaga(action) {
@@ -111,7 +111,7 @@ export function* watchAsyncAdminSaga() {
   yield takeEvery("FETCH_ALL_USERS", fetchAllUsersSaga);
   yield takeEvery("FETCH_ALL_ARTISTS", fetchAllArtistsSaga);
   yield takeEvery("FETCH_ALL_PAINTINGS", fetchAllPaintingsSaga);
-  // yield takeEvery("TOGGLE_USER_STATUS", toggleUserStatusSaga);
+  yield takeEvery("TOGGLE_USER_STATUS", toggleUserStatusSaga);
   // yield takeEvery("UPDATE_ARTIST_COMMISSION", updateArtistCommissionSaga);
   // yield takeEvery("VERIFY_ARTIST", verifyArtistSaga);
   // yield takeEvery("REJECT_ARTWORK", rejectArtworkSaga);

@@ -14,13 +14,16 @@ const ArtDetailPage = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  
+
   // State for UI elements
   const [selectedImage, setSelectedImage] = useState();
   const [activeTab, setActiveTab] = useState("original");
   const [activeInfoTab, setActiveInfoTab] = useState("about");
-  const [selectedSize, setSelectedSize] = useState({ label: "8 × 10 inches", value: "8*10 inches" });
-  
+  const [selectedSize, setSelectedSize] = useState({
+    label: "8 × 10 inches",
+    value: "8*10 inches",
+  });
+
   // Redux state
   const { artDetail, printPrice } = useSelector((state) => state.art);
   const { authUser } = useSelector((state) => state.auth);
@@ -35,6 +38,19 @@ const ArtDetailPage = () => {
   useEffect(() => {
     if (artDetail) {
       setSelectedImage(artDetail?.thumbnail?.secure_url);
+      console.log("artist id===>", artDetail?.artist?._id);
+      dispatch({
+        type: "GET_ARTIST_PROFILE_BY_ID",
+        payload: {
+          artistId: artDetail?.artist?._id,
+        },
+      })
+      dispatch({
+        type: "GET_ALL_ART_BY_ARTIST",
+        payload: {
+          artistId: artDetail?.artist?._id,
+        },
+      })
     }
   }, [artDetail]);
 
@@ -49,10 +65,26 @@ const ArtDetailPage = () => {
   const infoContent = {
     about: (
       <div>
-        <p className="mb-4">{artDetail?.description || "No description available for this artwork."}</p>
-        <p>Created by {artDetail?.artist?.name || "Unknown Artist"} in {artDetail?.year || "N/A"}.</p>
-        <p className="mt-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-        <p className="mt-4">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+        <p className="mb-4">
+          {artDetail?.description ||
+            "No description available for this artwork."}
+        </p>
+        <p>
+          Created by {artDetail?.artist?.name || "Unknown Artist"} in{" "}
+          {artDetail?.year || "N/A"}.
+        </p>
+        <p className="mt-4">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
+          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+          aliquip ex ea commodo consequat.
+        </p>
+        <p className="mt-4">
+          Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
+          dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+          proident, sunt in culpa qui officia deserunt mollit anim id est
+          laborum.
+        </p>
       </div>
     ),
     details: (
@@ -61,54 +93,107 @@ const ArtDetailPage = () => {
           <div>
             <h3 className="font-semibold mb-2">Artwork Specifications</h3>
             <ul className="space-y-2">
-              <li><span className="font-medium">Medium:</span> {artDetail?.medium || "Not specified"}</li>
-              <li><span className="font-medium">Width:</span> {artDetail?.width || "N/A"} cm</li>
-              <li><span className="font-medium">Height:</span> {artDetail?.height || "N/A"} cm</li>
-              <li><span className="font-medium">Depth:</span> {artDetail?.depth || "N/A"} cm</li>
+              <li>
+                <span className="font-medium">Medium:</span>{" "}
+                {artDetail?.medium || "Not specified"}
+              </li>
+              <li>
+                <span className="font-medium">Width:</span>{" "}
+                {artDetail?.width || "N/A"} cm
+              </li>
+              <li>
+                <span className="font-medium">Height:</span>{" "}
+                {artDetail?.height || "N/A"} cm
+              </li>
+              <li>
+                <span className="font-medium">Depth:</span>{" "}
+                {artDetail?.depth || "N/A"} cm
+              </li>
             </ul>
           </div>
           <div>
             <h3 className="font-semibold mb-2">Additional Information</h3>
             <ul className="space-y-2">
-              <li><span className="font-medium">Style:</span> {artDetail?.style || "Not specified"}</li>
-              <li><span className="font-medium">Year:</span> {artDetail?.year || "N/A"}</li>
-              <li><span className="font-medium">Framed:</span> {artDetail?.isFramed ? "Yes" : "No"}</li>
-              <li><span className="font-medium">Certificate of Authenticity:</span> Included</li>
+              <li>
+                <span className="font-medium">Style:</span>{" "}
+                {artDetail?.style || "Not specified"}
+              </li>
+              <li>
+                <span className="font-medium">Year:</span>{" "}
+                {artDetail?.year || "N/A"}
+              </li>
+              <li>
+                <span className="font-medium">Framed:</span>{" "}
+                {artDetail?.isFramed ? "Yes" : "No"}
+              </li>
+              <li>
+                <span className="font-medium">
+                  Certificate of Authenticity:
+                </span>{" "}
+                Included
+              </li>
             </ul>
           </div>
         </div>
         <div className="mt-6">
           <h3 className="font-semibold mb-2">Technical Details</h3>
-          <p>The artwork is created using premium quality materials ensuring longevity and color preservation. The canvas is stretched over a wooden frame with finished edges.</p>
-          <p className="mt-4">All materials used are archival quality and the artwork has been treated with a protective varnish to prevent dust and UV damage.</p>
+          <p>
+            The artwork is created using premium quality materials ensuring
+            longevity and color preservation. The canvas is stretched over a
+            wooden frame with finished edges.
+          </p>
+          <p className="mt-4">
+            All materials used are archival quality and the artwork has been
+            treated with a protective varnish to prevent dust and UV damage.
+          </p>
         </div>
       </div>
     ),
     shipping: (
       <div>
         <h3 className="font-semibold mb-2">Shipping Information</h3>
-        <p className="mb-4">All artworks are carefully packaged and insured during transit. Shipping is included in the price.</p>
-        
+        <p className="mb-4">
+          All artworks are carefully packaged and insured during transit.
+          Shipping is included in the price.
+        </p>
+
         <h3 className="font-semibold mb-2">Returns Policy</h3>
-        <p className="mb-4">We offer a 14-day satisfaction guarantee. If you're not completely satisfied with your purchase, you can return it within 14 days for a full refund.</p>
-        
+        <p className="mb-4">
+          We offer a 14-day satisfaction guarantee. If you're not completely
+          satisfied with your purchase, you can return it within 14 days for a
+          full refund.
+        </p>
+
         <h3 className="font-semibold mb-2">Delivery Timeline</h3>
-        <p>Original artworks typically ship within 3-5 business days. Print copies ship within 1-2 business days.</p>
-        
+        <p>
+          Original artworks typically ship within 3-5 business days. Print
+          copies ship within 1-2 business days.
+        </p>
+
         <h3 className="font-semibold mb-2 mt-4">International Shipping</h3>
-        <p>We ship worldwide. International orders may be subject to import duties and taxes which are the responsibility of the buyer.</p>
-        
+        <p>
+          We ship worldwide. International orders may be subject to import
+          duties and taxes which are the responsibility of the buyer.
+        </p>
+
         <h3 className="font-semibold mb-2 mt-4">Packaging</h3>
-        <p>Each artwork is professionally packed in acid-free materials and protected with foam corners and rigid packaging to ensure safe delivery.</p>
+        <p>
+          Each artwork is professionally packed in acid-free materials and
+          protected with foam corners and rigid packaging to ensure safe
+          delivery.
+        </p>
       </div>
-    )
+    ),
   };
 
   return (
     <div className="w-full bg-white">
       <Header />
       <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-        <Link to="/" className="inline-flex items-center space-x-2 text-gray-600 hover:text-gray-900 mb-8">
+        <Link
+          to="/"
+          className="inline-flex items-center space-x-2 text-gray-600 hover:text-gray-900 mb-8"
+        >
           <FontAwesomeIcon icon={faArrowLeft} className="w-5 h-5" />
           <span>Back to Gallery</span>
         </Link>
@@ -124,8 +209,8 @@ const ArtDetailPage = () => {
                     key={index}
                     onClick={() => setSelectedImage(singleArt?.secure_url)}
                     className={`cursor-pointer border-2 ${
-                      selectedImage === singleArt?.secure_url 
-                        ? "border-blue-500" 
+                      selectedImage === singleArt?.secure_url
+                        ? "border-blue-500"
                         : "border-gray-200"
                     } hover:border-blue-300 transition-all`}
                   >
@@ -137,9 +222,12 @@ const ArtDetailPage = () => {
                   </div>
                 ))}
               </div>
-              
+
               {/* Main Image - Fixed Width and Height */}
-              <div className="flex-1" style={{ width: '600px', height: '500px' }}>
+              <div
+                className="flex-1"
+                style={{ width: "600px", height: "500px" }}
+              >
                 <div className="w-full h-full bg-gray-50 rounded-lg shadow-lg flex items-center justify-center">
                   <img
                     src={selectedImage}
@@ -162,8 +250,8 @@ const ArtDetailPage = () => {
                     dispatch(setprintPrice({ printPrice: "" }));
                   }}
                   className={`flex-1 py-3 px-4 text-center font-medium ${
-                    activeTab === "original" 
-                      ? "bg-gray-800 text-white" 
+                    activeTab === "original"
+                      ? "bg-gray-800 text-white"
                       : "bg-white text-gray-700 hover:bg-gray-100"
                   } transition-colors`}
                 >
@@ -172,8 +260,8 @@ const ArtDetailPage = () => {
                 <button
                   onClick={() => setActiveTab("print")}
                   className={`flex-1 py-3 px-4 text-center font-medium ${
-                    activeTab === "print" 
-                      ? "bg-gray-800 text-white" 
+                    activeTab === "print"
+                      ? "bg-gray-800 text-white"
                       : "bg-white text-gray-700 hover:bg-gray-100"
                   } transition-colors`}
                 >
@@ -199,7 +287,8 @@ const ArtDetailPage = () => {
                 {activeTab === "original" ? (
                   <div className="space-y-4">
                     <div className="text-sm text-gray-600">
-                      Size: {artDetail?.width} W x {artDetail?.height} H x {artDetail?.depth} D cm
+                      Size: {artDetail?.width} W x {artDetail?.height} H x{" "}
+                      {artDetail?.depth} D cm
                     </div>
                     <div className="text-3xl font-light">
                       USD {artDetail?.priceDetails?.price || "Price on request"}
@@ -245,7 +334,10 @@ const ArtDetailPage = () => {
                         ]}
                         className="text-sm"
                         value={selectedSize}
-                        defaultValue={{ label: "8 × 10 inches", value: "8*10 inches" }}
+                        defaultValue={{
+                          label: "8 × 10 inches",
+                          value: "8*10 inches",
+                        }}
                         onChange={(e) => {
                           setSelectedSize(e);
                           if (e.value === "8*10 inches") {
@@ -260,9 +352,7 @@ const ArtDetailPage = () => {
                         }}
                       />
                     </div>
-                    <div className="text-3xl font-light">
-                      USD {printPrice}
-                    </div>
+                    <div className="text-3xl font-light">USD {printPrice}</div>
                     <button
                       className="w-full bg-black hover:bg-gray-800 text-white py-3 rounded transition-colors"
                       onClick={() => {
@@ -282,7 +372,9 @@ const ArtDetailPage = () => {
                   </div>
                   <div className="flex items-center gap-2">
                     <TiTick className="text-green-600 text-lg" />
-                    <span className="text-sm">14-day satisfaction guarantee</span>
+                    <span className="text-sm">
+                      14-day satisfaction guarantee
+                    </span>
                   </div>
                 </div>
               </div>
@@ -292,7 +384,9 @@ const ArtDetailPage = () => {
 
         {/* Similar Artworks Carousel */}
         <div className="mt-16">
-          <h2 className="text-2xl font-medium mb-6">More From {artDetail?.artist?.name || "This Artist"}</h2>
+          <h2 className="text-2xl font-medium mb-6">
+            More From {artDetail?.artist?.name || "This Artist"}
+          </h2>
           <ProductCarousel />
         </div>
 
@@ -304,7 +398,7 @@ const ArtDetailPage = () => {
                 onClick={() => setActiveInfoTab("about")}
                 className={`py-4 px-1 border-b-2 font-medium text-sm ${
                   activeInfoTab === "about"
-                    ? "border-black text-black" 
+                    ? "border-black text-black"
                     : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
                 } transition-colors`}
               >
@@ -314,7 +408,7 @@ const ArtDetailPage = () => {
                 onClick={() => setActiveInfoTab("details")}
                 className={`py-4 px-1 border-b-2 font-medium text-sm ${
                   activeInfoTab === "details"
-                    ? "border-black text-black" 
+                    ? "border-black text-black"
                     : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
                 } transition-colors`}
               >
@@ -324,7 +418,7 @@ const ArtDetailPage = () => {
                 onClick={() => setActiveInfoTab("shipping")}
                 className={`py-4 px-1 border-b-2 font-medium text-sm ${
                   activeInfoTab === "shipping"
-                    ? "border-black text-black" 
+                    ? "border-black text-black"
                     : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
                 } transition-colors`}
               >
@@ -333,11 +427,15 @@ const ArtDetailPage = () => {
             </nav>
           </div>
           {/* Content area with fixed height and overflow without scrollbar */}
-          <div 
-            className="py-6 h-64 overflow-hidden" 
-            style={{ overflowY: 'auto', scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+          <div
+            className="py-6 h-64 overflow-hidden"
+            style={{
+              overflowY: "auto",
+              scrollbarWidth: "none",
+              msOverflowStyle: "none",
+            }}
           >
-            <div className="pr-2" style={{ paddingRight: '17px' }}>
+            <div className="pr-2" style={{ paddingRight: "17px" }}>
               {infoContent[activeInfoTab]}
             </div>
           </div>
@@ -350,30 +448,46 @@ const ArtDetailPage = () => {
             <div className="w-1/3 p-6 flex flex-col items-center justify-center border-r border-gray-200">
               <div className="relative mb-4">
                 <div className="w-24 h-24 rounded-full overflow-hidden bg-gray-200 border-2 border-gray-300">
-                  <img 
-                    src={artDetail?.artist?.profileImage?.secure_url || "/api/placeholder/100/100"} 
-                    alt={artDetail?.artist?.name || "Artist"} 
+                  <img
+                    src={
+                      artDetail?.artist?.profileImage?.secure_url ||
+                      "/api/placeholder/100/100"
+                    }
+                    alt={artDetail?.artist?.name || "Artist"}
                     className="w-full h-full object-cover"
                   />
                 </div>
               </div>
-              <h3 className="text-xl font-semibold text-center">{artDetail?.artist?.name || "Unknown Artist"}</h3>
-              <p className="text-gray-600 text-sm text-center">{artDetail?.artist?.country || "International"}</p>
-              <button 
+              <h3 className="text-xl font-semibold text-center">
+                {artDetail?.artist?.name || "Unknown Artist"}
+              </h3>
+              <p className="text-gray-600 text-sm text-center">
+                {artDetail?.artist?.country || "International"}
+              </p>
+              <button
                 className="mt-6 px-6 py-2 bg-black text-white text-sm font-medium rounded hover:bg-gray-800 transition-colors"
                 onClick={() => navigate(`/artist/${artDetail?.artist?._id}`)}
               >
                 SEE FULL PROFILE
               </button>
             </div>
-            
+
             {/* Artist Description */}
             <div className="w-2/3 p-6 flex flex-col">
               <h3 className="text-lg font-semibold mb-3">About the Artist</h3>
-              <div className="overflow-hidden h-40" style={{ overflowY: 'auto', scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+              <div
+                className="overflow-hidden h-40"
+                style={{
+                  overflowY: "auto",
+                  scrollbarWidth: "none",
+                  msOverflowStyle: "none",
+                }}
+              >
                 <p className="text-sm text-gray-600">
-                  {artDetail?.artist?.bio || 
-                    `${artDetail?.artist?.name || "This artist"} is a contemporary artist known for their unique style and creative vision. 
+                  {artDetail?.artist?.bio ||
+                    `${
+                      artDetail?.artist?.name || "This artist"
+                    } is a contemporary artist known for their unique style and creative vision. 
                     With a background in fine arts and a passion for exploring new techniques, 
                     they have developed a distinctive approach that resonates with art enthusiasts worldwide.
                     
@@ -383,8 +497,7 @@ const ArtDetailPage = () => {
                     to reflect and connect on a deeper level.
                     
                     Having refined their craft over many years, they continue to push boundaries and 
-                    evolve their artistic expression with each new creation.`
-                  }
+                    evolve their artistic expression with each new creation.`}
                 </p>
               </div>
             </div>
