@@ -14,7 +14,7 @@ import {
 
 
 const ProductCarousel = () => {
-  const { } = useSelector((state) => state.art);
+  // const { } = useSelector((state) => state.art);
   const items = [
     {
       headline: "Color My Dreams",
