@@ -27,6 +27,7 @@ const ArtDetailPage = () => {
   // Redux state
   const { artDetail, printPrice } = useSelector((state) => state.art);
   const { authUser } = useSelector((state) => state.auth);
+  const { artistDetails } = useSelector((state) => state.artist);
 
   useEffect(() => {
     dispatch({
@@ -44,13 +45,13 @@ const ArtDetailPage = () => {
         payload: {
           artistId: artDetail?.artist?._id,
         },
-      })
+      });
       dispatch({
         type: "GET_ALL_ART_BY_ARTIST",
         payload: {
           artistId: artDetail?.artist?._id,
         },
-      })
+      });
     }
   }, [artDetail]);
 
@@ -450,23 +451,27 @@ const ArtDetailPage = () => {
                 <div className="w-24 h-24 rounded-full overflow-hidden bg-gray-200 border-2 border-gray-300">
                   <img
                     src={
-                      artDetail?.artist?.profileImage?.secure_url ||
+                      artistDetails?.profileImage?.secure_url ||
                       "/api/placeholder/100/100"
                     }
-                    alt={artDetail?.artist?.name || "Artist"}
+                    alt={artistDetails?.userId?.name || "Artist"}
                     className="w-full h-full object-cover"
                   />
                 </div>
               </div>
               <h3 className="text-xl font-semibold text-center">
-                {artDetail?.artist?.name || "Unknown Artist"}
+                {`${
+                  artistDetails?.userId?.firstName
+                    ? `${artistDetails?.userId?.firstName} ${artistDetails?.userId?.lastName}`
+                    : "No artist"
+                }`}
               </h3>
               <p className="text-gray-600 text-sm text-center">
-                {artDetail?.artist?.country || "International"}
+                {artistDetails?.country || "International"}
               </p>
               <button
                 className="mt-6 px-6 py-2 bg-black text-white text-sm font-medium rounded hover:bg-gray-800 transition-colors"
-                onClick={() => navigate(`/artist/${artDetail?.artist?._id}`)}
+                onClick={() => navigate(`/ArtistProfilePage/${id}`)}
               >
                 SEE FULL PROFILE
               </button>
@@ -484,7 +489,7 @@ const ArtDetailPage = () => {
                 }}
               >
                 <p className="text-sm text-gray-600">
-                  {artDetail?.artist?.bio ||
+                  {artistDetails?.aboutMe ||
                     `${
                       artDetail?.artist?.name || "This artist"
                     } is a contemporary artist known for their unique style and creative vision. 

@@ -12,10 +12,8 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { useSelector } from "react-redux";
 
-
-
 const ProductCarousel = () => {
-  const {getAllArtByArtist} = useSelector((state) => state.artist);
+  const { getAllArtByArtist } = useSelector((state) => state.artist);
   const items = [
     {
       headline: "Color My Dreams",
@@ -123,23 +121,30 @@ const ProductCarousel = () => {
       slidesToSlide={1}
       swipeable
     >
-      {items.map((item, index) => (
+      {getAllArtByArtist?.map((item, index) => (
         <div key={index} className="p-4">
           <div className="">
             <img
-              src={item.image}
-              alt={item.headline}
+              src={item.thumbnail?.secure_url}
+              alt={item.thumbnail?.secure_url}
               className="w-full h-56 object-cover rounded-md shadow-lg"
             />
           </div>
           <div>
             <div>
-              <h2 className="text-base font-semibold mt-2">{item.headline}</h2>
-              <p className="text-sm text-gray-600">{item.size}</p>
+              <h2 className="text-base font-semibold mt-2">
+                {item.title ? item.title : "Not found"}
+              </h2>
+              <p className="text-sm text-gray-600">{`${item.height} H X ${item.width} W X ${item.depth} D`}</p>
             </div>
             <div>
               <h2 className="text-sm mt-2">{item.artist}</h2>
-              <p className="text-sm text-gray-600">{item.price}</p>
+              <p className="text-sm text-gray-600">
+                {`${
+                  parseInt(item.priceDetails?.price) +
+                  parseInt(item.commissionAmount)
+                } USD`}
+              </p>
             </div>
           </div>
         </div>
