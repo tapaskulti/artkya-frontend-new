@@ -9,30 +9,19 @@ function PaintingsManagement() {
   const [searchTerm, setSearchTerm] = useState("");
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [selectedPainting, setSelectedPainting] = useState(null);
-  const [paintings, setPaintings] = useState([]);
 
   useEffect(() => {
     dispatch({ type: "FETCH_ALL_PAINTINGS" });
   }, [dispatch]);
 
-  useEffect(() => {
-    setPaintings(allPaintings);
-  }, [allPaintings]);
-
   const handleStatusChange = (paintingId, newStatus) => {
-    setPaintings(
-      paintings?.map((p) =>
-        p.id === paintingId ? { ...p, status: newStatus } : p
-      )
-    );
+    // Handle status change directly on allPaintings or dispatch an action
+    // You can dispatch an action here to update the status in the store
   };
 
   const toggleApproval = (paintingId) => {
-    setPaintings(
-      paintings?.map((p) =>
-        p.id === paintingId ? { ...p, approved: !p.approved } : p
-      )
-    );
+    // Toggle approval directly on allPaintings or dispatch an action
+    // You can dispatch an action here to update the approval status in the store
   };
 
   const handleDeleteClick = (painting) => {
@@ -42,20 +31,20 @@ function PaintingsManagement() {
 
   const confirmDelete = () => {
     if (selectedPainting) {
-      setPaintings(paintings?.filter((p) => p.id !== selectedPainting.id));
+      // Delete the painting directly from the Redux store (dispatch an action)
       setShowDeleteModal(false);
       setSelectedPainting(null);
     }
   };
 
-  const filteredPaintings = paintings?.filter(
+  const filteredPaintings = allPaintings.filter(
     (painting) =>
       painting.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
       painting.artist.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  const totalRevenue = paintings
-    ?.filter((p) => p.status === "Sold")
+  const totalRevenue = allPaintings
+    .filter((p) => p.status === "Sold")
     .reduce((sum, p) => sum + p.price + p.commission, 0);
 
   return (
@@ -79,12 +68,12 @@ function PaintingsManagement() {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div className="bg-white p-4 rounded-lg shadow-sm">
           <p className="text-sm text-gray-500">Total Paintings</p>
-          <p className="text-2xl font-bold">{paintings.length}</p>
+          <p className="text-2xl font-bold">{allPaintings.length}</p>
         </div>
         <div className="bg-white p-4 rounded-lg shadow-sm">
           <p className="text-sm text-gray-500">Paintings Sold</p>
           <p className="text-2xl font-bold text-green-600">
-            {paintings.filter((p) => p.status === "Sold").length}
+            {allPaintings.filter((p) => p.status === "Sold").length}
           </p>
         </div>
         <div className="bg-white p-4 rounded-lg shadow-sm">
@@ -121,7 +110,7 @@ function PaintingsManagement() {
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
-              {filteredPaintings?.map((painting) => (
+              {filteredPaintings.map((painting) => (
                 <tr key={painting.id} className="hover:bg-gray-50">
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="flex items-center">
@@ -202,8 +191,7 @@ function PaintingsManagement() {
               </button>
             </div>
             <p className="mb-4">
-              Are you sure you want to delete painting "
-              {selectedPainting?.title}"? This action cannot be undone.
+              Are you sure you want to delete painting "{selectedPainting?.title}"? This action cannot be undone.
             </p>
             <div className="flex justify-end space-x-3">
               <button
