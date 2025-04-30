@@ -46,3 +46,14 @@ export const getAllPantingsAction = async () => {
     console.log(error);
   }
 };
+
+export const approveArtWorkAction = async (payload) => {
+  try {
+    console.log("approveArtWorkAction Called");
+    const response = await axios.patch(`${VITE_BASE_URL}/admin/approveArtwork?artId=${payload?.artId}`);
+
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+};

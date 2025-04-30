@@ -7,7 +7,7 @@ import {
   setUserLoading,
   setArtistLoading,
 } from "../redux/app/admin/adminSlice";
-import { getAllPantingsAction } from "../api/adminAction";
+import { approveArtWorkAction, getAllPantingsAction } from "../api/adminAction";
 import { fetchAllUsersAction } from "../api/adminAction";
 import { fetchAllArtistsAction } from "../api/adminAction";
 import { fetchTotalUserArtistCountsAction } from "../api/adminAction";
@@ -60,7 +60,7 @@ function* fetchAllPaintingsSaga() {
   try {
     yield put(setPaintingLoading({ artistLoading: true }));
     const response = yield call(getAllPantingsAction);
-    yield put(setAllPaintings({ allPaintings: response?.data?.data}));
+    yield put(setAllPaintings({ allPaintings: response?.data?.data }));
   } catch (error) {
     console.error("Error fetching all artists:", error.message);
   } finally {
@@ -68,19 +68,19 @@ function* fetchAllPaintingsSaga() {
   }
 }
 
-// Toggle user status
-function* toggleUserStatusSaga(action) {
-  try {
-    yield put(setUserLoading({ userLoading: true }));
+// // Toggle user status
+// function* toggleUserStatusSaga(action) {
+//   try {
+//     yield put(setUserLoading({ userLoading: true }));
 
-    const response = yield call(toggleUserStatusAction, action.payload);
-    yield put(setUsers({ users: response.users })); // Update the users list in the store
-  } catch (error) {
-    console.error("Error toggling user status:", error.message);
-  } finally {
-    yield put(setUserLoading({ userLoading: false }));
-  }
-}
+//     const response = yield call(toggleUserStatusAction, action.payload);
+//     yield put(setUsers({ users: response.users })); // Update the users list in the store
+//   } catch (error) {
+//     console.error("Error toggling user status:", error.message);
+//   } finally {
+//     yield put(setUserLoading({ userLoading: false }));
+//   }
+// }
 
 // // Update artist commission
 // function* updateArtistCommissionSaga(action) {
@@ -103,7 +103,18 @@ function* toggleUserStatusSaga(action) {
 
 // function* verifyArtistSaga(action) {}
 // function* rejectArtworkSaga(action) {}
-// function* approveArtworkSaga(action) {}
+function* approveArtworkSaga(action) {
+  console.log("approveArtworkSaga=>", action.payload);
+  try {
+    const response = yield call(approveArtWorkAction, action.payload);
+    if (response.status === 200) {
+      console.log(response.data);
+      yield put({ type: "FETCH_ALL_PAINTINGS" });
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}
 
 // Watcher Saga
 export function* watchAsyncAdminSaga() {
@@ -111,9 +122,9 @@ export function* watchAsyncAdminSaga() {
   yield takeEvery("FETCH_ALL_USERS", fetchAllUsersSaga);
   yield takeEvery("FETCH_ALL_ARTISTS", fetchAllArtistsSaga);
   yield takeEvery("FETCH_ALL_PAINTINGS", fetchAllPaintingsSaga);
-  yield takeEvery("TOGGLE_USER_STATUS", toggleUserStatusSaga);
+  // yield takeEvery("TOGGLE_USER_STATUS", toggleUserStatusSaga);
   // yield takeEvery("UPDATE_ARTIST_COMMISSION", updateArtistCommissionSaga);
   // yield takeEvery("VERIFY_ARTIST", verifyArtistSaga);
   // yield takeEvery("REJECT_ARTWORK", rejectArtworkSaga);
-  // yield takeEvery("APPROVE_ARTWORK", approveArtworkSaga);
+  yield takeEvery("APPROVE_ARTWORK", approveArtworkSaga);
 }

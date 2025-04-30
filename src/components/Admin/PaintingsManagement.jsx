@@ -19,9 +19,13 @@ function PaintingsManagement() {
     // You can dispatch an action here to update the status in the store
   };
 
-  const toggleApproval = (paintingId) => {
-    // Toggle approval directly on allPaintings or dispatch an action
-    // You can dispatch an action here to update the approval status in the store
+  const toggleApproval = (artId) => {
+    dispatch({
+      type: "APPROVE_ARTWORK",
+      payload: {
+        artId: artId,
+      },
+    });
   };
 
   const handleDeleteClick = (painting) => {
@@ -191,7 +195,7 @@ function PaintingsManagement() {
               </button>
             </div>
             <p className="mb-4">
-              Are you sure you want to delete painting "{selectedPainting?.title}"? This action cannot be undone.
+              {` Are you sure you want to delete painting ${selectedPainting?.title}? This action cannot be undone.`}
             </p>
             <div className="flex justify-end space-x-3">
               <button
