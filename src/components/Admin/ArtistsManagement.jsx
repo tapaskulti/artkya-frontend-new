@@ -1,7 +1,10 @@
-import React, { useState } from 'react';
-import { FaSearch, FaTrashAlt, FaTimes, FaExternalLinkAlt } from 'react-icons/fa';
+import  { useEffect, useState } from 'react';
+import { FaSearch, FaTrashAlt} from 'react-icons/fa';
+import { useDispatch, useSelector } from 'react-redux';
 
 const ArtistsManagement = () => {
+  const dispatch = useDispatch();
+  const{allArtists} = useSelector(state=>state.admin)
   const [artists, setArtists] = useState([
     {
       id: 1,
@@ -38,6 +41,10 @@ const ArtistsManagement = () => {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [selectedArtist, setSelectedArtist] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
+
+  useEffect(() => {
+    dispatch({ type: "FETCH_ALL_ARTISTS" });
+  }, [dispatch]);
 
   const handleStatusToggle = artistId => {
     setArtists(artists.map(artist => {

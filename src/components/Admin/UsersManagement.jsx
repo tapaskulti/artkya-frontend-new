@@ -1,78 +1,98 @@
-import React, { useState } from 'react';
-import { BsCheckCircle, BsSearch, BsXCircle } from 'react-icons/bs';
+import { useEffect, useState } from "react";
+import { BsCheckCircle, BsSearch, BsXCircle } from "react-icons/bs";
+import { useDispatch, useSelector } from "react-redux";
 
-function UsersManagement() {
+const UsersManagement = () =>{
+  const dispatch = useDispatch();
+  const{allUsers,totalCount} = useSelector(state=>state.admin)
   const [users, setUsers] = useState([
-    { 
-      id: 1, 
-      name: 'John Doe', 
-      email: 'john@example.com', 
-      status: 'Active',
-      userType: 'User',
+    {
+      id: 1,
+      name: "John Doe",
+      email: "john@example.com",
+      status: "Active",
+      userType: "User",
       isVerified: true,
-      joinDate: '2024-01-15'
+      joinDate: "2024-01-15",
     },
-    { 
-      id: 2, 
-      name: 'Sarah Johnson', 
-      email: 'sarah@example.com', 
-      status: 'Active',
-      userType: 'Artist',
+    {
+      id: 2,
+      name: "Sarah Johnson",
+      email: "sarah@example.com",
+      status: "Active",
+      userType: "Artist",
       isVerified: true,
-      joinDate: '2024-02-01',
+      joinDate: "2024-02-01",
       originalCommission: 30,
       printedCommission: 40,
       totalArtworks: 45,
       totalSales: 23,
-      rating: 4.8
+      rating: 4.8,
     },
-    { 
-      id: 3, 
-      name: 'Mike Wilson', 
-      email: 'mike@example.com', 
-      status: 'Disabled',
-      userType: 'User',
+    {
+      id: 3,
+      name: "Mike Wilson",
+      email: "mike@example.com",
+      status: "Disabled",
+      userType: "User",
       isVerified: false,
-      joinDate: '2024-03-01'
-    }
+      joinDate: "2024-03-01",
+    },
   ]);
 
-  const [searchTerm, setSearchTerm] = useState('');
-  const [activeTab, setActiveTab] = useState('all');
+  useEffect(() => {
+    dispatch({ type: "FETCH_ALL_USERS" });
+  }, [dispatch]);
+
+  useEffect(() => {
+    dispatch({ type: "FETCH_TOTAL_COUNTS" });
+  }, [dispatch]);
+
+  const [searchTerm, setSearchTerm] = useState("");
+  const [activeTab, setActiveTab] = useState("all");
 
   const handleStatusToggle = (userId) => {
-    setUsers(users.map(user => {
-      if (user.id === userId) {
-        return {
-          ...user,
-          status: user.status === 'Active' ? 'Disabled' : 'Active'
-        };
-      }
-      return user;
-    }));
+    setUsers(
+      users.map((user) => {
+        if (user.id === userId) {
+          return {
+            ...user,
+            status: user.status === "Active" ? "Disabled" : "Active",
+          };
+        }
+        return user;
+      })
+    );
   };
 
   const handleCommissionChange = (userId, type, value) => {
-    setUsers(users.map(user => {
-      if (user.id === userId) {
-        return {
-          ...user,
-          [type === 'original' ? 'originalCommission' : 'printedCommission']: value
-        };
-      }
-      return user;
-    }));
+    setUsers(
+      users.map((user) => {
+        if (user.id === userId) {
+          return {
+            ...user,
+            [type === "original" ? "originalCommission" : "printedCommission"]:
+              value,
+          };
+        }
+        return user;
+      })
+    );
   };
 
-  const filteredUsers = users.filter(user => {
-    const matchesSearch = user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         user.email.toLowerCase().includes(searchTerm.toLowerCase());
-    
-    if (activeTab === 'artists') return matchesSearch && user.userType === 'Artist';
+  const filteredUsers = users.filter((user) => {
+    const matchesSearch =
+      user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      user.email.toLowerCase().includes(searchTerm.toLowerCase());
+
+    if (activeTab === "artists")
+      return matchesSearch && user.userType === "Artist";
     return matchesSearch;
   });
 
-  const totalArtists = users.filter(user => user.userType === 'Artist').length;
+  const totalArtists = users.filter(
+    (user) => user.userType === "Artist"
+  ).length;
 
   return (
     <div className="space-y-6">
@@ -95,11 +115,11 @@ function UsersManagement() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="bg-white p-4 rounded-lg shadow-sm">
           <p className="text-sm text-gray-500">Total Users</p>
-          <p className="text-2xl font-bold">{users.length}</p>
+          <p className="text-2xl font-bold">{totalCount?.totalUser}</p>
         </div>
         <div className="bg-white p-4 rounded-lg shadow-sm">
           <p className="text-sm text-gray-500">Total Artists</p>
-          <p className="text-2xl font-bold text-purple-600">{totalArtists}</p>
+          <p className="text-2xl font-bold text-purple-600">{totalCount?.totalArtist}</p>
         </div>
       </div>
 
@@ -107,21 +127,21 @@ function UsersManagement() {
       <div className="border-b border-gray-200">
         <nav className="-mb-px flex space-x-8">
           <button
-            onClick={() => setActiveTab('all')}
+            onClick={() => setActiveTab("all")}
             className={`${
-              activeTab === 'all'
-                ? 'border-blue-500 text-blue-600'
-                : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+              activeTab === "all"
+                ? "border-blue-500 text-blue-600"
+                : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
             } whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm`}
           >
             All Users
           </button>
           <button
-            onClick={() => setActiveTab('artists')}
+            onClick={() => setActiveTab("artists")}
             className={`${
-              activeTab === 'artists'
-                ? 'border-blue-500 text-blue-600'
-                : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+              activeTab === "artists"
+                ? "border-blue-500 text-blue-600"
+                : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
             } whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm`}
           >
             Artists
@@ -149,7 +169,7 @@ function UsersManagement() {
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   Status
                 </th>
-                {activeTab === 'artists' && (
+                {activeTab === "artists" && (
                   <>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                       Original Commission (%)
@@ -172,20 +192,26 @@ function UsersManagement() {
                         </span>
                       </div>
                       <div className="ml-4">
-                        <div className="text-sm font-medium text-gray-900">{user.name}</div>
-                        <div className="text-sm text-gray-500">{user.email}</div>
+                        <div className="text-sm font-medium text-gray-900">
+                          {user.name}
+                        </div>
+                        <div className="text-sm text-gray-500">
+                          {user.email}
+                        </div>
                       </div>
                     </div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
-                    <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
-                      user.userType === 'Artist' 
-                        ? 'bg-purple-100 text-purple-800' 
-                        : 'bg-gray-100 text-gray-800'
-                    }`}>
+                    <span
+                      className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
+                        user.userType === "Artist"
+                          ? "bg-purple-100 text-purple-800"
+                          : "bg-gray-100 text-gray-800"
+                      }`}
+                    >
                       {user.userType}
                     </span>
-                    {user.userType === 'Artist' && (
+                    {user.userType === "Artist" && (
                       <div className="mt-1 text-sm text-gray-500">
                         {user.totalArtworks} artworks • {user.rating} ★
                       </div>
@@ -210,13 +236,13 @@ function UsersManagement() {
                       <input
                         type="checkbox"
                         className="sr-only peer"
-                        checked={user.status === 'Active'}
+                        checked={user.status === "Active"}
                         onChange={() => handleStatusToggle(user.id)}
                       />
                       <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
                     </label>
                   </td>
-                  {activeTab === 'artists' && user.userType === 'Artist' && (
+                  {activeTab === "artists" && user.userType === "Artist" && (
                     <>
                       <td className="px-6 py-4 whitespace-nowrap">
                         <input
@@ -224,7 +250,13 @@ function UsersManagement() {
                           min="0"
                           max="100"
                           value={user.originalCommission || 0}
-                          onChange={(e) => handleCommissionChange(user.id, 'original', Number(e.target.value))}
+                          onChange={(e) =>
+                            handleCommissionChange(
+                              user.id,
+                              "original",
+                              Number(e.target.value)
+                            )
+                          }
                           className="w-20 px-2 py-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                         />
                       </td>
@@ -234,7 +266,13 @@ function UsersManagement() {
                           min="0"
                           max="100"
                           value={user.printedCommission || 0}
-                          onChange={(e) => handleCommissionChange(user.id, 'printed', Number(e.target.value))}
+                          onChange={(e) =>
+                            handleCommissionChange(
+                              user.id,
+                              "printed",
+                              Number(e.target.value)
+                            )
+                          }
                           className="w-20 px-2 py-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                         />
                       </td>

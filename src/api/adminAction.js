@@ -17,7 +17,7 @@ export const fetchTotalUserArtistCountsAction = async () => {
 export const fetchAllUsersAction = async () => {
   try {
     // console.log("fetchAllUsersAction Called");
-    const response = await axios.get(`${VITE_BASE_URL}/admin/getAllArtists`);
+    const response = await axios.get(`${VITE_BASE_URL}/admin/getAllUsers`);
 
     return response;
   } catch (error) {
@@ -28,7 +28,7 @@ export const fetchAllUsersAction = async () => {
 export const fetchAllArtistsAction = async () => {
   try {
     // console.log("fetchAllArtistsAction Called");
-    const response = await axios.get(`${VITE_BASE_URL}/admin/getAllPainting`);
+    const response = await axios.get(`${VITE_BASE_URL}/admin/getAllArtists`);
 
     return response;
   } catch (error) {

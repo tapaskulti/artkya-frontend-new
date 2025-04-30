@@ -6,6 +6,7 @@ import {
   setPaintingLoading,
   setUserLoading,
   setArtistLoading,
+  setTotalCount,
 } from "../redux/app/admin/adminSlice";
 import { approveArtWorkAction, getAllPantingsAction } from "../api/adminAction";
 import { fetchAllUsersAction } from "../api/adminAction";
@@ -19,8 +20,20 @@ function* fetchTotalCountsSaga() {
     yield put(setArtistLoading({ artistLoading: true }));
 
     const response = yield call(fetchTotalUserArtistCountsAction);
-    // yield put(setTotalUsers({ totalUsers: response.totalUsers }));
-    // yield put(setTotalArtist({ totalArtists: response.totalArtists }));
+    if (response.status === 200) {
+      yield put(
+        setTotalCount({
+          key: "totalUser",
+          count: response.data.totalArtists,
+        })
+      );
+      yield put(
+        setTotalCount({
+          key: "totalArtist",
+          count: response.data.totalUsers,
+        })
+      );
+    }
   } catch (error) {
     console.error("Error fetching total counts:", error.message);
   } finally {
