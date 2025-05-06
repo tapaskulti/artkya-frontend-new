@@ -17,6 +17,7 @@
     "@material-tailwind/react": "^2.1.8",
     "@reduxjs/toolkit": "^2.0.1",
     "axios": "^1.6.5",
+    "caniuse-lite": "^1.0.30001716",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-dropzone": "^14.2.3",

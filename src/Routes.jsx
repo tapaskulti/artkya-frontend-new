@@ -21,6 +21,7 @@ import Admin from "./pages/AdminDashboard";
 import PaintingsManagement from "./components/Admin/PaintingsManagement";
 import OrdersManagement from "./components/Admin/OrdersManagement";
 import UsersManagement from "./components/Admin/UsersManagement";
+import ArtistsManagement from "./components/Admin/ArtistsManagement";
 
 const Routes = () => {
   return (
@@ -56,10 +57,10 @@ const Routes = () => {
       <Route path="/Admin" element={<Admin />}>
         <Route index element={<UsersManagement />} />
         <Route path="users" element={<UsersManagement />} />
+        <Route path="artists" element={<ArtistsManagement />} />
         <Route path="paintings" element={<PaintingsManagement />} />
         <Route path="orders" element={<OrdersManagement />} />
       </Route>
-
     </RoutePath>
   );
 };
