@@ -6,6 +6,7 @@ import { artReducer } from "./app/art/artSlice";
 import { cartReducer } from "./app/cart/cartSlice";
 import { wishlistReducer } from "./app/wishlist/wishlistSlice";
 import { artistReducer } from "./app/artist/artist-slice";
+import { adminReducer } from "./app/admin/adminSlice";
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -16,6 +17,7 @@ export const Store = configureStore({
     cart:cartReducer,
     wishlist:wishlistReducer,
     artist:artistReducer,
+    admin:adminReducer,
   },
   // middleware: [sagaMiddleware],
   middleware: (getDefaultMiddleware) =>

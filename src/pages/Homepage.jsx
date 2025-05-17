@@ -20,7 +20,7 @@ import Blank_Avatar from "../assets/Blank_Avatar.png";
 
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import Footer from "../components/Footer";
+
 
 const featuredArts = [
   {
@@ -345,7 +345,7 @@ const Homepage = () => {
         <section className="py-16 bg-white">
           <div className="container mx-auto px-4">
             <h2 className="text-3xl font-bold text-gray-800 mb-8 text-center">
-              Artist's Works
+              Artist Works
             </h2>
             <div className="relative">
               <div className="overflow-hidden">
