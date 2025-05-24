@@ -25,10 +25,12 @@ export const fetchAllUsersAction = async () => {
   }
 };
 
-export const fetchAllArtistsAction = async () => {
+export const fetchAllArtistsAction = async (payload) => {
   try {
     // console.log("fetchAllArtistsAction Called");
-    const response = await axios.get(`${VITE_BASE_URL}/admin/getAllArtists`);
+    const response = await axios.get(
+      `${VITE_BASE_URL}/admin/getAllArtists?search=${payload.search}`
+    );
 
     return response;
   } catch (error) {
@@ -50,7 +52,9 @@ export const getAllPantingsAction = async () => {
 export const approveArtWorkAction = async (payload) => {
   try {
     console.log("approveArtWorkAction Called");
-    const response = await axios.patch(`${VITE_BASE_URL}/admin/approveArtwork?artId=${payload?.artId}`);
+    const response = await axios.patch(
+      `${VITE_BASE_URL}/admin/approveArtwork?artId=${payload?.artId}`
+    );
 
     return response;
   } catch (error) {

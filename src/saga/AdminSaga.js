@@ -47,7 +47,13 @@ function* fetchAllUsersSaga() {
   try {
     yield put(setUserLoading({ userLoading: true }));
     const response = yield call(fetchAllUsersAction);
-    yield put(setAllUsers({ users: response }));
+
+    console.log("fetchAllUsersSaga====>", response?.data);
+
+    if (response.status === 200) {
+      yield put(setAllUsers({ allUsers: response?.data }));
+    }
+  
   } catch (error) {
     console.error("Error fetching all users:", error.message);
   } finally {
@@ -56,12 +62,15 @@ function* fetchAllUsersSaga() {
 }
 
 // Fetch all artists
-function* fetchAllArtistsSaga() {
+function* fetchAllArtistsSaga(action) {
   try {
     yield put(setArtistLoading({ artistLoading: true }));
+    const response = yield call(fetchAllArtistsAction, action.payload);
+    console.log("fetchAllArtistsSagaresponse===>", response);
 
-    const response = yield call(fetchAllArtistsAction);
-    yield put(setAllArtist({ artists: response.data }));
+    if (response.status === 200) {
+      yield put(setAllArtist({ allArtists: response.data?.data }));
+    }
   } catch (error) {
     console.error("Error fetching all artists:", error.message);
   } finally {
@@ -95,24 +104,24 @@ function* fetchAllPaintingsSaga() {
 //   }
 // }
 
-// // Update artist commission
-// function* updateArtistCommissionSaga(action) {
-//   try {
-//     yield put(setArtistLoading({ artistLoading: true }));
-//     const { artistId, type, value } = action.payload;
-//     const payload = { printPercent: value };
-//     const response = yield call(
-//       updateArtistCommissionAction,
-//       artistId,
-//       payload
-//     );
-//     yield put(setAllArtist({ artists: response.artists })); // Update the artists list in the store
-//   } catch (error) {
-//     console.error("Error updating artist commission:", error.message);
-//   } finally {
-//     yield put(setArtistLoading({ artistLoading: false }));
-//   }
-// }
+// Update artist commission
+function* updateArtistCommissionSaga(action) {
+  try {
+    yield put(setArtistLoading({ artistLoading: true }));
+    const { artistId, type, value } = action.payload;
+    const payload = { printPercent: value };
+    const response = yield call(
+      updateArtistCommissionAction,
+      artistId,
+      payload
+    );
+    yield put(setAllArtist({ artists: response.artists })); // Update the artists list in the store
+  } catch (error) {
+    console.error("Error updating artist commission:", error.message);
+  } finally {
+    yield put(setArtistLoading({ artistLoading: false }));
+  }
+}
 
 // function* verifyArtistSaga(action) {}
 // function* rejectArtworkSaga(action) {}
@@ -136,7 +145,7 @@ export function* watchAsyncAdminSaga() {
   yield takeEvery("FETCH_ALL_ARTISTS", fetchAllArtistsSaga);
   yield takeEvery("FETCH_ALL_PAINTINGS", fetchAllPaintingsSaga);
   // yield takeEvery("TOGGLE_USER_STATUS", toggleUserStatusSaga);
-  // yield takeEvery("UPDATE_ARTIST_COMMISSION", updateArtistCommissionSaga);
+  yield takeEvery("UPDATE_ARTIST_COMMISSION", updateArtistCommissionSaga);
   // yield takeEvery("VERIFY_ARTIST", verifyArtistSaga);
   // yield takeEvery("REJECT_ARTWORK", rejectArtworkSaga);
   yield takeEvery("APPROVE_ARTWORK", approveArtworkSaga);

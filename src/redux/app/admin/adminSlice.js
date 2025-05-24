@@ -20,10 +20,10 @@ const adminSlice = createSlice({
   initialState,
   reducers: {
     setAllUsers(state, action) {
-      state.users = action.payload.users;
+      state.allUsers = action.payload.allUsers;
     },
     setAllArtist(state, action) {
-      state.artists = action.payload.artists;
+      state.allArtists = action.payload.allArtists;
     },
     setAllPaintings(state, action) {
       state.allPaintings = action.payload.allPaintings;
