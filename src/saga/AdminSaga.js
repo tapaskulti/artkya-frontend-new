@@ -43,10 +43,10 @@ function* fetchTotalCountsSaga() {
 }
 
 // Fetch all users
-function* fetchAllUsersSaga() {
+function* fetchAllUsersSaga(action) {
   try {
     yield put(setUserLoading({ userLoading: true }));
-    const response = yield call(fetchAllUsersAction);
+    const response = yield call(fetchAllUsersAction, action.payload);
 
     console.log("fetchAllUsersSaga====>", response?.data);
 
@@ -141,7 +141,7 @@ function* approveArtworkSaga(action) {
 // Watcher Saga
 export function* watchAsyncAdminSaga() {
   yield takeEvery("FETCH_TOTAL_COUNTS", fetchTotalCountsSaga);
-  yield takeEvery("FETCH_ALL_USERS", fetchAllUsersSaga);
+  yield takeEvery("FETCH_ALL_USER", fetchAllUsersSaga);
   yield takeEvery("FETCH_ALL_ARTISTS", fetchAllArtistsSaga);
   yield takeEvery("FETCH_ALL_PAINTINGS", fetchAllPaintingsSaga);
   // yield takeEvery("TOGGLE_USER_STATUS", toggleUserStatusSaga);

@@ -14,10 +14,12 @@ export const fetchTotalUserArtistCountsAction = async () => {
   }
 };
 
-export const fetchAllUsersAction = async () => {
+export const fetchAllUsersAction = async (payload) => {
   try {
     // console.log("fetchAllUsersAction Called");
-    const response = await axios.get(`${VITE_BASE_URL}/admin/getAllUsers`);
+    const response = await axios.get(
+      `${VITE_BASE_URL}/admin/getAllUsers?search=${payload.searchTerm??""}`
+    );
 
     return response;
   } catch (error) {

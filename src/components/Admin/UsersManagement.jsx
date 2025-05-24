@@ -1,76 +1,29 @@
 import { useEffect, useState } from "react";
 import { CheckCircle, Search, XCircle } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
+import moment from "moment"; 
 
 const UsersManagement = () => {
   const dispatch = useDispatch();
-  const { totalCount,allUsers } = useSelector((state) => state.admin);
-
-  const [users, setUsers] = useState([
-    {
-      id: 1,
-      name: "John Doe",
-      email: "john@example.com",
-      status: "Active",
-      userType: "User",
-      isVerified: true,
-      joinDate: "2024-01-15",
-    },
-    {
-      id: 2,
-      name: "Sarah Johnson",
-      email: "sarah@example.com",
-      status: "Active",
-      userType: "Artist",
-      isVerified: true,
-      joinDate: "2024-02-01",
-      totalArtworks: 45,
-      totalSales: 23,
-      rating: 4.8,
-    },
-    {
-      id: 3,
-      name: "Mike Wilson",
-      email: "mike@example.com",
-      status: "Disabled",
-      userType: "User",
-      isVerified: false,
-      joinDate: "2024-03-01",
-    },
-  ]);
-
+  const { totalCount, allUsers } = useSelector((state) => state.admin);
   const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
-    dispatch({ type: "FETCH_ALL_USERS" });
+    dispatch({ type: "FETCH_ALL_USER", payload: searchTerm });
     dispatch({ type: "FETCH_TOTAL_COUNTS" });
-  }, [dispatch]);
+  }, [dispatch, searchTerm]);
 
   const handleStatusToggle = (userId) => {
-    setUsers((prevUsers) =>
-      prevUsers.map((user) =>
-        user.id === userId
-          ? { ...user, status: user.status === "Active" ? "Disabled" : "Active" }
-          : user
-      )
-    );
+    // Implement status toggle logic or dispatch here
   };
-
-  const filteredUsers = users.filter((user) => {
-    const lowerSearch = searchTerm.toLowerCase();
-    return (
-      user.name.toLowerCase().includes(lowerSearch) ||
-      user.email.toLowerCase().includes(lowerSearch)
-    );
-  });
-
-  console.log("allUsers===>", allUsers);
 
   return (
     <div className="min-h-screen dark:bg-gray-900">
       <div className="max-w-7xl mx-auto space-y-6">
         <div className="flex justify-between items-center">
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Users Management</h1>
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
+            Users Management
+          </h1>
           <div className="relative">
             <input
               type="text"
@@ -121,8 +74,8 @@ const UsersManagement = () => {
                 </tr>
               </thead>
               <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
-                {allUsers.map((user) => (
-                  <tr key={user.id} className="hover:bg-gray-50 dark:hover:bg-gray-700">
+                {allUsers?.map((user) => (
+                  <tr key={user._id} className="hover:bg-gray-50 dark:hover:bg-gray-700">
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div className="flex items-center">
                         <div className="h-10 w-10 rounded-full bg-gray-200 dark:bg-gray-600 flex items-center justify-center">
@@ -131,32 +84,31 @@ const UsersManagement = () => {
                           </span>
                         </div>
                         <div className="ml-4">
-                          <div className="text-sm font-medium text-gray-900 dark:text-white">{user.name}</div>
-                          <div className="text-sm text-gray-500 dark:text-gray-400">{user.email}</div>
+                          <div className="text-sm font-medium text-gray-900 dark:text-white">
+                            {user.name}
+                          </div>
+                          <div className="text-sm text-gray-500 dark:text-gray-400">
+                            {user.email}
+                          </div>
                         </div>
                       </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <span
                         className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
-                          user.userType === "Artist"
+                          user.userType === "ARTIST"
                             ? "bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200"
                             : "bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200"
                         }`}
                       >
                         {user.userType}
                       </span>
-                      {user.userType === "Artist" && (
-                        <div className="mt-1 text-sm text-gray-500 dark:text-gray-400">
-                          {user?.totalArtworks} artworks • {user.rating} ★
-                        </div>
-                      )}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
-                      {user?.joiningDate}
+                      {moment(user.joiningDate).format("DD MMM YYYY")}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      {user.isVerified ? (
+                      {user.verified === "Verified" ? (
                         <span className="inline-flex items-center text-green-600 dark:text-green-400">
                           <CheckCircle className="w-4 h-4 mr-1" /> Verified
                         </span>
@@ -172,9 +124,9 @@ const UsersManagement = () => {
                           type="checkbox"
                           className="sr-only peer"
                           checked={user.status === "Active"}
-                          onChange={() => handleStatusToggle(user.id)}
+                          onChange={() => handleStatusToggle(user._id)}
                         />
-                        <div className="w-11 h-6 bg-gray-200 dark:bg-gray-600 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600 dark:peer-checked:bg-blue-500"></div>
+                        <div className="w-11 h-6 bg-gray-200 dark:bg-gray-600 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600 dark:peer-checked:bg-blue-500"></div>
                       </label>
                     </td>
                   </tr>
