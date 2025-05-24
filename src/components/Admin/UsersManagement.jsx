@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { CheckCircle, Search, XCircle } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
-import moment from "moment"; 
+import moment from "moment";
 
 const UsersManagement = () => {
   const dispatch = useDispatch();
@@ -9,7 +9,12 @@ const UsersManagement = () => {
   const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
-    dispatch({ type: "FETCH_ALL_USER", payload: searchTerm });
+    dispatch({
+      type: "FETCH_ALL_USER",
+      payload: {
+        search: searchTerm,
+      },
+    });
     dispatch({ type: "FETCH_TOTAL_COUNTS" });
   }, [dispatch, searchTerm]);
 
@@ -38,13 +43,17 @@ const UsersManagement = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm border dark:border-gray-700">
-            <p className="text-sm text-gray-500 dark:text-gray-400">Total Users</p>
+            <p className="text-sm text-gray-500 dark:text-gray-400">
+              Total Users
+            </p>
             <p className="text-2xl font-bold text-gray-900 dark:text-white">
               {totalCount?.totalUser ?? 0}
             </p>
           </div>
           <div className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm border dark:border-gray-700">
-            <p className="text-sm text-gray-500 dark:text-gray-400">Total Artists</p>
+            <p className="text-sm text-gray-500 dark:text-gray-400">
+              Total Artists
+            </p>
             <p className="text-2xl font-bold text-purple-600 dark:text-purple-400">
               {totalCount?.totalArtist ?? 0}
             </p>
@@ -75,7 +84,10 @@ const UsersManagement = () => {
               </thead>
               <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
                 {allUsers?.map((user) => (
-                  <tr key={user._id} className="hover:bg-gray-50 dark:hover:bg-gray-700">
+                  <tr
+                    key={user._id}
+                    className="hover:bg-gray-50 dark:hover:bg-gray-700"
+                  >
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div className="flex items-center">
                         <div className="h-10 w-10 rounded-full bg-gray-200 dark:bg-gray-600 flex items-center justify-center">

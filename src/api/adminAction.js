@@ -16,9 +16,9 @@ export const fetchTotalUserArtistCountsAction = async () => {
 
 export const fetchAllUsersAction = async (payload) => {
   try {
-    // console.log("fetchAllUsersAction Called");
+    console.log("fetchAllUsersAction Called",payload);
     const response = await axios.get(
-      `${VITE_BASE_URL}/admin/getAllUsers?search=${payload.searchTerm??""}`
+      `${VITE_BASE_URL}/admin/getAllUsers?search=${payload.search}`
     );
 
     return response;

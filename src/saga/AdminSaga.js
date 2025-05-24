@@ -44,13 +44,14 @@ function* fetchTotalCountsSaga() {
 
 // Fetch all users
 function* fetchAllUsersSaga(action) {
+
   try {
     yield put(setUserLoading({ userLoading: true }));
     const response = yield call(fetchAllUsersAction, action.payload);
 
     console.log("fetchAllUsersSaga====>", response?.data);
 
-    if (response.status === 200) {
+    if (response?.status === 200) {
       yield put(setAllUsers({ allUsers: response?.data }));
     }
   
