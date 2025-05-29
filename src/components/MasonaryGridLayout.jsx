@@ -69,7 +69,7 @@ const MasonaryGridLayout = ({ artDetails }) => {
                   {singleArt?.title}
                 </h2>
                 <p className="text-sm font-semibold text-gray-800">
-                  ${singleArt?.priceDetails?.price}
+                  ${singleArt?.totalPrice}
                 </p>
               </div>
               <p className="text-sm text-gray-600 cursor-pointer"

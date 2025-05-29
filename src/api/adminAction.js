@@ -16,7 +16,7 @@ export const fetchTotalUserArtistCountsAction = async () => {
 
 export const fetchAllUsersAction = async (payload) => {
   try {
-    console.log("fetchAllUsersAction Called",payload);
+    console.log("fetchAllUsersAction Called", payload);
     const response = await axios.get(
       `${VITE_BASE_URL}/admin/getAllUsers?search=${payload.search}`
     );
@@ -56,6 +56,31 @@ export const approveArtWorkAction = async (payload) => {
     console.log("approveArtWorkAction Called");
     const response = await axios.patch(
       `${VITE_BASE_URL}/admin/approveArtwork?artId=${payload?.artId}`
+    );
+
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+};
+export const updateArtistCommissionAction = async (payload) => {
+  try {
+    console.log("updateArtistCommissionAction Called", payload);
+    const response = await axios.patch(
+      `${VITE_BASE_URL}/admin/updateCommission`,
+      payload.body
+    );
+
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+};
+export const verifyArtistAction = async (payload) => {
+  try {
+    console.log("verifyArtist Called", payload);
+    const response = await axios.patch(
+      `${VITE_BASE_URL}/admin/verifyArtist?userId=${payload?.userId}`,
     );
 
     return response;
