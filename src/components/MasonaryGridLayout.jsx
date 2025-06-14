@@ -53,7 +53,7 @@ const MasonaryGridLayout = ({ artDetails }) => {
                       payload: {
                         userId: authUser?._id,
                         artId: singleArt?._id,
-                        artPrice: singleArt?.priceDetails?.price,
+                        artPrice: singleArt?.totalPrice,
                         navigate,
                       },
                     });

@@ -292,7 +292,7 @@ const ArtDetailPage = () => {
                       {artDetail?.depth} D cm
                     </div>
                     <div className="text-3xl font-light">
-                      USD {artDetail?.priceDetails?.price || "Price on request"}
+                      USD {artDetail?.totalPrice || "Price on request"}
                     </div>
                     <div className="flex flex-col gap-3">
                       <button
@@ -303,7 +303,7 @@ const ArtDetailPage = () => {
                             payload: {
                               userId: authUser?._id,
                               artId: artDetail?._id,
-                              artPrice: artDetail?.priceDetails?.price,
+                              artPrice: artDetail?.totalPrice,
                               navigate,
                             },
                           });

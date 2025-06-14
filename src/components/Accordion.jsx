@@ -299,7 +299,7 @@ export const AccordionContinue = ({ onAddressUpdate }) => {
                             payload: {
                               userId: authUser?._id,
                               artId: singleArt?._id,
-                              artPrice: singleArt?.price,
+                              artPrice: singleArt?.totalPrice,
                             },
                           });
                         }}

@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { Link } from "react-router-dom";
 import logo from "../assets/logo.png";
 import { HiOutlineShoppingCart } from "react-icons/hi2";
@@ -73,7 +74,7 @@ const Cart = () => {
                                   payload: {
                                     userId: authUser?._id,
                                     artId: singleArt?._id,
-                                    artPrice: parseInt(singleArt?.priceDetails?.price),
+                                    artPrice: parseInt(singleArt?.totalPrice),
                                   },
                                 });                                
                               }}
@@ -102,10 +103,10 @@ const Cart = () => {
             <div className="space-y-3">
               <div className="flex text-xl justify-between font-semibold text-gray-900 dark:text-white">
                 <h1>Estimated Total</h1>
-                <h1>₹{cartDetails?.totalPrice}</h1>
+                <h1>${cartDetails?.totalPrice}</h1>
               </div>
               <h1 className="text-gray-700 dark:text-gray-300">
-                All charges and refunds will be made in USD ($106,615) and may
+                All charges and refunds will be made in USD ($10,615) and may
                 be subject to exchange rate fluctuations.
               </h1>
               <Link to="/ShippingBilling">
