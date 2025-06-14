@@ -28,7 +28,7 @@ const Cart = () => {
     try {
       setIsProcessingPayment(true);
       
-      const response = await fetch(`${import.meta.env.VITE_BASE_URL}/payment`, {
+      const response = await fetch(`${import.meta.env.VITE_BASE_URL}/pay/payment`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
