@@ -2,6 +2,7 @@ import { toast } from "react-toastify";
 import { call, put, takeEvery } from "redux-saga/effects";
 import {
   addToCartAction,
+  clearCartAction,
   createCartAction,
   getCartByIdAction,
   removeFromCartAction,
@@ -54,9 +55,18 @@ export function* removeArtFromCartSaga(action) {
   }
 }
 
+export function* clearCartSaga(action) {
+  try {
+    const response = yield call(clearCartAction, action.payload);
+  } catch (error) {
+    console.log(error.message);
+  }
+}
+
 export function* watchAsyncCartSaga() {
   yield takeEvery("CREATE_CART_BY_ID", createCartByIdSaga);
   yield takeEvery("GET_CART_BY_ID", getCartByIdSaga);
   yield takeEvery("ADD_ART_TO_CART", addArtToCartSaga);
   yield takeEvery("REMOVE_ART_FROM_CART", removeArtFromCartSaga);
+  yield takeEvery("CLEAR_CART", clearCartSaga);
 }

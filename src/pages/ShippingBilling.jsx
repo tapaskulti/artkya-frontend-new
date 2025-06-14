@@ -1,4 +1,5 @@
-import { Link } from "react-router-dom";
+/* eslint-disable react/prop-types */
+import { Link, useNavigate } from "react-router-dom";
 import { IoShieldCheckmarkSharp } from "react-icons/io5";
 import { TiLockClosed } from "react-icons/ti";
 import { AiFillDollarCircle } from "react-icons/ai";
@@ -11,7 +12,9 @@ import { PaymentForm, CreditCard } from 'react-square-web-payments-sdk';
 const Cart = () => {
   const { cartDetails } = useSelector((state) => state.cart);
   const { authUser } = useSelector((state) => state.auth);
+  const { shippingAddress, billingAddress, sameAsShipping } = useSelector((state) => state.order);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   
   // Payment states
   const [isProcessingPayment, setIsProcessingPayment] = useState(false);
@@ -21,6 +24,35 @@ const Cart = () => {
   const squareConfig = {
     applicationId: import.meta.env.VITE_BASE_SQUARE_APP_ID,
     locationId: import.meta.env.VITE_APP_SQUARE_LOCATION_ID
+  };
+
+  // Validate addresses before payment
+  const validateAddresses = () => {
+    const requiredFields = ['firstName', 'lastName', 'address1', 'country', 'city', 'state', 'postalCode', 'Email', 'PhoneNumber'];
+    
+    // Check shipping address
+    const shippingValid = requiredFields.every(field => 
+      shippingAddress[field] && shippingAddress[field].toString().trim() !== ''
+    );
+    
+    if (!shippingValid) {
+      alert('Please complete all required shipping address fields');
+      return false;
+    }
+    
+    // Check billing address if not same as shipping
+    if (!sameAsShipping) {
+      const billingValid = requiredFields.every(field => 
+        billingAddress[field] && billingAddress[field].toString().trim() !== ''
+      );
+      
+      if (!billingValid) {
+        alert('Please complete all required billing address fields');
+        return false;
+      }
+    }
+    
+    return true;
   };
 
   // Process payment function
@@ -36,19 +68,55 @@ const Cart = () => {
         body: JSON.stringify({
           sourceId: sourceId,
           amount: Math.round(amount * 100), // Convert to cents for Square
-          currency: 'USD'
+          currency: 'USD',
+          billingAddress: sameAsShipping ? shippingAddress : billingAddress
         })
       });
 
       const result = await response.json();
-      console.log(result)
+      console.log('Payment result:', result);
       
       if (result.success) {
-        alert('Payment successful! Order placed.');
-        // You can redirect to success page or clear cart here
-        // dispatch({ type: 'CLEAR_CART' });
+        // Create order after successful payment
+        const orderData = {
+          buyerId: authUser?._id,
+          artIds: cartDetails?.arts || [],
+          shippingAddress: shippingAddress,
+          billingAddress: sameAsShipping ? shippingAddress : billingAddress,
+          sameAsShipping: sameAsShipping,
+          totalAmount: cartDetails?.totalPrice || 0,
+          totalItems: cartDetails?.arts?.length || 0,
+          paymentId: result.paymentId,
+          paymentMethod: "square",
+          paymentStatus: result.status,
+          orderType: "original",
+        };
+
+        // Dispatch create order action
+        dispatch({
+          type: "CREATE_ORDER_BY_ID",
+          payload: {
+            body: orderData,
+          },
+        });
+
+        // Clear cart after successful order
+        dispatch({
+          type: "CLEAR_CART",
+          payload: authUser?._id,
+        });
+
+        // Redirect to success page with order data
+        navigate('/order-success', { 
+          state: { 
+            orderData,
+            paymentResult: result
+          }
+        });
+        
       } else {
-        alert('Payment failed. Please try again.');
+        alert(`Payment failed: ${result.message || 'Unknown error'}`);
+        console.error('Payment errors:', result.errors);
       }
       
       return result;
@@ -83,6 +151,11 @@ const Cart = () => {
       return;
     }
     
+    // Validate addresses before proceeding
+    if (!validateAddresses()) {
+      return;
+    }
+    
     // Show payment form
     setShowPaymentForm(true);
   };
@@ -108,6 +181,7 @@ const Cart = () => {
               <button 
                 onClick={() => setShowPaymentForm(false)}
                 className="text-gray-500 hover:text-gray-700 text-2xl"
+                disabled={isProcessingPayment}
               >
                 ×
               </button>
@@ -123,6 +197,18 @@ const Cart = () => {
               </p>
             </div>
 
+            {/* Address Summary */}
+            <div className="mb-4 p-3 bg-gray-50 rounded-lg text-sm">
+              <div className="font-semibold mb-2">Shipping to:</div>
+              <div>
+                {shippingAddress.firstName} {shippingAddress.lastName}<br/>
+                {shippingAddress.address1}<br/>
+                {shippingAddress.address2 && <>{shippingAddress.address2}<br/></>}
+                {shippingAddress.city}, {shippingAddress.state} {shippingAddress.postalCode}<br/>
+                {shippingAddress.country}
+              </div>
+            </div>
+
             <PaymentForm
               applicationId={squareConfig.applicationId}
               cardTokenizeResponseReceived={handlePaymentTokenReceived}
@@ -134,7 +220,7 @@ const Cart = () => {
             {isProcessingPayment && (
               <div className="mt-4 text-center">
                 <div className="inline-block animate-spin rounded-full h-6 w-6 border-b-2 border-[#80bc30]"></div>
-                <p className="mt-2 text-sm text-gray-600">Processing payment...</p>
+                <p className="mt-2 text-sm text-gray-600">Processing payment and creating order...</p>
               </div>
             )}
           </div>
@@ -146,7 +232,7 @@ const Cart = () => {
           <div className="w-full md:w-2/5 bg-slate-50 p-4 mb-6 md:mb-0">
             <div className="text-4xl font-semibold">Checkout</div>
             <div>
-              <AccordionContinue className="block" />
+              <AccordionContinue />
             </div>
             <div className="mx-4">
               <button 

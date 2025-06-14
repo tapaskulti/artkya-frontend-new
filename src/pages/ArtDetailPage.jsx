@@ -160,9 +160,9 @@ const ArtDetailPage = () => {
 
         <h3 className="font-semibold mb-2">Returns Policy</h3>
         <p className="mb-4">
-          We offer a 14-day satisfaction guarantee. If you're not completely
+          {`We offer a 14-day satisfaction guarantee. If you're not completely
           satisfied with your purchase, you can return it within 14 days for a
-          full refund.
+          full refund.`}
         </p>
 
         <h3 className="font-semibold mb-2">Delivery Timeline</h3>

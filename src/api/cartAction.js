@@ -27,9 +27,15 @@ export const removeFromCartAction = async (payload) => {
 
   return response;
 };
+export const clearCartAction = async (payload) => {
+  const response = await axios.patch(
+    `${VITE_BASE_URL}/cart/clearCartByUserId?userId=${payload?.userId}`
+  );
+  return response;
+};
 
 export const getCartByIdAction = async (payload) => {
-  // console.log("Action payload---->", payload);
+
   try {
     const response = await axios.get(
       `${VITE_BASE_URL}/cart/cartByUserId?userId=${payload}`
