@@ -1,7 +1,11 @@
-import { useLocation, Link, useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
-import { CheckCircleIcon } from '@heroicons/react/24/solid';
-import { TruckIcon, CreditCardIcon, MapPinIcon } from '@heroicons/react/24/outline';
+import { useLocation, Link, useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import {
+  CheckCircleIcon,
+  CreditCardIcon,
+  MapPinIcon,
+  TruckIcon,
+} from "lucide-react";
 
 const OrderSuccess = () => {
   const location = useLocation();
@@ -9,9 +13,8 @@ const OrderSuccess = () => {
   const { orderData, paymentResult } = location.state || {};
 
   useEffect(() => {
-    // Redirect to home if no order data
     if (!orderData) {
-      navigate('/');
+      navigate("/");
     }
   }, [orderData, navigate]);
 
@@ -19,8 +22,13 @@ const OrderSuccess = () => {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
-          <h1 className="text-2xl font-semibold text-gray-900">No order data found</h1>
-          <Link to="/" className="text-blue-600 hover:text-blue-500 mt-4 inline-block">
+          <h1 className="text-2xl font-semibold text-gray-900">
+            No order data found
+          </h1>
+          <Link
+            to="/"
+            className="text-blue-600 hover:text-blue-500 mt-4 inline-block"
+          >
             Return to Home
           </Link>
         </div>
@@ -29,12 +37,12 @@ const OrderSuccess = () => {
   }
 
   const formatDate = (date) => {
-    return new Date(date).toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit'
+    return new Date(date).toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
     });
   };
 
@@ -57,7 +65,8 @@ const OrderSuccess = () => {
             Order Placed Successfully!
           </h1>
           <p className="text-lg text-gray-600">
-            Thank you for your purchase. Your order has been confirmed and will be processed soon.
+            Thank you for your purchase. Your order has been confirmed and will
+            be processed soon.
           </p>
         </div>
 
@@ -72,7 +81,9 @@ const OrderSuccess = () => {
             <div className="space-y-2 text-sm">
               <div className="flex justify-between">
                 <span className="text-gray-600">Payment ID:</span>
-                <span className="font-mono text-xs">{paymentResult?.paymentId}</span>
+                <span className="font-mono text-xs">
+                  {paymentResult?.paymentId}
+                </span>
               </div>
               <div className="flex justify-between">
                 <span className="text-gray-600">Method:</span>
@@ -80,7 +91,9 @@ const OrderSuccess = () => {
               </div>
               <div className="flex justify-between">
                 <span className="text-gray-600">Status:</span>
-                <span className="text-green-600 font-semibold">{orderData.paymentStatus}</span>
+                <span className="text-green-600 font-semibold">
+                  {orderData.paymentStatus}
+                </span>
               </div>
               <div className="flex justify-between">
                 <span className="text-gray-600">Amount:</span>
@@ -97,7 +110,8 @@ const OrderSuccess = () => {
             </div>
             <div className="text-sm">
               <div className="font-semibold mb-1">
-                {orderData.shippingAddress.firstName} {orderData.shippingAddress.lastName}
+                {orderData.shippingAddress.firstName}{" "}
+                {orderData.shippingAddress.lastName}
               </div>
               <div className="text-gray-600 space-y-1">
                 <div>{orderData.shippingAddress.address1}</div>
@@ -105,7 +119,9 @@ const OrderSuccess = () => {
                   <div>{orderData.shippingAddress.address2}</div>
                 )}
                 <div>
-                  {orderData.shippingAddress.city}, {orderData.shippingAddress.state} {orderData.shippingAddress.postalCode}
+                  {orderData.shippingAddress.city},{" "}
+                  {orderData.shippingAddress.state}{" "}
+                  {orderData.shippingAddress.postalCode}
                 </div>
                 <div>{orderData.shippingAddress.country}</div>
                 <div className="mt-2">
@@ -129,7 +145,10 @@ const OrderSuccess = () => {
               </div>
               <div className="flex justify-between">
                 <span className="text-gray-600">Items:</span>
-                <span>{orderData.totalItems} item{orderData.totalItems > 1 ? 's' : ''}</span>
+                <span>
+                  {orderData.totalItems} item
+                  {orderData.totalItems > 1 ? "s" : ""}
+                </span>
               </div>
               <div className="flex justify-between">
                 <span className="text-gray-600">Order Date:</span>
@@ -149,7 +168,8 @@ const OrderSuccess = () => {
             <h3 className="text-lg font-semibold mb-4">Billing Address</h3>
             <div className="text-sm text-gray-600">
               <div className="font-semibold mb-1">
-                {orderData.billingAddress.firstName} {orderData.billingAddress.lastName}
+                {orderData.billingAddress.firstName}{" "}
+                {orderData.billingAddress.lastName}
               </div>
               <div className="space-y-1">
                 <div>{orderData.billingAddress.address1}</div>
@@ -157,7 +177,9 @@ const OrderSuccess = () => {
                   <div>{orderData.billingAddress.address2}</div>
                 )}
                 <div>
-                  {orderData.billingAddress.city}, {orderData.billingAddress.state} {orderData.billingAddress.postalCode}
+                  {orderData.billingAddress.city},{" "}
+                  {orderData.billingAddress.state}{" "}
+                  {orderData.billingAddress.postalCode}
                 </div>
                 <div>{orderData.billingAddress.country}</div>
               </div>
@@ -172,10 +194,13 @@ const OrderSuccess = () => {
           </h3>
           <div className="space-y-4">
             {orderData.artIds.map((art, index) => (
-              <div key={art._id || index} className="flex items-center space-x-4 p-4 border border-gray-200 rounded-lg">
+              <div
+                key={art._id || index}
+                className="flex items-center space-x-4 p-4 border border-gray-200 rounded-lg"
+              >
                 <div className="flex-shrink-0">
                   <img
-                    src={art.thumbnail?.secure_url || '/placeholder-art.jpg'}
+                    src={art.thumbnail?.secure_url || "/placeholder-art.jpg"}
                     alt={art.title}
                     className="w-20 h-20 object-cover rounded-lg"
                   />
@@ -190,8 +215,12 @@ const OrderSuccess = () => {
                   </div>
                 </div>
                 <div className="text-right">
-                  <div className="text-sm text-green-600 font-semibold">✓ Confirmed</div>
-                  <div className="text-xs text-gray-500 mt-1">Shipping Included</div>
+                  <div className="text-sm text-green-600 font-semibold">
+                    ✓ Confirmed
+                  </div>
+                  <div className="text-xs text-gray-500 mt-1">
+                    Shipping Included
+                  </div>
                 </div>
               </div>
             ))}
@@ -200,24 +229,34 @@ const OrderSuccess = () => {
 
         {/* Next Steps */}
         <div className="bg-blue-50 rounded-lg p-6 mb-8">
-          <h3 className="text-lg font-semibold text-blue-900 mb-4">What happens next?</h3>
+          <h3 className="text-lg font-semibold text-blue-900 mb-4">
+            What happens next?
+          </h3>
           <div className="space-y-3 text-sm text-blue-800">
             <div className="flex items-start space-x-3">
-              <div className="bg-blue-200 rounded-full w-6 h-6 flex items-center justify-center text-xs font-semibold">1</div>
+              <div className="bg-blue-200 rounded-full w-6 h-6 flex items-center justify-center text-xs font-semibold">
+                1
+              </div>
               <div>
                 <div className="font-semibold">Order Processing</div>
                 <div>{`We'll prepare your artwork for shipping within 1-2 business days.`}</div>
               </div>
             </div>
             <div className="flex items-start space-x-3">
-              <div className="bg-blue-200 rounded-full w-6 h-6 flex items-center justify-center text-xs font-semibold">2</div>
+              <div className="bg-blue-200 rounded-full w-6 h-6 flex items-center justify-center text-xs font-semibold">
+                2
+              </div>
               <div>
                 <div className="font-semibold">Quality Check</div>
-                <div>Each piece is carefully inspected and professionally packaged.</div>
+                <div>
+                  Each piece is carefully inspected and professionally packaged.
+                </div>
               </div>
             </div>
             <div className="flex items-start space-x-3">
-              <div className="bg-blue-200 rounded-full w-6 h-6 flex items-center justify-center text-xs font-semibold">3</div>
+              <div className="bg-blue-200 rounded-full w-6 h-6 flex items-center justify-center text-xs font-semibold">
+                3
+              </div>
               <div>
                 <div className="font-semibold">Shipment & Tracking</div>
                 <div>{`You'll receive tracking information once your order ships.`}</div>
@@ -252,7 +291,8 @@ const OrderSuccess = () => {
         <div className="text-center mt-8 p-6 bg-gray-100 rounded-lg">
           <h4 className="font-semibold text-gray-900 mb-2">Need Help?</h4>
           <p className="text-sm text-gray-600 mb-4">
-            Our customer support team is here to assist you with any questions about your order.
+            Our customer support team is here to assist you with any questions
+            about your order.
           </p>
           <div className="flex flex-col sm:flex-row gap-2 justify-center">
             <Link

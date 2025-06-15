@@ -7,51 +7,68 @@ import { FaStar } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 import { AccordionContinue } from "../components/Accordion";
-import { PaymentForm, CreditCard } from 'react-square-web-payments-sdk';
+import { PaymentForm, CreditCard } from "react-square-web-payments-sdk";
+import { setAllCart } from "../redux/app/cart/cartSlice";
 
 const Cart = () => {
   const { cartDetails } = useSelector((state) => state.cart);
   const { authUser } = useSelector((state) => state.auth);
-  const { shippingAddress, billingAddress, sameAsShipping } = useSelector((state) => state.order);
+  const { shippingAddress, billingAddress, sameAsShipping } = useSelector(
+    (state) => state.order
+  );
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  
+
   // Payment states
   const [isProcessingPayment, setIsProcessingPayment] = useState(false);
   const [paymentToken, setPaymentToken] = useState(null);
   const [showPaymentForm, setShowPaymentForm] = useState(false);
-  
+
   const squareConfig = {
     applicationId: import.meta.env.VITE_BASE_SQUARE_APP_ID,
-    locationId: import.meta.env.VITE_APP_SQUARE_LOCATION_ID
+    locationId: import.meta.env.VITE_APP_SQUARE_LOCATION_ID,
   };
 
   // Validate addresses before payment
   const validateAddresses = () => {
-    const requiredFields = ['firstName', 'lastName', 'address1', 'country', 'city', 'state', 'postalCode', 'Email', 'PhoneNumber'];
-    
+    const requiredFields = [
+      "firstName",
+      "lastName",
+      "address1",
+      "country",
+      "city",
+      "state",
+      "postalCode",
+      "Email",
+      "PhoneNumber",
+    ];
+
     // Check shipping address
-    const shippingValid = requiredFields.every(field => 
-      shippingAddress[field] && shippingAddress[field].toString().trim() !== ''
+    const shippingValid = requiredFields.every(
+      (field) =>
+        shippingAddress[field] &&
+        shippingAddress[field].toString().trim() !== ""
     );
-    
+
     if (!shippingValid) {
-      alert('Please complete all required shipping address fields');
+      alert("Please complete all required shipping address fields");
       return false;
     }
-    
+
     // Check billing address if not same as shipping
     if (!sameAsShipping) {
-      const billingValid = requiredFields.every(field => 
-        billingAddress[field] && billingAddress[field].toString().trim() !== ''
+      const billingValid = requiredFields.every(
+        (field) =>
+          billingAddress[field] &&
+          billingAddress[field].toString().trim() !== ""
       );
-      
+
       if (!billingValid) {
-        alert('Please complete all required billing address fields');
+        alert("Please complete all required billing address fields");
         return false;
       }
     }
-    
+
     return true;
   };
 
@@ -59,23 +76,26 @@ const Cart = () => {
   const processPayment = async (sourceId, amount) => {
     try {
       setIsProcessingPayment(true);
-      
-      const response = await fetch(`${import.meta.env.VITE_BASE_URL}/pay/payment`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          sourceId: sourceId,
-          amount: Math.round(amount * 100), // Convert to cents for Square
-          currency: 'USD',
-          billingAddress: sameAsShipping ? shippingAddress : billingAddress
-        })
-      });
+
+      const response = await fetch(
+        `${import.meta.env.VITE_BASE_URL}/pay/payment`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            sourceId: sourceId,
+            amount: Math.round(amount * 100), // Convert to cents for Square
+            currency: "USD",
+            billingAddress: sameAsShipping ? shippingAddress : billingAddress,
+          }),
+        }
+      );
 
       const result = await response.json();
-      console.log('Payment result:', result);
-      
+      console.log("Payment result:", result);
+
       if (result.success) {
         // Create order after successful payment
         const orderData = {
@@ -103,26 +123,29 @@ const Cart = () => {
         // Clear cart after successful order
         dispatch({
           type: "CLEAR_CART",
-          payload: authUser?._id,
+          payload: {
+            userId: authUser?._id,
+          },
         });
 
-        // Redirect to success page with order data
-        navigate('/order-success', { 
-          state: { 
-            orderData,
-            paymentResult: result
-          }
-        });
+        dispatch(setAllCart({ cartDetails: {} }))
         
+        // Redirect to success page with order data
+        navigate("/order-success", {
+          state: {
+            orderData,
+            paymentResult: result,
+          },
+        });
       } else {
-        alert(`Payment failed: ${result.message || 'Unknown error'}`);
-        console.error('Payment errors:', result.errors);
+        alert(`Payment failed: ${result.message || "Unknown error"}`);
+        console.error("Payment errors:", result.errors);
       }
-      
+
       return result;
     } catch (error) {
-      console.error('Payment processing error:', error);
-      alert('Payment processing failed. Please try again.');
+      console.error("Payment processing error:", error);
+      alert("Payment processing failed. Please try again.");
       throw error;
     } finally {
       setIsProcessingPayment(false);
@@ -132,9 +155,9 @@ const Cart = () => {
 
   // Handle payment token received from Square
   const handlePaymentTokenReceived = async (token, buyer) => {
-    console.log('Payment token received:', { token, buyer });
+    console.log("Payment token received:", { token, buyer });
     setPaymentToken(token);
-    
+
     // Process payment immediately when token is received
     await processPayment(token.token, cartDetails?.totalPrice || 0);
   };
@@ -142,20 +165,20 @@ const Cart = () => {
   // Handle place order click
   const handlePlaceOrder = () => {
     if (!cartDetails?.arts?.length) {
-      alert('Your cart is empty!');
+      alert("Your cart is empty!");
       return;
     }
-    
+
     if (!authUser) {
-      alert('Please login to place order');
+      alert("Please login to place order");
       return;
     }
-    
+
     // Validate addresses before proceeding
     if (!validateAddresses()) {
       return;
     }
-    
+
     // Show payment form
     setShowPaymentForm(true);
   };
@@ -171,14 +194,14 @@ const Cart = () => {
           </div>
         </div>
       </div>
-      
+
       {/* Payment Modal */}
       {showPaymentForm && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white p-6 rounded-lg max-w-md w-full mx-4">
             <div className="flex justify-between items-center mb-4">
               <h2 className="text-xl font-semibold">Complete Payment</h2>
-              <button 
+              <button
                 onClick={() => setShowPaymentForm(false)}
                 className="text-gray-500 hover:text-gray-700 text-2xl"
                 disabled={isProcessingPayment}
@@ -186,7 +209,7 @@ const Cart = () => {
                 ×
               </button>
             </div>
-            
+
             <div className="mb-4">
               <div className="flex justify-between text-lg font-semibold">
                 <span>Total Amount:</span>
@@ -201,10 +224,19 @@ const Cart = () => {
             <div className="mb-4 p-3 bg-gray-50 rounded-lg text-sm">
               <div className="font-semibold mb-2">Shipping to:</div>
               <div>
-                {shippingAddress.firstName} {shippingAddress.lastName}<br/>
-                {shippingAddress.address1}<br/>
-                {shippingAddress.address2 && <>{shippingAddress.address2}<br/></>}
-                {shippingAddress.city}, {shippingAddress.state} {shippingAddress.postalCode}<br/>
+                {shippingAddress.firstName} {shippingAddress.lastName}
+                <br />
+                {shippingAddress.address1}
+                <br />
+                {shippingAddress.address2 && (
+                  <>
+                    {shippingAddress.address2}
+                    <br />
+                  </>
+                )}
+                {shippingAddress.city}, {shippingAddress.state}{" "}
+                {shippingAddress.postalCode}
+                <br />
                 {shippingAddress.country}
               </div>
             </div>
@@ -216,11 +248,13 @@ const Cart = () => {
             >
               <CreditCard />
             </PaymentForm>
-            
+
             {isProcessingPayment && (
               <div className="mt-4 text-center">
                 <div className="inline-block animate-spin rounded-full h-6 w-6 border-b-2 border-[#80bc30]"></div>
-                <p className="mt-2 text-sm text-gray-600">Processing payment and creating order...</p>
+                <p className="mt-2 text-sm text-gray-600">
+                  Processing payment and creating order...
+                </p>
               </div>
             )}
           </div>
@@ -235,20 +269,20 @@ const Cart = () => {
               <AccordionContinue />
             </div>
             <div className="mx-4">
-              <button 
+              <button
                 onClick={handlePlaceOrder}
                 disabled={isProcessingPayment || !cartDetails?.arts?.length}
                 className={`flex w-full text-white text-xl font-semibold mt-5 px-10 py-4 justify-center ${
                   isProcessingPayment || !cartDetails?.arts?.length
-                    ? 'bg-gray-400 cursor-not-allowed' 
-                    : 'bg-[#80bc30] hover:bg-[#89c043]'
+                    ? "bg-gray-400 cursor-not-allowed"
+                    : "bg-[#80bc30] hover:bg-[#89c043]"
                 }`}
               >
-                {isProcessingPayment ? 'Processing...' : 'Place Order'}
+                {isProcessingPayment ? "Processing..." : "Place Order"}
               </button>
             </div>
           </div>
-          
+
           <div className="w-full md:w-1/3 bg-slate-50 p-4 space-y-4">
             <div className="space-y-3">
               <div className="flex text-xl justify-between font-semibold">
@@ -256,22 +290,22 @@ const Cart = () => {
                 <h1>₹{cartDetails?.totalPrice}</h1>
               </div>
               <h1 className="text-sm text-gray-600">
-                All charges and refunds will be made in USD and may
-                be subject to exchange rate fluctuations.
+                All charges and refunds will be made in USD and may be subject
+                to exchange rate fluctuations.
               </h1>
-              <button 
+              <button
                 onClick={handlePlaceOrder}
                 disabled={isProcessingPayment || !cartDetails?.arts?.length}
                 className={`flex w-full text-white text-xl font-semibold mt-5 px-10 py-4 justify-center ${
                   isProcessingPayment || !cartDetails?.arts?.length
-                    ? 'bg-gray-400 cursor-not-allowed' 
-                    : 'bg-[#80bc30] hover:bg-[#89c043]'
+                    ? "bg-gray-400 cursor-not-allowed"
+                    : "bg-[#80bc30] hover:bg-[#89c043]"
                 }`}
               >
-                {isProcessingPayment ? 'Processing...' : 'Place Order'}
+                {isProcessingPayment ? "Processing..." : "Place Order"}
               </button>
             </div>
-            
+
             <div>
               <CartCardComponent
                 icon={<FaStar />}
@@ -302,19 +336,15 @@ const Cart = () => {
                 }
               />
             </div>
-            
+
             <div className="text-xl">Need More Help?</div>
-            
+
             <div className="flex space-x-3 flex-col md:flex-row">
-              <Link
-                className="flex cursor-pointer w-full md:w-64 text-black justify-center items-center py-2 text-base border border-black text-center mb-2 md:mb-0"
-              >
+              <Link className="flex cursor-pointer w-full md:w-64 text-black justify-center items-center py-2 text-base border border-black text-center mb-2 md:mb-0">
                 Enjoy Complimentary Advisory
               </Link>
 
-              <Link
-                className="flex cursor-pointer w-full md:w-64 text-black justify-center items-center py-2 text-base border border-black text-center"
-              >
+              <Link className="flex cursor-pointer w-full md:w-64 text-black justify-center items-center py-2 text-base border border-black text-center">
                 Contact customer Support
               </Link>
             </div>

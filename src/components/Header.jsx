@@ -76,15 +76,15 @@ const Header = () => {
               <InnerMenuComponent
                 name={"Orders"}
                 onClick={() => {
-                  // navigate("/Accounts");
+                  navigate("/orders");
                 }}
               />
-              <InnerMenuComponent
+              {/* <InnerMenuComponent
                 name={"Offers"}
                 onClick={() => {
                   // navigate("/Accounts");
                 }}
-              />
+              /> */}
               <InnerMenuComponent
                 name={"Account"}
                 onClick={() => {

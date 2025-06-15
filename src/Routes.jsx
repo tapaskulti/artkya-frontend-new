@@ -16,12 +16,13 @@ import ArtistMainPage from "./pages/artist_dashboard/ArtistMainPage";
 import Homepage from "./pages/Homepage";
 import UserProfilePage from "./pages/UserProfilePage";
 import OriginalArtCheckout from "./pages/OriginalArtCheckout";
-import PrintArtCheckout from "./pages/PrintArtCheckout";
 import Admin from "./pages/AdminDashboard";
 import PaintingsManagement from "./components/Admin/PaintingsManagement";
 import OrdersManagement from "./components/Admin/OrdersManagement";
 import UsersManagement from "./components/Admin/UsersManagement";
 import ArtistsManagement from "./components/Admin/ArtistsManagement";
+import OrderSuccess from "./pages/OrderSuccessPage";
+import OrderDetailsModal from "./pages/Orders";
 
 const Routes = () => {
   return (
@@ -43,7 +44,8 @@ const Routes = () => {
       <Route path="/ShippingBilling" element={<ShippingBilling />} />
       {/* <Route path="/:id/checkout" element={<ChekoutPage />} /> */}
       <Route path="/Artist" element={<ArtistMainPage />} />
-      {/* <Route path="/Admin" element={<Admin />} /> */}
+      <Route path="/order-success" element={<OrderSuccess />} />
+      <Route path="/orders" element={<OrderDetailsModal />} />
       <Route
         path="/artDetailPage/:id/original"
         element={<OriginalArtCheckout />}
