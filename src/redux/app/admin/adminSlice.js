@@ -4,15 +4,17 @@ const initialState = {
   allUsers: [],
   allArtists: [],
   allPaintings: [],
+  allOrders: [],
+  adminOrderLoading: false,
   userLoading: false,
   artistLoading: false,
   paintingLoading: false,
-  totalCount:{
-    totalUser:"",
-    totalArtist:"",
-    totalPainting:"",
-    totalOrders:"",
-  }
+  totalCount: {
+    totalUser: "",
+    totalArtist: "",
+    totalPainting: "",
+    totalOrders: "",
+  },
 };
 
 const adminSlice = createSlice({
@@ -38,8 +40,8 @@ const adminSlice = createSlice({
       state.paintingLoading = action.payload.paintingLoading;
     },
     setTotalCount(state, action) {
-        state.totalCount[action.payload.key] = action.payload.count;
-      },
+      state.totalCount[action.payload.key] = action.payload.count;
+    },
   },
 });
 
@@ -54,11 +56,3 @@ export const {
 } = adminSlice.actions;
 
 export const adminReducer = adminSlice.reducer;
-
-
-
-
-
-
-
-
