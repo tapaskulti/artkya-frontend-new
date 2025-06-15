@@ -5,6 +5,7 @@ import { watchAsyncCartSaga } from "./CartSaga";
 import { watchAsyncWishlistSaga } from "./WishlistSaga";
 import { watchAsyncArtistSaga } from "./artistSaga";
 import { watchAsyncAdminSaga } from "./AdminSaga";
+import { watchAsyncOrderSaga } from "./OrderSaga";
 
 
 
@@ -15,6 +16,7 @@ export function* rootSaga() {
     watchAsyncCartSaga(),
     watchAsyncWishlistSaga(),
     watchAsyncArtistSaga(),
-    watchAsyncAdminSaga()
+    watchAsyncAdminSaga(),
+    watchAsyncOrderSaga()
   ]);
 }

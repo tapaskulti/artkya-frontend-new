@@ -14,10 +14,12 @@ export const fetchTotalUserArtistCountsAction = async () => {
   }
 };
 
-export const fetchAllUsersAction = async () => {
+export const fetchAllUsersAction = async (payload) => {
   try {
-    // console.log("fetchAllUsersAction Called");
-    const response = await axios.get(`${VITE_BASE_URL}/admin/getAllUsers`);
+    console.log("fetchAllUsersAction Called", payload);
+    const response = await axios.get(
+      `${VITE_BASE_URL}/admin/getAllUsers?search=${payload.search}`
+    );
 
     return response;
   } catch (error) {
@@ -25,10 +27,12 @@ export const fetchAllUsersAction = async () => {
   }
 };
 
-export const fetchAllArtistsAction = async () => {
+export const fetchAllArtistsAction = async (payload) => {
   try {
     // console.log("fetchAllArtistsAction Called");
-    const response = await axios.get(`${VITE_BASE_URL}/admin/getAllArtists`);
+    const response = await axios.get(
+      `${VITE_BASE_URL}/admin/getAllArtists?search=${payload.search}`
+    );
 
     return response;
   } catch (error) {
@@ -50,7 +54,34 @@ export const getAllPantingsAction = async () => {
 export const approveArtWorkAction = async (payload) => {
   try {
     console.log("approveArtWorkAction Called");
-    const response = await axios.patch(`${VITE_BASE_URL}/admin/approveArtwork?artId=${payload?.artId}`);
+    const response = await axios.patch(
+      `${VITE_BASE_URL}/admin/approveArtwork?artId=${payload?.artId}`
+    );
+
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+};
+export const updateArtistCommissionAction = async (payload) => {
+  try {
+    console.log("updateArtistCommissionAction Called", payload);
+    const response = await axios.patch(
+      `${VITE_BASE_URL}/admin/updateCommission`,
+      payload.body
+    );
+
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+};
+export const verifyArtistAction = async (payload) => {
+  try {
+    console.log("verifyArtist Called", payload);
+    const response = await axios.patch(
+      `${VITE_BASE_URL}/admin/verifyArtist?userId=${payload?.userId}`,
+    );
 
     return response;
   } catch (error) {

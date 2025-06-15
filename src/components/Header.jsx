@@ -3,7 +3,6 @@ import logo from "../assets/logo.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 import { Link, NavLink, useNavigate } from "react-router-dom";
-import { faOpencart } from "@fortawesome/free-brands-svg-icons";
 import { AiOutlineUser } from "react-icons/ai";
 import { CiHeart } from "react-icons/ci";
 import { BsCart3 } from "react-icons/bs";
@@ -22,7 +21,6 @@ const Header = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { cartDetails } = useSelector((state) => state.cart);
-
 
   return (
     <>
@@ -76,15 +74,15 @@ const Header = () => {
               <InnerMenuComponent
                 name={"Orders"}
                 onClick={() => {
-                  // navigate("/Accounts");
+                  navigate("/orders");
                 }}
               />
-              <InnerMenuComponent
+              {/* <InnerMenuComponent
                 name={"Offers"}
                 onClick={() => {
                   // navigate("/Accounts");
                 }}
-              />
+              /> */}
               <InnerMenuComponent
                 name={"Account"}
                 onClick={() => {
@@ -157,7 +155,7 @@ const Header = () => {
         </>
       )}
 
-      <div className="items-center w-full scroll ">
+      <div className="items-center w-full scroll bg-gray-50">
         <div className={`${dropDownOpen ? "visible" : "hidden"}`}>
           <div>
             <ul className="md:flex font-sans text-base space-y-2 cursor-pointer text-[#000000] p-5">
@@ -248,12 +246,12 @@ const Header = () => {
                         Login
                       </NavLink>
                     </li>
-                    <span>|</span>
-                    <li className="hover:text-amber-800 ">
+                    {/* <span>|</span> */}
+                    {/* <li className="hover:text-amber-800 ">
                       <NavLink className="border-black" to="/Register">
                         Register
                       </NavLink>
-                    </li>
+                    </li> */}
                   </>
                 )}
                 {token && (

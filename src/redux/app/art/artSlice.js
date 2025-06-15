@@ -14,7 +14,8 @@ const initialState = {
   sortCriteria: "",
   searchCriteria: "",
   artNotFound: false,
-  printPrice:""
+  printPrice:"",
+  paymentStatus:null
 };
 
 const artSlice = createSlice({
@@ -60,6 +61,9 @@ const artSlice = createSlice({
     setprintPrice(state, action) {
       state.printPrice = action.payload.printPrice;
     },
+    setpaymentStatus(state, action) {
+      state.paymentStatus = action.payload.paymentStatus;
+    },
   },
 });
 
@@ -76,6 +80,7 @@ export const {
   setSearchInput,
   setSortCriteria,
   setSearchCriteria,
-  setprintPrice
+  setprintPrice,
+  setpaymentStatus
 } = artSlice.actions;
 export const artReducer = artSlice.reducer;

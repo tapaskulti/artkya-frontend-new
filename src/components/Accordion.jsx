@@ -1,11 +1,11 @@
 /* eslint-disable react/prop-types */
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
-import paypal from "../assets/paypal-logo.png";
-import { CreditCard, PaymentForm } from "react-square-web-payments-sdk";
-import { toast } from "react-toastify";
-import SquareLogoPoweredBy from "../assets/powered-by-square-logo.png";
+import {
+  setShippingAddress,
+  setBillingAddress,
+  setSameAsShipping,
+} from "../redux/app/order/orderSlice";
 
 // eslint-disable-next-line react/prop-types
 const Accordion = ({ element, onCheckChange, name }) => {
@@ -76,7 +76,6 @@ const Accordion = ({ element, onCheckChange, name }) => {
 };
 
 export default Accordion;
-
 
 export const SecondAccordion = ({ element, onCheckChange, name }) => {
   const [accordionOpen, setAccordionOpen] = useState(true); // Accordion starts open
@@ -178,21 +177,14 @@ export const AccordionContinue = () => {
   const dispatch = useDispatch();
   const { cartDetails } = useSelector((state) => state.cart);
   const { authUser } = useSelector((state) => state.auth);
+  const {
+    shippingAddress: reduxShippingAddress,
+    billingAddress: reduxBillingAddress,
+    sameAsShipping,
+  } = useSelector((state) => state.order);
+
   const [showSavedAddress, setShowSavedAddress] = useState(true);
-  const [selectedAddress, setSelectedAddress] = useState(undefined);
-  const [shippingAddress, setShippingAddress] = useState({
-    firstName: "",
-    lastName: "",
-    address1: "",
-    address2: "",
-    country: "",
-    city: "",
-    state: "",
-    postalCode: "",
-    Email: "",
-    PhoneNumber: "",
-  });
-  const [billingAddress, setBillingAddress] = useState({
+  const [shippingAddress, setLocalShippingAddress] = useState({
     firstName: "",
     lastName: "",
     address1: "",
@@ -205,48 +197,139 @@ export const AccordionContinue = () => {
     PhoneNumber: "",
   });
 
+  const [billingAddress, setLocalBillingAddress] = useState({
+    firstName: "",
+    lastName: "",
+    address1: "",
+    address2: "",
+    country: "",
+    city: "",
+    state: "",
+    postalCode: "",
+    Email: "",
+    PhoneNumber: "",
+  });
+
+  // Update local state when Redux state changes
+  useEffect(() => {
+    if (Object.keys(reduxShippingAddress).length > 0) {
+      setLocalShippingAddress(reduxShippingAddress);
+    }
+    if (Object.keys(reduxBillingAddress).length > 0) {
+      setLocalBillingAddress(reduxBillingAddress);
+    }
+  }, [reduxShippingAddress, reduxBillingAddress]);
+
   const handleSaveShippingAddress = () => {
+    // Save shipping address to user profile
     dispatch({
       type: "ADD_SHIPPING_ADDRESS",
       payload: {
         userId: authUser?._id,
-        body: {
-          firstName: shippingAddress.firstName,
-          lastName: shippingAddress.lastName,
-          address1: shippingAddress.address1,
-          address2: shippingAddress.address2,
-          country: shippingAddress.country,
-          city: shippingAddress.city,
-          state: shippingAddress.state,
-          postalCode: shippingAddress.postalCode,
-          Email: shippingAddress.Email,
-          PhoneNumber: shippingAddress.PhoneNumber,
-        },
+        body: shippingAddress,
       },
     });
+
+    // Update Redux store
+    dispatch(setShippingAddress({ shippingAddress }));
+
+    // If same as billing is checked, update billing address too
+    if (sameAsShipping) {
+      dispatch(setBillingAddress({ billingAddress: shippingAddress }));
+      setLocalBillingAddress(shippingAddress);
+    }
+
     setShowSavedAddress(true);
   };
+
+  const handleShippingAddressChange = (field, value) => {
+    const updatedAddress = {
+      ...shippingAddress,
+      [field]: value,
+    };
+    setLocalShippingAddress(updatedAddress);
+
+    // Update Redux store
+    dispatch(setShippingAddress({ shippingAddress: updatedAddress }));
+
+    // If same as billing is checked, update billing address too
+    if (sameAsShipping) {
+      setLocalBillingAddress(updatedAddress);
+      dispatch(setBillingAddress({ billingAddress: updatedAddress }));
+    }
+  };
+
+  const handleBillingAddressChange = (field, value) => {
+    const updatedAddress = {
+      ...billingAddress,
+      [field]: value,
+    };
+    setLocalBillingAddress(updatedAddress);
+    dispatch(setBillingAddress({ billingAddress: updatedAddress }));
+  };
+
+  const handleSameAsBillingChange = (checked) => {
+    dispatch(setSameAsShipping({ sameAsShipping: checked }));
+
+    if (checked) {
+      setLocalBillingAddress(shippingAddress);
+      dispatch(setBillingAddress({ billingAddress: shippingAddress }));
+    } else {
+      // Reset billing address when unchecked
+      const emptyAddress = {
+        firstName: "",
+        lastName: "",
+        address1: "",
+        address2: "",
+        country: "",
+        city: "",
+        state: "",
+        postalCode: "",
+        Email: "",
+        PhoneNumber: "",
+      };
+      setLocalBillingAddress(emptyAddress);
+      dispatch(setBillingAddress({ billingAddress: emptyAddress }));
+    }
+  };
+
+  const handleSelectSavedAddress = (address, isChecked) => {
+    if (isChecked) {
+      setLocalShippingAddress(address);
+      dispatch(setShippingAddress({ shippingAddress: address }));
+
+      if (sameAsShipping) {
+        setLocalBillingAddress(address);
+        dispatch(setBillingAddress({ billingAddress: address }));
+      }
+    }
+  };
+
   return (
-    <div>
-      <div className="collapse collapse-arrow bg-white/90 border-b border-t border-slate-200 rounded-none my-2">
+    <div className="bg-white">
+      <div className="collapse collapse-arrow bg-white border-b border-t border-slate-200 rounded-none my-2">
         <input type="radio" name="my-accordion-2" />
-        <div className="collapse collapse-title text-base font-medium">
+        <div className="collapse-title text-base font-medium bg-white text-black">
           Your Cart
         </div>
-        <div className="collapse-content">
+        <div className="collapse-content bg-white">
           {cartDetails?.arts?.map((singleArt) => {
             return (
-              <div className="space-y-3" key={singleArt?._id}>
-                <div className=" bg-white border-t-2 flex p-3">
+              <div className="space-y-3 bg-white" key={singleArt?._id}>
+                <div className="bg-white border-t-2 flex p-3">
                   <div className="w-[30%]">
                     <img src={singleArt?.thumbnail?.secure_url} alt="" />
                   </div>
                   <div className="w-[70%] px-3 space-y-1">
                     <div className="flex justify-between">
                       <div>
-                        <h1 className="text-base italic">{singleArt?.title}</h1>
-                        <h1 className=" text-sm">Soo Beng Lim</h1>
-                        <h1 className=" text-xs">{singleArt?.subject}</h1>
+                        <h1 className="text-base italic text-black">
+                          {singleArt?.title}
+                        </h1>
+                        <h1 className="text-sm text-black">Soo Beng Lim</h1>
+                        <h1 className="text-xs text-black">
+                          {singleArt?.subject}
+                        </h1>
                       </div>
                       <button
                         className="bg-gray-300 text-white font-semibold rounded-full h-6 p-2 flex items-center"
@@ -256,7 +339,7 @@ export const AccordionContinue = () => {
                             payload: {
                               userId: authUser?._id,
                               artId: singleArt?._id,
-                              artPrice: singleArt?.price,
+                              artPrice: singleArt?.totalPrice,
                             },
                           });
                         }}
@@ -265,12 +348,12 @@ export const AccordionContinue = () => {
                       </button>
                     </div>
                     <div className="flex justify-between text-xs">
-                      <h1>Shipping</h1>
-                      <h1>Included</h1>
+                      <h1 className="text-black">Shipping</h1>
+                      <h1 className="text-black">Included</h1>
                     </div>
                     <div className="flex justify-between text-sm font-semibold">
-                      <h1>Artwork Total</h1>
-                      <h1>{singleArt?.price}</h1>
+                      <h1 className="text-black">Artwork Total</h1>
+                      <h1 className="text-black">{singleArt?.price}</h1>
                     </div>
                   </div>
                 </div>
@@ -279,13 +362,14 @@ export const AccordionContinue = () => {
           })}
         </div>
       </div>
-      <div className="collapse collapse-arrow bg-white/90 border-b border-t border-slate-200 rounded-none my-2">
+
+      <div className="collapse collapse-arrow bg-white border-b border-t border-slate-200 rounded-none my-2">
         <input type="radio" name="my-accordion-2" />
-        <div className="collapse-title text-base font-medium">
+        <div className="collapse-title text-base font-medium bg-white text-black">
           Shipping Address
         </div>
-        <div className="collapse-content">
-          <div className="flex text-sm pr-5 my-4">
+        <div className="collapse-content bg-white">
+          <div className="flex text-sm pr-5 my-4 text-black">
             Kolkata Station Road
             <br />
             Kolkata, West Bengal 700004
@@ -297,128 +381,98 @@ export const AccordionContinue = () => {
                   <input
                     type="text"
                     placeholder="First Name*"
-                    className="w-full border text-slate-400 border-slate-200 rounded-md px-3 py-3 focus:border-none focus:outline-slate-400 focus:outline-1"
+                    className="w-full border text-slate-400 border-slate-200 rounded-md px-3 py-3 focus:border-none focus:outline-slate-400 focus:outline-1 bg-white"
                     value={shippingAddress.firstName}
-                    onChange={(e) => {
-                      setShippingAddress({
-                        ...shippingAddress,
-                        firstName: e.target.value,
-                      });
-                    }}
+                    onChange={(e) =>
+                      handleShippingAddressChange("firstName", e.target.value)
+                    }
                   />
                   <input
                     type="text"
                     placeholder="Last Name*"
-                    className="w-full border border-slate-200 rounded-md px-3 py-3 focus:border-none focus:outline-slate-400 focus:outline-1"
+                    className="w-full border border-slate-200 rounded-md px-3 py-3 focus:border-none focus:outline-slate-400 focus:outline-1 bg-white"
                     value={shippingAddress.lastName}
-                    onChange={(e) => {
-                      setShippingAddress({
-                        ...shippingAddress,
-                        lastName: e.target.value,
-                      });
-                    }}
+                    onChange={(e) =>
+                      handleShippingAddressChange("lastName", e.target.value)
+                    }
                   />
                 </div>
                 <input
                   type="text"
                   placeholder="Address1*"
-                  className="w-full border text-slate-400 border-slate-200 rounded-md px-3 py-3 focus:border-none focus:outline-slate-400 focus:outline-1"
+                  className="w-full border text-slate-400 border-slate-200 rounded-md px-3 py-3 focus:border-none focus:outline-slate-400 focus:outline-1 bg-white"
                   value={shippingAddress.address1}
-                  onChange={(e) => {
-                    setShippingAddress({
-                      ...shippingAddress,
-                      address1: e.target.value,
-                    });
-                  }}
+                  onChange={(e) =>
+                    handleShippingAddressChange("address1", e.target.value)
+                  }
                 />
                 <input
                   type="text"
                   placeholder="Address2"
-                  className="w-full border text-slate-400 border-slate-200 rounded-md px-3 py-3 focus:border-none focus:outline-slate-400 focus:outline-1"
+                  className="w-full border text-slate-400 border-slate-200 rounded-md px-3 py-3 focus:border-none focus:outline-slate-400 focus:outline-1 bg-white"
                   value={shippingAddress.address2}
-                  onChange={(e) => {
-                    setShippingAddress({
-                      ...shippingAddress,
-                      address2: e.target.value,
-                    });
-                  }}
+                  onChange={(e) =>
+                    handleShippingAddressChange("address2", e.target.value)
+                  }
                 />
                 <div className="flex items-center space-x-5">
                   <input
                     type="text"
                     placeholder="Country*"
-                    className="w-full border text-slate-400 border-slate-200 rounded-md px-3 py-3 focus:border-none focus:outline-slate-400 focus:outline-1"
+                    className="w-full border text-slate-400 border-slate-200 rounded-md px-3 py-3 focus:border-none focus:outline-slate-400 focus:outline-1 bg-white"
                     value={shippingAddress.country}
-                    onChange={(e) => {
-                      setShippingAddress({
-                        ...shippingAddress,
-                        country: e.target.value,
-                      });
-                    }}
+                    onChange={(e) =>
+                      handleShippingAddressChange("country", e.target.value)
+                    }
                   />
                   <input
                     type="text"
                     placeholder="City*"
-                    className="w-full border border-slate-200 rounded-md px-3 py-3 focus:border-none focus:outline-slate-400 focus:outline-1"
+                    className="w-full border border-slate-200 rounded-md px-3 py-3 focus:border-none focus:outline-slate-400 focus:outline-1 bg-white"
                     value={shippingAddress.city}
-                    onChange={(e) => {
-                      setShippingAddress({
-                        ...shippingAddress,
-                        city: e.target.value,
-                      });
-                    }}
+                    onChange={(e) =>
+                      handleShippingAddressChange("city", e.target.value)
+                    }
                   />
                 </div>
                 <div className="flex items-center space-x-5">
                   <input
                     type="text"
                     placeholder="State/Region*"
-                    className="w-full border text-slate-400 border-slate-200 rounded-md px-3 py-3 focus:border-none focus:outline-slate-400 focus:outline-1"
+                    className="w-full border text-slate-400 border-slate-200 rounded-md px-3 py-3 focus:border-none focus:outline-slate-400 focus:outline-1 bg-white"
                     value={shippingAddress.state}
-                    onChange={(e) => {
-                      setShippingAddress({
-                        ...shippingAddress,
-                        state: e.target.value,
-                      });
-                    }}
+                    onChange={(e) =>
+                      handleShippingAddressChange("state", e.target.value)
+                    }
                   />
                   <input
                     type="text"
                     placeholder="Zip/Postal Code*"
-                    className="w-full border border-slate-200 rounded-md px-3 py-3 focus:border-none focus:outline-slate-400 focus:outline-1"
+                    className="w-full border border-slate-200 rounded-md px-3 py-3 focus:border-none focus:outline-slate-400 focus:outline-1 bg-white"
                     value={shippingAddress.postalCode}
-                    onChange={(e) => {
-                      setShippingAddress({
-                        ...shippingAddress,
-                        postalCode: e.target.value,
-                      });
-                    }}
+                    onChange={(e) =>
+                      handleShippingAddressChange("postalCode", e.target.value)
+                    }
                   />
                 </div>
                 <div className="flex items-center space-x-5">
                   <input
                     type="text"
                     placeholder="Email*"
-                    className="w-full border text-slate-400 border-slate-200 rounded-md px-3 py-3 focus:border-none focus:outline-slate-400 focus:outline-1"
+                    className="w-full border text-slate-400 border-slate-200 rounded-md px-3 py-3 focus:border-none focus:outline-slate-400 focus:outline-1 bg-white"
                     value={shippingAddress.Email}
-                    onChange={(e) => {
-                      setShippingAddress({
-                        ...shippingAddress,
-                        Email: e.target.value,
-                      });
-                    }}
+                    onChange={(e) =>
+                      handleShippingAddressChange("Email", e.target.value)
+                    }
                   />
                   <input
                     type="text"
                     placeholder="Phone Number*"
-                    className="w-full border border-slate-200 rounded-md px-3 py-3 focus:border-none focus:outline-slate-400 focus:outline-1"
+                    className="w-full border border-slate-200 rounded-md px-3 py-3 focus:border-none focus:outline-slate-400 focus:outline-1 bg-white"
                     value={shippingAddress.PhoneNumber}
-                    onChange={(e) => {
-                      setShippingAddress({
-                        ...shippingAddress,
-                        PhoneNumber: e.target.value,
-                      });
-                    }}
+                    onChange={(e) =>
+                      handleShippingAddressChange("PhoneNumber", e.target.value)
+                    }
                   />
                 </div>
                 <div className="space-y-3">
@@ -430,7 +484,7 @@ export const AccordionContinue = () => {
                   </button>
 
                   <div
-                    className="flex justify-center text-sm cursor-pointer"
+                    className="flex justify-center text-sm cursor-pointer text-black"
                     onClick={() => setShowSavedAddress(true)}
                   >
                     Cancel
@@ -442,170 +496,188 @@ export const AccordionContinue = () => {
             <>
               {!authUser?.shippingAddress?.length === 0 ? (
                 <>
-                  <h1 className="flex justify-center">No Saved Address</h1>
+                  <h1 className="flex justify-center text-black">
+                    No Saved Address
+                  </h1>
                 </>
               ) : (
                 <>
-                  {authUser?.shippingAddress?.map((singleeAddress) => {
+                  {authUser?.shippingAddress?.map((singleAddress) => {
                     return (
-                      <>
+                      <div key={singleAddress._id}>
                         <div className="mt-5 space-y-1">
                           <div className="flex items-start relative">
                             <input
                               type="checkbox"
                               className="w-[5%] mt-1.5"
-                              onClick={(e) => {
-                                console.log(e.target.checked);
-                              }}
+                              onChange={(e) =>
+                                handleSelectSavedAddress(
+                                  singleAddress,
+                                  e.target.checked
+                                )
+                              }
                             />
-                            <div className="w-[75%] px-3 text-sm">
+                            <div className="w-[75%] px-3 text-sm text-black">
                               <div>
                                 <span>
-                                  {` ${
-                                    singleeAddress?.firstName
-                                      ? singleeAddress?.firstName
-                                      : ""
-                                  } 
-                                  ${
-                                    singleeAddress?.lastName
-                                      ? singleeAddress?.lastName
-                                      : ""
+                                  {`${singleAddress?.firstName || ""} ${
+                                    singleAddress?.lastName || ""
                                   }`}
                                 </span>
                               </div>
-
                               <div>
-                                <div>
-                                  {singleeAddress?.address1
-                                    ? singleeAddress?.address1
-                                    : ""}
-                                </div>
-                                <div>
-                                  {singleeAddress?.address2
-                                    ? singleeAddress?.address2
-                                    : ""}
-                                </div>
-                                <div>{singleeAddress?.city}</div>
+                                <div>{singleAddress?.address1 || ""}</div>
+                                <div>{singleAddress?.address2 || ""}</div>
+                                <div>{singleAddress?.city}</div>
                               </div>
-
                               <div className="flex space-x-1">
-                                <div>{singleeAddress?.state}</div>
-                                <div> {singleeAddress?.postalCode}</div>
-                                <div>{singleeAddress?.country} </div>
+                                <div>{singleAddress?.state}</div>
+                                <div>{singleAddress?.postalCode}</div>
+                                <div>{singleAddress?.country}</div>
                               </div>
-
-                              <div>{singleeAddress?.PhoneNumber}</div>
+                              <div>{singleAddress?.PhoneNumber}</div>
                             </div>
                             <h2 className="text-slate-900 text-base hover:no-underline underline cursor-pointer">
                               Delete
                             </h2>
                           </div>
                         </div>
-                      </>
+                      </div>
                     );
                   })}
                 </>
               )}
 
               <div
-                className="flex justify-center text-sm mt-3 cursor-pointer"
+                className="flex justify-center text-sm mt-3 cursor-pointer text-black"
                 onClick={() => setShowSavedAddress(false)}
               >
                 Add New Address
-              </div>
-              <div className="py-3">
-                <Link to="/ShippingBilling">
-                  <button className="flex w-full bg-slate-800 hover:bg-slate-700 text-white text-xl font-semibold mt-5 px-10 py-4 justify-center">
-                    Save and Continue
-                  </button>
-                </Link>
               </div>
             </>
           )}
         </div>
       </div>
-      <div className="collapse collapse-arrow bg-white/90 border-b border-t border-slate-200 rounded-none my-2">
+
+      <div className="collapse collapse-arrow bg-white border-b border-t border-slate-200 rounded-none my-2">
         <input type="radio" name="my-accordion-2" className="" />
-        <div className="collapse-title text-base font-medium">
-          Payment Method
+        <div className="collapse-title text-base font-medium bg-white text-black">
+          Billing Address
         </div>
-        <div className="collapse-content">
+        <div className="collapse-content bg-white">
           <div className="space-y-5">
-            <div className="flex space-x-3">
-              <input type="radio" />
-              <h2 className="text-base">Credit or Debit Card</h2>
+            <div className="flex space-x-3 items-center">
+              <input
+                type="checkbox"
+                checked={sameAsShipping}
+                onChange={(e) => handleSameAsBillingChange(e.target.checked)}
+              />
+              <h2 className="text-base text-black">Same as shipping address</h2>
             </div>
-            <div>
-              <div className="flex items-center justify-start pb-2 space-x-3">
-                <div>Powered by</div>
-                <img
-                  src={SquareLogoPoweredBy}
-                  alt=""
-                  className="w-16 h-auto text-left"
-                />
-              </div>
-                         
-              <PaymentForm
-                applicationId={import.meta.env.VITE_BASE_SQUARE_APP_ID}            
-                cardTokenizeResponseReceived={async (token, buyer) => {
-                  console.info({ token, buyer });
 
-                  const response = await fetch(
-                    `${
-                      import.meta.env.VITE_BASE_URL
-                    }/art/payment?amount=${""}`,
-                    {
-                      method: "POST",
-                      headers: {
-                        "Content-Type": "application/json",
-                      },
-                      body: JSON.stringify({
-                        sourceId: token?.token,
-                        price: "",
-                      }),
+            {!sameAsShipping && (
+              <div className="space-y-5">
+                <div className="flex items-center space-x-5">
+                  <input
+                    type="text"
+                    placeholder="First Name*"
+                    className="w-full border text-slate-400 border-slate-200 rounded-md px-3 py-3 focus:border-none focus:outline-slate-400 focus:outline-1 bg-white"
+                    value={billingAddress.firstName}
+                    onChange={(e) =>
+                      handleBillingAddressChange("firstName", e.target.value)
                     }
-                  );
-
-                  console.log(response);
-                  // dispatch({
-                  //     type: "PAYMENT",
-                  //     payload: {
-                  //         body: {
-                  //             sourceId: token?.token,
-                  //         }
-                  //     }
-                  // })
-                  if (response.status === 200) {
-                    toast.success("Payment success");
-
-                    alert(JSON.stringify(await response.json(), null, 2));
+                  />
+                  <input
+                    type="text"
+                    placeholder="Last Name*"
+                    className="w-full border border-slate-200 rounded-md px-3 py-3 focus:border-none focus:outline-slate-400 focus:outline-1 bg-white"
+                    value={billingAddress.lastName}
+                    onChange={(e) =>
+                      handleBillingAddressChange("lastName", e.target.value)
+                    }
+                  />
+                </div>
+                <input
+                  type="text"
+                  placeholder="Address1*"
+                  className="w-full border text-slate-400 border-slate-200 rounded-md px-3 py-3 focus:border-none focus:outline-slate-400 focus:outline-1 bg-white"
+                  value={billingAddress.address1}
+                  onChange={(e) =>
+                    handleBillingAddressChange("address1", e.target.value)
                   }
-                }}
-                locationId="LTCZQNC840HDJ"
-              >
-                <CreditCard />
-              </PaymentForm>
-              
-            </div>
-            <div>
-              <h2 className="text-slate-900 font-semibold text-base py-3">
-                Billing Address
-              </h2>
-              <div className="flex space-x-3">
-                <input type="checkbox" />
-                <h2 className="text-base">Same as shipping address</h2>
+                />
+                <input
+                  type="text"
+                  placeholder="Address2"
+                  className="w-full border text-slate-400 border-slate-200 rounded-md px-3 py-3 focus:border-none focus:outline-slate-400 focus:outline-1 bg-white"
+                  value={billingAddress.address2}
+                  onChange={(e) =>
+                    handleBillingAddressChange("address2", e.target.value)
+                  }
+                />
+                <div className="flex items-center space-x-5">
+                  <input
+                    type="text"
+                    placeholder="Country*"
+                    className="w-full border text-slate-400 border-slate-200 rounded-md px-3 py-3 focus:border-none focus:outline-slate-400 focus:outline-1 bg-white"
+                    value={billingAddress.country}
+                    onChange={(e) =>
+                      handleBillingAddressChange("country", e.target.value)
+                    }
+                  />
+                  <input
+                    type="text"
+                    placeholder="City*"
+                    className="w-full border border-slate-200 rounded-md px-3 py-3 focus:border-none focus:outline-slate-400 focus:outline-1 bg-white"
+                    value={billingAddress.city}
+                    onChange={(e) =>
+                      handleBillingAddressChange("city", e.target.value)
+                    }
+                  />
+                </div>
+                <div className="flex items-center space-x-5">
+                  <input
+                    type="text"
+                    placeholder="State/Region*"
+                    className="w-full border text-slate-400 border-slate-200 rounded-md px-3 py-3 focus:border-none focus:outline-slate-400 focus:outline-1 bg-white"
+                    value={billingAddress.state}
+                    onChange={(e) =>
+                      handleBillingAddressChange("state", e.target.value)
+                    }
+                  />
+                  <input
+                    type="text"
+                    placeholder="Zip/Postal Code*"
+                    className="w-full border border-slate-200 rounded-md px-3 py-3 focus:border-none focus:outline-slate-400 focus:outline-1 bg-white"
+                    value={billingAddress.postalCode}
+                    onChange={(e) =>
+                      handleBillingAddressChange("postalCode", e.target.value)
+                    }
+                  />
+                </div>
+                <div className="flex items-center space-x-5">
+                  <input
+                    type="text"
+                    placeholder="Email*"
+                    className="w-full border text-slate-400 border-slate-200 rounded-md px-3 py-3 focus:border-none focus:outline-slate-400 focus:outline-1 bg-white"
+                    value={billingAddress.Email}
+                    onChange={(e) =>
+                      handleBillingAddressChange("Email", e.target.value)
+                    }
+                  />
+                  <input
+                    type="text"
+                    placeholder="Phone Number*"
+                    className="w-full border border-slate-200 rounded-md px-3 py-3 focus:border-none focus:outline-slate-400 focus:outline-1 bg-white"
+                    value={billingAddress.PhoneNumber}
+                    onChange={(e) =>
+                      handleBillingAddressChange("PhoneNumber", e.target.value)
+                    }
+                  />
+                </div>
               </div>
-            </div>
-            <div className="flex space-x-3 pt-10">
-              <input type="radio" />
-              <img src={paypal} className="w-20 h-5" />
-            </div>
+            )}
           </div>
-          <Link to="/ShippingBilling">
-            <button className="flex w-full bg-slate-800 hover:bg-slate-700 text-white text-xl font-semibold mt-5 px-10 py-4 justify-center">
-              Save and Continue
-            </button>
-          </Link>
         </div>
       </div>
     </div>
