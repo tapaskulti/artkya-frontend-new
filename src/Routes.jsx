@@ -23,6 +23,7 @@ import UsersManagement from "./components/Admin/UsersManagement";
 import ArtistsManagement from "./components/Admin/ArtistsManagement";
 import OrderSuccess from "./pages/OrderSuccessPage";
 import OrderDetailsModal from "./pages/Orders";
+import ResetPasswordPage from "./pages/auth/ResetPassword";
 
 const Routes = () => {
   return (
@@ -49,6 +50,10 @@ const Routes = () => {
       <Route
         path="/artDetailPage/:id/original"
         element={<OriginalArtCheckout />}
+      />
+      <Route
+        path="/reset/:id"
+        element={<ResetPasswordPage />}
       />
       {/* <Route path="/artDetailPage/:id/print" element={<PrintArtCheckout />} />
       <Route path="Admin/users" element={<UsersManagement />} />
