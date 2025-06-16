@@ -5,7 +5,7 @@ const CuratorNote = () => {
     <div className="m-10">
       <div className="text-2xl py-2">Curator Notes</div>
       <div className="pt-3 pb-8">
-        Saatchi Art's curators and art advisors are often approached for special
+        Artkya curators and art advisors are often approached for special
         collections or projects that require artists to have a unique skill set
         or history in a specific practice area. By entering the information
         below, you are making it possible for curators to better identify you
