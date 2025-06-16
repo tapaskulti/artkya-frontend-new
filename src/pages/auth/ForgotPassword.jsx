@@ -1,6 +1,14 @@
-import { useState } from 'react';
-import { Mail, ArrowRight, Palette, Star, Shield, ArrowLeft } from 'lucide-react';
-import axios from 'axios';
+import { useState } from "react";
+import {
+  Mail,
+  ArrowRight,
+  Palette,
+  Star,
+  Shield,
+  ArrowLeft,
+} from "lucide-react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 // import { useDispatch } from "react-redux";
 // import { Link, useNavigate } from "react-router-dom";
 // import Header from "../../components/Header";
@@ -8,8 +16,8 @@ import axios from 'axios';
 
 const ForgotPasswordPage = () => {
   // const dispatch = useDispatch();
-  // const navigate = useNavigate();
-  
+  const navigate = useNavigate();
+
   const [email, setEmail] = useState("");
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -19,11 +27,14 @@ const ForgotPasswordPage = () => {
     e.preventDefault();
     setIsLoading(true);
     setError("");
-    
+
     try {
-      const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/user/forgotPasswordmail`, {
-        email: email
-      });
+      const response = await axios.post(
+        `${import.meta.env.VITE_BASE_URL}/user/forgotPasswordmail`,
+        {
+          email: email,
+        }
+      );
 
       if (response.data.success) {
         setIsSubmitted(true);
@@ -34,8 +45,8 @@ const ForgotPasswordPage = () => {
     } catch (error) {
       console.error("Forgot password error:", error);
       setError(
-        error.response?.data?.message || 
-        "An error occurred while sending the reset email. Please try again."
+        error.response?.data?.message ||
+          "An error occurred while sending the reset email. Please try again."
       );
     } finally {
       setIsLoading(false);
@@ -45,10 +56,10 @@ const ForgotPasswordPage = () => {
   const handleResendEmail = async () => {
     setIsLoading(true);
     setError("");
-    
+
     try {
-      const response = await axios.post('/api/auth/forgot-password', {
-        email: email
+      const response = await axios.post("/api/auth/forgot-password", {
+        email: email,
       });
 
       if (response.data.success) {
@@ -60,8 +71,8 @@ const ForgotPasswordPage = () => {
     } catch (error) {
       console.error("Resend email error:", error);
       setError(
-        error.response?.data?.message || 
-        "An error occurred while resending the email. Please try again."
+        error.response?.data?.message ||
+          "An error occurred while resending the email. Please try again."
       );
     } finally {
       setIsLoading(false);
@@ -103,7 +114,9 @@ const ForgotPasswordPage = () => {
                       <h1 className="text-4xl font-bold mb-2 bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
                         ArtKya
                       </h1>
-                      <p className="text-gray-300 text-lg">Premium Art Marketplace</p>
+                      <p className="text-gray-300 text-lg">
+                        Premium Art Marketplace
+                      </p>
                     </div>
 
                     <div className="space-y-6 mb-8">
@@ -111,7 +124,9 @@ const ForgotPasswordPage = () => {
                         <Star className="w-6 h-6 text-yellow-400" />
                         <div className="text-left">
                           <p className="font-semibold">Secure Recovery</p>
-                          <p className="text-sm text-gray-300">Protected password reset process</p>
+                          <p className="text-sm text-gray-300">
+                            Protected password reset process
+                          </p>
                         </div>
                       </div>
 
@@ -119,14 +134,18 @@ const ForgotPasswordPage = () => {
                         <Shield className="w-6 h-6 text-green-400" />
                         <div className="text-left">
                           <p className="font-semibold">Account Protection</p>
-                          <p className="text-sm text-gray-300">Your data remains safe</p>
+                          <p className="text-sm text-gray-300">
+                            Your data remains safe
+                          </p>
                         </div>
                       </div>
                     </div>
 
                     <blockquote className="text-lg italic text-gray-300 border-l-4 border-white/30 pl-4">
                       "Where art meets technology in perfect harmony."
-                      <footer className="text-sm mt-2 text-gray-400">— ArtKya</footer>
+                      <footer className="text-sm mt-2 text-gray-400">
+                        — ArtKya
+                      </footer>
                     </blockquote>
                   </div>
                 </div>
@@ -142,8 +161,10 @@ const ForgotPasswordPage = () => {
                   </div>
 
                   {/* Back to Login Link */}
-                  <button 
-                    onClick={() => console.log("Navigate to login")}
+                  <button
+                    onClick={() => {
+                      navigate("/Login");
+                    }}
                     className="inline-flex items-center text-gray-600 hover:text-gray-900 transition-colors duration-200 mb-8"
                   >
                     <ArrowLeft className="w-4 h-4 mr-2" />
@@ -154,8 +175,13 @@ const ForgotPasswordPage = () => {
                     // Forgot Password Form
                     <>
                       <div className="mb-8">
-                        <h2 className="text-3xl font-bold text-gray-900 mb-2">Forgot Password?</h2>
-                        <p className="text-gray-600">No worries! Enter your email and we'll send you reset instructions.</p>
+                        <h2 className="text-3xl font-bold text-gray-900 mb-2">
+                          Forgot Password?
+                        </h2>
+                        <p className="text-gray-600">
+                          No worries! Enter your email and we'll send you reset
+                          instructions.
+                        </p>
                       </div>
 
                       <div className="space-y-6">
@@ -178,8 +204,8 @@ const ForgotPasswordPage = () => {
                             }}
                             className="w-full pl-10 pr-4 py-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-gray-900 focus:border-transparent transition-all duration-200 bg-white text-gray-900 placeholder-gray-500"
                             style={{
-                              WebkitBoxShadow: '0 0 0 1000px white inset',
-                              WebkitTextFillColor: '#111827'
+                              WebkitBoxShadow: "0 0 0 1000px white inset",
+                              WebkitTextFillColor: "#111827",
                             }}
                             required
                             disabled={isLoading}
@@ -206,9 +232,11 @@ const ForgotPasswordPage = () => {
 
                         <div className="text-center">
                           <p className="text-gray-600">
-                            Remember your password?{' '}
-                            <button 
-                              onClick={() => console.log("Navigate to login")}
+                            Remember your password?{" "}
+                            <button
+                              onClick={() => {
+                                navigate("/Login");
+                              }}
                               className="text-gray-900 hover:text-gray-700 font-semibold transition-colors duration-200"
                             >
                               Back to Login
@@ -224,10 +252,14 @@ const ForgotPasswordPage = () => {
                         <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
                           <Mail className="w-8 h-8 text-green-600" />
                         </div>
-                        <h2 className="text-3xl font-bold text-gray-900 mb-2">Check Your Email</h2>
+                        <h2 className="text-3xl font-bold text-gray-900 mb-2">
+                          Check Your Email
+                        </h2>
                         <p className="text-gray-600">
-                          We've sent password reset instructions to{' '}
-                          <span className="font-semibold text-gray-900">{email}</span>
+                          We've sent password reset instructions to{" "}
+                          <span className="font-semibold text-gray-900">
+                            {email}
+                          </span>
                         </p>
                       </div>
 
@@ -259,13 +291,17 @@ const ForgotPasswordPage = () => {
 
                         {error && (
                           <div className="bg-red-50 border border-red-200 rounded-lg p-3">
-                            <p className="text-red-600 text-sm text-center">{error}</p>
+                            <p className="text-red-600 text-sm text-center">
+                              {error}
+                            </p>
                           </div>
                         )}
 
                         <div className="text-center pt-4">
-                          <p className="text-sm text-gray-500 mb-2">Didn't receive the email? Check your spam folder.</p>
-                          <button 
+                          <p className="text-sm text-gray-500 mb-2">
+                            Didn't receive the email? Check your spam folder.
+                          </p>
+                          <button
                             onClick={() => console.log("Navigate to login")}
                             className="text-gray-900 hover:text-gray-700 font-semibold transition-colors duration-200"
                           >
