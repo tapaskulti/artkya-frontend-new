@@ -72,7 +72,7 @@ const App = () => {
 
   return (
     <>
-      <div>
+      <div className="bg-white">
         <Routes />
       </div>
     </>

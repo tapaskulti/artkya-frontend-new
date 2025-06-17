@@ -96,7 +96,7 @@ const ProfileInformation = () => {
                 value={formData.aboutMe}
                 onChange={handleChange}
                 rows={5}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent resize-none"
+                className="bg-white text-black text-black w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent resize-none"
                 placeholder="Tell us about yourself, your artistic journey, and what inspires your work..."
               />
               <p className="text-sm text-gray-500 mt-1">
@@ -115,7 +115,7 @@ const ProfileInformation = () => {
                 value={formData.education}
                 onChange={handleChange}
                 rows={4}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent resize-none"
+                className="bg-white text-black w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent resize-none"
                 placeholder="Include your formal art education, degrees, workshops, and relevant training..."
               />
               <p className="text-sm text-gray-500 mt-1">
@@ -134,7 +134,7 @@ const ProfileInformation = () => {
                 value={formData.events}
                 onChange={handleChange}
                 rows={4}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent resize-none"
+                className="bg-white text-black w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent resize-none"
                 placeholder="Notable events, art fairs, competitions, or conferences you've participated in..."
               />
               <p className="text-sm text-gray-500 mt-1">
@@ -153,7 +153,7 @@ const ProfileInformation = () => {
                 value={formData.exibition}
                 onChange={handleChange}
                 rows={4}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent resize-none"
+                className="bg-white text-black w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent resize-none"
                 placeholder="Solo and group exhibitions, galleries where you've shown your work..."
               />
               <p className="text-sm text-gray-500 mt-1">
@@ -176,7 +176,7 @@ const ProfileInformation = () => {
                   name="customUrl"
                   value={formData.customUrl}
                   onChange={handleChange}
-                  className="flex-1 px-4 py-3 border border-gray-300 rounded-r-lg focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent"
+                  className="bg-white text-black flex-1 px-4 py-3 border border-gray-300 rounded-r-lg focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent"
                   placeholder="your-custom-url"
                 />
               </div>
@@ -199,7 +199,7 @@ const ProfileInformation = () => {
                     name="country"
                     value={formData.country}
                     onChange={handleChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent"
+                    className="bg-white text-black w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent"
                     placeholder="United States"
                   />
                 </div>
@@ -211,7 +211,7 @@ const ProfileInformation = () => {
                     name="state"
                     value={formData.state}
                     onChange={handleChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent"
+                    className="bg-white text-black w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent"
                     placeholder="California"
                   />
                 </div>
@@ -223,7 +223,7 @@ const ProfileInformation = () => {
                     name="city"
                     value={formData.city}
                     onChange={handleChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent"
+                    className="bg-white text-black w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent"
                     placeholder="Los Angeles"
                   />
                 </div>

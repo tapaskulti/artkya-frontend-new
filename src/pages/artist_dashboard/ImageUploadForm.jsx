@@ -84,7 +84,7 @@ const SearchableDropdown = ({ options, value, onChange, placeholder }) => {
         <div className="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-md shadow-lg max-h-60 overflow-y-auto">
           <input
             type="text"
-            className="w-full px-3 py-2 border-b border-gray-200 focus:outline-none"
+            className="bg-white text-blackw-full px-3 py-2 border-b border-gray-200 focus:outline-none"
             placeholder="Search..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
@@ -167,7 +167,7 @@ const MultiSelectDropdown = ({
         <div className="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-md shadow-lg max-h-60 overflow-y-auto">
           <input
             type="text"
-            className="w-full px-3 py-2 border-b border-gray-200 focus:outline-none"
+            className=" bg-white text-black w-full px-3 py-2 border-b border-gray-200 focus:outline-none"
             placeholder="Search..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
@@ -314,9 +314,10 @@ const ArtUploadForm = () => {
   const validateStep3 = () => {
     return (
       formData.price !== "" &&
-      parseFloat(formData.price) > 0 &&
-      formData.offerPrice !== "" &&
-      parseFloat(formData.offerPrice) > 0
+      parseFloat(formData.price) > 0 
+      // &&
+      // formData.offerPrice !== "" &&
+      // parseFloat(formData.offerPrice) > 0
     );
   };
 
@@ -431,7 +432,7 @@ const ArtUploadForm = () => {
       submissionData.append("keywords", JSON.stringify(formData.keywords));
 
       // Images
-      formData.images.forEach((image, index) => {
+      formData.images.forEach((image) => {
         submissionData.append("images", image);
       });
 
@@ -454,7 +455,7 @@ const ArtUploadForm = () => {
     <div className="max-w-7xl mx-auto p-6 bg-white min-h-screen">
       <StepProgressBar currentStep={currentStep} totalSteps={4} />
 
-      <div className="flex gap-8">
+      <div className="flex gap-8 ">
         {/* Preview Section */}
         <div className="w-1/3">
           <div className="border border-gray-300 rounded-lg p-6 bg-gray-50">
@@ -542,7 +543,7 @@ const ArtUploadForm = () => {
                     setFormData((prev) => ({ ...prev, title: e.target.value }))
                   }
                   placeholder="Enter artwork title"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black"
+                  className="bg-white text-black w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black"
                 />
               </Accordion>
 
@@ -730,7 +731,7 @@ const ArtUploadForm = () => {
                           }))
                         }
                         placeholder="0.0"
-                        className="w-full px-3 py-2 border border-gray-300 rounded-md"
+                        className="bg-white text-black w-full px-3 py-2 border border-gray-300 rounded-md"
                       />
                     </div>
                     <div>
@@ -747,7 +748,7 @@ const ArtUploadForm = () => {
                           }))
                         }
                         placeholder="0.0"
-                        className="w-full px-3 py-2 border border-gray-300 rounded-md"
+                        className="bg-white text-black w-full px-3 py-2 border border-gray-300 rounded-md"
                       />
                     </div>
                     <div>
@@ -764,7 +765,7 @@ const ArtUploadForm = () => {
                           }))
                         }
                         placeholder="0.1"
-                        className="w-full px-3 py-2 border border-gray-300 rounded-md"
+                        className="bg-white text-black w-full px-3 py-2 border border-gray-300 rounded-md"
                       />
                     </div>
                     <div className="flex items-end">
@@ -808,7 +809,7 @@ const ArtUploadForm = () => {
                         onKeyDown={(e) => e.key === "Enter" && addKeyword()}
                         placeholder="Enter keyword"
                         disabled={formData.keywords.length >= 12}
-                        className="flex-1 px-3 py-2 border border-gray-300 rounded-md"
+                        className="bg-white text-black flex-1 px-3 py-2 border border-gray-300 rounded-md"
                       />
                       <button
                         onClick={addKeyword}
@@ -862,7 +863,7 @@ const ArtUploadForm = () => {
                       }
                       placeholder="Describe your artwork..."
                       rows={6}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md"
+                      className="bg-white text-black w-full px-3 py-2 border border-gray-300 rounded-md"
                     />
                     <p className="text-sm text-gray-500 mt-1">
                       {formData.description.length}/50 minimum characters
@@ -890,9 +891,10 @@ const ArtUploadForm = () => {
                 title="Pricing"
                 isValid={
                   formData.price &&
-                  parseFloat(formData.price) > 0 &&
-                  formData.offerPrice &&
-                  parseFloat(formData.offerPrice) > 0
+                  parseFloat(formData.price) > 0 
+                  // &&
+                  // formData.offerPrice &&
+                  // parseFloat(formData.offerPrice) > 0
                 }
               >
                 <div className="space-y-4">
@@ -914,12 +916,12 @@ const ArtUploadForm = () => {
                           }))
                         }
                         placeholder="0.00"
-                        className="w-full pl-8 pr-3 py-2 border border-gray-300 rounded-md"
+                        className="bg-white text-black w-full pl-8 pr-3 py-2 border border-gray-300 rounded-md"
                       />
                     </div>
                   </div>
 
-                  <div>
+                  {/* <div>
                     <label className="block text-sm font-medium mb-2">
                       Offer Price *
                     </label>
@@ -943,7 +945,7 @@ const ArtUploadForm = () => {
                     <p className="text-sm text-gray-500 mt-1">
                       Offer price should be less than or equal to selling price
                     </p>
-                  </div>
+                  </div> */}
 
                   <div className="bg-gray-50 p-4 rounded-md">
                     <h4 className="font-medium mb-2">Price Summary</h4>
@@ -952,10 +954,10 @@ const ArtUploadForm = () => {
                         <span>Selling Price:</span>
                         <span>${formData.price || "0.00"}</span>
                       </div>
-                      <div className="flex justify-between">
+                      {/* <div className="flex justify-between">
                         <span>Offer Price:</span>
                         <span>${formData.offerPrice || "0.00"}</span>
-                      </div>
+                      </div> */}
                       <div className="flex justify-between">
                         <span>Shipping Fee:</span>
                         <span>$20.00</span>
