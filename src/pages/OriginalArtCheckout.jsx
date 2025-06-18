@@ -26,7 +26,7 @@ const OriginalArtCheckout = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 p-4 md:p-8">
+    <div className="min-h-screen bg-gray-50 p-4 md:p-8 ">
       <div className="max-w-6xl mx-auto">
         <div className="mb-8">
           <Link
@@ -60,7 +60,7 @@ const OriginalArtCheckout = () => {
               <div>
                 <label
                   htmlFor="fullName"
-                  className="block text-sm font-medium text-gray-700 mb-1"
+                  className="text-gray-700 block text-sm font-medium  mb-1"
                 >
                   Full Name
                 </label>
@@ -70,7 +70,7 @@ const OriginalArtCheckout = () => {
                   value={formData.fullName}
                   onChange={handleChange}
                   required
-                  className="w-full p-2 border rounded"
+                  className="bg-gray-100 border-gray-800 text-gray-800 w-full p-2 border rounded"
                 />
               </div>
 
@@ -87,7 +87,7 @@ const OriginalArtCheckout = () => {
                   value={formData.address}
                   onChange={handleChange}
                   required
-                  className="w-full p-2 border rounded min-h-[100px]"
+                  className="bg-gray-100 border-gray-800 text-gray-800 w-full p-2 border rounded min-h-[100px]"
                 />
               </div>
 
@@ -105,7 +105,7 @@ const OriginalArtCheckout = () => {
                   value={formData.contactNumber}
                   onChange={handleChange}
                   required
-                  className="w-full p-2 border rounded"
+                  className="bg-gray-100 border-gray-800 text-gray-800 w-full p-2 border rounded"
                 />
               </div>
 
@@ -123,7 +123,7 @@ const OriginalArtCheckout = () => {
                   value={formData.contactEmail}
                   onChange={handleChange}
                   required
-                  className="w-full p-2 border rounded"
+                  className="bg-gray-100 border-gray-800 text-gray-800 w-full p-2 border rounded"
                 />
               </div>
 
