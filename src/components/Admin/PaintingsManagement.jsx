@@ -38,15 +38,15 @@ function PaintingsManagement() {
     }
   };
 
-  const filteredPaintings = allPaintings.filter(
+  const filteredPaintings = allPaintings?.filter(
     (painting) =>
       painting.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
       painting.artist.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   const totalRevenue = allPaintings
-    .filter((p) => p.status === "Sold")
-    .reduce((sum, p) => sum + p.price + p.commission, 0);
+    ?.filter((p) => p.status === "Sold")
+    ?.reduce((sum, p) => sum + p.price + p.commission, 0);
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
@@ -75,7 +75,7 @@ function PaintingsManagement() {
           <div className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm">
             <p className="text-sm text-gray-500 dark:text-gray-400">Paintings Sold</p>
             <p className="text-2xl font-bold text-green-600">
-              {allPaintings.filter((p) => p.status === "Sold").length}
+              {allPaintings?.filter((p) => p.status === "Sold").length}
             </p>
           </div>
           <div className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm">

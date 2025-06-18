@@ -30,7 +30,7 @@ const ArtistMainPage = () => {
 
   return (
     <>
-      <div className="overflow-hidden">
+      <div className="overflow-hidden bg-gray-50">
         <div className="">
           <Header />
           <ArtistHeader activeTab={activeTab} handleTabClick={handleTabClick} />

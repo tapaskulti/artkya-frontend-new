@@ -57,7 +57,7 @@ export function* removeArtFromCartSaga(action) {
 
 export function* clearCartSaga(action) {
   try {
-    const response = yield call(clearCartAction, action.payload);
+     yield call(clearCartAction, action.payload);
   } catch (error) {
     console.log(error.message);
   }
