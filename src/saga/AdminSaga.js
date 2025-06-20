@@ -7,11 +7,25 @@ import {
   setUserLoading,
   setArtistLoading,
   setTotalCount,
+  setAdminOrderLoading,
+  setAllOrdersSuccess,
+  setAdminOrderError,
+  updateAdminOrder,
+  updateOrderStatusSuccess,
+  downloadInvoiceSuccess,
+  generateOrderReportSuccess,
+  sendOrderEmailSuccess,
 } from "../redux/app/admin/adminSlice";
 import {
   approveArtWorkAction,
+  downloadInvoiceAction,
+  fetchAdminOrderByIdAction,
+  fetchAdminOrdersAction,
+  generateOrderReportAction,
   getAllPantingsAction,
+  sendOrderEmailAction,
   updateArtistCommissionAction,
+  updateOrderStatusAction,
   verifyArtistAction,
 } from "../api/adminAction";
 import { fetchAllUsersAction } from "../api/adminAction";
@@ -113,15 +127,15 @@ function* fetchAllPaintingsSaga() {
 function* updateArtistCommissionSaga(action) {
   try {
     yield put(setArtistLoading({ artistLoading: true }));
-    const response = yield call(updateArtistCommissionAction,action.payload );
-   console.log("response======>",response)
-   if(response.status===200){
-    toast("Commision updated successfully")
-   }
+    const response = yield call(updateArtistCommissionAction, action.payload);
+    console.log("response======>", response);
+    if (response.status === 200) {
+      toast("Commision updated successfully");
+    }
   } catch (error) {
     console.error("Error updating artist commission:", error.message);
-    if(error){
-      toast("Failed to update Commision")
+    if (error) {
+      toast("Failed to update Commision");
     }
   } finally {
     yield put(setArtistLoading({ artistLoading: false }));
@@ -131,14 +145,14 @@ function* updateArtistCommissionSaga(action) {
 function* verifyArtistSaga(action) {
   try {
     yield put(setArtistLoading({ artistLoading: true }));
-    const response = yield call(verifyArtistAction,action.payload );
-   if(response.status===200){
-    toast("Artist Verified successfully")
-   }
+    const response = yield call(verifyArtistAction, action.payload);
+    if (response.status === 200) {
+      toast("Artist Verified successfully");
+    }
   } catch (error) {
     console.error("Error updating artist commission:", error.message);
-    if(error){
-      toast("Failed to Verify Artist")
+    if (error) {
+      toast("Failed to Verify Artist");
     }
   } finally {
     yield put(setArtistLoading({ artistLoading: false }));
@@ -158,6 +172,203 @@ function* approveArtworkSaga(action) {
   }
 }
 
+export function* fetchAdminOrdersSaga(action) {
+  try {
+    yield put(setAdminOrderLoading(true));
+    const response = yield call(fetchAdminOrdersAction, action.payload);
+    console.log("response=>", response);
+    if (response.status === 200) {
+      yield put(
+        setAllOrdersSuccess({
+          orders: response.data.data.orders,
+          pagination: response.data.data.pagination,
+          stats: response.data.data.stats,
+        })
+      );
+    } else {
+      yield put(
+        setAdminOrderError(
+          response.data.message || "Failed to fetch admin orders"
+        )
+      );
+    }
+  } catch (error) {
+    console.log(error.message);
+    yield put(
+      setAdminOrderError(error.message || "Failed to fetch admin orders")
+    );
+  }
+}
+
+export function* fetchAdminOrderByIdSaga(action) {
+  try {
+    yield put(setAdminOrderLoading(true));
+    const response = yield call(fetchAdminOrderByIdAction, action.payload);
+
+    if (response.status === 200) {
+      yield put(updateAdminOrder(response.data.data.order));
+      yield put(setAdminOrderLoading(false));
+    } else {
+      yield put(
+        setAdminOrderError(
+          response.data.message || "Failed to fetch order details"
+        )
+      );
+    }
+  } catch (error) {
+    console.log(error.message);
+    yield put(
+      setAdminOrderError(error.message || "Failed to fetch order details")
+    );
+  }
+}
+
+export function* updateOrderStatusSaga(action) {
+  try {
+    const response = yield call(updateOrderStatusAction, action.payload);
+
+    if (response.status === 200) {
+      yield put(
+        updateOrderStatusSuccess({
+          orderId: action.payload.orderId,
+          status: action.payload.status,
+        })
+      );
+      toast("Order status updated successfully");
+    } else {
+      yield put(
+        setAdminOrderError(
+          response.data.message || "Failed to update order status"
+        )
+      );
+      toast.error("Failed to update order status");
+    }
+  } catch (error) {
+    console.log(error.message);
+    yield put(
+      setAdminOrderError(error.message || "Failed to update order status")
+    );
+    toast.error("Failed to update order status");
+  }
+}
+
+export function* sendOrderEmailSaga(action) {
+  try {
+    const response = yield call(sendOrderEmailAction, action.payload);
+
+    if (response.status === 200) {
+      yield put(
+        sendOrderEmailSuccess({
+          orderId: action.payload.orderId,
+          emailType: action.payload.emailType,
+        })
+      );
+      toast(`${action.payload.emailType} email sent successfully`);
+    } else {
+      yield put(
+        setAdminOrderError(response.data.message || "Failed to send email")
+      );
+      toast.error("Failed to send email");
+    }
+  } catch (error) {
+    console.log(error.message);
+    yield put(setAdminOrderError(error.message || "Failed to send email"));
+    toast.error("Failed to send email");
+  }
+}
+
+export function* generateOrderReportSaga(action) {
+  try {
+    const response = yield call(generateOrderReportAction, action.payload);
+
+    if (response.status === 200) {
+      yield put(
+        generateOrderReportSuccess({
+          reportType: action.payload.reportType,
+          format: action.payload.format,
+        })
+      );
+
+      // Create and download the file
+      const blob = new Blob([response.data], {
+        type:
+          action.payload.format === "pdf"
+            ? "application/pdf"
+            : action.payload.format === "excel"
+            ? "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+            : "text/csv",
+      });
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = `${action.payload.reportType}-report-${
+        new Date().toISOString().split("T")[0]
+      }.${action.payload.format === "excel" ? "xlsx" : action.payload.format}`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url);
+
+      toast(`${action.payload.reportType} report generated successfully`);
+    } else {
+      yield put(
+        setAdminOrderError(response.data.message || "Failed to generate report")
+      );
+      toast.error("Failed to generate report");
+    }
+  } catch (error) {
+    console.log(error.message);
+    yield put(setAdminOrderError(error.message || "Failed to generate report"));
+    toast.error("Failed to generate report");
+  }
+}
+
+export function* downloadInvoiceSaga(action) {
+  try {
+    const response = yield call(downloadInvoiceAction, action.payload);
+
+    if (response.status === 200) {
+      yield put(
+        downloadInvoiceSuccess({
+          orderId: action.payload.orderId,
+          format: action.payload.format,
+        })
+      );
+
+      // Create and download the invoice file
+      const blob = new Blob([response.data], {
+        type:
+          action.payload.format === "pdf"
+            ? "application/pdf"
+            : "application/json",
+      });
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = `invoice-${action.payload.orderId}.${action.payload.format}`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url);
+
+      toast("Invoice downloaded successfully");
+    } else {
+      yield put(
+        setAdminOrderError(
+          response.data.message || "Failed to download invoice"
+        )
+      );
+      toast.error("Failed to download invoice");
+    }
+  } catch (error) {
+    console.log(error.message);
+    yield put(
+      setAdminOrderError(error.message || "Failed to download invoice")
+    );
+    toast.error("Failed to download invoice");
+  }
+}
+
 // Watcher Saga
 export function* watchAsyncAdminSaga() {
   yield takeEvery("FETCH_TOTAL_COUNTS", fetchTotalCountsSaga);
@@ -169,4 +380,12 @@ export function* watchAsyncAdminSaga() {
   yield takeEvery("VERIFY_ARTIST", verifyArtistSaga);
   // yield takeEvery("REJECT_ARTWORK", rejectArtworkSaga);
   yield takeEvery("APPROVE_ARTWORK", approveArtworkSaga);
+
+  // admin order sagas
+  yield takeEvery("FETCH_ADMIN_ORDERS", fetchAdminOrdersSaga);
+  yield takeEvery("FETCH_ADMIN_ORDER_BY_ID", fetchAdminOrderByIdSaga);
+  yield takeEvery("UPDATE_ORDER_STATUS", updateOrderStatusSaga);
+  yield takeEvery("SEND_ORDER_EMAIL", sendOrderEmailSaga);
+  yield takeEvery("GENERATE_ORDER_REPORT", generateOrderReportSaga);
+  yield takeEvery("DOWNLOAD_INVOICE", downloadInvoiceSaga);
 }

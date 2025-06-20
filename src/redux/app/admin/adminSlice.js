@@ -184,7 +184,7 @@ export const {
   downloadInvoiceSuccess,
 
  // General actions
-  setTotalCounts,
+  setTotalCount,
   clearAllAdminData
 } = adminSlice.actions;
 
