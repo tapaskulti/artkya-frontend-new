@@ -1,7 +1,5 @@
 import {
   ArrowLeft,
-  Heart,
-  Share2,
   ZoomIn,
   Check,
   Star,
@@ -21,7 +19,6 @@ import { CreditCard, PaymentForm } from "react-square-web-payments-sdk";
 // import axios from 'axios';
 
 const ArtDetailPage = () => {
-  // Mock data - replace with your Redux state
   const { artDetail } = useSelector((state) => state.art);
   const { authUser } = useSelector((state) => state.auth);
   const { artistDetails } = useSelector((state) => state.artist);
