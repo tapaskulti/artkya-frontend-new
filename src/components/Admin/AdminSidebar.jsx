@@ -4,8 +4,9 @@ import {
   ShoppingBag, 
   Image, 
   // BarChart3,
-  // Settings,
-  LogOut
+  Settings,
+  LogOut,
+  ArrowBigLeftDashIcon
 } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 
@@ -116,23 +117,23 @@ const AdminSidebar = () => {
       {/* Footer */}
       <div className="p-4 border-t border-gray-200">
         <div className="space-y-1">
-          {/* <Link
-            to="/Admin/settings"
+          <Link
+            to="/Painting"
             className={`group flex items-center px-3 py-2 text-sm font-medium rounded-sm transition-all duration-200 ${
-              isActive('/Admin/settings')
+              isActive('/Painting')
                 ? 'bg-gray-900 text-white'
                 : 'text-gray-700 hover:bg-gray-100 hover:text-gray-900'
             }`}
           >
-            <Settings 
+            <ArrowBigLeftDashIcon 
               className={`flex-shrink-0 w-4 h-4 mr-3 transition-colors duration-200 ${
-                isActive('/Admin/settings')
+                isActive('/Painting')
                   ? 'text-white' 
                   : 'text-gray-400 group-hover:text-gray-600'
               }`}
             />
-            Settings
-          </Link> */}
+            Back To Painting
+          </Link>
           
           <button
             onClick={() => {

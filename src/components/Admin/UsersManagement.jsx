@@ -33,7 +33,7 @@ const UsersManagement = () => {
 
   useEffect(() => {
     dispatch({
-      type: "FETCH_ALL_USER_REQUEST",
+      type: "FETCH_ALL_USER",
       payload: {
         search: searchTerm,
         ...filters,
