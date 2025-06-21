@@ -10,11 +10,51 @@ const initialState = {
   allArtists: [],
   artistLoading: false,
   artistError: null,
+  artistDetails: null,
+  artistAnalytics: {
+    totalArtists: 0,
+    activeArtists: 0,
+    verifiedArtists: 0,
+    averageCommission: 0,
+    totalRevenue: 0,
+  },
 
   // Painting Management
   allPaintings: [],
   paintingLoading: false,
   paintingError: null,
+  paintingAnalytics: {
+    overview: {
+      totalPaintings: 0,
+      approvedPaintings: 0,
+      soldPaintings: 0,
+      recentUploads: 0,
+      approvalRate: 0,
+      salesRate: 0,
+    },
+    categoryBreakdown: {},
+    topArtists: [],
+    revenue: {
+      total: 0,
+      average: 0,
+    },
+  },
+  paintingFilters: {
+    search: "",
+    status: "",
+    category: "",
+    approved: "",
+    artist: "",
+    priceRange: "",
+  },
+  selectedPainting: null,
+  paintingPagination: {
+    currentPage: 1,
+    totalPages: 1,
+    totalPaintings: 0,
+    hasNextPage: false,
+    hasPrevPage: false,
+  },
 
   // Order Management
   allOrders: [],
@@ -67,21 +107,201 @@ const adminSlice = createSlice({
     setAllUsers(state, action) {
       state.allUsers = action.payload.allUsers;
     },
-    setAllArtist(state, action) {
-      state.allArtists = action.payload.allArtists;
-    },
-    setAllPaintings(state, action) {
-      state.allPaintings = action.payload.allPaintings;
-    },
+
     setUserLoading(state, action) {
       state.userLoading = action.payload.userLoading;
     },
-    setArtistLoading(state, action) {
-      state.artistLoading = action.payload.artistLoading;
+
+    // Artist Managment Action
+
+    // Artist Actions
+    fetchAllArtistsStart: (state) => {
+      state.artistLoading = true;
+      state.artistError = null;
+    },
+    fetchAllArtistsSuccess: (state, action) => {
+      state.artistLoading = false;
+      state.allArtists = action.payload.artists;
+      state.artistAnalytics = action.payload.analytics || state.artistAnalytics;
+    },
+    fetchAllArtistsFailure: (state, action) => {
+      state.artistLoading = false;
+      state.artistError = action.payload;
+    },
+
+    // Artist Details
+    getArtistDetailsStart: (state) => {
+      state.artistLoading = true;
+      state.artistError = null;
+    },
+    getArtistDetailsSuccess: (state, action) => {
+      state.artistLoading = false;
+      state.artistDetails = action.payload;
+    },
+    getArtistDetailsFailure: (state, action) => {
+      state.artistLoading = false;
+      state.artistError = action.payload;
+    },
+
+    // Verify Artist
+    verifyArtistStart: (state) => {
+      state.artistLoading = true;
+      state.artistError = null;
+    },
+    verifyArtistSuccess: (state, action) => {
+      state.artistLoading = false;
+      const artistIndex = state.allArtists.findIndex(
+        (artist) => artist._id === action.payload.userId
+      );
+      if (artistIndex !== -1) {
+        state.allArtists[artistIndex].verified = action.payload.verified;
+      }
+    },
+    verifyArtistFailure: (state, action) => {
+      state.artistLoading = false;
+      state.artistError = action.payload;
+    },
+
+    // Update Artist Status
+    updateArtistStatusStart: (state) => {
+      state.artistError = null;
+    },
+    updateArtistStatusSuccess: (state, action) => {
+      const artistIndex = state.allArtists.findIndex(
+        (artist) => artist._id === action.payload.userId
+      );
+      if (artistIndex !== -1) {
+        state.allArtists[artistIndex].status = action.payload.status;
+      }
+    },
+    updateArtistStatusFailure: (state, action) => {
+      state.artistError = action.payload;
+    },
+
+    // Toggle Art Approval Permission
+    toggleArtApprovalPermissionStart: (state) => {
+      state.artistError = null;
+    },
+    toggleArtApprovalPermissionSuccess: (state, action) => {
+      const artistIndex = state.allArtists.findIndex(
+        (artist) => artist._id === action.payload.userId
+      );
+      if (artistIndex !== -1) {
+        state.allArtists[artistIndex].isArtApprovalReq =
+          action.payload.isArtApprovalReq;
+      }
+    },
+    toggleArtApprovalPermissionFailure: (state, action) => {
+      state.artistError = action.payload;
+    },
+
+    // Update Artist Commission Actions
+    updateArtistCommissionStart: (state) => {
+      state.artistError = null;
+    },
+    updateArtistCommissionSuccess: (state, action) => {
+      const artistIndex = state.allArtists.findIndex(
+        (artist) => artist._id === action.payload.userId
+      );
+      if (artistIndex !== -1) {
+        state.allArtists[artistIndex].originalCommission =
+          action.payload.originalPercent;
+      }
+      // Also update artist details if it's currently loaded
+      if (
+        state.artistDetails &&
+        state.artistDetails._id === action.payload.userId
+      ) {
+        state.artistDetails.originalCommission = action.payload.originalPercent;
+      }
+    },
+    updateArtistCommissionFailure: (state, action) => {
+      state.artistError = action.payload;
+    },
+
+    // Get Artist Analytics Actions
+    getArtistAnalyticsStart: (state) => {
+      state.artistLoading = true;
+      state.artistError = null;
+    },
+    getArtistAnalyticsSuccess: (state, action) => {
+      state.artistLoading = false;
+      state.artistAnalytics = {
+        ...state.artistAnalytics,
+        ...(action.payload.analytics || action.payload),
+      };
+    },
+    getArtistAnalyticsFailure: (state, action) => {
+      state.artistLoading = false;
+      state.artistError = action.payload;
+    },
+
+    // Export Artists Actions
+    exportArtistsStart: (state) => {
+      state.exportLoading = true;
+      state.artistError = null;
+    },
+    exportArtistsSuccess: (state) => {
+      state.exportLoading = false;
+    },
+    exportArtistsFailure: (state, action) => {
+      state.exportLoading = false;
+      state.artistError = action.payload;
+    },
+
+    // Painting Managment Action
+    setAllPaintings(state, action) {
+      state.allPaintings = action.payload.allPaintings;
+      state.paintingLoading = false;
+      state.paintingError = null;
     },
     setPaintingLoading(state, action) {
-      state.paintingLoading = action.payload.paintingLoading;
+      state.paintingLoading = action.payload;
     },
+    setPaintingError(state, action) {
+      state.paintingError = action.payload;
+      state.paintingLoading = false;
+    },
+    updatePaintingSuccess(state, action) {
+      const { artId, status } = action.payload;
+      const painting = state.allPaintings.find((p) => p.id === artId);
+      if (painting) {
+        painting.status = status;
+        painting.lastUpdated = new Date().toISOString();
+      }
+    },
+    deletePaintingSuccess(state, action) {
+      const artId = action.payload;
+      state.allPaintings = state.allPaintings.filter((p) => p.id !== artId);
+    },
+    approvePaintingSuccess(state, action) {
+      const artId = action.payload;
+      const painting = state.allPaintings.find((p) => p.id === artId);
+      if (painting) {
+        painting.approved = true;
+        painting.approvedAt = new Date().toISOString();
+      }
+    },
+    setPaintingAnalyticsSuccess(state, action) {
+      state.paintingAnalytics = action.payload;
+    },
+    setPaintingFilters(state, action) {
+      state.paintingFilters = { ...state.paintingFilters, ...action.payload };
+    },
+    setSelectedPainting(state, action) {
+      state.selectedPainting = action.payload;
+    },
+    setPaintingPaginationSuccess(state, action) {
+      state.paintingPagination = action.payload;
+    },
+    clearPaintingData(state) {
+      state.allPaintings = [];
+      state.selectedPainting = null;
+      state.paintingError = null;
+      state.paintingAnalytics = initialState.paintingAnalytics;
+      state.paintingPagination = initialState.paintingPagination;
+    },
+
     // Order Management Actions
     setAdminOrderLoading(state, action) {
       state.adminOrderLoading = action.payload;
@@ -139,15 +359,15 @@ const adminSlice = createSlice({
       state.orderStats = initialState.orderStats;
     },
     // Email & Report Actions
-    sendOrderEmailSuccess(state, action) {
+    sendOrderEmailSuccess(state) {
       state.adminOrderError = null;
       // Could add email history to order if needed
     },
-    generateOrderReportSuccess(state, action) {
+    generateOrderReportSuccess(state) {
       state.adminOrderError = null;
       // Could store report generation status
     },
-    downloadInvoiceSuccess(state, action) {
+    downloadInvoiceSuccess(state) {
       state.adminOrderError = null;
       // Could store download history
     },
@@ -165,11 +385,52 @@ const adminSlice = createSlice({
 
 export const {
   setAllUsers,
-  setAllArtist,
-  setAllPaintings,
   setUserLoading,
-  setArtistLoading,
+
+  // Artist actions
+  fetchAllArtistsStart,
+  fetchAllArtistsSuccess,
+  fetchAllArtistsFailure,
+  getArtistDetailsStart,
+  getArtistDetailsSuccess,
+  getArtistDetailsFailure,
+  verifyArtistStart,
+  verifyArtistSuccess,
+  verifyArtistFailure,
+  updateArtistStatusStart,
+  updateArtistStatusSuccess,
+  updateArtistStatusFailure,
+  toggleArtApprovalPermissionStart,
+  toggleArtApprovalPermissionSuccess,
+  toggleArtApprovalPermissionFailure,
+  updateArtistCommissionStart,
+  updateArtistCommissionSuccess,
+  updateArtistCommissionFailure,
+  getArtistAnalyticsStart,
+  getArtistAnalyticsSuccess,
+  getArtistAnalyticsFailure,
+  exportArtistsStart,
+  exportArtistsSuccess,
+  exportArtistsFailure,
+
+  // Painting actions
+  setAllPaintings,
   setPaintingLoading,
+  setPaintingError,
+  updatePaintingSuccess,
+  deletePaintingSuccess,
+  approvePaintingSuccess,
+  setPaintingAnalyticsSuccess,
+  setPaintingFilters,
+  setSelectedPainting,
+  setPaintingPaginationSuccess,
+  clearPaintingData,
+  exportPaintingsSuccess,
+  bulkApprovePaintingsSuccess,
+  togglePaintingApproval,
+  resetPaintingFilters,
+  updateMultiplePaintings,
+
   // Order actions
   setAdminOrderLoading,
   setAdminOrderError,
@@ -183,9 +444,9 @@ export const {
   generateOrderReportSuccess,
   downloadInvoiceSuccess,
 
- // General actions
+  // General actions
   setTotalCount,
-  clearAllAdminData
+  clearAllAdminData,
 } = adminSlice.actions;
 
 export const adminReducer = adminSlice.reducer;
