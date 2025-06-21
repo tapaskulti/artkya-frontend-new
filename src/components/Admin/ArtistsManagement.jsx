@@ -17,7 +17,7 @@ import { debounce } from "lodash";
 
 const ArtistsManagement = () => {
   const dispatch = useDispatch();
-  const { allArtists, artistLoading, artistAnalytics } = useSelector(
+  const { allArtists, artistLoading } = useSelector(
     (state) => state.admin
   );
 
