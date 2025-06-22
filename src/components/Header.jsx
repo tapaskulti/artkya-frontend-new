@@ -219,7 +219,7 @@ const Header = () => {
         </div>
 
         {/* Main header */}
-        <div className="bg-gray-50 shadow-sm border-b border-gray-100">
+        <div className="bg-white shadow-sm border-b border-gray-100">
           <div className="flex items-center justify-between py-4 mx-5 md:mx-10 md:flex md:justify-between">
             {/* Mobile menu button */}
             <div className="md:hidden">

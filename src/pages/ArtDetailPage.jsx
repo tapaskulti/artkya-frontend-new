@@ -651,7 +651,11 @@ const ArtDetailPage = () => {
                 <MapPin className="w-4 h-4 mr-1" />
                 <span>{artistDetails?.country || "Location"}</span>
               </div>
-              <button className="px-8 py-3 bg-gray-900 text-white font-semibold rounded-xl hover:bg-gray-800 transition-all duration-300 transform hover:scale-105">
+              <button className="px-8 py-3 bg-gray-900 text-white font-semibold rounded-xl hover:bg-gray-800 transition-all duration-300 transform hover:scale-105"
+              onClick={()=>{
+                navigate(`/ArtistProfilePage/${artistDetails?._id}`)
+              }}
+              >
                 VIEW FULL PROFILE
               </button>
             </div>
