@@ -1,8 +1,7 @@
 import { useState } from "react";
-import logo from "../assets/logo.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import { Link, NavLink, useNavigate, useLocation } from "react-router-dom";
 import { AiOutlineUser } from "react-icons/ai";
 import { CiHeart } from "react-icons/ci";
 import { BsCart3 } from "react-icons/bs";
@@ -10,24 +9,34 @@ import { useDispatch, useSelector } from "react-redux";
 import { InnerMenuComponent } from "./Menu";
 import {
   setCreateArtistAcc,
-  setHeaderMenuOpen,
+  setHeaderMenuOpen
 } from "../redux/app/art/artSlice";
 import Modal from "./Modal";
+import logo from "../assets/logo.jpeg";
 
 const Header = () => {
   const { token, authUser } = useSelector((state) => state.auth);
   const { headerMenuOpen, createArtistAcc } = useSelector((state) => state.art);
+  const { cartDetails } = useSelector((state) => state.cart);
   const [dropDownOpen, setdropDownOpen] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { cartDetails } = useSelector((state) => state.cart);
+  const location = useLocation();
+
+  // Helper function to check if a nav item is active
+  const isActiveNav = (path) => {
+    if (path === "/") {
+      return location.pathname === "/";
+    }
+    return location.pathname.startsWith(path);
+  };
 
   return (
     <>
       {headerMenuOpen && (
         <>
-          <div className="absolute right-1 top-[70px] w-56 h-80 bg-white z-20">
-            <div className="border-b">
+          <div className="absolute right-1 top-[70px] w-56 h-80 bg-white z-20 shadow-lg border border-gray-200 rounded-sm">
+            <div className="border-b border-gray-100">
               {authUser?.isArtist ? (
                 <>
                   <InnerMenuComponent
@@ -50,7 +59,7 @@ const Header = () => {
                 </>
               )}
             </div>
-            <div className="border-b">
+            <div className="border-b border-gray-100">
               <InnerMenuComponent
                 name={"View Profile"}
                 onClick={() => {
@@ -68,21 +77,16 @@ const Header = () => {
               <InnerMenuComponent
                 name={"Collections"}
                 onClick={() => {
-                  // navigate("/Accounts");
+                  // navigate("/Collections");
                 }}
               />
               <InnerMenuComponent
                 name={"Orders"}
                 onClick={() => {
                   navigate("/orders");
+                  dispatch(setHeaderMenuOpen({ headerMenuOpen: false }));
                 }}
               />
-              {/* <InnerMenuComponent
-                name={"Offers"}
-                onClick={() => {
-                  // navigate("/Accounts");
-                }}
-              /> */}
               <InnerMenuComponent
                 name={"Account"}
                 onClick={() => {
@@ -101,9 +105,9 @@ const Header = () => {
                     payload: {
                       email: authUser?.email,
                       body: {
-                        navigate: navigate,
-                      },
-                    },
+                        navigate: navigate
+                      }
+                    }
                   });
                   dispatch(setHeaderMenuOpen({ headerMenuOpen: false }));
                 }}
@@ -130,9 +134,9 @@ const Header = () => {
                 payload: {
                   body: {
                     userId: authUser?._id,
-                    isArtist: true,
-                  },
-                },
+                    isArtist: true
+                  }
+                }
               });
             }}
             buttonOne={"Cancel"}
@@ -149,27 +153,60 @@ const Header = () => {
             <div className="">
               {`This action will create an "Artist" which will give you the
               ability to upload and sell art once you complete your verification
-              process.This action cannot be reversed`}
+              process. This action cannot be reversed`}
             </div>
           </Modal>
         </>
       )}
 
-      <div className="items-center w-full scroll bg-gray-50">
+      <div className="items-center w-full scroll bg-white shadow-sm">
+        {/* Mobile menu overlay */}
         <div className={`${dropDownOpen ? "visible" : "hidden"}`}>
-          <div>
-            <ul className="md:flex font-sans text-base space-y-2 cursor-pointer text-[#000000] p-5">
-              <li className="hover:text-amber-800 ">
-                <NavLink to="/">Home</NavLink>
+          <div className="bg-white shadow-lg border-b border-gray-200">
+            <ul className="md:flex font-sans text-base space-y-2 cursor-pointer text-gray-800 p-5">
+              <li className="hover:text-amber-600 transition-colors duration-200">
+                <NavLink
+                  to="/"
+                  className={({ isActive }) =>
+                    isActive ? "text-amber-600 font-medium" : ""
+                  }
+                  onClick={() => setdropDownOpen(false)}
+                >
+                  Home
+                </NavLink>
               </li>
-              <li className="hover:text-amber-800 ">
-                <NavLink to="/Painting">Painting</NavLink>
+              <li className="hover:text-amber-600 transition-colors duration-200">
+                <NavLink
+                  to="/Painting"
+                  className={({ isActive }) =>
+                    isActive ? "text-amber-600 font-medium" : ""
+                  }
+                  onClick={() => setdropDownOpen(false)}
+                >
+                  Painting
+                </NavLink>
               </li>
-              <li className="hover:text-amber-800 ">
-                <NavLink to="/AboutUs">About Us</NavLink>
+              <li className="hover:text-amber-600 transition-colors duration-200">
+                <NavLink
+                  to="/AboutUs"
+                  className={({ isActive }) =>
+                    isActive ? "text-amber-600 font-medium" : ""
+                  }
+                  onClick={() => setdropDownOpen(false)}
+                >
+                  About Us
+                </NavLink>
               </li>
-              <li className="hover:text-amber-800 ">
-                <NavLink to="/Contacts">Contacts</NavLink>
+              <li className="hover:text-amber-600 transition-colors duration-200">
+                <NavLink
+                  to="/Contacts"
+                  className={({ isActive }) =>
+                    isActive ? "text-amber-600 font-medium" : ""
+                  }
+                  onClick={() => setdropDownOpen(false)}
+                >
+                  Contacts
+                </NavLink>
               </li>
             </ul>
           </div>
@@ -180,84 +217,147 @@ const Header = () => {
             }}
           ></div>
         </div>
-        <div className="bg-slate-100 shadow-md">
-          <div className="flex items-center justify-between py-6 mx-5 md:mx-10 md:flex md:justify-between hover:text-primary">
+
+        {/* Main header */}
+        <div className="bg-white shadow-sm border-b border-gray-100">
+          <div className="flex items-center justify-between py-4 mx-5 md:mx-10 md:flex md:justify-between">
+            {/* Mobile menu button */}
             <div className="md:hidden">
-              <FontAwesomeIcon
+              <button
                 onClick={() => {
                   setdropDownOpen(!dropDownOpen);
                 }}
-                icon={faBars}
-                className="w-5 h-5 md:hidden"
-              />
+                className="p-2 rounded-sm hover:bg-gray-100 transition-colors duration-200"
+              >
+                <FontAwesomeIcon
+                  icon={faBars}
+                  className="w-5 h-5 text-gray-700"
+                />
+              </button>
             </div>
+
+            {/* Logo */}
             <div className="flex items-center justify-center md:justify-start">
-              <Link to="/">
-                <img src={logo} className="h-12 " alt="Artkya Logo" />
+              <Link to="/" className="flex items-center">
+                <img src={logo} className="h-12" alt="Artkya Logo" />
               </Link>
             </div>
-            <div className="flex items-center space-x-24">
-              <ul className="hidden md:flex space-x-10 font-sans text-base cursor-pointer  text-[#000000] ">
+
+            <div className="flex items-center space-x-8">
+              {/* Desktop Navigation */}
+              <ul className="hidden md:flex space-x-8 font-sans text-base cursor-pointer text-gray-800">
                 {token && authUser?.role === "ADMIN" && (
-                  <>
-                    <li className="hover:text-amber-800 ">
-                      <NavLink className="border-black" to="/Admin">
-                        Admin
-                      </NavLink>
-                    </li>
-                  </>
+                  <li className="hover:text-amber-600 transition-colors duration-200">
+                    <NavLink
+                      to="/Admin"
+                      className={({ isActive }) =>
+                        `pb-1 border-b-2 transition-colors duration-200 ${
+                          isActive || isActiveNav("/Admin")
+                            ? "text-amber-600 border-amber-600 font-medium"
+                            : "border-transparent hover:border-amber-200"
+                        }`
+                      }
+                    >
+                      Admin
+                    </NavLink>
+                  </li>
                 )}
                 {token && authUser?.isArtist && (
-                  <>
-                    <li className="hover:text-amber-800 ">
-                      <NavLink className="border-black" to="/Artist">
-                        Sell Art
-                      </NavLink>
-                    </li>
-                  </>
+                  <li className="hover:text-amber-600 transition-colors duration-200">
+                    <NavLink
+                      to="/Artist"
+                      className={({ isActive }) =>
+                        `pb-1 border-b-2 transition-colors duration-200 ${
+                          isActive || isActiveNav("/Artist")
+                            ? "text-amber-600 border-amber-600 font-medium"
+                            : "border-transparent hover:border-amber-200"
+                        }`
+                      }
+                    >
+                      Sell Art
+                    </NavLink>
+                  </li>
                 )}
-
-                <li className="hover:text-amber-800 ">
-                  <NavLink className="border-black" to="/">
+                <li className="hover:text-amber-600 transition-colors duration-200">
+                  <NavLink
+                    to="/"
+                    className={({ isActive }) =>
+                      `pb-1 border-b-2 transition-colors duration-200 ${
+                        isActive && location.pathname === "/"
+                          ? "text-amber-600 border-amber-600 font-medium"
+                          : "border-transparent hover:border-amber-200"
+                      }`
+                    }
+                  >
                     Home
                   </NavLink>
                 </li>
-                <li className="hover:text-amber-800 ">
-                  <NavLink className="border-black" to="/Painting">
+                <li className="hover:text-amber-600 transition-colors duration-200">
+                  <NavLink
+                    to="/Painting"
+                    className={({ isActive }) =>
+                      `pb-1 border-b-2 transition-colors duration-200 ${
+                        isActive || isActiveNav("/Painting")
+                          ? "text-amber-600 border-amber-600 font-medium"
+                          : "border-transparent hover:border-amber-200"
+                      }`
+                    }
+                  >
                     Painting
                   </NavLink>
                 </li>
-                <li className="hover:text-amber-800 ">
-                  <NavLink className="border-black" to="/AboutUs">
+                <li className="hover:text-amber-600 transition-colors duration-200">
+                  <NavLink
+                    to="/AboutUs"
+                    className={({ isActive }) =>
+                      `pb-1 border-b-2 transition-colors duration-200 ${
+                        isActive || isActiveNav("/AboutUs")
+                          ? "text-amber-600 border-amber-600 font-medium"
+                          : "border-transparent hover:border-amber-200"
+                      }`
+                    }
+                  >
                     About Us
                   </NavLink>
                 </li>
-                <li className="hover:text-amber-800 ">
-                  <NavLink className="border-black" to="/Contacts">
+                <li className="hover:text-amber-600 transition-colors duration-200">
+                  <NavLink
+                    to="/Contacts"
+                    className={({ isActive }) =>
+                      `pb-1 border-b-2 transition-colors duration-200 ${
+                        isActive || isActiveNav("/Contacts")
+                          ? "text-amber-600 border-amber-600 font-medium"
+                          : "border-transparent hover:border-amber-200"
+                      }`
+                    }
+                  >
                     Contacts
                   </NavLink>
                 </li>
               </ul>
-              <ul className="hidden md:flex space-x-3 font-sans text-base cursor-pointer font-medium  text-[#000000] ">
+
+              {/* Auth & User Actions */}
+              <ul className="hidden md:flex space-x-4 font-sans text-base cursor-pointer font-medium text-gray-800">
                 {token === "" && (
-                  <>
-                    <li className="hover:text-amber-800 ">
-                      <NavLink className="border-black" to="/Login">
-                        Login
-                      </NavLink>
-                    </li>
-                    {/* <span>|</span> */}
-                    {/* <li className="hover:text-amber-800 ">
-                      <NavLink className="border-black" to="/Register">
-                        Register
-                      </NavLink>
-                    </li> */}
-                  </>
+                  <li className="hover:text-amber-600 transition-colors duration-200">
+                    <NavLink
+                      to="/Login"
+                      className={({ isActive }) =>
+                        `px-4 py-2 rounded-sm border transition-colors duration-200 ${
+                          isActive || isActiveNav("/Login")
+                            ? "bg-amber-600 text-white border-amber-600"
+                            : "border-gray-300 hover:border-amber-600 hover:text-amber-600"
+                        }`
+                      }
+                    >
+                      Login
+                    </NavLink>
+                  </li>
                 )}
                 {token && (
                   <>
                     <li
-                      className="hover:text-amber-800"
+                      className="hover:text-amber-600 transition-colors duration-200 p-2 rounded-sm hover:bg-gray-100"
                       onClick={() => {
                         navigate("/favoutires");
                       }}
@@ -265,33 +365,34 @@ const Header = () => {
                       <CiHeart className="w-5 h-6" />
                     </li>
                     <li
-                      className="hover:text-amber-800 relative"
+                      className="hover:text-amber-600 transition-colors duration-200 relative p-2 rounded-sm hover:bg-gray-100"
                       onClick={() => {
                         navigate("/Cart");
                       }}
                     >
                       <BsCart3 className="w-5 h-6" />
                       {cartDetails?.arts?.length > 0 ? (
-                        <span className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs">
+                        <span className="absolute -top-1 -right-1 bg-amber-600 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs font-medium">
                           {cartDetails?.arts?.length}
                         </span>
                       ) : (
-                        <span className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs">
+                        <span className="absolute -top-1 -right-1 bg-gray-400 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs font-medium">
                           0
                         </span>
                       )}
                     </li>
                     <li
-                      className="hover:text-amber-800 "
+                      className="hover:text-amber-600 transition-colors duration-200 p-2 rounded-sm hover:bg-gray-100 relative"
                       onClick={() => {
-                        // navigate("/Accounts");
                         dispatch(
                           setHeaderMenuOpen({ headerMenuOpen: !headerMenuOpen })
                         );
                       }}
                     >
-                      {/* <MenuDefault buttonIcon={<AiOutlineUser  /> }/> */}
                       <AiOutlineUser className="w-5 h-6" />
+                      {headerMenuOpen && (
+                        <div className="absolute top-full right-0 w-2 h-2 bg-white border-l border-t border-gray-200 transform rotate-45 translate-y-[-1px]"></div>
+                      )}
                     </li>
                   </>
                 )}

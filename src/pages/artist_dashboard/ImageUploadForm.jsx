@@ -1,246 +1,285 @@
-import React, { useState, useEffect } from "react";
-import SearchableDropdown from "../../components/SearchableDropdown";
-import SearchableDropdownMultiSelect from "../../components/SearchableDropdownMultiSelect";
-import axios from "axios";
+/* eslint-disable react/prop-types */
+import { useState } from "react";
 import {
-  CategoryItem,
-  subjectElement,
-  colorElement,
-  featuredArtistElement,
-  materialElement,
-  mediumElement,
-  orientationElement,
-  priceElement,
-  sizeElement,
-  styleElement,
-} from "../../utlis/filterData";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faImage,
-  faChevronDown,
-  faChevronRight,
-  faCheckCircle,
-} from "@fortawesome/free-solid-svg-icons";
-import Dropzone from "../../components/Dropzone";
-
-import {
-  Accordion,
-  AccordionHeader,
-  AccordionBody,
-} from "@material-tailwind/react";
+  Image,
+  ChevronDown,
+  ChevronRight,
+  CheckCircle,
+  X,
+  Upload,
+} from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
-const ImageUploadForm = ({
-  currentStep,
-  nextStep,
-  prevStep,
-  HandlecheckForNextBtnSubmit,
+// Mock data - replace with your actual data
+const categoryOptions = [
+  "Paintings",
+  "Photography",
+  "Sculpture",
+  "Digital Art",
+  "Mixed Media",
+  "Prints",
+];
+
+const subjectOptions = [
+  "Abstract",
+  "Landscape",
+  "Portrait",
+  "Still Life",
+  "Nature",
+  "Urban",
+  "Animals",
+];
+
+const mediumOptions = [
+  "Oil",
+  "Acrylic",
+  "Watercolor",
+  "Digital",
+  "Pencil",
+  "Charcoal",
+  "Mixed Media",
+];
+
+const materialOptions = [
+  "Canvas",
+  "Paper",
+  "Wood",
+  "Metal",
+  "Glass",
+  "Fabric",
+  "Stone",
+];
+
+const styleOptions = [
+  "Realistic",
+  "Abstract",
+  "Impressionist",
+  "Modern",
+  "Contemporary",
+  "Minimalist",
+];
+
+// Reusable Components
+const SearchableDropdown = ({ options, value, onChange, placeholder }) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [search, setSearch] = useState("");
+
+  const filteredOptions = options.filter((option) =>
+    option.toLowerCase().includes(search.toLowerCase())
+  );
+
+  return (
+    <div className="relative">
+      <div
+        className="w-full px-3 py-2 border border-gray-300 rounded-md cursor-pointer flex justify-between items-center bg-white"
+        onClick={() => setIsOpen(!isOpen)}
+      >
+        <span className={value ? "text-black" : "text-gray-500"}>
+          {value || placeholder}
+        </span>
+        <ChevronDown className="w-4 h-4" />
+      </div>
+      {isOpen && (
+        <div className="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-md shadow-lg max-h-60 overflow-y-auto">
+          <input
+            type="text"
+            className="bg-white text-blackw-full px-3 py-2 border-b border-gray-200 focus:outline-none"
+            placeholder="Search..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+          {filteredOptions.map((option, index) => (
+            <div
+              key={index}
+              className="px-3 py-2 hover:bg-gray-100 cursor-pointer"
+              onClick={() => {
+                onChange(option);
+                setIsOpen(false);
+                setSearch("");
+              }}
+            >
+              {option}
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+};
+
+const MultiSelectDropdown = ({
+  options,
+  selectedOptions,
+  setSelectedOptions,
+  placeholder,
+  limit = 5,
 }) => {
-  const [step, setStep] = useState(1);
-  const { authUser } = useSelector((state) => state.auth)
+  const [isOpen, setIsOpen] = useState(false);
+  const [search, setSearch] = useState("");
 
+  const filteredOptions = options.filter(
+    (option) =>
+      option.toLowerCase().includes(search.toLowerCase()) &&
+      !selectedOptions.includes(option)
+  );
 
-  useEffect(() => {
-    setStep(currentStep);
-    setOpen(1);
-  }, [currentStep]);
-
-  const handleNextStep = () => {
-    setStep((prevStep) => Math.min(prevStep + 1, 4));
-    nextStep();
+  const addOption = (option) => {
+    if (selectedOptions.length < limit) {
+      setSelectedOptions([...selectedOptions, option]);
+    }
   };
 
-  const handlePrevStep = () => {
-    setStep((prevStep) => Math.max(prevStep - 1, 1));
-    prevStep();
+  const removeOption = (option) => {
+    setSelectedOptions(selectedOptions.filter((item) => item !== option));
   };
 
-  const [images, setImages] = useState([]);
-  const [viewImages, setViewImages] = useState([]);
-  const [modalOpen, setModalOpen] = useState(false);
-  const [open, setOpen] = useState(1);
-  const [title, setTitle] = useState("");
-  const [category, setCategory] = useState("Paintings");
-  const [subject, setSubject] = useState("");
-  const [selectedYear, setSelectedYear] = useState("");
-  const [mediums, setMediums] = useState("");
-  const [materials, setMaterials] = useState("");
-  const [styles, setStyles] = useState("");
-  const [width, setWidth] = useState();
-  const [height, setHight] = useState();
-  const [depth, setDepth] = useState();
-  const [currentKey, setCurrentKey] = useState("");
-  const [keywords, setKeywords] = useState([]);
-  const [description, setDescription] = useState("");
-  const [sellingPrice, setSellingPrice] = useState("");
-  const [offerPrice, setOfferPrice] = useState("");
-  const [platformFee, setPlatformFee] = useState("");
-  const [validationErr, setValidationErr] = useState("");
-  const [spErr, setSpErr] = useState("");
-  const [opErr, setOpErr] = useState("");
-  const [printOption, setPrintOption] = useState("");
-  const [isUnique, setIsUnique] = useState(false);
+  return (
+    <div className="relative">
+      <div
+        className="w-full px-3 py-2 border border-gray-300 rounded-md cursor-pointer flex justify-between items-center bg-white min-h-[40px]"
+        onClick={() => setIsOpen(!isOpen)}
+      >
+        <div className="flex flex-wrap gap-2">
+          {selectedOptions.length === 0 ? (
+            <span className="text-gray-500">{placeholder}</span>
+          ) : (
+            selectedOptions.map((option, index) => (
+              <span
+                key={index}
+                className="bg-blue-100 text-blue-800 px-2 py-1 rounded text-sm flex items-center gap-1"
+              >
+                {option}
+                <X
+                  className="w-3 h-3 cursor-pointer hover:text-red-600"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    removeOption(option);
+                  }}
+                />
+              </span>
+            ))
+          )}
+        </div>
+        <ChevronDown className="w-4 h-4 flex-shrink-0" />
+      </div>
+      {isOpen && (
+        <div className="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-md shadow-lg max-h-60 overflow-y-auto">
+          <input
+            type="text"
+            className=" bg-white text-black w-full px-3 py-2 border-b border-gray-200 focus:outline-none"
+            placeholder="Search..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+          {filteredOptions.map((option, index) => (
+            <div
+              key={index}
+              className="px-3 py-2 hover:bg-gray-100 cursor-pointer"
+              onClick={() => {
+                addOption(option);
+                setSearch("");
+              }}
+            >
+              {option}
+            </div>
+          ))}
+          {selectedOptions.length >= limit && (
+            <div className="px-3 py-2 text-red-500 text-sm">
+              Maximum {limit} selections allowed
+            </div>
+          )}
+        </div>
+      )}
+    </div>
+  );
+};
 
+const Accordion = ({ open, onToggle, title, isValid, children }) => {
+  return (
+    <div className="border border-gray-200 rounded-md mb-4">
+      <div
+        className="flex justify-between items-center p-4 cursor-pointer hover:bg-gray-50"
+        onClick={onToggle}
+      >
+        <div className="flex items-center gap-3">
+          {open ? (
+            <ChevronDown className="w-5 h-5" />
+          ) : (
+            <ChevronRight className="w-5 h-5" />
+          )}
+          <span className="font-medium">{title}</span>
+        </div>
+        <CheckCircle
+          className={`w-5 h-5 ${isValid ? "text-green-500" : "text-red-500"}`}
+        />
+      </div>
+      {open && (
+        <div className="px-4 pb-4 border-t border-gray-200">{children}</div>
+      )}
+    </div>
+  );
+};
+
+const StepProgressBar = ({ currentStep }) => {
+  const steps = ["Image", "Description", "Price & Details", "Prints"];
+
+  return (
+    <div className="flex items-center justify-between w-full mb-8">
+      {steps.map((step, index) => (
+        <div key={index} className="flex-1 flex flex-col items-center">
+          <div
+            className={`w-10 h-10 rounded-full flex items-center justify-center text-white font-bold ${
+              currentStep >= index + 1 ? "bg-black" : "bg-gray-300"
+            }`}
+          >
+            {index + 1}
+          </div>
+          <span className="mt-2 text-sm font-medium">{step}</span>
+          {index < steps.length - 1 && (
+            <div
+              className={`h-1 w-full mt-4 ${
+                currentStep > index + 1 ? "bg-black" : "bg-gray-300"
+              }`}
+            />
+          )}
+        </div>
+      ))}
+    </div>
+  );
+};
+
+const ArtUploadForm = () => {
+  const [currentStep, setCurrentStep] = useState(1);
+  const [openAccordion, setOpenAccordion] = useState(1);
+  const { authUser } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
-  const formData = new FormData();
-
-  formData.append("title", title);
-  // formData.append("images", JSON.stringify(images));
-  images.forEach((image, index) => {
-    formData.append(`images`, image); // The key should be 'images' to match your backend
+  const navigate = useNavigate();
+  // Form state
+  const [formData, setFormData] = useState({
+    title: "",
+    images: [],
+    category: "Paintings",
+    subject: "",
+    year: "",
+    medium: [],
+    materials: [],
+    styles: [],
+    width: "",
+    height: "",
+    depth: "",
+    keywords: [],
+    description: "",
+    price: "",
+    offerPrice: "",
+    printOption: "", // 'Original', 'Printed', 'Both'
+    original: false,
+    print: false,
   });
-  formData.append("thumbnail", images[0]);
-  formData.append("category", category);
-  formData.append("subject", subject);
-  formData.append("year", selectedYear);
-  formData.append("medium", JSON.stringify(mediums));
-  formData.append("materials", JSON.stringify(materials));
-  formData.append("styles", JSON.stringify(styles));
-  formData.append("width", width);
-  formData.append("height", height);
-  formData.append("depth", depth);
-  formData.append("price", sellingPrice);
-  formData.append("offerPrice", offerPrice);
-  formData.append("printOption", printOption);
-  formData.append("artist", authUser?._id);
 
-  // console.log("images====>", images);
-  // console.log("viewImages====>", viewImages);
+  const [currentKeyword, setCurrentKeyword] = useState("");
 
-  // console.log("title====>", title);
-  // console.log("mediums====>", mediums);
-  // console.log("materials====>", materials);
-  // console.log("thumbnail====>", images[0]?.file);
-  // console.log("styles====>", styles);
-  // console.log("width====>", width);
-  // console.log("height====>", height);
-  // console.log("depth====>", depth);
-  // console.log("price====>", sellingPrice);
-  // console.log("printOption====>", printOption);
-  // console.log("year====>", selectedYear);
-
-  // dispatch({
-  //   type:"CREATE_DRAFT",
-  //   payload:{
-  //     body:formData
-  //   }
-  // })
-
-  useEffect(() => {
-    const rectElement = document.getElementById("rect");
-    if (rectElement) {
-      let h = parseFloat(height);
-      let w = parseFloat(width);
-      if (w && h && !isNaN(w) && !isNaN(h)) {
-        if (w > 10 || h > 10) {
-          w /= Math.pow(10, Math.floor(Math.log10(w)));
-          h /= Math.pow(10, Math.floor(Math.log10(h)));
-        }
-        rectElement.style.width = w / 2 + "in";
-        rectElement.style.height = h / 2 + "in";
-      }
-      if (w || h) {
-        if (!w) {
-          rectElement.style.width = 0 + "in";
-        }
-        if (!h) {
-          rectElement.style.height = 0 + "in";
-        }
-      }
-    }
-  }, [width, height, depth]);
-
-  useEffect(() => {
-    setValidationErr("");
-    setSpErr("");
-    setOpErr("");
-
-    if (!sellingPrice) {
-      setSpErr("Please Enter Selling Price");
-      return;
-    }
-    if (!offerPrice) {
-      setOpErr("Please Enter OfferPrice Price");
-      return;
-    }
-    if (sellingPrice < offerPrice) {
-      setValidationErr("Offer Price cannot be more than Selling Price");
-    } else {
-      setPlatformFee((offerPrice * 0.2).toFixed(2));
-      return;
-    }
-  }, [sellingPrice, offerPrice, platformFee, spErr, opErr, validationErr]);
-
-  useEffect(() => {
-    HandlecheckForNextBtnSubmit(false);
-    return; //delete this 2 line
-    if (currentStep == 1 && title && images.length > 0) {
-      HandlecheckForNextBtnSubmit(false);
-    } else if (
-      currentStep == 2 &&
-      category &&
-      subject &&
-      selectedYear &&
-      mediums.length > 0 &&
-      materials.length > 0 &&
-      styles.length > 0 &&
-      width &&
-      height &&
-      depth &&
-      keywords.length > 4 &&
-      description.length > 50
-    ) {
-      HandlecheckForNextBtnSubmit(false);
-    } else if (
-      (currentStep == 3 && sellingPrice,
-      offerPrice && platformFee && !spErr && !opErr && !validationErr)
-    ) {
-      HandlecheckForNextBtnSubmit(false);
-    } else {
-      HandlecheckForNextBtnSubmit(true);
-    }
-  }, [
-    title,
-    images,
-    currentStep,
-    category,
-    subject,
-    selectedYear,
-    mediums,
-    materials,
-    styles,
-    width,
-    height,
-    depth,
-    keywords,
-    description,
-    sellingPrice,
-    offerPrice,
-    platformFee,
-    spErr,
-    opErr,
-    validationErr,
-  ]);
-
-  const handleOpen = (value) => setOpen(open === value ? 0 : value);
-
-  const handleKeyPusher = (newKey) => {
-    if (newKey.length < 3) {
-      alert("Keywords must be at least 2 characters.");
-      return;
-    }
-    if (newKey) {
-      setKeywords((prevData) => [...prevData, newKey]);
-      setCurrentKey("");
-    }
-  };
-  const handleRemoveKeyword = (index) => {
-    setKeywords((prevKeywords) => {
-      const updatedKeywords = prevKeywords.filter((_, i) => i !== index);
-      return updatedKeywords;
-    });
-  };
-
+  // Generate years
   const generateYears = () => {
     const currentYear = new Date().getFullYear();
     const years = [];
@@ -250,781 +289,816 @@ const ImageUploadForm = ({
     return years;
   };
 
-  const openModal = () => {
-    setModalOpen(true);
+  // Validation functions
+  const validateStep1 = () => {
+    return formData.title.trim() !== "" && formData.images.length > 0;
   };
 
-  const closeModal = () => {
-    setModalOpen(false);
+  const validateStep2 = () => {
+    return (
+      formData.category !== "" &&
+      formData.subject !== "" &&
+      formData.year !== "" &&
+      formData.medium.length >= 1 &&
+      formData.materials.length >= 1 &&
+      formData.styles.length >= 1 &&
+      formData.width !== "" &&
+      formData.height !== "" &&
+      formData.depth !== "" &&
+      formData.keywords.length >= 5 &&
+      formData.description.length >= 50
+    );
   };
 
-  // const handleDropZoneImageSelection = (selectedImages) => {
-  //   const newImages = [...images];
-  //   const newViewImages = [...viewImages];
-  //   selectedImages.forEach((selectedImage) => {
-  //     newViewImages.push({
-  //       file: selectedImage,
-  //       src: URL.createObjectURL(selectedImage),
-  //       title: title,
-  //       size: selectedImage.size,
-  //       originalDimensions: `${selectedImage.width}x${selectedImage.height}`,
-  //     });
-  //     newImages.push(selectedImage)
-  //   });
-  //   setImages(newImages);
-  //   setViewImages(newViewImages);
-  //   closeModal();
-  // };
-
-  const handleDropZoneImageSelection = (selectedFiles) => {
-    const newViewImages = [...viewImages];
-    const filesArray = Array.from(selectedFiles);
-    setImages((prevImages) => [...prevImages, ...filesArray]);
-    selectedFiles.forEach((selectedImage) => {
-      newViewImages.push({
-        file: selectedImage,
-        src: URL.createObjectURL(selectedImage),
-        title: title,
-        size: selectedImage.size,
-        originalDimensions: `${selectedImage.width}x${selectedImage.height}`,
-      });
-    });
-    setViewImages(newViewImages);
-    closeModal();
+  const validateStep3 = () => {
+    return (
+      formData.price !== "" && parseFloat(formData.price) > 0
+      // &&
+      // formData.offerPrice !== "" &&
+      // parseFloat(formData.offerPrice) > 0
+    );
   };
 
-  const handlePrintOption = (key) => {
-    setPrintOption(key);
+  const validateStep4 = () => {
+    return formData.printOption !== "";
   };
 
-  const finalFormSubmission = async () => {
-    try {
-      const artFormData = {
-        images,
-        title,
-        category,
-        subject,
-        selectedYear,
-        mediums,
-        materials,
-        styles,
-        width,
-        height,
-        depth,
-        keywords,
-        description,
-        sellingPrice,
-        offerPrice,
-        platformFee,
-        printOption,
-        isUnique,
-      };
-      //   console.log('artFormData',artFormData);
-      //  await axios.post('http://localhost:3000/upload', artFormData)
-      //           .then(response => {
-      //             // Handle success
-      //             console.log('Submission successful:', response.data);
-      //           })
-      //           .catch(error => {
-      //             // Handle error
-      //             console.error('Error submitting data:', error);
-      //           });
-      const payloadBody = {
-        // images,
-        title: title,
-        category: category,
-        subject: subject,
-        year: selectedYear,
-        medium: mediums,
-        materials: materials,
-        styles: styles,
-        width: width,
-        height: height,
-        depth: depth,
-        keywords: keywords,
-        description: description,
-        price: sellingPrice,
-        // offerPrice,
-        // platformFee,
-        // printOption,
-        // isUnique
-      };
-      dispatch({
-        type: "CREATE_POST",
-        payload: {
-          body: formData,
-        },
-      });
-    } catch (error) {
-      console.log("Error while submiting a Art Data", error);
+  const isStepValid = (step) => {
+    switch (step) {
+      case 1:
+        return validateStep1();
+      case 2:
+        return validateStep2();
+      case 3:
+        return validateStep3();
+      case 4:
+        return validateStep4();
+      default:
+        return false;
     }
   };
+
+  const canProceed = () => {
+    return isStepValid(currentStep);
+  };
+
+  // Handle file upload
+  const handleImageUpload = (event) => {
+    const files = Array.from(event.target.files);
+    setFormData((prev) => ({
+      ...prev,
+      images: [...prev.images, ...files],
+    }));
+  };
+
+  // Handle image deletion
+  const handleImageDelete = (indexToDelete) => {
+    setFormData((prev) => ({
+      ...prev,
+      images: prev.images.filter((_, index) => index !== indexToDelete),
+    }));
+  };
+
+  // Handle keyword addition
+  const addKeyword = () => {
+    if (currentKeyword.trim().length >= 2 && formData.keywords.length < 12) {
+      setFormData((prev) => ({
+        ...prev,
+        keywords: [...prev.keywords, currentKeyword.trim()],
+      }));
+      setCurrentKeyword("");
+    }
+  };
+
+  const removeKeyword = (index) => {
+    setFormData((prev) => ({
+      ...prev,
+      keywords: prev.keywords.filter((_, i) => i !== index),
+    }));
+  };
+
+  // Navigation
+  const nextStep = () => {
+    if (canProceed() && currentStep < 4) {
+      setCurrentStep((prev) => prev + 1);
+      setOpenAccordion(1);
+    }
+  };
+
+  const prevStep = () => {
+    if (currentStep > 1) {
+      setCurrentStep((prev) => prev - 1);
+      setOpenAccordion(1);
+    }
+  };
+
+  // Handle print option change
+  const handlePrintOptionChange = (option) => {
+    setFormData((prev) => ({
+      ...prev,
+      printOption: option,
+      original: option === "Original" || option === "Both",
+      print: option === "Printed" || option === "Both",
+    }));
+  };
+
+  // Handle form submission
+  const handleSubmit = () => {
+    if (validateStep4()) {
+      // Create FormData for file upload (matching your backend controller)
+      const submissionData = new FormData();
+
+      // Basic fields
+      submissionData.append("title", formData.title);
+      submissionData.append("category", formData.category);
+      submissionData.append("subject", formData.subject);
+      submissionData.append("year", formData.year);
+      submissionData.append("width", formData.width);
+      submissionData.append("height", formData.height);
+      submissionData.append("depth", formData.depth);
+      submissionData.append("description", formData.description);
+      submissionData.append("price", formData.price);
+      submissionData.append("offerPrice", formData.offerPrice);
+      submissionData.append("printOption", formData.printOption);
+      submissionData.append("original", formData.original);
+      submissionData.append("print", formData.print);
+
+      // Arrays as JSON strings (as expected by your controller)
+      submissionData.append("medium", JSON.stringify(formData.medium));
+      submissionData.append("materials", JSON.stringify(formData.materials));
+      submissionData.append("styles", JSON.stringify(formData.styles));
+      submissionData.append("keywords", JSON.stringify(formData.keywords));
+
+      // Images
+      formData.images.forEach((image) => {
+        submissionData.append("images", image);
+      });
+
+      // Thumbnail (first image)
+      if (formData.images.length > 0) {
+        submissionData.append("thumbnail", formData.images[0]);
+      }
+
+      // Artist ID (you'll need to get this from auth context)
+      submissionData.append("artist", authUser?._id);
+
+      console.log("Submitting artwork data...");
+      dispatch({ type: "CREATE_POST", payload: { body: submissionData } });
+    }
+
+    navigate("/Painting");
+  };
+
   return (
-    <div className="block w-full">
-      <div className="flex w-full">
-        <div className="w-1/3 p-4">
-          <div className="preview-section border border-gray-300 rounded p-4 flex flex-wrap">
-            {viewImages.length === 0 && (
-              <FontAwesomeIcon
-                icon={faImage}
-                className="imageUploadPreviewIcon"
-              />
-            )}
-            {viewImages?.length > 0 &&
-              viewImages?.map((image, index) => (
-                <div key={index} className="image-preview mb-4">
-                  <img
-                    src={image?.src}
-                    alt={`Preview ${index + 1}`}
-                    className={`max-w-full ${
-                      index === 0 ? "w-100 h-100" : "w-40 h-40"
-                    }`}
-                  />
-                </div>
-              ))}
-            <div className="Title p-2">
-              Title
-              <div>
-                <i>{title}</i>
+    <div className="max-w-7xl mx-auto p-6 bg-white min-h-screen">
+      <StepProgressBar currentStep={currentStep} totalSteps={4} />
+
+      <div className="flex gap-8 ">
+        {/* Preview Section */}
+        <div className="w-1/3">
+          <div className="border border-gray-300 rounded-lg p-6 bg-gray-50">
+            <h3 className="text-lg font-semibold mb-4">Preview</h3>
+
+            {formData.images.length === 0 ? (
+              <div className="flex items-center justify-center h-48 bg-gray-200 rounded-lg">
+                <Image className="w-16 h-16 text-gray-400" />
               </div>
+            ) : (
+              <div className="space-y-4">
+                <div className="w-full h-48 bg-gray-200 rounded-lg overflow-hidden relative group">
+                  <img
+                    src={URL.createObjectURL(formData.images[0])}
+                    alt="Primary"
+                    className="w-full h-full object-contain"
+                  />
+                  <button
+                    onClick={() => handleImageDelete(0)}
+                    className="absolute top-2 right-2 w-6 h-6 bg-red-500 text-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center hover:bg-red-600"
+                  >
+                    <X className="w-4 h-4" />
+                  </button>
+                </div>
+                {formData.images.length > 1 && (
+                  <div className="grid grid-cols-3 gap-2">
+                    {formData.images.slice(1).map((image, index) => (
+                      <div
+                        key={index}
+                        className="w-full h-16 bg-gray-200 rounded overflow-hidden relative group"
+                      >
+                        <img
+                          src={URL.createObjectURL(image)}
+                          alt={`Additional ${index + 1}`}
+                          className="w-full h-full object-contain"
+                        />
+                        <button
+                          onClick={() => handleImageDelete(index + 1)}
+                          className="absolute top-1 right-1 w-4 h-4 bg-red-500 text-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center hover:bg-red-600"
+                        >
+                          <X className="w-3 h-3" />
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            )}
+
+            <div className="mt-4">
+              <h4 className="font-medium">Title</h4>
+              <p className="text-gray-600 italic">
+                {formData.title || "No title entered"}
+              </p>
             </div>
+
+            {formData.width && formData.height && formData.depth && (
+              <div className="mt-2">
+                <h4 className="font-medium">Dimensions</h4>
+                <p className="text-gray-600">
+                  {`${formData.width} × ${formData.height} × ${formData.depth}`}
+                </p>
+              </div>
+            )}
           </div>
         </div>
-        <div className="w-2/3 p-4">
-          {step === 1 && (
-            <>
-              <div className="formTitle">
-                <h1>Artwork</h1>
-              </div>
-              <Accordion open={open === 1}>
-                <AccordionHeader onClick={() => handleOpen(1)}>
-                  <div className="w-full flex justify-between items-center">
-                    <div className="flex  justify-between items-center">
-                      <FontAwesomeIcon
-                        icon={open === 1 ? faChevronDown : faChevronRight}
-                      />
-                      <span className="accordionHeader">Title</span>
-                    </div>
-                    <div>
-                      <FontAwesomeIcon
-                        icon={faCheckCircle}
-                        className={title ? "text-green-500" : "text-red-500"}
-                      />
-                    </div>
-                  </div>
-                </AccordionHeader>
-                <AccordionBody>
-                  <div className="upload-title">
-                    <input
-                      id="titleInput"
-                      type="text"
-                      value={title}
-                      placeholder="Enter title"
-                      onChange={(e) => setTitle(e.target.value)}
-                      className="w-full px-3 py-2 border rounded-md"
-                    />
-                  </div>
-                </AccordionBody>
+
+        {/* Form Section */}
+        <div className="w-2/3">
+          {/* Step 1: Image and Title */}
+          {currentStep === 1 && (
+            <div>
+              <h2 className="text-2xl font-bold mb-6">Artwork</h2>
+
+              <Accordion
+                open={openAccordion === 1}
+                onToggle={() => setOpenAccordion(openAccordion === 1 ? 0 : 1)}
+                title="Title"
+                isValid={formData.title.trim() !== ""}
+              >
+                <input
+                  type="text"
+                  value={formData.title}
+                  onChange={(e) =>
+                    setFormData((prev) => ({ ...prev, title: e.target.value }))
+                  }
+                  placeholder="Enter artwork title"
+                  className="bg-white text-black w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black"
+                />
               </Accordion>
-              <div className="upload-image h-10">
-                <Accordion open={open === 2}>
-                  <AccordionHeader onClick={() => handleOpen(2)}>
-                    <div className="w-full flex justify-between items-center">
-                      <div className="flex justify-between items-center">
-                        <FontAwesomeIcon
-                          icon={open === 2 ? faChevronDown : faChevronRight}
-                        />
-                        <span className="accordionHeader"> Image</span>
-                      </div>
-                      <div>
-                        <FontAwesomeIcon
-                          icon={faCheckCircle}
-                          className={
-                            images.length > 0
-                              ? "text-green-500"
-                              : "text-red-500"
-                          }
-                        />
-                      </div>
-                    </div>
-                  </AccordionHeader>
-                  <AccordionBody>
-                    <h1 className="block mt-5">Upload Art Image:</h1>
-                    <label
-                      htmlFor="imageInput"
-                      className="block imageInput"
-                      onClick={openModal}
-                    >
-                      <div className="addSign"></div>
-                      <div className="text-center">
-                        {images.length < 1 && (
-                          <u>
-                            <small>ADD PRIMARY IMAGE</small>
-                          </u>
-                        )}
-                        {images.length > 1 && (
-                          <u>
-                            <small>ADD ADDITIONAL IMAGE</small>
-                          </u>
-                        )}
-                      </div>
+
+              <Accordion
+                open={openAccordion === 2}
+                onToggle={() => setOpenAccordion(openAccordion === 2 ? 0 : 2)}
+                title="Images"
+                isValid={formData.images.length > 0}
+              >
+                <div className="space-y-4">
+                  <p className="text-gray-600">
+                    Upload your artwork images. The first image will be used as
+                    the primary image.
+                  </p>
+
+                  <div className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center">
+                    <input
+                      type="file"
+                      multiple
+                      accept="image/*"
+                      onChange={handleImageUpload}
+                      className="hidden"
+                      id="image-upload"
+                    />
+                    <label htmlFor="image-upload" className="cursor-pointer">
+                      <Upload className="w-12 h-12 mx-auto text-gray-400 mb-4" />
+                      <p className="text-gray-600">
+                        Click to upload images or drag and drop
+                      </p>
+                      <p className="text-sm text-gray-500 mt-2">
+                        PNG, JPG, GIF up to 10MB each
+                      </p>
                     </label>
-                  </AccordionBody>
-                </Accordion>
-              </div>
-            </>
+                  </div>
+
+                  {formData.images.length > 0 && (
+                    <div className="text-sm text-green-600">
+                      {formData.images.length} image(s) uploaded
+                    </div>
+                  )}
+                </div>
+              </Accordion>
+            </div>
           )}
 
-          {step === 2 && (
-            <>
-              <div className="formTitle">
-                <h1>Description</h1>
-              </div>
-              <Accordion open={open === 1}>
-                <AccordionHeader onClick={() => handleOpen(1)}>
-                  <div className="w-full flex justify-between items-center">
-                    <div className="flex  justify-between items-center">
-                      <FontAwesomeIcon
-                        icon={open === 1 ? faChevronDown : faChevronRight}
-                      />
-                      <span className="accordionHeader">
-                        {" "}
-                        Category, Subject & Year
-                      </span>
-                    </div>
-                    <div>
-                      <FontAwesomeIcon
-                        icon={faCheckCircle}
-                        className={
-                          category && subject && selectedYear
-                            ? "text-green-500"
-                            : "text-red-500"
-                        }
-                      />
-                    </div>
-                  </div>
-                </AccordionHeader>
-                <AccordionBody>
-                  <div className="upload-title">
-                    <label htmlFor="Category" className="block my-2">
-                      Category:
+          {/* Step 2: Description */}
+          {currentStep === 2 && (
+            <div>
+              <h2 className="text-2xl font-bold mb-6">Description</h2>
+
+              <Accordion
+                open={openAccordion === 1}
+                onToggle={() => setOpenAccordion(openAccordion === 1 ? 0 : 1)}
+                title="Category, Subject & Year"
+                isValid={formData.category && formData.subject && formData.year}
+              >
+                <div className="space-y-4">
+                  <div>
+                    <label className="block text-sm font-medium mb-2">
+                      Category *
                     </label>
-                    <div className=" w-full">
-                      <SearchableDropdown
-                        options={CategoryItem.flatMap((item) => item.element)}
-                        selectedVal={category}
-                        handleChange={(val) => setCategory(val)}
-                      />
-                    </div>
-                  </div>
-                  <div className="upload-Subject">
-                    <label htmlFor="year" className="block mt-5 mb-2">
-                      Subject:
-                    </label>
-                    <div className=" w-full">
-                      <SearchableDropdown
-                        options={subjectElement.flatMap((item) => item.element)}
-                        selectedVal={subject}
-                        handleChange={(val) => setSubject(val)}
-                      />
-                    </div>
-                  </div>
-                  <div className="upload-title">
-                    <label htmlFor="year" className="block mt-5 mb-2">
-                      Year:
-                    </label>
-                    <div className=" w-full">
-                      <SearchableDropdown
-                        options={generateYears().flatMap((item) => item)}
-                        selectedVal={selectedYear}
-                        handleChange={(val) => setSelectedYear(val)}
-                      />
-                    </div>
-                  </div>
-                </AccordionBody>
-              </Accordion>
-              <Accordion open={open === 2}>
-                <AccordionHeader onClick={() => handleOpen(2)}>
-                  <div className="w-full flex justify-between items-center">
-                    <div className="flex  justify-between items-center">
-                      <FontAwesomeIcon
-                        icon={open === 2 ? faChevronDown : faChevronRight}
-                      />
-                      <span className="accordionHeader">
-                        {" "}
-                        Mediums, Materials & Styles
-                      </span>
-                    </div>
-                    <div>
-                      <FontAwesomeIcon
-                        icon={faCheckCircle}
-                        className={
-                          mediums.length > 0 &&
-                          materials.length > 0 &&
-                          styles.length > 0
-                            ? "text-green-500"
-                            : "text-red-500"
-                        }
-                      />
-                    </div>
-                  </div>
-                </AccordionHeader>
-                <AccordionBody>
-                  <div className="upload-title">
-                    <label htmlFor="year" className="block mb-3">
-                      Mediums:
-                    </label>
-                    <div className=" w-full">
-                      <i>Select 1-5 Mediums</i>
-                      <SearchableDropdownMultiSelect
-                        placeholder="Search or Select Mediums"
-                        limit={5}
-                        options={
-                          mediumElement.length > 0
-                            ? mediumElement[0].element
-                            : []
-                        }
-                        selectedOptions={mediums}
-                        setSelectedOptions={setMediums}
-                      />
-                    </div>
-                  </div>
-                  <div className="upload-title">
-                    <label htmlFor="year" className="block mt-5 mb-2">
-                      Materials:
-                    </label>
-                    <div className=" w-full">
-                      <i>Select 1-5 Materials</i>
-                      <SearchableDropdownMultiSelect
-                        placeholder="Search or Select Materials"
-                        limit={5}
-                        options={
-                          materialElement.length > 0
-                            ? materialElement[0].element
-                            : []
-                        }
-                        selectedOptions={materials}
-                        setSelectedOptions={setMaterials}
-                      />
-                    </div>
-                  </div>
-                  <div className="upload-title">
-                    <label htmlFor="year" className="block mt-5 mb-2">
-                      Styles:
-                    </label>
-                    <div className=" w-full">
-                      <i>Select 1-5 Styles</i>
-                      <SearchableDropdownMultiSelect
-                        placeholder="Search or Select Styles"
-                        limit={5}
-                        options={
-                          styleElement.length > 0 ? styleElement[0].element : []
-                        }
-                        selectedOptions={styles}
-                        setSelectedOptions={setStyles}
-                      />
-                    </div>
-                  </div>
-                </AccordionBody>
-              </Accordion>
-              <Accordion open={open === 3}>
-                <AccordionHeader onClick={() => handleOpen(3)}>
-                  <div className="w-full flex justify-between items-center">
-                    <div className="flex  justify-between items-center">
-                      <FontAwesomeIcon
-                        icon={open === 3 ? faChevronDown : faChevronRight}
-                      />
-                      <span className="accordionHeader">Dimensions</span>
-                    </div>
-                    <div>
-                      <FontAwesomeIcon
-                        icon={faCheckCircle}
-                        className={
-                          width && height && depth
-                            ? "text-green-500"
-                            : "text-red-500"
-                        }
-                      />
-                    </div>
-                  </div>
-                </AccordionHeader>
-                <AccordionBody>
-                  <div className="upload-title">
-                    <label htmlFor="titleInput" className="block mt-5">
-                      It’s very important that you provide accurate dimensions
-                      as collectors and trade clients need to know the exact
-                      size of the artwork before purchasing it. For flat
-                      artworks, such as photographs and other works on paper, we
-                      suggest that you enter a depth of 0.1.
-                    </label>
-                    <div className="dimensions">
-                      <div className="m-2 w-1/4">
-                        <label htmlFor="titleInput1" className="block">
-                          Width
-                        </label>
-                        <input
-                          id="titleInput1"
-                          type="number"
-                          value={width}
-                          placeholder="Enter title"
-                          onChange={(e) => setWidth(e.target.value)}
-                          className="w-full mt-3 px-3 py-2 border rounded-md"
-                        />
-                      </div>
-                      <div className="m-2 w-1/4">
-                        <label htmlFor="titleInput2" className="block">
-                          Height
-                        </label>
-                        <input
-                          id="titleInput2"
-                          type="number"
-                          value={height}
-                          placeholder="Enter title"
-                          onChange={(e) => setHight(e.target.value)}
-                          className="w-full mt-3 px-3 py-2 border rounded-md"
-                        />
-                      </div>
-                      <div className="m-2 w-1/4">
-                        <label htmlFor="titleInput3" className="block">
-                          Depth
-                        </label>
-                        <input
-                          id="titleInput3"
-                          type="number"
-                          value={depth}
-                          placeholder="Enter title"
-                          onChange={(e) => setDepth(e.target.value)}
-                          className="w-full mt-3 px-3 py-2 border rounded-md"
-                        />
-                      </div>
-                      <div className="m-2 w-1/4 flex items-end">
-                        <label
-                          htmlFor="titleInput4"
-                          className="sr-only"
-                        ></label>
-                        <div className="w-full mt-3 px-3 py-2">
-                          <u>
-                            <b>inches</b>
-                          </u>
-                        </div>
-                      </div>
-                    </div>
-                    <div id="rect">
-                      {width && height && <p>{width + " x " + height}</p>}
-                    </div>
-                  </div>
-                </AccordionBody>
-              </Accordion>
-              <Accordion open={open === 4}>
-                <AccordionHeader onClick={() => handleOpen(4)}>
-                  <div className="w-full flex justify-between items-center">
-                    <div className="flex  justify-between items-center">
-                      <FontAwesomeIcon
-                        icon={open === 4 ? faChevronDown : faChevronRight}
-                      />
-                      <span className="accordionHeader">
-                        Keywords & Description
-                      </span>
-                    </div>
-                    <div>
-                      <FontAwesomeIcon
-                        icon={faCheckCircle}
-                        className={
-                          keywords.length > 4 &&
-                          keywords.length < 12 &&
-                          description.length > 50
-                            ? "text-green-500"
-                            : "text-red-500"
-                        }
-                      />
-                    </div>
-                  </div>
-                </AccordionHeader>
-                <AccordionBody>
-                  <div className="upload-title">
-                    <label htmlFor="titleInput" className="block mt-5">
-                      Keywords
-                    </label>
-                    <p>
-                      Please provide from 5 to 12 keywords. Tagging your artwork
-                      with keywords allows collectors to find your artwork more
-                      easily. It’s best to enter simple, descriptive words that
-                      describe the key visual elements of the work, such as
-                      color, subject matter, and artistic style. You may enter
-                      or paste a comma separated list of keywords that are
-                      distinct and at least 2-character long. We recommend
-                      providing keywords in English.
-                    </p>
-                    <input
-                      id="currentKey"
-                      type="text"
-                      value={currentKey}
-                      placeholder="Enter Keywords"
-                      onChange={(e) => setCurrentKey(e.target.value)}
-                      onKeyDown={(e) => {
-                        if (e.key === "Enter") {
-                          handleKeyPusher(e.target.value);
-                        }
-                      }}
-                      disabled={keywords.length > 11}
-                      className="w-full  mt-5 mb-3 px-3 py-2 border rounded-md"
+                    <SearchableDropdown
+                      options={categoryOptions}
+                      value={formData.category}
+                      onChange={(value) =>
+                        setFormData((prev) => ({ ...prev, category: value }))
+                      }
+                      placeholder="Select category"
                     />
-                    {keywords.length > 11 && (
-                      <p className="text-red-500 font-semibold">
-                        Max Keywords of 12 has been reached
-                      </p>
-                    )}
-                    {keywords.length < 5 && (
-                      <p className="text-red-500 font-semibold">
-                        Minimum 5 Keywords required
-                      </p>
-                    )}
-                    <div className="flex flex-wrap w-full">
-                      {keywords &&
-                        keywords.length > 0 &&
-                        keywords.map((keyword, index) => (
-                          <div
-                            key={index}
-                            className="flex items-center space-x-2 bg-gray-100 px-2 py-1 mx-2 rounded-md my-4"
-                          >
-                            <span className="text-sm flex-1 truncate">
-                              {keyword}
-                            </span>
-                            <button
-                              onClick={() => handleRemoveKeyword(index)}
-                              className="focus:outline-none bg-transparent hover:bg-gray-200 text-red-500 font-semibold py-1 px-2 rounded"
-                            >
-                              X
-                            </button>
-                          </div>
-                        ))}
-                    </div>
                   </div>
-                  <div className="upload-title mt-5">
-                    <label htmlFor="year" className="block mt-5">
-                      Description:
+
+                  <div>
+                    <label className="block text-sm font-medium mb-2">
+                      Subject *
                     </label>
-                    <p>
-                      Collectors tend to appreciate works more if they know the
-                      “story” behind them, so be sure to write informative
-                      artwork descriptions. Great descriptions not only provide
-                      useful information (e.g. physical texture, whether hanging
-                      hardware is included, quality of materials), but they also
-                      answer questions like:
-                    </p>
-                    <p>
-                      <li>
-                        <b>What/who inspired the work?</b>
-                      </li>
-                      <li>
-                        <b>What do you hope its viewers will feel/think?</b>
-                      </li>
-                      <li>
-                        <b>
-                          Why did you choose the medium, subject matter, style?
-                        </b>
-                      </li>
-                    </p>
-                    <div className="relative w-full">
-                      <textarea
-                        id="description"
-                        rows="10"
-                        value={description}
-                        placeholder="Search and Select"
-                        onChange={(e) => setDescription(e.target.value)}
-                        className="w-full mt-3 px-3 py-2 border rounded-md"
-                      />
-                      {description.length < 50 && (
-                        <p className="text-red-500 font-semibold">
-                          Minimum characters still required{" "}
-                          {50 - description.length}
-                        </p>
-                      )}
-                    </div>
+                    <SearchableDropdown
+                      options={subjectOptions}
+                      value={formData.subject}
+                      onChange={(value) =>
+                        setFormData((prev) => ({ ...prev, subject: value }))
+                      }
+                      placeholder="Select subject"
+                    />
                   </div>
-                </AccordionBody>
+
+                  <div>
+                    <label className="block text-sm font-medium mb-2">
+                      Year *
+                    </label>
+                    <SearchableDropdown
+                      options={generateYears()}
+                      value={formData.year}
+                      onChange={(value) =>
+                        setFormData((prev) => ({ ...prev, year: value }))
+                      }
+                      placeholder="Select year"
+                    />
+                  </div>
+                </div>
               </Accordion>
-            </>
-          )}
-          {step === 3 && (
-            <>
-              <Accordion open={open === 1}>
-                <AccordionHeader onClick={() => handleOpen(1)}>
-                  <div className="w-full flex justify-between items-center">
-                    <div className="flex  justify-between items-center">
-                      <FontAwesomeIcon
-                        icon={open === 1 ? faChevronDown : faChevronRight}
+
+              <Accordion
+                open={openAccordion === 2}
+                onToggle={() => setOpenAccordion(openAccordion === 2 ? 0 : 2)}
+                title="Mediums, Materials & Styles"
+                isValid={
+                  formData.medium.length >= 1 &&
+                  formData.materials.length >= 1 &&
+                  formData.styles.length >= 1
+                }
+              >
+                <div className="space-y-4">
+                  <div>
+                    <label className="block text-sm font-medium mb-2">
+                      Mediums (1-5) *
+                    </label>
+                    <MultiSelectDropdown
+                      options={mediumOptions}
+                      selectedOptions={formData.medium}
+                      setSelectedOptions={(value) =>
+                        setFormData((prev) => ({ ...prev, medium: value }))
+                      }
+                      placeholder="Select mediums"
+                      limit={5}
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium mb-2">
+                      Materials (1-5) *
+                    </label>
+                    <MultiSelectDropdown
+                      options={materialOptions}
+                      selectedOptions={formData.materials}
+                      setSelectedOptions={(value) =>
+                        setFormData((prev) => ({ ...prev, materials: value }))
+                      }
+                      placeholder="Select materials"
+                      limit={5}
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium mb-2">
+                      Styles (1-5) *
+                    </label>
+                    <MultiSelectDropdown
+                      options={styleOptions}
+                      selectedOptions={formData.styles}
+                      setSelectedOptions={(value) =>
+                        setFormData((prev) => ({ ...prev, styles: value }))
+                      }
+                      placeholder="Select styles"
+                      limit={5}
+                    />
+                  </div>
+                </div>
+              </Accordion>
+
+              <Accordion
+                open={openAccordion === 3}
+                onToggle={() => setOpenAccordion(openAccordion === 3 ? 0 : 3)}
+                title="Dimensions"
+                isValid={formData.width && formData.height && formData.depth}
+              >
+                <div className="space-y-4">
+                  <p className="text-gray-600">
+                    Provide accurate dimensions as collectors need to know the
+                    exact size before purchasing. For flat artworks, enter a
+                    depth of 0.1.
+                  </p>
+
+                  <div className="grid grid-cols-4 gap-4">
+                    <div>
+                      <label className="block text-sm font-medium mb-2">
+                        Width *
+                      </label>
+                      <input
+                        type="number"
+                        value={formData.width}
+                        onChange={(e) =>
+                          setFormData((prev) => ({
+                            ...prev,
+                            width: e.target.value,
+                          }))
+                        }
+                        placeholder="0.0"
+                        className="bg-white text-black w-full px-3 py-2 border border-gray-300 rounded-md"
                       />
-                      <span className="accordionHeader">
-                        {" "}
-                        Seller Price, Offer Price & Platform Charge
-                      </span>
                     </div>
                     <div>
-                      <FontAwesomeIcon
-                        icon={faCheckCircle}
-                        className={
-                          sellingPrice &&
-                          offerPrice &&
-                          platformFee &&
-                          !validationErr &&
-                          !spErr &&
-                          !opErr
-                            ? "text-green-500"
-                            : "text-red-500"
+                      <label className="block text-sm font-medium mb-2">
+                        Height *
+                      </label>
+                      <input
+                        type="number"
+                        value={formData.height}
+                        onChange={(e) =>
+                          setFormData((prev) => ({
+                            ...prev,
+                            height: e.target.value,
+                          }))
                         }
+                        placeholder="0.0"
+                        className="bg-white text-black w-full px-3 py-2 border border-gray-300 rounded-md"
                       />
                     </div>
-                  </div>
-                </AccordionHeader>
-                <AccordionBody>
-                  <div className="upload-title">
-                    <label htmlFor="sellerPrice" className="block mt-5">
-                      Seller Price:
-                    </label>
-                    <div className="relative w-full">
+                    <div>
+                      <label className="block text-sm font-medium mb-2">
+                        Depth *
+                      </label>
                       <input
                         type="number"
-                        id="sellerPrice"
-                        pattern="[0-9]+([.,][0-9]+)?"
-                        title="Please enter a valid number"
-                        value={sellingPrice}
-                        onChange={(e) => setSellingPrice(e.target.value)}
-                        className="w-full mt-3 px-3 py-2 border rounded-md"
+                        value={formData.depth}
+                        onChange={(e) =>
+                          setFormData((prev) => ({
+                            ...prev,
+                            depth: e.target.value,
+                          }))
+                        }
+                        placeholder="0.1"
+                        className="bg-white text-black w-full px-3 py-2 border border-gray-300 rounded-md"
                       />
-                      <span style={{ color: "red", fontStyle: "italic" }}>
-                        {spErr}
-                      </span>
+                    </div>
+                    <div className="flex items-end">
+                      <span className="text-sm font-medium mb-2">inches</span>
                     </div>
                   </div>
-                  <div className="upload-title">
-                    <label htmlFor="offerPrice" className="block mt-5">
-                      Offer Price:
-                    </label>
-                    <div className="relative w-full">
-                      <input
-                        type="number"
-                        id="offerPrice"
-                        value={offerPrice}
-                        onChange={(e) => setOfferPrice(e.target.value)}
-                        className="w-full mt-3 px-3 py-2 border rounded-md"
-                      />
-                      <span style={{ color: "red", fontStyle: "italic" }}>
-                        {opErr || validationErr}
-                      </span>
+
+                  {formData.width && formData.height && (
+                    <div className="text-sm text-gray-600">
+                      {/* Dimensions: {formData.width}" × {formData.height}" ×{" "}
+                      {formData.depth}" */}
+                      Dimensions: {`${formData.width} × ${formData.height} × ${formData.depth}`}
                     </div>
-                  </div>
-                  <div className="upload-title">
-                    <label htmlFor="platformCharge" className="block mt-5">
-                      Platform Charge:
+                  )}
+                </div>
+              </Accordion>
+
+              <Accordion
+                open={openAccordion === 4}
+                onToggle={() => setOpenAccordion(openAccordion === 4 ? 0 : 4)}
+                title="Keywords & Description"
+                isValid={
+                  formData.keywords.length >= 5 &&
+                  formData.description.length >= 50
+                }
+              >
+                <div className="space-y-4">
+                  <div>
+                    <label className="block text-sm font-medium mb-2">
+                      Keywords (5-12) *
                     </label>
-                    <div className="relative w-full">
+                    <p className="text-gray-600 text-sm mb-3">
+                      Add descriptive keywords to help collectors find your
+                      artwork. Each keyword should be at least 2 characters.
+                    </p>
+
+                    <div className="flex gap-2 mb-3">
                       <input
                         type="text"
-                        id="platformCharge"
-                        value={platformFee}
-                        disabled
-                        className="w-full mt-3 px-3 py-2 border rounded-md"
+                        value={currentKeyword}
+                        onChange={(e) => setCurrentKeyword(e.target.value)}
+                        onKeyDown={(e) => e.key === "Enter" && addKeyword()}
+                        placeholder="Enter keyword"
+                        disabled={formData.keywords.length >= 12}
+                        className="bg-white text-black flex-1 px-3 py-2 border border-gray-300 rounded-md"
                       />
-                    </div>
-                  </div>
-                </AccordionBody>
-              </Accordion>
-            </>
-          )}
-          {step === 4 && (
-            <>
-              <Accordion open={open === 1}>
-                <AccordionHeader onClick={() => handleOpen(1)}>
-                  <div className="w-full flex justify-between items-center">
-                    <div className="flex justify-between items-center">
-                      <FontAwesomeIcon
-                        icon={open === 1 ? faChevronDown : faChevronRight}
-                      />
-                      <span className="accordionHeader">Printing</span>
-                    </div>
-                    <div>
-                      <FontAwesomeIcon
-                        icon={faCheckCircle}
-                        className={
-                          printOption ? "text-green-500" : "text-red-500"
+                      <button
+                        onClick={addKeyword}
+                        disabled={
+                          formData.keywords.length >= 12 ||
+                          currentKeyword.length < 2
                         }
-                      />
+                        className="px-4 py-2 bg-black text-white rounded-md disabled:bg-gray-300"
+                      >
+                        Add
+                      </button>
                     </div>
-                  </div>
-                </AccordionHeader>
-                <AccordionBody>
-                  <div className="upload-title">
-                    <label
-                      htmlFor="printOption"
-                      className="block mb-2 font-bold"
-                    >
-                      Original Or Printed Copy:
-                    </label>
-                    <div className="flex items-center space-x-4">
-                      <label className="inline-flex items-center">
-                        <input
-                          type="radio"
-                          className="form-radio text-blue-500"
-                          name="printOption"
-                          value="Original"
-                          checked={printOption === "Original"}
-                          onChange={() => handlePrintOption("Original")}
-                        />
-                        <span className="ml-2">Original</span>
-                      </label>
-                      <label className="inline-flex items-center">
-                        <input
-                          type="radio"
-                          className="form-radio text-blue-500"
-                          name="printOption"
-                          value="Printed"
-                          checked={printOption === "Printed"}
-                          onChange={() => handlePrintOption("Printed")}
-                        />
-                        <span className="ml-2">Printed</span>
-                      </label>
-                    </div>
-                    <label
-                      htmlFor="uniqueCheckbox"
-                      className="block mt-5 font-bold"
-                    >
-                      <input
-                        type="checkbox"
-                        id="uniqueCheckbox"
-                        checked={isUnique}
-                        onChange={() => setIsUnique(!isUnique)}
-                        className="mr-2"
-                      />
-                      Unique in Universe
-                    </label>
-                  </div>
-                </AccordionBody>
-              </Accordion>
-            </>
-          )}
-        </div>
 
-        {modalOpen && (
-          <Dropzone
-            closeModal={closeModal}
-            handleDropZoneImageSelection={handleDropZoneImageSelection}
-            isThumbnailImage={images.length < 1}
-          />
-        )}
-      </div>
-      <div className="w-full text-center">
-        {currentStep == 4 && (
-          <button
-            onClick={() => finalFormSubmission()}
-            className="cursor-pointer bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded"
-          >
-            Final Submission
-          </button>
-        )}
+                    <div className="flex flex-wrap gap-2">
+                      {formData.keywords.map((keyword, index) => (
+                        <span
+                          key={index}
+                          className="bg-gray-100 px-3 py-1 rounded-full text-sm flex items-center gap-2"
+                        >
+                          {keyword}
+                          <X
+                            className="w-3 h-3 cursor-pointer hover:text-red-600"
+                            onClick={() => removeKeyword(index)}
+                          />
+                        </span>
+                      ))}
+                    </div>
+
+                    {formData.keywords.length < 5 && (
+                      <p className="text-red-500 text-sm">
+                        Minimum 5 keywords required
+                      </p>
+                    )}
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium mb-2">
+                      Description *
+                    </label>
+                    <p className="text-gray-600 text-sm mb-3">
+                      Tell the story behind your artwork. Include inspiration,
+                      techniques, and what you hope viewers will feel.
+                    </p>
+                    <textarea
+                      value={formData.description}
+                      onChange={(e) =>
+                        setFormData((prev) => ({
+                          ...prev,
+                          description: e.target.value,
+                        }))
+                      }
+                      placeholder="Describe your artwork..."
+                      rows={6}
+                      className="bg-white text-black w-full px-3 py-2 border border-gray-300 rounded-md"
+                    />
+                    <p className="text-sm text-gray-500 mt-1">
+                      {formData.description.length}/50 minimum characters
+                      {formData.description.length < 50 && (
+                        <span className="text-red-500">
+                          {" "}
+                          - {50 - formData.description.length} more needed
+                        </span>
+                      )}
+                    </p>
+                  </div>
+                </div>
+              </Accordion>
+            </div>
+          )}
+
+          {/* Step 3: Pricing */}
+          {currentStep === 3 && (
+            <div>
+              <h2 className="text-2xl font-bold mb-6">Price & Details</h2>
+
+              <Accordion
+                open={openAccordion === 1}
+                onToggle={() => setOpenAccordion(openAccordion === 1 ? 0 : 1)}
+                title="Pricing"
+                isValid={
+                  formData.price && parseFloat(formData.price) > 0
+                  // &&
+                  // formData.offerPrice &&
+                  // parseFloat(formData.offerPrice) > 0
+                }
+              >
+                <div className="space-y-4">
+                  <div>
+                    <label className="block text-sm font-medium mb-2">
+                      Selling Price *
+                    </label>
+                    <div className="relative">
+                      <span className="absolute left-3 top-2 text-gray-500">
+                        $
+                      </span>
+                      <input
+                        type="number"
+                        value={formData.price}
+                        onChange={(e) =>
+                          setFormData((prev) => ({
+                            ...prev,
+                            price: e.target.value,
+                          }))
+                        }
+                        placeholder="0.00"
+                        className="bg-white text-black w-full pl-8 pr-3 py-2 border border-gray-300 rounded-md"
+                      />
+                    </div>
+                  </div>
+
+                  {/* <div>
+                    <label className="block text-sm font-medium mb-2">
+                      Offer Price *
+                    </label>
+                    <div className="relative">
+                      <span className="absolute left-3 top-2 text-gray-500">
+                        $
+                      </span>
+                      <input
+                        type="number"
+                        value={formData.offerPrice}
+                        onChange={(e) =>
+                          setFormData((prev) => ({
+                            ...prev,
+                            offerPrice: e.target.value,
+                          }))
+                        }
+                        placeholder="0.00"
+                        className="w-full pl-8 pr-3 py-2 border border-gray-300 rounded-md"
+                      />
+                    </div>
+                    <p className="text-sm text-gray-500 mt-1">
+                      Offer price should be less than or equal to selling price
+                    </p>
+                  </div> */}
+
+                  <div className="bg-gray-50 p-4 rounded-md">
+                    <h4 className="font-medium mb-2">Price Summary</h4>
+                    <div className="space-y-1 text-sm">
+                      <div className="flex justify-between">
+                        <span>Selling Price:</span>
+                        <span>${formData.price || "0.00"}</span>
+                      </div>
+                      {/* <div className="flex justify-between">
+                        <span>Offer Price:</span>
+                        <span>${formData.offerPrice || "0.00"}</span>
+                      </div> */}
+                      <div className="flex justify-between">
+                        <span>Shipping Fee:</span>
+                        <span>$20.00</span>
+                      </div>
+                      <div className="flex justify-between font-medium border-t pt-1">
+                        <span>Total to Buyer:</span>
+                        <span>
+                          $
+                          {formData.price
+                            ? (parseFloat(formData.price) + 20).toFixed(2)
+                            : "20.00"}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </Accordion>
+            </div>
+          )}
+
+          {/* Step 4: Print Options */}
+          {currentStep === 4 && (
+            <div>
+              <h2 className="text-2xl font-bold mb-6">Print Options</h2>
+
+              <Accordion
+                open={openAccordion === 1}
+                onToggle={() => setOpenAccordion(openAccordion === 1 ? 0 : 1)}
+                title="Print Type"
+                isValid={formData.printOption !== ""}
+              >
+                <div className="space-y-4">
+                  <p className="text-gray-600">
+                    {`Select what type of artwork you're offering:`}
+                  </p>
+
+                  <div className="space-y-3">
+                    <label className="flex items-center">
+                      <input
+                        type="radio"
+                        name="printType"
+                        value="Original"
+                        checked={formData.printOption === "Original"}
+                        onChange={(e) =>
+                          handlePrintOptionChange(e.target.value)
+                        }
+                        className="mr-3"
+                      />
+                      <span>Original artwork only</span>
+                    </label>
+
+                    <label className="flex items-center">
+                      <input
+                        type="radio"
+                        name="printType"
+                        value="Printed"
+                        checked={formData.printOption === "Printed"}
+                        onChange={(e) =>
+                          handlePrintOptionChange(e.target.value)
+                        }
+                        className="mr-3"
+                      />
+                      <span>Printed copies only</span>
+                    </label>
+
+                    <label className="flex items-center">
+                      <input
+                        type="radio"
+                        name="printType"
+                        value="Both"
+                        checked={formData.printOption === "Both"}
+                        onChange={(e) =>
+                          handlePrintOptionChange(e.target.value)
+                        }
+                        className="mr-3"
+                      />
+                      <span>Original and printed copies</span>
+                    </label>
+                  </div>
+
+                  {formData.printOption && (
+                    <div className="bg-blue-50 p-3 rounded-md text-sm">
+                      <p>
+                        <strong>Selected:</strong> {formData.printOption}
+                      </p>
+                      <p>
+                        <strong>Original:</strong>{" "}
+                        {formData.original ? "Yes" : "No"}
+                      </p>
+                      <p>
+                        <strong>Print:</strong> {formData.print ? "Yes" : "No"}
+                      </p>
+                    </div>
+                  )}
+                </div>
+              </Accordion>
+            </div>
+          )}
+
+          {/* Navigation Buttons */}
+          <div className="flex justify-between mt-8">
+            <button
+              onClick={prevStep}
+              disabled={currentStep === 1}
+              className={`px-6 py-2 rounded-md ${
+                currentStep === 1
+                  ? "bg-gray-300 text-gray-500 cursor-not-allowed"
+                  : "bg-gray-600 text-white hover:bg-gray-700"
+              }`}
+            >
+              Back
+            </button>
+
+            {currentStep < 4 ? (
+              <button
+                onClick={nextStep}
+                disabled={!canProceed()}
+                className={`px-6 py-2 rounded-md ${
+                  canProceed()
+                    ? "bg-black text-white hover:bg-gray-800"
+                    : "bg-gray-300 text-gray-500 cursor-not-allowed"
+                }`}
+              >
+                Save & Continue
+              </button>
+            ) : (
+              <button
+                onClick={handleSubmit}
+                disabled={!canProceed()}
+                className={`px-6 py-2 rounded-md ${
+                  canProceed()
+                    ? "bg-black text-white hover:bg-gray-800"
+                    : "bg-gray-300 text-gray-500 cursor-not-allowed"
+                }`}
+              >
+                Submit Artwork
+              </button>
+            )}
+          </div>
+        </div>
       </div>
     </div>
   );
 };
 
-export default ImageUploadForm;
+export default ArtUploadForm;

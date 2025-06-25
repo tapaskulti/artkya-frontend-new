@@ -1,137 +1,95 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faImage,
-  faChartLine,
-  faTags,
-  faMapMarkerAlt,
-  faStickyNote,
-  faUserCircle,
-  faUser,
-} from "@fortawesome/free-solid-svg-icons";
-import "./styles.css";
+import React from 'react';
+import { 
+  Image, 
+  TrendingUp, 
+  Tag, 
+  MapPin, 
+  StickyNote, 
+  UserCircle, 
+  User 
+} from 'lucide-react';
 
 const ArtistHeader = ({ activeTab, handleTabClick }) => {
+  const tabs = [
+    {
+      id: 'Manage Artworks',
+      label: 'Manage Artworks',
+      icon: Image,
+    },
+    {
+      id: 'Sales Dashboard',
+      label: 'Sales Dashboard',
+      icon: TrendingUp,
+    },
+    {
+      id: 'Addresses',
+      label: 'Addresses',
+      icon: MapPin,
+    },
+    {
+      id: 'Curator Notes',
+      label: 'Curator Notes',
+      icon: StickyNote,
+    },
+    {
+      id: 'Account',
+      label: 'Account',
+      icon: UserCircle,
+    },
+    {
+      id: 'Profile Information',
+      label: 'Profile Information',
+      icon: User,
+    },
+  ];
+
   return (
-    <div className="bg-current">
-      <ul className="hidden text-sm font-medium text-center text-white shadow sm:flex ">
-        <li className="w-full border-2 border-white hover:bg-slate-400">
-          <a
-            href="#"
-            onClick={() => handleTabClick("Manage Artworks")}
-            className={`inline-block w-full text-center p-4 ${
-              activeTab === "Manage Artworks" ? "bg-blue-50 text-black" : ""
-            }  `}
-            aria-current={activeTab === "Manage Artworks" ? "page" : null}
+    <div className="bg-black shadow-lg">
+      <div className="hidden sm:block">
+        <nav className="flex space-x-0">
+          {tabs.map((tab) => {
+            const IconComponent = tab.icon;
+            const isActive = activeTab === tab.id;
+            
+            return (
+              <button
+                key={tab.id}
+                onClick={() => handleTabClick(tab.id)}
+                className={`
+                  flex-1 flex flex-col items-center justify-center px-4 py-6 
+                  border-2 border-white transition-all duration-200 hover:bg-gray-800
+                  ${isActive 
+                    ? 'bg-white text-black' 
+                    : 'bg-black text-white hover:bg-gray-800'
+                  }
+                `}
+              >
+                <IconComponent className="w-6 h-6 mb-2" />
+                <span className="text-sm font-medium text-center leading-tight">
+                  {tab.label}
+                </span>
+              </button>
+            );
+          })}
+        </nav>
+      </div>
+      
+      {/* Mobile dropdown version */}
+      <div className="sm:hidden">
+        <div className="relative">
+          <select
+            value={activeTab}
+            onChange={(e) => handleTabClick(e.target.value)}
+            className="w-full px-4 py-3 bg-black text-white border-2 border-white focus:outline-none"
           >
-            <div className="flex flex-col items-center justify-center">
-              <FontAwesomeIcon icon={faImage} className="ArtistHedderIcon" />
-              <span className="mt-2">Manage Artworks</span>
-            </div>
-          </a>
-        </li>
-        <li className="w-full border-2 border-white hover:bg-slate-400">
-          <a
-            href="#"
-            onClick={() => handleTabClick("Sales Dashboard")}
-            className={`inline-block w-full text-center p-4 ${
-              activeTab === "Sales Dashboard" ? "bg-blue-50 text-black" : ""
-            }  `}
-            aria-current={activeTab === "Sales Dashboard" ? "page" : null}
-          >
-            <div className="flex flex-col items-center justify-center">
-              <FontAwesomeIcon
-                icon={faChartLine}
-                className="ArtistHedderIcon"
-              />
-              <span className="mt-2">Sales Dashboard</span>
-            </div>
-          </a>
-        </li>
-        <li className="w-full border-2 border-white hover:bg-slate-400">
-          <a
-            href="#"
-            onClick={() => handleTabClick("Offers Dashboard")}
-            className={`inline-block w-full text-center p-4 ${
-              activeTab === "Offers Dashboard" ? "bg-blue-50 text-black" : ""
-            }  `}
-            aria-current={activeTab === "Offers Dashboard" ? "page" : null}
-          >
-            <div className="flex flex-col items-center justify-center">
-              <FontAwesomeIcon icon={faTags} className="ArtistHedderIcon" />
-              <span className="mt-2">Offers Dashboard</span>
-            </div>
-          </a>
-        </li>
-        <li className="w-full border-2 border-white hover:bg-slate-400">
-          <a
-            href="#"
-            onClick={() => handleTabClick("Addresses")}
-            className={`inline-block w-full text-center p-4 ${
-              activeTab === "Addresses" ? "bg-blue-50 text-black" : ""
-            }  `}
-            aria-current={activeTab === "Addresses" ? "page" : null}
-          >
-            <div className="flex flex-col items-center justify-center">
-              <FontAwesomeIcon
-                icon={faMapMarkerAlt}
-                className="ArtistHedderIcon"
-              />
-              <span className="mt-2">Addresses</span>
-            </div>
-          </a>
-        </li>
-        <li className="w-full border-2 border-white hover:bg-slate-400">
-          <a
-            href="#"
-            onClick={() => handleTabClick("Curator Notes")}
-            className={`inline-block w-full text-center p-4 ${
-              activeTab === "Curator Notes" ? "bg-blue-50 text-black" : ""
-            }  `}
-            aria-current={activeTab === "Curator Notes" ? "page" : null}
-          >
-            <div className="flex flex-col items-center justify-center">
-              <FontAwesomeIcon
-                icon={faStickyNote}
-                className="ArtistHedderIcon"
-              />
-              <span className="mt-2">Curator Notes</span>
-            </div>
-          </a>
-        </li>
-        <li className="w-full border-2 border-white hover:bg-slate-400">
-          <a
-            href="#"
-            onClick={() => handleTabClick("Account")}
-            className={`inline-block w-full text-center p-4 ${
-              activeTab === "Account" ? "bg-blue-50 text-black" : ""
-            }  `}
-            aria-current={activeTab === "Account" ? "page" : null}
-          >
-            <div className="flex flex-col items-center justify-center">
-              <FontAwesomeIcon
-                icon={faUserCircle}
-                className="ArtistHedderIcon"
-              />
-              <span className="mt-2">Account</span>
-            </div>
-          </a>
-        </li>
-        <li className="w-full border-2 border-white hover:bg-slate-400">
-          <a
-            href="#"
-            onClick={() => handleTabClick("Profile Information")}
-            className={`inline-block w-full text-center p-4 ${
-              activeTab === "Profile Information" ? "bg-blue-50 text-black" : ""
-            }  `}
-            aria-current={activeTab === "Profile Information" ? "page" : null}
-          >
-            <div className="flex flex-col items-center justify-center">
-              <FontAwesomeIcon icon={faUser} className="ArtistHedderIcon" />
-              <span className="mt-2">Profile Information</span>
-            </div>
-          </a>
-        </li>
-      </ul>
+            {tabs.map((tab) => (
+              <option key={tab.id} value={tab.id} className="bg-black text-white">
+                {tab.label}
+              </option>
+            ))}
+          </select>
+        </div>
+      </div>
     </div>
   );
 };
