@@ -21,29 +21,28 @@ import Blank_Avatar from "../assets/Blank_Avatar.png";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
-
 const featuredArts = [
   {
     id: 1,
     title: "Sunset Dreams",
     artist: "Jane Doe",
     price: "$1,200",
-    image: Feature1,
+    image: Feature1
   },
   {
     id: 2,
     title: "Urban Rhythm",
     artist: "John Smith",
     price: "$950",
-    image: Feature2,
+    image: Feature2
   },
   {
     id: 3,
     title: "Serenity",
     artist: "Emma Johnson",
     price: "$1,500",
-    image: Feature3,
-  },
+    image: Feature3
+  }
 ];
 
 // const featuredCollections = [
@@ -352,7 +351,7 @@ const Homepage = () => {
                 <div
                   className="flex transition-transform duration-300 ease-in-out"
                   style={{
-                    transform: `translateX(-${startIndex * (100 / 4)}%)`,
+                    transform: `translateX(-${startIndex * (100 / 4)}%)`
                   }}
                 >
                   {randArtAndArtist?.artworks?.map((artwork) => (

@@ -1,5 +1,5 @@
 import React from "react";
-import logo from "../assets/logo.jpeg";
+import logo from "../assets/logo.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import { faFacebookF, faLinkedinIn, faTwitter } from "@fortawesome/free-brands-svg-icons"
@@ -22,16 +22,13 @@ const Footer = () => {
           <div className="md:hidden"></div>
           <ul className="hidden space-x-10 font-sans text-sm cursor-pointer md:flex text-slate-200">
             <li className="hover:text-[#dddddd]">
-              <Link to="/">Artwork</Link>
+              <Link to="/">Home</Link>
             </li>
             <li className="hover:text-[#dddddd]">
-              <Link to="/Album">Album</Link>
+              <Link to="/painting">Painting</Link>
             </li>
             <li className="hover:text-[#dddddd]">
-              <Link to="/BooksMedia">Books & Media</Link>
-            </li>
-            <li className="hover:text-[#dddddd]">
-              <Link to="/Guessbook">Guestbook</Link>
+              <Link to="/aboutus">About Us</Link>
             </li>
             <li className="hover:text-[#dddddd]">
               <Link to="/Contact">Contact</Link>
@@ -73,7 +70,7 @@ const Footer = () => {
         <div className="border-t-[1px] border-slate-700">
           <div className="py-3 mx-5 sm:flex sm:items-center sm:justify-between md:mx-10">
             <h2 className="text-sm text-slate-400">
-              &copy;2023 Phauzdar.com. All Rights Reserved.
+              &copy;2025 Artkya.com. All Rights Reserved.
             </h2>
             <div className="flex items-center mt-1 space-x-3 text-sm text-slate-400 md:mt-0">
               <h2>
