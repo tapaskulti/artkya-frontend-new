@@ -3,7 +3,7 @@ import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
 import ForgotPassword from "./pages/auth/ForgotPassword";
 import ArtistProfilePage from "./pages/ArtistProfilePage";
-import Painting from "./pages/Painting";
+import Painting from "./pages/Painting2";
 import AboutUs from "./pages/AboutUs";
 import Contacts from "./pages/Contacts";
 import Favourites from "./pages/Favourites";

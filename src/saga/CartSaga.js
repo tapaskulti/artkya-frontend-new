@@ -11,8 +11,7 @@ import { setAllCart } from "../redux/app/cart/cartSlice";
 
 export function* createCartByIdSaga(action) {
   try {
-    const response = yield call(createCartAction, action.payload);
-   
+     yield call(createCartAction, action.payload);
   } catch (error) {
     console.log(error.message);
   }
@@ -34,8 +33,11 @@ export function* addArtToCartSaga(action) {
   try {
     const response = yield call(addToCartAction, action.payload);
     if (response.status === 200) {
-      // action.payload.navigate("/Cart");
-      toast.success("Added To Cart")
+      toast.success("Added To Cart");
+      yield put({
+        type: "GET_CART_BY_ID",
+        payload: action.payload?.userId,
+      });
     }
   } catch (error) {
     console.log(error.message);
@@ -45,7 +47,7 @@ export function* addArtToCartSaga(action) {
 export function* removeArtFromCartSaga(action) {
   try {
     console.log(action.payload);
-    const response = yield call(removeFromCartAction, action.payload);
+    yield call(removeFromCartAction, action.payload);
     yield put({
       type: "GET_CART_BY_ID",
       payload: action.payload?.userId,
@@ -57,7 +59,7 @@ export function* removeArtFromCartSaga(action) {
 
 export function* clearCartSaga(action) {
   try {
-     yield call(clearCartAction, action.payload);
+    yield call(clearCartAction, action.payload);
   } catch (error) {
     console.log(error.message);
   }

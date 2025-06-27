@@ -4,7 +4,9 @@ const initialState = {
   artistDetails: {},
   artistImageUploadLoading: false,
   getAllArtByArtist: [],
-  randArtAndArtist:{}
+  randArtAndArtist: {},
+  uploadProgress: 0,
+  uploadError: null,
 };
 
 const artistSlice = createSlice({
@@ -23,6 +25,17 @@ const artistSlice = createSlice({
     setRandArtAndArtist(state, action) {
       state.randArtAndArtist = action.payload.randArtAndArtist;
     },
+    setUploadProgress(state, action) {
+      state.uploadProgress = action.payload.uploadProgress;
+    },
+    setUploadError(state, action) {
+      state.uploadError = action.payload.uploadError;
+    },
+    resetUpload(state) {
+      state.uploadProgress = 0;
+      state.uploadError = null;
+      state.artistImageUploadLoading = false;
+    },
   },
 });
 
@@ -30,7 +43,10 @@ export const {
   setArtistDetails,
   setArtistImageUploadLoading,
   setGetAllArtByArtist,
-  setRandArtAndArtist
+  setRandArtAndArtist,
+  setUploadProgress,
+  setUploadError,
+  resetUpload
 } = artistSlice.actions;
 
 export const artistReducer = artistSlice.reducer;

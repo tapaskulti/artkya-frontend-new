@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import {
   Image,
   ChevronDown,
@@ -221,7 +221,7 @@ const Accordion = ({ open, onToggle, title, isValid, children }) => {
   );
 };
 
-const StepProgressBar = ({ currentStep, totalSteps }) => {
+const StepProgressBar = ({ currentStep }) => {
   const steps = ["Image", "Description", "Price & Details", "Prints"];
 
   return (
@@ -278,7 +278,6 @@ const ArtUploadForm = () => {
   });
 
   const [currentKeyword, setCurrentKeyword] = useState("");
-  const [errors, setErrors] = useState({});
 
   // Generate years
   const generateYears = () => {
@@ -313,8 +312,7 @@ const ArtUploadForm = () => {
 
   const validateStep3 = () => {
     return (
-      formData.price !== "" &&
-      parseFloat(formData.price) > 0 
+      formData.price !== "" && parseFloat(formData.price) > 0
       // &&
       // formData.offerPrice !== "" &&
       // parseFloat(formData.offerPrice) > 0
@@ -516,7 +514,7 @@ const ArtUploadForm = () => {
               <div className="mt-2">
                 <h4 className="font-medium">Dimensions</h4>
                 <p className="text-gray-600">
-                  {formData.width}" × {formData.height}" × {formData.depth}"
+                  {`${formData.width} × ${formData.height} × ${formData.depth}`}
                 </p>
               </div>
             )}
@@ -775,8 +773,9 @@ const ArtUploadForm = () => {
 
                   {formData.width && formData.height && (
                     <div className="text-sm text-gray-600">
-                      Dimensions: {formData.width}" × {formData.height}" ×{" "}
-                      {formData.depth}"
+                      {/* Dimensions: {formData.width}" × {formData.height}" ×{" "}
+                      {formData.depth}" */}
+                      Dimensions: {`${formData.width} × ${formData.height} × ${formData.depth}`}
                     </div>
                   )}
                 </div>
@@ -890,8 +889,7 @@ const ArtUploadForm = () => {
                 onToggle={() => setOpenAccordion(openAccordion === 1 ? 0 : 1)}
                 title="Pricing"
                 isValid={
-                  formData.price &&
-                  parseFloat(formData.price) > 0 
+                  formData.price && parseFloat(formData.price) > 0
                   // &&
                   // formData.offerPrice &&
                   // parseFloat(formData.offerPrice) > 0
@@ -991,7 +989,7 @@ const ArtUploadForm = () => {
               >
                 <div className="space-y-4">
                   <p className="text-gray-600">
-                    Select what type of artwork you're offering:
+                    {`Select what type of artwork you're offering:`}
                   </p>
 
                   <div className="space-y-3">
