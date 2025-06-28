@@ -9,7 +9,7 @@ import {
   Download,
   Palette,
   DollarSign,
-  TrendingUp,
+  TrendingUp
 } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -26,7 +26,7 @@ function PaintingsManagement() {
     category: "",
     approved: "",
     priceRange: "",
-    artist: "",
+    artist: ""
   });
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(10);
@@ -38,14 +38,14 @@ function PaintingsManagement() {
   const handleStatusChange = (paintingId, newStatus) => {
     dispatch({
       type: "UPDATE_PAINTING_STATUS",
-      payload: { artId: paintingId, status: newStatus },
+      payload: { artId: paintingId, status: newStatus }
     });
   };
 
   const toggleApproval = (artId) => {
     dispatch({
       type: "APPROVE_ARTWORK",
-      payload: { artId },
+      payload: { artId }
     });
   };
 
@@ -58,7 +58,7 @@ function PaintingsManagement() {
     if (selectedPainting) {
       dispatch({
         type: "DELETE_PAINTING",
-        payload: { artId: selectedPainting.id },
+        payload: { artId: selectedPainting.id }
       });
       setShowDeleteModal(false);
       setSelectedPainting(null);
@@ -76,7 +76,7 @@ function PaintingsManagement() {
       category: "",
       approved: "",
       priceRange: "",
-      artist: "",
+      artist: ""
     });
     setCurrentPage(1);
   };
@@ -84,7 +84,7 @@ function PaintingsManagement() {
   const exportPaintings = () => {
     dispatch({
       type: "EXPORT_PAINTINGS",
-      payload: { filters, format: "excel" },
+      payload: { filters, format: "excel" }
     });
   };
 

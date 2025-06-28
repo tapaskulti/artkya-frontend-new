@@ -6,7 +6,7 @@ import {
   ChevronRight,
   CheckCircle,
   X,
-  Upload,
+  Upload
 } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -18,7 +18,7 @@ const categoryOptions = [
   "Sculpture",
   "Digital Art",
   "Mixed Media",
-  "Prints",
+  "Prints"
 ];
 
 const subjectOptions = [
@@ -28,7 +28,7 @@ const subjectOptions = [
   "Still Life",
   "Nature",
   "Urban",
-  "Animals",
+  "Animals"
 ];
 
 const mediumOptions = [
@@ -38,7 +38,7 @@ const mediumOptions = [
   "Digital",
   "Pencil",
   "Charcoal",
-  "Mixed Media",
+  "Mixed Media"
 ];
 
 const materialOptions = [
@@ -48,7 +48,7 @@ const materialOptions = [
   "Metal",
   "Glass",
   "Fabric",
-  "Stone",
+  "Stone"
 ];
 
 const styleOptions = [
@@ -57,7 +57,7 @@ const styleOptions = [
   "Impressionist",
   "Modern",
   "Contemporary",
-  "Minimalist",
+  "Minimalist"
 ];
 
 // Reusable Components
@@ -113,7 +113,7 @@ const MultiSelectDropdown = ({
   selectedOptions,
   setSelectedOptions,
   placeholder,
-  limit = 5,
+  limit = 5
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [search, setSearch] = useState("");
@@ -274,7 +274,7 @@ const ArtUploadForm = () => {
     offerPrice: "",
     printOption: "", // 'Original', 'Printed', 'Both'
     original: false,
-    print: false,
+    print: false
   });
 
   const [currentKeyword, setCurrentKeyword] = useState("");
@@ -347,7 +347,7 @@ const ArtUploadForm = () => {
     const files = Array.from(event.target.files);
     setFormData((prev) => ({
       ...prev,
-      images: [...prev.images, ...files],
+      images: [...prev.images, ...files]
     }));
   };
 
@@ -355,7 +355,7 @@ const ArtUploadForm = () => {
   const handleImageDelete = (indexToDelete) => {
     setFormData((prev) => ({
       ...prev,
-      images: prev.images.filter((_, index) => index !== indexToDelete),
+      images: prev.images.filter((_, index) => index !== indexToDelete)
     }));
   };
 
@@ -364,7 +364,7 @@ const ArtUploadForm = () => {
     if (currentKeyword.trim().length >= 2 && formData.keywords.length < 12) {
       setFormData((prev) => ({
         ...prev,
-        keywords: [...prev.keywords, currentKeyword.trim()],
+        keywords: [...prev.keywords, currentKeyword.trim()]
       }));
       setCurrentKeyword("");
     }
@@ -373,7 +373,7 @@ const ArtUploadForm = () => {
   const removeKeyword = (index) => {
     setFormData((prev) => ({
       ...prev,
-      keywords: prev.keywords.filter((_, i) => i !== index),
+      keywords: prev.keywords.filter((_, i) => i !== index)
     }));
   };
 
@@ -398,7 +398,7 @@ const ArtUploadForm = () => {
       ...prev,
       printOption: option,
       original: option === "Original" || option === "Both",
-      print: option === "Printed" || option === "Both",
+      print: option === "Printed" || option === "Both"
     }));
   };
 
@@ -725,7 +725,7 @@ const ArtUploadForm = () => {
                         onChange={(e) =>
                           setFormData((prev) => ({
                             ...prev,
-                            width: e.target.value,
+                            width: e.target.value
                           }))
                         }
                         placeholder="0.0"
@@ -742,7 +742,7 @@ const ArtUploadForm = () => {
                         onChange={(e) =>
                           setFormData((prev) => ({
                             ...prev,
-                            height: e.target.value,
+                            height: e.target.value
                           }))
                         }
                         placeholder="0.0"
@@ -759,7 +759,7 @@ const ArtUploadForm = () => {
                         onChange={(e) =>
                           setFormData((prev) => ({
                             ...prev,
-                            depth: e.target.value,
+                            depth: e.target.value
                           }))
                         }
                         placeholder="0.1"
@@ -775,7 +775,8 @@ const ArtUploadForm = () => {
                     <div className="text-sm text-gray-600">
                       {/* Dimensions: {formData.width}" × {formData.height}" ×{" "}
                       {formData.depth}" */}
-                      Dimensions: {`${formData.width} × ${formData.height} × ${formData.depth}`}
+                      Dimensions:{" "}
+                      {`${formData.width} × ${formData.height} × ${formData.depth}`}
                     </div>
                   )}
                 </div>
@@ -857,7 +858,7 @@ const ArtUploadForm = () => {
                       onChange={(e) =>
                         setFormData((prev) => ({
                           ...prev,
-                          description: e.target.value,
+                          description: e.target.value
                         }))
                       }
                       placeholder="Describe your artwork..."
@@ -910,7 +911,7 @@ const ArtUploadForm = () => {
                         onChange={(e) =>
                           setFormData((prev) => ({
                             ...prev,
-                            price: e.target.value,
+                            price: e.target.value
                           }))
                         }
                         placeholder="0.00"
