@@ -131,7 +131,7 @@ const Cart = () => {
         dispatch(setAllCart({ cartDetails: {} }))
         
         // Redirect to success page with order data
-        navigate("/order-success", {
+        navigate("/orderSuccess", {
           state: {
             orderData,
             paymentResult: result,

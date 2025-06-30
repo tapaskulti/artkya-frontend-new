@@ -45,7 +45,7 @@ const Routes = () => {
       <Route path="/ShippingBilling" element={<ShippingBilling />} />
       {/* <Route path="/:id/checkout" element={<ChekoutPage />} /> */}
       <Route path="/Artist" element={<ArtistMainPage />} />
-      <Route path="/order-success" element={<OrderSuccess />} />
+      <Route path="/orderSuccess" element={<OrderSuccess />} />
       <Route path="/orders" element={<OrderDetailsModal />} />
       <Route
         path="/artDetailPage/:id/original"
