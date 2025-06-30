@@ -7,7 +7,7 @@ import {
   TruckIcon,
 } from "lucide-react";
 
-const OrderSuccess = () => {
+const OrderSuccessPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { orderData, paymentResult } = location.state || {};
@@ -315,4 +315,4 @@ const OrderSuccess = () => {
   );
 };
 
-export default OrderSuccess;
+export default OrderSuccessPage;
