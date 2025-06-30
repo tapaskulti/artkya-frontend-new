@@ -17,7 +17,6 @@ import {
   subjectElement,
 } from "../utlis/filterData";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import { setSortCriteria } from "../redux/app/art/artSlice";
 import MasonaryGridLayout, {
   NoArtFound,
@@ -70,7 +69,7 @@ const Painting = () => {
         body: {}, // Empty body to fetch all arts
       },
     });
-  }, [dispatch]);
+  }, [dispatch, searchCriteria, searchInput, sortCriteria]);
 
   useEffect(() => {
     const filterDataPayload = {

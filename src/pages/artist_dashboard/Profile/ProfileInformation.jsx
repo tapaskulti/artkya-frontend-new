@@ -96,7 +96,7 @@ const ProfileInformation = () => {
                 value={formData.aboutMe}
                 onChange={handleChange}
                 rows={5}
-                className="bg-white text-black text-black w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent resize-none"
+                className="bg-white text-black w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent resize-none"
                 placeholder="Tell us about yourself, your artistic journey, and what inspires your work..."
               />
               <p className="text-sm text-gray-500 mt-1">

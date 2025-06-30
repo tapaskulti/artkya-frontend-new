@@ -23,7 +23,7 @@ import { setSortCriteria, setSearchInput, setSearchCriteria } from "../redux/app
 const Painting = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { allArt, artNotFound, searchInput, sortCriteria, searchCriteria, totalPages, currentPage } =
+  const { allArt, artNotFound, searchInput, sortCriteria, searchCriteria, totalPages} =
     useSelector((state) => state.art);
   const { authUser } = useSelector((state) => state.auth);
     
@@ -88,7 +88,7 @@ const Painting = () => {
         body: {}, // Empty body to fetch all arts
       },
     });
-  }, [dispatch]);
+  }, [dispatch, pagination.limit, pagination.page, searchCriteria, searchInput, sortCriteria]);
 
   useEffect(() => {
     const filterDataPayload = {
@@ -367,7 +367,6 @@ const Painting = () => {
 
   const CustomSelectWithSearchSide = ({
     categories = [],
-    placeholder = 'Select a category',
     className = '',
     ...props
   }) => {
