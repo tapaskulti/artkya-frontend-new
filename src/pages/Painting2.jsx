@@ -3,7 +3,7 @@ import Header from "../components/Header";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
 import { faPaintBrush } from "@fortawesome/free-solid-svg-icons";
-import { Search, Filter, Grid, List, SortAsc, Palette, ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from 'lucide-react';
+import { Search, Filter, Palette, ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from 'lucide-react';
 import {
   artistCountryElement,
   colorElement,
