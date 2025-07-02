@@ -12,7 +12,7 @@ import {
   setHeaderMenuOpen
 } from "../redux/app/art/artSlice";
 import Modal from "./Modal";
-import logo from "../assets/logo.jpg";
+import logo from "../assets/logo1.jpeg";
 
 const Header = () => {
   const { token, authUser } = useSelector((state) => state.auth);

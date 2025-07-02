@@ -21,7 +21,7 @@ const Cart = () => {
 
   // Payment states
   const [isProcessingPayment, setIsProcessingPayment] = useState(false);
-  const [paymentToken, setPaymentToken] = useState(null);
+  // const [paymentToken, setPaymentToken] = useState(null);
   const [showPaymentForm, setShowPaymentForm] = useState(false);
 
   const squareConfig = {
@@ -131,7 +131,7 @@ const Cart = () => {
         dispatch(setAllCart({ cartDetails: {} }))
         
         // Redirect to success page with order data
-        navigate("/order-success", {
+        navigate("/orderSuccess", {
           state: {
             orderData,
             paymentResult: result,
@@ -156,7 +156,7 @@ const Cart = () => {
   // Handle payment token received from Square
   const handlePaymentTokenReceived = async (token, buyer) => {
     console.log("Payment token received:", { token, buyer });
-    setPaymentToken(token);
+    // setPaymentToken(token);
 
     // Process payment immediately when token is received
     await processPayment(token.token, cartDetails?.totalPrice || 0);

@@ -21,7 +21,7 @@ import PaintingsManagement from "./components/Admin/PaintingsManagement";
 import OrdersManagement from "./components/Admin/OrdersManagement";
 import UsersManagement from "./components/Admin/UsersManagement";
 import ArtistsManagement from "./components/Admin/ArtistsManagement";
-import OrderSuccess from "./pages/OrderSuccessPage";
+import OrderSuccess from "./pages/OrderSuccess";
 import OrderDetailsModal from "./pages/Orders";
 import ResetPasswordPage from "./pages/auth/ResetPassword";
 
@@ -45,7 +45,7 @@ const Routes = () => {
       <Route path="/ShippingBilling" element={<ShippingBilling />} />
       {/* <Route path="/:id/checkout" element={<ChekoutPage />} /> */}
       <Route path="/Artist" element={<ArtistMainPage />} />
-      <Route path="/order-success" element={<OrderSuccess />} />
+      <Route path="/orderSuccess" element={<OrderSuccess />} />
       <Route path="/orders" element={<OrderDetailsModal />} />
       <Route
         path="/artDetailPage/:id/original"
