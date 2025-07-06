@@ -25,8 +25,8 @@ const Header = () => {
 
   // Helper function to check if a nav item is active
   const isActiveNav = (path) => {
-    if (path === '/') {
-      return location.pathname === '/';
+    if (path === "/") {
+      return location.pathname === "/";
     }
     return location.pathname.startsWith(path);
   };
@@ -165,9 +165,9 @@ const Header = () => {
           <div className="bg-white shadow-lg border-b border-gray-200">
             <ul className="md:flex font-sans text-base space-y-2 cursor-pointer text-gray-800 p-5">
               <li className="hover:text-amber-600 transition-colors duration-200">
-                <NavLink 
-                  to="/" 
-                  className={({ isActive }) => 
+                <NavLink
+                  to="/"
+                  className={({ isActive }) =>
                     isActive ? "text-amber-600 font-medium" : ""
                   }
                   onClick={() => setdropDownOpen(false)}
@@ -176,9 +176,9 @@ const Header = () => {
                 </NavLink>
               </li>
               <li className="hover:text-amber-600 transition-colors duration-200">
-                <NavLink 
+                <NavLink
                   to="/Painting"
-                  className={({ isActive }) => 
+                  className={({ isActive }) =>
                     isActive ? "text-amber-600 font-medium" : ""
                   }
                   onClick={() => setdropDownOpen(false)}
@@ -187,9 +187,9 @@ const Header = () => {
                 </NavLink>
               </li>
               <li className="hover:text-amber-600 transition-colors duration-200">
-                <NavLink 
+                <NavLink
                   to="/AboutUs"
-                  className={({ isActive }) => 
+                  className={({ isActive }) =>
                     isActive ? "text-amber-600 font-medium" : ""
                   }
                   onClick={() => setdropDownOpen(false)}
@@ -198,9 +198,9 @@ const Header = () => {
                 </NavLink>
               </li>
               <li className="hover:text-amber-600 transition-colors duration-200">
-                <NavLink 
+                <NavLink
                   to="/Contacts"
-                  className={({ isActive }) => 
+                  className={({ isActive }) =>
                     isActive ? "text-amber-600 font-medium" : ""
                   }
                   onClick={() => setdropDownOpen(false)}
@@ -248,12 +248,12 @@ const Header = () => {
               <ul className="hidden md:flex space-x-8 font-sans text-base cursor-pointer text-gray-800">
                 {token && authUser?.role === "ADMIN" && (
                   <li className="hover:text-amber-600 transition-colors duration-200">
-                    <NavLink 
+                    <NavLink
                       to="/Admin"
-                      className={({ isActive }) => 
+                      className={({ isActive }) =>
                         `pb-1 border-b-2 transition-colors duration-200 ${
-                          isActive || isActiveNav('/Admin') 
-                            ? "text-amber-600 border-amber-600 font-medium" 
+                          isActive || isActiveNav("/Admin")
+                            ? "text-amber-600 border-amber-600 font-medium"
                             : "border-transparent hover:border-amber-200"
                         }`
                       }
@@ -264,12 +264,12 @@ const Header = () => {
                 )}
                 {token && authUser?.isArtist && (
                   <li className="hover:text-amber-600 transition-colors duration-200">
-                    <NavLink 
+                    <NavLink
                       to="/Artist"
-                      className={({ isActive }) => 
+                      className={({ isActive }) =>
                         `pb-1 border-b-2 transition-colors duration-200 ${
-                          isActive || isActiveNav('/Artist')
-                            ? "text-amber-600 border-amber-600 font-medium" 
+                          isActive || isActiveNav("/Artist")
+                            ? "text-amber-600 border-amber-600 font-medium"
                             : "border-transparent hover:border-amber-200"
                         }`
                       }
@@ -279,12 +279,12 @@ const Header = () => {
                   </li>
                 )}
                 <li className="hover:text-amber-600 transition-colors duration-200">
-                  <NavLink 
+                  <NavLink
                     to="/"
-                    className={({ isActive }) => 
+                    className={({ isActive }) =>
                       `pb-1 border-b-2 transition-colors duration-200 ${
-                        isActive && location.pathname === '/'
-                          ? "text-amber-600 border-amber-600 font-medium" 
+                        isActive && location.pathname === "/"
+                          ? "text-amber-600 border-amber-600 font-medium"
                           : "border-transparent hover:border-amber-200"
                       }`
                     }
@@ -293,12 +293,12 @@ const Header = () => {
                   </NavLink>
                 </li>
                 <li className="hover:text-amber-600 transition-colors duration-200">
-                  <NavLink 
+                  <NavLink
                     to="/Painting"
-                    className={({ isActive }) => 
+                    className={({ isActive }) =>
                       `pb-1 border-b-2 transition-colors duration-200 ${
-                        isActive || isActiveNav('/Painting')
-                          ? "text-amber-600 border-amber-600 font-medium" 
+                        isActive || isActiveNav("/Painting")
+                          ? "text-amber-600 border-amber-600 font-medium"
                           : "border-transparent hover:border-amber-200"
                       }`
                     }
@@ -307,12 +307,12 @@ const Header = () => {
                   </NavLink>
                 </li>
                 <li className="hover:text-amber-600 transition-colors duration-200">
-                  <NavLink 
+                  <NavLink
                     to="/AboutUs"
-                    className={({ isActive }) => 
+                    className={({ isActive }) =>
                       `pb-1 border-b-2 transition-colors duration-200 ${
-                        isActive || isActiveNav('/AboutUs')
-                          ? "text-amber-600 border-amber-600 font-medium" 
+                        isActive || isActiveNav("/AboutUs")
+                          ? "text-amber-600 border-amber-600 font-medium"
                           : "border-transparent hover:border-amber-200"
                       }`
                     }
@@ -321,12 +321,12 @@ const Header = () => {
                   </NavLink>
                 </li>
                 <li className="hover:text-amber-600 transition-colors duration-200">
-                  <NavLink 
+                  <NavLink
                     to="/Contacts"
-                    className={({ isActive }) => 
+                    className={({ isActive }) =>
                       `pb-1 border-b-2 transition-colors duration-200 ${
-                        isActive || isActiveNav('/Contacts')
-                          ? "text-amber-600 border-amber-600 font-medium" 
+                        isActive || isActiveNav("/Contacts")
+                          ? "text-amber-600 border-amber-600 font-medium"
                           : "border-transparent hover:border-amber-200"
                       }`
                     }
@@ -340,12 +340,12 @@ const Header = () => {
               <ul className="hidden md:flex space-x-4 font-sans text-base cursor-pointer font-medium text-gray-800">
                 {token === "" && (
                   <li className="hover:text-amber-600 transition-colors duration-200">
-                    <NavLink 
+                    <NavLink
                       to="/Login"
-                      className={({ isActive }) => 
+                      className={({ isActive }) =>
                         `px-4 py-2 rounded-sm border transition-colors duration-200 ${
-                          isActive || isActiveNav('/Login')
-                            ? "bg-amber-600 text-white border-amber-600" 
+                          isActive || isActiveNav("/Login")
+                            ? "bg-amber-600 text-white border-amber-600"
                             : "border-gray-300 hover:border-amber-600 hover:text-amber-600"
                         }`
                       }
@@ -354,7 +354,7 @@ const Header = () => {
                     </NavLink>
                   </li>
                 )}
-                {token && (
+                {token ? (
                   <>
                     <li
                       className="hover:text-amber-600 transition-colors duration-200 p-2 rounded-sm hover:bg-gray-100"
@@ -394,6 +394,17 @@ const Header = () => {
                         <div className="absolute top-full right-0 w-2 h-2 bg-white border-l border-t border-gray-200 transform rotate-45 translate-y-[-1px]"></div>
                       )}
                     </li>
+                  </>
+                ) : (
+                  <>
+                    <div
+                      className="py-3 px-6 rounded-full text-sm font-medium transition-all duration-300 bg-black text-white"
+                      onClick={() => {
+                        navigate("/login");
+                      }}
+                    >
+                      Login
+                    </div>
                   </>
                 )}
               </ul>
