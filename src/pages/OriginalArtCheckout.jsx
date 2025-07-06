@@ -10,11 +10,56 @@ const OriginalArtCheckout = () => {
     address: "",
     contactNumber: "",
     contactEmail: "",
+    description: "", // Added optional description field
   });
 
-  const handleSubmit = (e) => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Form submitted:", formData);
+    setIsSubmitting(true);
+    
+    try {
+      // Prepare data for email API
+      const orderData = {
+        fullName: formData.fullName,
+        address: formData.address,
+        contactNumber: formData.contactNumber,
+        contactEmail: formData.contactEmail,
+        description: formData.description,
+        artworkTitle: artDetail?.title,
+        artworkImage: artDetail?.thumbnail?.secure_url,
+        artworkId: artDetail?._id,
+      };
+
+      // Call your email API
+      const response = await fetch('/api/send-order-details', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(orderData),
+      });
+
+      if (response.ok) {
+        alert('Order details sent successfully!');
+        // Optionally redirect or reset form
+        setFormData({
+          fullName: "",
+          address: "",
+          contactNumber: "",
+          contactEmail: "",
+          description: "",
+        });
+      } else {
+        throw new Error('Failed to send order details');
+      }
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      alert('Failed to send order details. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleChange = (e) => {
@@ -60,9 +105,9 @@ const OriginalArtCheckout = () => {
               <div>
                 <label
                   htmlFor="fullName"
-                  className="text-gray-700 block text-sm font-medium  mb-1"
+                  className="text-gray-700 block text-sm font-medium mb-1"
                 >
-                  Full Name
+                  Full Name <span className="text-red-500">*</span>
                 </label>
                 <input
                   id="fullName"
@@ -70,7 +115,8 @@ const OriginalArtCheckout = () => {
                   value={formData.fullName}
                   onChange={handleChange}
                   required
-                  className="bg-gray-100 border-gray-800 text-gray-800 w-full p-2 border rounded"
+                  className="bg-white border-gray-300 text-gray-800 w-full p-3 border rounded-md focus:ring-2 focus:ring-green-500 focus:border-green-500"
+                  placeholder="Enter your full name"
                 />
               </div>
 
@@ -79,7 +125,7 @@ const OriginalArtCheckout = () => {
                   htmlFor="address"
                   className="block text-sm font-medium text-gray-700 mb-1"
                 >
-                  Address
+                  Address <span className="text-red-500">*</span>
                 </label>
                 <textarea
                   id="address"
@@ -87,7 +133,8 @@ const OriginalArtCheckout = () => {
                   value={formData.address}
                   onChange={handleChange}
                   required
-                  className="bg-gray-100 border-gray-800 text-gray-800 w-full p-2 border rounded min-h-[100px]"
+                  className="bg-white border-gray-300 text-gray-800 w-full p-3 border rounded-md min-h-[100px] focus:ring-2 focus:ring-green-500 focus:border-green-500"
+                  placeholder="Enter your complete address"
                 />
               </div>
 
@@ -96,7 +143,7 @@ const OriginalArtCheckout = () => {
                   htmlFor="contactNumber"
                   className="block text-sm font-medium text-gray-700 mb-1"
                 >
-                  Contact Number
+                  Contact Number <span className="text-red-500">*</span>
                 </label>
                 <input
                   id="contactNumber"
@@ -105,7 +152,8 @@ const OriginalArtCheckout = () => {
                   value={formData.contactNumber}
                   onChange={handleChange}
                   required
-                  className="bg-gray-100 border-gray-800 text-gray-800 w-full p-2 border rounded"
+                  className="bg-white border-gray-300 text-gray-800 w-full p-3 border rounded-md focus:ring-2 focus:ring-green-500 focus:border-green-500"
+                  placeholder="Enter your contact number"
                 />
               </div>
 
@@ -114,7 +162,7 @@ const OriginalArtCheckout = () => {
                   htmlFor="contactEmail"
                   className="block text-sm font-medium text-gray-700 mb-1"
                 >
-                  Contact Email
+                  Contact Email <span className="text-red-500">*</span>
                 </label>
                 <input
                   id="contactEmail"
@@ -123,7 +171,26 @@ const OriginalArtCheckout = () => {
                   value={formData.contactEmail}
                   onChange={handleChange}
                   required
-                  className="bg-gray-100 border-gray-800 text-gray-800 w-full p-2 border rounded"
+                  className="bg-white border-gray-300 text-gray-800 w-full p-3 border rounded-md focus:ring-2 focus:ring-green-500 focus:border-green-500"
+                  placeholder="Enter your email address"
+                />
+              </div>
+
+              {/* New Description Field - Optional */}
+              <div>
+                <label
+                  htmlFor="description"
+                  className="block text-sm font-medium text-gray-700 mb-1"
+                >
+                  Additional Notes <span className="text-gray-400">(Optional)</span>
+                </label>
+                <textarea
+                  id="description"
+                  name="description"
+                  value={formData.description}
+                  onChange={handleChange}
+                  className="bg-white border-gray-300 text-gray-800 w-full p-3 border rounded-md min-h-[80px] focus:ring-2 focus:ring-green-500 focus:border-green-500"
+                  placeholder="Any special instructions or additional information..."
                 />
               </div>
 
@@ -133,10 +200,19 @@ const OriginalArtCheckout = () => {
                 </p>
                 <button
                   type="submit"
-                  className="w-full bg-green-600 hover:bg-green-700 text-white p-2 rounded"
+                  disabled={isSubmitting}
+                  className={`w-full p-3 rounded-md text-white font-medium transition-colors ${
+                    isSubmitting
+                      ? 'bg-gray-400 cursor-not-allowed'
+                      : 'bg-green-600 hover:bg-green-700'
+                  }`}
                 >
-                  SEND DETAILS
+                  {isSubmitting ? 'SENDING...' : 'SEND DETAILS'}
                 </button>
+              </div>
+
+              <div className="text-xs text-gray-500 mt-2">
+                <span className="text-red-500">*</span> Required fields
               </div>
             </form>
           </div>
