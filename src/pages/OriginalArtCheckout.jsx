@@ -18,7 +18,7 @@ const OriginalArtCheckout = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
+
     try {
       // Prepare data for email API
       const orderData = {
@@ -33,16 +33,20 @@ const OriginalArtCheckout = () => {
       };
 
       // Call your email API
-      const response = await fetch('/api/send-order-details', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(orderData),
-      });
+      const response = await fetch(
+        `${import.meta.env.VITE_BASE_URL}/user/send_order_details`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(orderData),
+        }
+      );
 
+      console.log("response",response)
       if (response.ok) {
-        alert('Order details sent successfully!');
+        alert("Order details sent successfully!");
         // Optionally redirect or reset form
         setFormData({
           fullName: "",
@@ -52,11 +56,11 @@ const OriginalArtCheckout = () => {
           description: "",
         });
       } else {
-        throw new Error('Failed to send order details');
+        throw new Error("Failed to send order details");
       }
     } catch (error) {
-      console.error('Error submitting form:', error);
-      alert('Failed to send order details. Please try again.');
+      console.error("Error submitting form:", error);
+      alert("Failed to send order details. Please try again.");
     } finally {
       setIsSubmitting(false);
     }
@@ -182,7 +186,8 @@ const OriginalArtCheckout = () => {
                   htmlFor="description"
                   className="block text-sm font-medium text-gray-700 mb-1"
                 >
-                  Additional Notes <span className="text-gray-400">(Optional)</span>
+                  Additional Notes{" "}
+                  <span className="text-gray-400">(Optional)</span>
                 </label>
                 <textarea
                   id="description"
@@ -203,11 +208,11 @@ const OriginalArtCheckout = () => {
                   disabled={isSubmitting}
                   className={`w-full p-3 rounded-md text-white font-medium transition-colors ${
                     isSubmitting
-                      ? 'bg-gray-400 cursor-not-allowed'
-                      : 'bg-green-600 hover:bg-green-700'
+                      ? "bg-gray-400 cursor-not-allowed"
+                      : "bg-green-600 hover:bg-green-700"
                   }`}
                 >
-                  {isSubmitting ? 'SENDING...' : 'SEND DETAILS'}
+                  {isSubmitting ? "SENDING..." : "SEND DETAILS"}
                 </button>
               </div>
 
