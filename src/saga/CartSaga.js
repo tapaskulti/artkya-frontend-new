@@ -59,15 +59,10 @@ export function* removeArtFromCartSaga(action) {
 
 export function* clearCartSaga(action) {
   try {
-<<<<<<< HEAD
-<<<<<<< HEAD
+
     yield call(clearCartAction, action.payload);
-=======
-     yield call(clearCartAction, action.payload);
->>>>>>> 8f62c1590c5b170f2f5c171e4034f14e1460ded4
-=======
-    yield call(clearCartAction, action.payload);
->>>>>>> 77d00d5588fd2512e9640e3a7e9dddd12da61868
+
+
   } catch (error) {
     console.log(error.message);
   }
