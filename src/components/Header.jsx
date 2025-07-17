@@ -340,11 +340,7 @@ const Header = () => {
               <ul className="hidden md:flex space-x-4 font-sans text-base cursor-pointer font-medium text-gray-800">
                 {token === "" && (
                   <li className="hover:text-amber-600 transition-colors duration-200">
-<<<<<<< HEAD
-                    <NavLink
-=======
                     {/* <NavLink
->>>>>>> aae82418e86a528388e9356938e1415e45002436
                       to="/Login"
                       className={({ isActive }) =>
                         `px-4 py-2 rounded-sm border transition-colors duration-200 ${
