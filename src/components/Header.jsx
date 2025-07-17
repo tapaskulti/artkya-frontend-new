@@ -340,7 +340,11 @@ const Header = () => {
               <ul className="hidden md:flex space-x-4 font-sans text-base cursor-pointer font-medium text-gray-800">
                 {token === "" && (
                   <li className="hover:text-amber-600 transition-colors duration-200">
+<<<<<<< HEAD
                     <NavLink
+=======
+                    {/* <NavLink
+>>>>>>> aae82418e86a528388e9356938e1415e45002436
                       to="/Login"
                       className={({ isActive }) =>
                         `px-4 py-2 rounded-sm border transition-colors duration-200 ${
@@ -351,10 +355,10 @@ const Header = () => {
                       }
                     >
                       Login
-                    </NavLink>
+                    </NavLink> */}
                   </li>
                 )}
-                {token && (
+                {token ? (
                   <>
                     <li
                       className="hover:text-amber-600 transition-colors duration-200 p-2 rounded-sm hover:bg-gray-100"
@@ -394,6 +398,17 @@ const Header = () => {
                         <div className="absolute top-full right-0 w-2 h-2 bg-white border-l border-t border-gray-200 transform rotate-45 translate-y-[-1px]"></div>
                       )}
                     </li>
+                  </>
+                ) : (
+                  <>
+                    <div
+                      className="py-3 px-6 rounded-full text-sm font-medium transition-all duration-300 bg-black text-white"
+                      onClick={() => {
+                        navigate("/login");
+                      }}
+                    >
+                      Login
+                    </div>
                   </>
                 )}
               </ul>
