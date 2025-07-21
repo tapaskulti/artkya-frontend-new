@@ -14,6 +14,7 @@ import {
   setGetAllArtByArtist,
   setRandArtAndArtist,
 } from "../redux/app/artist/artist-slice";
+import { setCreateArtistAcc } from "../redux/app/art/artSlice";
 
 export function* createArtistSaga(action) {
   try {
@@ -21,7 +22,8 @@ export function* createArtistSaga(action) {
     const response = yield call(createArtistAction, action?.payload);
     console.log("createArtistSaga====>", response?.data);
     if (response?.status === 200) {
-      toast("Artist created successfully");
+      toast("Artist created successfully");     
+       yield put(setCreateArtistAcc({ createArtistAcc: false }));
     }
   } catch (error) {
     console.log(error);

@@ -1,8 +1,9 @@
+/* eslint-disable react/prop-types */
 import Header from "../components/Header";
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useParams, useNavigate } from "react-router-dom";
-import { FaPencilAlt, FaCamera, FaEdit, FaPlus } from "react-icons/fa";
+import {  useParams, useNavigate } from "react-router-dom";
+import { FaCamera, FaEdit, FaPlus } from "react-icons/fa";
 import MasonaryGridLayout from "../components/MasonaryGridLayout";
 import ReactCrop from "react-image-crop";
 import "react-image-crop/dist/ReactCrop.css";
@@ -493,7 +494,7 @@ function ArtistProfilePage() {
             <h3 className="text-lg font-semibold text-gray-900">Artworks</h3>
             {canEdit && (
               <button
-                onClick={() => navigate("/artist/upload-artwork")}
+                onClick={() => navigate("/artist")}
                 className="inline-flex items-center px-4 py-2 bg-amber-600 text-white rounded-md hover:bg-amber-700 transition-colors"
               >
                 <FaPlus className="w-4 h-4 mr-2" />
@@ -518,7 +519,7 @@ function ArtistProfilePage() {
                 </p>
                 {canEdit && (
                   <button
-                    onClick={() => navigate("/artist/upload-artwork")}
+                    onClick={() => navigate("/artist")}
                     className="inline-flex items-center px-6 py-3 bg-amber-600 text-white rounded-md hover:bg-amber-700 transition-colors"
                   >
                     <FaPlus className="w-5 h-5 mr-2" />
