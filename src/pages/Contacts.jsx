@@ -12,7 +12,7 @@ const Contacts = () => {
           <div className="w-full py-24 lg:py-5 ">
             <div className="">
               <div className="pb-5 text-3xl font-normal text-left text-gray-400">
-                Contacts
+                Contacts01
               </div>
             </div>
           </div>

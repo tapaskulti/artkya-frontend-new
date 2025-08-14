@@ -22,7 +22,7 @@ const Footer = () => {
           <div className="md:hidden"></div>
           <ul className="hidden space-x-10 font-sans text-sm cursor-pointer md:flex text-slate-200">
             <li className="hover:text-[#dddddd]">
-              <Link to="/">Home01</Link>
+              <Link to="/">Home</Link>
             </li>
             <li className="hover:text-[#dddddd]">
               <Link to="/painting">Painting</Link>
