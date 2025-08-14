@@ -2,7 +2,11 @@ import React from "react";
 import logo from "../assets/logo.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
-import { faFacebookF, faLinkedinIn, faTwitter } from "@fortawesome/free-brands-svg-icons"
+import {
+  faFacebookF,
+  faLinkedinIn,
+  faTwitter
+} from "@fortawesome/free-brands-svg-icons";
 import { Link } from "react-router-dom";
 
 const Footer = () => {
@@ -12,17 +16,13 @@ const Footer = () => {
         <div className="flex items-center justify-between py-6 mx-10 md:flex md:justify-between hover:text-primary">
           <div className="">
             <Link to="/">
-              <img
-                src={logo}
-                className="h-6 "
-                alt="Phouzdar Logo"
-              />
+              <img src={logo} className="h-6 " alt="Phouzdar Logo" />
             </Link>
           </div>
           <div className="md:hidden"></div>
           <ul className="hidden space-x-10 font-sans text-sm cursor-pointer md:flex text-slate-200">
             <li className="hover:text-[#dddddd]">
-              <Link to="/">Home</Link>
+              <Link to="/">Home01</Link>
             </li>
             <li className="hover:text-[#dddddd]">
               <Link to="/painting">Painting</Link>
