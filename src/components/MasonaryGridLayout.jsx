@@ -8,24 +8,26 @@ const MasonaryGridLayout = ({ artDetails }) => {
   const navigate = useNavigate();
   const { authUser } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
-  
+
   return (
-    <div className="container mx-auto p-4 rounded-lg">
+    <div className="container mx-auto p-4 xl:p-0 rounded-lg">
       {/* Grid layout with responsive columns */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-16">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-16 xl:gap-5">
         {artDetails?.map((singleArt, index) => (
           <div
             key={index}
             className="mb-4 group shadow-lg rounded-lg overflow-hidden relative"
           >
             <div className="relative overflow-hidden rounded-t-lg">
-              <a href={`/artDetailPage/${singleArt?._id}`}>
-                <img
-                  src={singleArt?.thumbnail?.secure_url}
-                  alt={singleArt?.title || `Art ${index}`}
-                  className="w-auto h-full object-cover transition-transform duration-[2000ms] ease-in-out transform group-hover:scale-125"
-                />
-              </a>
+              <div className="max-h-96">
+                <a href={`/artDetailPage/${singleArt?._id}`}>
+                  <img
+                    src={singleArt?.thumbnail?.secure_url}
+                    alt={singleArt?.title || `Art ${index}`}
+                    className="w-auto h-full object-cover transition-transform duration-[2000ms] ease-in-out transform group-hover:scale-125"
+                  />
+                </a>
+              </div>
               {/* Action Buttons */}
               <div className="absolute top-2 right-2 flex space-x-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                 <button className="w-8 h-8 bg-white rounded-full flex items-center justify-center text-gray-600 hover:text-blue-500 transform hover:scale-110 transition-transform duration-300">
@@ -38,8 +40,8 @@ const MasonaryGridLayout = ({ artDetails }) => {
                       type: "ADD_ART_TO_WISHLIST",
                       payload: {
                         userId: authUser?._id,
-                        artId: singleArt?._id,
-                      },
+                        artId: singleArt?._id
+                      }
                     });
                   }}
                 >
@@ -54,8 +56,8 @@ const MasonaryGridLayout = ({ artDetails }) => {
                         userId: authUser?._id,
                         artId: singleArt?._id,
                         artPrice: singleArt?.totalPrice,
-                        navigate,
-                      },
+                        navigate
+                      }
                     });
                   }}
                 >
@@ -72,10 +74,11 @@ const MasonaryGridLayout = ({ artDetails }) => {
                   ${singleArt?.totalPrice}
                 </p>
               </div>
-              <p className="text-sm text-gray-600 cursor-pointer"
-              onClick={()=>{               
-                navigate(`/ArtistProfilePage/${singleArt?.artist?._id}`)
-              }}
+              <p
+                className="text-sm text-gray-600 cursor-pointer"
+                onClick={() => {
+                  navigate(`/ArtistProfilePage/${singleArt?.artist?._id}`);
+                }}
               >
                 {`${
                   singleArt?.artist?.firstName
@@ -86,7 +89,8 @@ const MasonaryGridLayout = ({ artDetails }) => {
                 }`}
               </p>
               <p className="text-sm text-gray-600">
-                {singleArt.height} x {singleArt?.width} x {singleArt?.depth} inch
+                {singleArt.height} x {singleArt?.width} x {singleArt?.depth}{" "}
+                inch
               </p>
             </div>
           </div>

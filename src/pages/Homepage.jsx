@@ -2,10 +2,10 @@ import { useState, useEffect } from "react";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import Header from "../components/Header";
 
-import Home1 from "../assets/home1.webp";
+import Home1 from "../assets/home1.jpg";
 import Home2 from "../assets/home2.jpg";
-import Home3 from "../assets/home3.webp";
-import Home4 from "../assets/home4.webp";
+import Home3 from "../assets/home3.jpg";
+import Home4 from "../assets/home4.jpg";
 
 import Feature1 from "../assets/feature1.jpg";
 import Feature2 from "../assets/feature2.jpg";
@@ -169,7 +169,7 @@ const Homepage = () => {
       <Header />
 
       {/* Hero Section with Carousel */}
-      <section className="relative h-[600px] overflow-hidden group">
+      <section className="relative h-[400px] overflow-hidden group">
         {carouselImages.map((image, index) => (
           <img
             key={index}
@@ -275,12 +275,14 @@ const Homepage = () => {
               </div>
             </div>
 
-            <div className="bg-white overflow-hidden group">
-              <img
-                src={Collection2}
-                alt=""
-                className="inset-0 w-full h-full object-cover transition-transform duration-[2000ms] ease-in-out transform group-hover:scale-125"
-              />
+            <div className="">
+              <div className="bg-white overflow-hidden group">
+                <img
+                  src={Collection2}
+                  alt=""
+                  className="inset-0 w-full h-full object-cover transition-transform duration-[2000ms] ease-in-out transform group-hover:scale-125"
+                />
+              </div>
             </div>
           </div>
         </div>
