@@ -15,11 +15,47 @@ import Feature3 from "../assets/feature3.jpg";
 import Collection1 from "../assets/collection1.jpg";
 import Collection2 from "../assets/collection2.jpg";
 import Collection3 from "../assets/collection3.jpg";
+import Collection4 from "../assets/collection4.jpg";
+import Collection5 from "../assets/collection5.jpg";
+import Collection6 from "../assets/collection6.jpg";
 
 import Blank_Avatar from "../assets/Blank_Avatar.png";
 
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+
+const COLLECTIONS = [
+  {
+    src: Collection1,
+    alt: "Bijon Choudhury",
+    span: "col-span-2 row-span-2"
+  },
+  {
+    src: Collection2,
+    alt: "Manjusha Ganguly",
+    span: "col-span-1 row-span-1"
+  },
+  {
+    src: Collection3,
+    alt: "Pratap Chavan",
+    span: "col-span-1 row-span-1"
+  },
+  {
+    src: Collection4,
+    alt: "Shuvaprasana",
+    span: "col-span-1 row-span-1"
+  },
+  {
+    src: Collection5,
+    alt: "Pranab Phauzdar",
+    span: "col-span-1 row-span-1"
+  },
+  {
+    src: Collection6,
+    alt: "Bijon Choudhury",
+    span: "col-span-1 row-span-1"
+  }
+];
 
 const featuredArts = [
   {
@@ -257,33 +293,24 @@ const Homepage = () => {
           <h2 className="text-3xl font-bold text-gray-800 mb-8 text-center">
             Featured Collections
           </h2>
-          <div className="grid grid-cols-2 gap-9">
-            <div className="">
-              <div className="bg-white overflow-hidden group">
+          <div className="grid grid-cols-3 gap-4 auto-rows-[200px]">
+            {COLLECTIONS.map((img, idx) => (
+              <div
+                key={idx}
+                className={`${img.span} relative overflow-hidden rounded-xl shadow-lg`}
+              >
                 <img
-                  src={Collection1}
-                  alt=""
-                  className="inset-0 w-full h-full object-cover transition-transform duration-[2000ms] ease-in-out transform group-hover:scale-125"
+                  src={img.src}
+                  alt={img.alt}
+                  className="h-full w-full object-cover transition-transform duration-300 hover:scale-105"
                 />
+                <div className="absolute inset-0 bg-black/30 opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                  <p className="text-white font-semibold text-lg text-center px-2">
+                    {img.alt}
+                  </p>
+                </div>
               </div>
-              <div className="bg-white overflow-hidden mt-9 group">
-                <img
-                  src={Collection3}
-                  alt=""
-                  className="inset-0 w-full h-full object-cover transition-transform duration-[2000ms] ease-in-out transform group-hover:scale-125"
-                />
-              </div>
-            </div>
-
-            <div className="">
-              <div className="bg-white overflow-hidden group">
-                <img
-                  src={Collection2}
-                  alt=""
-                  className="inset-0 w-full h-full object-cover transition-transform duration-[2000ms] ease-in-out transform group-hover:scale-125"
-                />
-              </div>
-            </div>
+            ))}
           </div>
         </div>
       </section>
